@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Vinext and Vite
+dist/
+.next/
+.vinext/
+.vite/
+next-env.d.ts
+
+# TypeScript
+*.tsbuildinfo
+
+# Tests
+coverage/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.DS_Store
+*.swp

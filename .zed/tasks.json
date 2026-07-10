@@ -1,0 +1,200 @@
+[
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "build"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "check"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: check",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "check:biome"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: check:biome",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "check:biome:fix"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: check:biome:fix",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "check:vinext"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: check:vinext",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "dev"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: dev",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "format"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: format",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "format:check"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: format:check",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "knip"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: knip",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "knip:fix"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: knip:fix",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "lint"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: lint",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "lint:fix"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: lint:fix",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "pokayoke"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: pokayoke",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "pokayoke:fix"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: pokayoke:fix",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "start"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: start",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "test"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: test",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "typecheck"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: typecheck",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "verify"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: verify",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  }
+]

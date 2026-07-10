@@ -1,0 +1,31 @@
+{
+  "format_on_save": "on",
+  "formatter": "language_server",
+  "tasks": {
+    "enabled": true,
+    "prefer_lsp": false
+  },
+  "languages": {
+    "JavaScript": {
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+    },
+    "JSX": {
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+    },
+    "TypeScript": {
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+    },
+    "TSX": {
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+    },
+    "JSON": {
+      "language_servers": ["biome", "json-language-server"]
+    },
+    "JSONC": {
+      "language_servers": ["biome", "json-language-server"]
+    },
+    "CSS": {
+      "language_servers": ["biome"]
+    }
+  }
+}

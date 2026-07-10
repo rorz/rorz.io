@@ -1,0 +1,30 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  "entry": [
+    "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
+    ".pokayoke/rules/**/*.rule.ts",
+    ".pokayoke/rules/**/*.test.ts"
+  ],
+  "project": ["app/**/*.{ts,tsx}", ".pokayoke/**/*.ts"],
+  "include": [
+    "files",
+    "dependencies",
+    "devDependencies",
+    "optionalPeerDependencies",
+    "unlisted",
+    "binaries",
+    "unresolved",
+    "exports",
+    "types",
+    "nsExports",
+    "nsTypes",
+    "duplicates",
+    "enumMembers",
+    "namespaceMembers",
+    "catalog",
+    "cycles"
+  ],
+  "includeEntryExports": false,
+  "treatConfigHintsAsErrors": true,
+  "treatTagHintsAsErrors": true
+}
