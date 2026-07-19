@@ -57,6 +57,11 @@
     },
     "jsxRuntime": "transparent"
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "json": {
     "formatter": {
       "trailingCommas": "none"
