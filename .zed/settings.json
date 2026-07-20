@@ -27,19 +27,7 @@
       },
       "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
-    "JSX": {
-      "code_actions_on_format": {
-        "source.fixAll.biome": true,
-        "source.organizeImports.biome": true
-      },
-      "format_on_save": "on",
-      "formatter": {
-        "language_server": {
-          "name": "biome"
-        }
-      },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
-    },
+
     "TypeScript": {
       "code_actions_on_format": {
         "source.fixAll.biome": true,

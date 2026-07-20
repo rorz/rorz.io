@@ -11,7 +11,8 @@
         "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
         "app/styles.css"
       ],
-      "project": ["app/**/*.{ts,tsx}"]
+      "project": ["app/**/*.{ts,tsx}"],
+      "ignoreDependencies": ["obsidian-oxide"]
     },
     "packages/obsidian": {
       "project": ["src/**/*.{ts,tsx}"]

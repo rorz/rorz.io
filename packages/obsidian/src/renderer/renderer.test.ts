@@ -1,40 +1,38 @@
 import { describe, expect, test } from "bun:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createGetFile } from "./get-file.ts";
+import { getFileFromLoaders } from "./file-store.ts";
 
 describe("getFile", () => {
   test("loads one exact Markdown file lazily", async () => {
     let loads = 0;
-    const getFile = createGetFile(
+    const file = await getFileFromLoaders(
       {
-        "../content/Welcome.md": () => {
+        "/.obsidian-vaults/rorz.io/Welcome.md": () => {
           loads += 1;
           return Promise.resolve("# Welcome");
         },
       },
-      "../content/",
+      "rorz.io",
+      "/Welcome.md",
     );
-
-    const file = await getFile("/Welcome.md");
 
     expect(loads).toBe(1);
     expect(file?.path).toBe("Welcome");
     expect(file?.source).toBe("# Welcome");
   });
 
-  test("returns null for missing and unsafe paths", async () => {
-    const getFile = createGetFile({}, "../content/");
-
-    expect(await getFile("Missing")).toBeNull();
-    expect(await getFile("../Welcome")).toBeNull();
-    expect(await getFile("folder//Welcome")).toBeNull();
+  test("returns null for missing files and unsafe vault or file paths", async () => {
+    expect(await getFileFromLoaders({}, "rorz.io", "Missing")).toBeNull();
+    expect(await getFileFromLoaders({}, "../rorz.io", "Welcome")).toBeNull();
+    expect(await getFileFromLoaders({}, "rorz.io", "../Welcome")).toBeNull();
+    expect(await getFileFromLoaders({}, "rorz.io", "folder//Welcome")).toBeNull();
   });
 
   test("renders GFM and Obsidian wikilinks without frontmatter or raw HTML", async () => {
-    const getFile = createGetFile(
+    const file = await getFileFromLoaders(
       {
-        "../content/Welcome.md": () =>
+        "/.obsidian-vaults/rorz.io/Welcome.md": () =>
           Promise.resolve(`---
 title: Hidden
 ---
@@ -48,9 +46,9 @@ title: Hidden
 <script>alert("nope")</script>
 `),
       },
-      "../content/",
+      "rorz.io",
+      "Welcome",
     );
-    const file = await getFile("Welcome");
 
     expect(file).not.toBeNull();
 

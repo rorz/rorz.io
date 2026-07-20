@@ -1,46 +1,10 @@
-import { createObsidianFile, type ObsidianFile } from "./markdown.tsx";
+import { type GetFile, getFileFromLoaders } from "./file-store.ts";
 
-type FileLoader = () => Promise<string>;
-type FileLoaders = Readonly<Record<string, FileLoader>>;
-type GetFile = (path: string) => Promise<ObsidianFile | null>;
+const vaultFiles = import.meta.glob<string>("/.obsidian-vaults/**/*.md", {
+  import: "default",
+  query: "?raw",
+});
 
-const leadingSlashPattern = /^\/+/u;
-const markdownExtensionPattern = /\.md$/iu;
+const getFile: GetFile = (vaultName, path) => getFileFromLoaders(vaultFiles, vaultName, path);
 
-const normalizePath = (path: string): string | null => {
-  const normalized = path
-    .replaceAll("\\", "/")
-    .replace(leadingSlashPattern, "")
-    .replace(markdownExtensionPattern, "");
-  const segments = normalized.split("/");
-
-  if (
-    normalized.length === 0 ||
-    segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")
-  ) {
-    return null;
-  }
-
-  return normalized;
-};
-
-const createGetFile =
-  (loaders: FileLoaders, sourceRoot: string): GetFile =>
-  async (path) => {
-    const normalized = normalizePath(path);
-
-    if (!normalized) {
-      return null;
-    }
-
-    const load = loaders[`${sourceRoot}${normalized}.md`];
-
-    if (!load) {
-      return null;
-    }
-
-    return createObsidianFile(normalized, await load());
-  };
-
-export type { FileLoader, FileLoaders, GetFile };
-export { createGetFile };
+export { getFile };
