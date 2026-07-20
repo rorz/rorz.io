@@ -1,31 +1,118 @@
 {
   "format_on_save": "on",
-  "formatter": "language_server",
+  "ensure_final_newline_on_save": true,
+  "line_ending": "prefer_lf",
+  "lsp": {
+    "biome": {
+      "settings": {
+        "require_config_file": true
+      }
+    }
+  },
   "tasks": {
     "enabled": true,
     "prefer_lsp": false
   },
   "languages": {
     "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
     "JSX": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
     "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
     "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
     "JSON": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "json-language-server"]
     },
     "JSONC": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome", "json-language-server"]
     },
     "CSS": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
       "language_servers": ["biome"]
+    },
+    "HTML": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "language_servers": ["biome", "..."]
     }
   }
 }

@@ -24,7 +24,6 @@ interface ZedTask {
 }
 
 const ruleId = "repo/tooling-contract";
-const webPackagePath = "apps/web/package.json";
 const expandedArgsPattern = /"args": \[\n {6}"run",\n {6}"([^"]+)"\n {4}\]/gu;
 const foreignPackageManagerPattern = /\b(?:npm|npx|pnpm|yarn)\b/u;
 
@@ -33,7 +32,8 @@ const requiredScripts = {
   check:
     "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
   "check:biome": "biome check .",
-  "check:biome:fix": "biome check --write --unsafe .",
+  "check:biome:fix": "biome check --write .",
+  "check:biome:fix:unsafe": "biome check --write --unsafe .",
   "check:vinext": "bun run --filter @rorz/web check:vinext",
   dev: "bun run --filter @rorz/web dev",
   format: "biome format --write .",
@@ -45,8 +45,9 @@ const requiredScripts = {
   pokayoke: "pokayoke check",
   "pokayoke:fix": "pokayoke check --fix",
   start: "bun run --filter @rorz/web start",
-  test: "bun test apps ./.pokayoke/rules/*.test.ts",
-  typecheck: "tsc --noEmit && bun run --filter @rorz/web typecheck",
+  test: "bun test apps packages ./.pokayoke/rules/*.test.ts",
+  typecheck:
+    "tsc --noEmit && bun run --filter obsidian-oxide typecheck && bun run --filter @rorz/web typecheck",
   verify: "bun run check && bun run build",
 } as const;
 
@@ -140,14 +141,16 @@ const validateRootPackage = (packageJson: PackageJson): Finding[] => {
     );
   }
 
-  if (!packageJson.workspaces?.includes("apps/*")) {
-    findings.push(
-      finding(
-        "The root package must include the app workspaces.",
-        "package.json",
-        'Add "apps/*" to package.json#workspaces.',
-      ),
-    );
+  for (const workspace of ["apps/*", "packages/*"]) {
+    if (!packageJson.workspaces?.includes(workspace)) {
+      findings.push(
+        finding(
+          `The root package must include the ${workspace} workspace.`,
+          "package.json",
+          `Add ${JSON.stringify(workspace)} to package.json#workspaces.`,
+        ),
+      );
+    }
   }
 
   return findings;
@@ -267,7 +270,7 @@ const toolingContract: Rule = {
     const findings = [
       ...validateRootPackage(rootPackageJson),
       ...validateScripts(rootScripts, requiredScripts, "package.json"),
-      ...validateScripts(webScripts, requiredWebScripts, webPackagePath),
+      ...validateScripts(webScripts, requiredWebScripts, "apps/web/package.json"),
       ...validateDependencies(
         rootPackageJson.devDependencies,
         requiredRootDevelopmentDependencies,
@@ -277,13 +280,13 @@ const toolingContract: Rule = {
       ...validateDependencies(
         webPackageJson.dependencies,
         requiredWebRuntimeDependencies,
-        webPackagePath,
+        "apps/web/package.json",
         "web runtime dependency",
       ),
       ...validateDependencies(
         webPackageJson.devDependencies,
         requiredWebDevelopmentDependencies,
-        webPackagePath,
+        "apps/web/package.json",
         "web development dependency",
       ),
       ...validateFiles(files),

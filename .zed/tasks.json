@@ -45,6 +45,17 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "check:biome:fix:unsafe"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: check:biome:fix:unsafe",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "check:vinext"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",

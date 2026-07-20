@@ -12,6 +12,9 @@
         "app/styles.css"
       ],
       "project": ["app/**/*.{ts,tsx}"]
+    },
+    "packages/obsidian": {
+      "project": ["src/**/*.{ts,tsx}"]
     }
   },
   "include": [

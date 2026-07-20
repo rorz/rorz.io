@@ -1,0 +1,28 @@
+{
+  "name": "obsidian-oxide",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./renderer": "./src/renderer/index.ts",
+    "./sync": "./src/sync/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "react-dom": "^19.2.7",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "react-markdown": "^10.1.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1"
+  }
+}

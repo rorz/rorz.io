@@ -38,7 +38,8 @@
         "useQwikValidLexicalScope": "off"
       },
       "style": {
-        "noJsxLiterals": "off"
+        "noJsxLiterals": "off",
+        "useConsistentTypeDefinitions": "off"
       },
       "suspicious": {
         "noReactSpecificProps": "off"
@@ -60,6 +61,11 @@
   "css": {
     "parser": {
       "tailwindDirectives": true
+    }
+  },
+  "html": {
+    "formatter": {
+      "enabled": true
     }
   },
   "json": {

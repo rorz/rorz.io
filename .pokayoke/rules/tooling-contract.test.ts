@@ -13,7 +13,7 @@ const rootPackageJson = {
   },
   packageManager: "bun@1.3.14",
   scripts: requiredScripts,
-  workspaces: ["apps/*"],
+  workspaces: ["apps/*", "packages/*"],
 } as const;
 
 const webPackageJson = {
@@ -71,6 +71,7 @@ const createContext = (root: string, fix: boolean): RuleContext => ({
   workspaces: async () => [
     { name: "rorz.io", root: "." },
     { name: "@rorz/web", root: "apps/web" },
+    { name: "obsidian-oxide", root: "packages/obsidian" },
   ],
 });
 
