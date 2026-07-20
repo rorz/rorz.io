@@ -17,21 +17,12 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "paths": {
-      "@/*": ["./*"]
-    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2023",
     "types": ["bun"]
   },
-  "include": [
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "vite.config.ts",
-    "vite-env.d.ts",
-    ".pokayoke/**/*.ts"
-  ],
+  "include": [".pokayoke/**/*.ts"],
   "exclude": ["node_modules", "dist", ".vinext"]
 }

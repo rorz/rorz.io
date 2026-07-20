@@ -5,8 +5,10 @@ import type { Finding, Rule, RuleContext } from "pokayoke";
 interface PackageJson {
   readonly dependencies?: Readonly<Record<string, string>>;
   readonly devDependencies?: Readonly<Record<string, string>>;
+  readonly name?: string;
   readonly packageManager?: string;
   readonly scripts?: Readonly<Record<string, string>>;
+  readonly workspaces?: readonly string[];
 }
 
 interface ZedTask {
@@ -22,17 +24,18 @@ interface ZedTask {
 }
 
 const ruleId = "repo/tooling-contract";
+const webPackagePath = "apps/web/package.json";
 const expandedArgsPattern = /"args": \[\n {6}"run",\n {6}"([^"]+)"\n {4}\]/gu;
 const foreignPackageManagerPattern = /\b(?:npm|npx|pnpm|yarn)\b/u;
 
 const requiredScripts = {
-  build: "vinext build",
+  build: "bun run --filter @rorz/web build",
   check:
     "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
   "check:biome": "biome check .",
   "check:biome:fix": "biome check --write --unsafe .",
-  "check:vinext": "vinext check",
-  dev: "vinext dev",
+  "check:vinext": "bun run --filter @rorz/web check:vinext",
+  dev: "bun run --filter @rorz/web dev",
   format: "biome format --write .",
   "format:check": "biome format .",
   knip: "knip",
@@ -41,21 +44,35 @@ const requiredScripts = {
   "lint:fix": "biome lint --write .",
   pokayoke: "pokayoke check",
   "pokayoke:fix": "pokayoke check --fix",
-  start: "vinext start",
-  test: "bun test app ./.pokayoke/rules/*.test.ts",
-  typecheck: "tsc --noEmit",
+  start: "bun run --filter @rorz/web start",
+  test: "bun test apps ./.pokayoke/rules/*.test.ts",
+  typecheck: "tsc --noEmit && bun run --filter @rorz/web typecheck",
   verify: "bun run check && bun run build",
 } as const;
 
-const requiredRuntimeDependencies = ["react", "react-dom"] as const;
+const requiredWebScripts = {
+  build: "vinext build",
+  "check:vinext": "vinext check",
+  dev: "vinext dev --port 4444",
+  start: "vinext start",
+  typecheck: "tsc --noEmit",
+} as const;
 
-const requiredDevelopmentDependencies = [
+const requiredRootDevelopmentDependencies = [
   "@biomejs/biome",
-  "@vitejs/plugin-react",
-  "@vitejs/plugin-rsc",
   "knip",
   "pokayoke",
+  "typescript",
+] as const;
+
+const requiredWebRuntimeDependencies = ["react", "react-dom"] as const;
+
+const requiredWebDevelopmentDependencies = [
+  "@tailwindcss/vite",
+  "@vitejs/plugin-react",
+  "@vitejs/plugin-rsc",
   "react-server-dom-webpack",
+  "tailwindcss",
   "typescript",
   "vinext",
   "vite",
@@ -63,6 +80,9 @@ const requiredDevelopmentDependencies = [
 
 const requiredFiles = [
   ".zed/settings.json",
+  "apps/web/package.json",
+  "apps/web/tsconfig.json",
+  "apps/web/vite.config.ts",
   "biome.json",
   "knip.jsonc",
   "pokayoke.jsonc",
@@ -107,29 +127,45 @@ const renderZedTasks = (scripts: Readonly<Record<string, string>>): string =>
     '"args": ["run", "$1"]',
   );
 
-const validatePackageManager = (packageJson: PackageJson): Finding[] => {
-  if (packageJson.packageManager?.startsWith("bun@")) {
-    return [];
-  }
-
-  return [
-    finding(
-      "packageManager must pin Bun.",
-      "package.json",
-      'Set "packageManager" to "bun@<version>".',
-    ),
-  ];
-};
-
-const validateScripts = (scripts: Readonly<Record<string, string>>): Finding[] => {
+const validateRootPackage = (packageJson: PackageJson): Finding[] => {
   const findings: Finding[] = [];
 
-  for (const [script, command] of Object.entries(requiredScripts)) {
+  if (!packageJson.packageManager?.startsWith("bun@")) {
+    findings.push(
+      finding(
+        "packageManager must pin Bun.",
+        "package.json",
+        'Set "packageManager" to "bun@<version>".',
+      ),
+    );
+  }
+
+  if (!packageJson.workspaces?.includes("apps/*")) {
+    findings.push(
+      finding(
+        "The root package must include the app workspaces.",
+        "package.json",
+        'Add "apps/*" to package.json#workspaces.',
+      ),
+    );
+  }
+
+  return findings;
+};
+
+const validateScripts = (
+  scripts: Readonly<Record<string, string>>,
+  required: Readonly<Record<string, string>>,
+  file: string,
+): Finding[] => {
+  const findings: Finding[] = [];
+
+  for (const [script, command] of Object.entries(required)) {
     if (scripts[script] !== command) {
       findings.push(
         finding(
           `The ${script} script does not match the tooling contract.`,
-          "package.json",
+          file,
           `Set scripts.${script} to ${JSON.stringify(command)}.`,
         ),
       );
@@ -141,7 +177,7 @@ const validateScripts = (scripts: Readonly<Record<string, string>>): Finding[] =
       findings.push(
         finding(
           `The ${script} script bypasses Bun.`,
-          "package.json",
+          file,
           "Use Bun for package scripts and one-off executables.",
         ),
       );
@@ -151,29 +187,18 @@ const validateScripts = (scripts: Readonly<Record<string, string>>): Finding[] =
   return findings;
 };
 
-const validateDependencies = (packageJson: PackageJson): Finding[] => {
+const validateDependencies = (
+  dependencies: Readonly<Record<string, string>> | undefined,
+  required: readonly string[],
+  file: string,
+  group: string,
+): Finding[] => {
   const findings: Finding[] = [];
 
-  for (const dependency of requiredRuntimeDependencies) {
-    if (!packageJson.dependencies?.[dependency]) {
+  for (const dependency of required) {
+    if (!dependencies?.[dependency]) {
       findings.push(
-        finding(
-          `Missing runtime dependency: ${dependency}.`,
-          "package.json",
-          `Install it with: bun add ${dependency}`,
-        ),
-      );
-    }
-  }
-
-  for (const dependency of requiredDevelopmentDependencies) {
-    if (!packageJson.devDependencies?.[dependency]) {
-      findings.push(
-        finding(
-          `Missing development dependency: ${dependency}.`,
-          "package.json",
-          `Install it with: bun add --dev ${dependency}`,
-        ),
+        finding(`Missing ${group}: ${dependency}.`, file, `Declare ${dependency} in ${file}.`),
       );
     }
   }
@@ -228,21 +253,41 @@ const validateZedTasks = async (
 
 const toolingContract: Rule = {
   meta: {
-    docs: "Keep Bun, the quality gate, and Zed's project tasks on one exact contract.",
+    docs: "Keep the Bun workspaces, quality gate, and Zed tasks on one exact contract.",
     fixable: true,
     id: ruleId,
     kind: "project",
   },
   async run(context) {
-    const packageJson = (await context.packageJson()) as PackageJson;
-    const scripts = packageJson.scripts ?? {};
+    const rootPackageJson = (await context.packageJson(".")) as PackageJson;
+    const webPackageJson = (await context.packageJson("apps/web")) as PackageJson;
+    const rootScripts = rootPackageJson.scripts ?? {};
+    const webScripts = webPackageJson.scripts ?? {};
     const files = new Set(await context.glob([...requiredFiles, ".zed/tasks.json"]));
     const findings = [
-      ...validatePackageManager(packageJson),
-      ...validateScripts(scripts),
-      ...validateDependencies(packageJson),
+      ...validateRootPackage(rootPackageJson),
+      ...validateScripts(rootScripts, requiredScripts, "package.json"),
+      ...validateScripts(webScripts, requiredWebScripts, webPackagePath),
+      ...validateDependencies(
+        rootPackageJson.devDependencies,
+        requiredRootDevelopmentDependencies,
+        "package.json",
+        "root development dependency",
+      ),
+      ...validateDependencies(
+        webPackageJson.dependencies,
+        requiredWebRuntimeDependencies,
+        webPackagePath,
+        "web runtime dependency",
+      ),
+      ...validateDependencies(
+        webPackageJson.devDependencies,
+        requiredWebDevelopmentDependencies,
+        webPackagePath,
+        "web development dependency",
+      ),
       ...validateFiles(files),
-      ...(await validateZedTasks(context, scripts, files)),
+      ...(await validateZedTasks(context, rootScripts, files)),
     ];
 
     return { findings };

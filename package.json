@@ -3,49 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "workspaces": ["apps/*"],
   "packageManager": "bun@1.3.14",
   "engines": {
     "bun": ">=1.3.14"
   },
   "scripts": {
-    "dev": "vinext dev --port 4444",
-    "build": "vinext build",
-    "start": "vinext start",
+    "dev": "bun run --filter @rorz/web dev",
+    "build": "bun run --filter @rorz/web build",
+    "start": "bun run --filter @rorz/web start",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "check:biome": "biome check .",
     "check:biome:fix": "biome check --write --unsafe .",
-    "check:vinext": "vinext check",
-    "typecheck": "tsc --noEmit",
+    "check:vinext": "bun run --filter @rorz/web check:vinext",
+    "typecheck": "tsc --noEmit && bun run --filter @rorz/web typecheck",
     "knip": "knip",
     "knip:fix": "knip --fix",
     "pokayoke": "pokayoke check",
     "pokayoke:fix": "pokayoke check --fix",
-    "test": "bun test app ./.pokayoke/rules/*.test.ts",
+    "test": "bun test apps ./.pokayoke/rules/*.test.ts",
     "check": "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
     "verify": "bun run check && bun run build"
   },
-  "dependencies": {
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.5.3",
-    "@tailwindcss/vite": "^4.3.3",
     "@types/bun": "^1.3.14",
     "@types/node": "^26.1.1",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.3",
-    "@vitejs/plugin-rsc": "^0.5.27",
     "knip": "^6.25.0",
+    "obsidian-headless": "^0.0.13",
     "pokayoke": "^0.0.6",
-    "react-server-dom-webpack": "^19.2.7",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2",
-    "vinext": "^1.0.0-beta.1",
-    "vite": "^8.1.4"
+    "typescript": "^7.0.2"
   }
 }

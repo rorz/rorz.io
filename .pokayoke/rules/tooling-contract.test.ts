@@ -4,28 +4,48 @@ import { tmpdir } from "node:os";
 import type { RuleContext } from "pokayoke";
 import { renderZedTasks, requiredScripts, toolingContract } from "./tooling-contract.rule.ts";
 
-const packageJson = {
+const rootPackageJson = {
+  devDependencies: {
+    "@biomejs/biome": "latest",
+    knip: "latest",
+    pokayoke: "latest",
+    typescript: "latest",
+  },
+  packageManager: "bun@1.3.14",
+  scripts: requiredScripts,
+  workspaces: ["apps/*"],
+} as const;
+
+const webPackageJson = {
   dependencies: {
     react: "latest",
     "react-dom": "latest",
   },
   devDependencies: {
-    "@biomejs/biome": "latest",
+    "@tailwindcss/vite": "latest",
     "@vitejs/plugin-react": "latest",
     "@vitejs/plugin-rsc": "latest",
-    knip: "latest",
-    pokayoke: "latest",
     "react-server-dom-webpack": "latest",
+    tailwindcss: "latest",
     typescript: "latest",
     vinext: "latest",
     vite: "latest",
   },
-  packageManager: "bun@1.3.14",
-  scripts: requiredScripts,
+  name: "@rorz/web",
+  scripts: {
+    build: "vinext build",
+    "check:vinext": "vinext check",
+    dev: "vinext dev --port 4444",
+    start: "vinext start",
+    typecheck: "tsc --noEmit",
+  },
 } as const;
 
 const toolingFiles = [
   ".zed/settings.json",
+  "apps/web/package.json",
+  "apps/web/tsconfig.json",
+  "apps/web/vite.config.ts",
   "biome.json",
   "knip.jsonc",
   "pokayoke.jsonc",
@@ -37,12 +57,21 @@ const createContext = (root: string, fix: boolean): RuleContext => ({
   fix,
   glob: async () => toolingFiles,
   options: undefined,
-  packageJson: async () => packageJson,
+  packageJson: (workspace) => {
+    if (workspace === "apps/web") {
+      return Promise.resolve(webPackageJson);
+    }
+
+    return Promise.resolve(rootPackageJson);
+  },
   parseTypescript: () => Promise.reject(new Error("parseTypescript is not used by this rule.")),
   readFile: async () => "[]\n",
   report: () => undefined,
   root,
-  workspaces: async () => [],
+  workspaces: async () => [
+    { name: "rorz.io", root: "." },
+    { name: "@rorz/web", root: "apps/web" },
+  ],
 });
 
 describe("repo/tooling-contract", () => {

@@ -5,16 +5,18 @@
   "files": [
     ".pokayoke/rules/**/*.ts",
     ".zed/*.json",
-    "app/**/*.ts",
-    "app/**/*.tsx",
     "AGENTS.md",
     "README.md",
+    "apps/web/app/**/*.ts",
+    "apps/web/app/**/*.tsx",
+    "apps/web/package.json",
+    "apps/web/tsconfig.json",
+    "apps/web/vite.config.ts",
     "biome.json",
     "knip.jsonc",
     "package.json",
     "pokayoke.jsonc",
-    "tsconfig.json",
-    "vite.config.ts"
+    "tsconfig.json"
   ],
   "ignores": ["**/node_modules/**", "**/dist/**", "**/.vinext/**", "**/*.d.ts"],
   "suppressions": {

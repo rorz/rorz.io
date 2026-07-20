@@ -1,12 +1,19 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
-  "entry": [
-    "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
-    "app/styles.css",
-    ".pokayoke/rules/**/*.rule.ts",
-    ".pokayoke/rules/**/*.test.ts"
-  ],
-  "project": ["app/**/*.{ts,tsx}", ".pokayoke/**/*.ts"],
+  "workspaces": {
+    ".": {
+      "entry": [".pokayoke/rules/**/*.rule.ts", ".pokayoke/rules/**/*.test.ts"],
+      "project": [".pokayoke/**/*.ts"],
+      "ignoreDependencies": ["obsidian-headless"]
+    },
+    "apps/web": {
+      "entry": [
+        "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
+        "app/styles.css"
+      ],
+      "project": ["app/**/*.{ts,tsx}"]
+    }
+  },
   "include": [
     "files",
     "dependencies",

@@ -22,3 +22,5 @@ coverage/
 # Editors and operating systems
 .DS_Store
 *.swp
+
+.obsidian-vault
