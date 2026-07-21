@@ -21,6 +21,9 @@ describe("getVault", () => {
     );
 
     expect(vault.name).toBe("notes");
+    expect(vault.paths).toEqual([
+      "Welcome",
+    ]);
     expect(await vault.getFile("Welcome")).toEqual({
       body: "# Welcome",
       frontmatter: {},
@@ -37,6 +40,41 @@ describe("getVault", () => {
     };
 
     expect(() => getVaultFromLoaders({}, config, "missing")).toThrow("Unknown vault: missing");
+  });
+});
+
+describe("Vault paths", () => {
+  test("exposes sorted extensionless source paths without loading files", () => {
+    let loads = 0;
+    const config = {
+      vaults: [
+        {
+          name: "notes",
+        },
+      ],
+      vaultsFolder: "./content/vaults/",
+    } as const;
+    const vault = getVaultFromLoaders(
+      {
+        "/content/vaults/notes/nested/Alpha.md": () => {
+          loads += 1;
+          return Promise.resolve("Alpha");
+        },
+        "/content/vaults/notes/Zebra.md": () => {
+          loads += 1;
+          return Promise.resolve("Zebra");
+        },
+        "/content/vaults/other/Ignored.md": () => Promise.resolve("Ignored"),
+      },
+      config,
+      "notes",
+    );
+
+    expect(vault.paths).toEqual([
+      "Zebra",
+      "nested/Alpha",
+    ]);
+    expect(loads).toBe(0);
   });
 });
 

@@ -1,15 +1,23 @@
 import type { ReactNode } from "react";
 import "./styles.css";
-import { getVault, isVaultLink, type VaultLink } from "obsid/vault";
-import obsidConfig from "../obsid.config.ts";
+import { isVaultLink, type VaultLink } from "obsid/vault";
+import { getVaultRouteManifest, vault } from "./vault.ts";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
 
-const getDirectoryHref = (resolvedPath: string | null, target: string): string => {
+const getDirectoryHref = (
+  getHref: (sourcePath: string) => string | null,
+  resolvedPath: string | null,
+  target: string,
+): string => {
   if (resolvedPath) {
-    return `/?article=${encodeURIComponent(resolvedPath)}`;
+    const href = getHref(resolvedPath);
+
+    if (href) {
+      return href;
+    }
   }
 
   return `#unresolved-${encodeURIComponent(target)}`;
@@ -24,10 +32,10 @@ const getLinkList = (value: unknown): readonly VaultLink[] => {
 };
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
-  //
-
-  const vault = getVault(obsidConfig, "rorz.io");
-  const rootPage = await vault.getFile("page");
+  const [manifest, rootPage] = await Promise.all([
+    getVaultRouteManifest(),
+    vault.getFile("page"),
+  ]);
 
   if (!rootPage) {
     throw new Error("Missing vault root page: page");
@@ -44,7 +52,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             {directories.map((directory) => (
               <a
                 className="underline"
-                href={getDirectoryHref(directory.resolvedPath, directory.target)}
+                href={getDirectoryHref(manifest.getHref, directory.resolvedPath, directory.target)}
                 key={directory.target}
               >
                 {directory.label}

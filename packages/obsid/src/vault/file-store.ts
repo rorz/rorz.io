@@ -48,15 +48,19 @@ const getVaultPaths = (
 ): readonly string[] => {
   const prefix = `${vaultRoot}/${vaultName}/`;
 
-  return Object.keys(loaders).flatMap((loaderPath) => {
-    if (!(loaderPath.startsWith(prefix) && loaderPath.toLowerCase().endsWith(markdownExtension))) {
-      return [];
-    }
+  return Object.keys(loaders)
+    .flatMap((loaderPath) => {
+      if (
+        !(loaderPath.startsWith(prefix) && loaderPath.toLowerCase().endsWith(markdownExtension))
+      ) {
+        return [];
+      }
 
-    return [
-      loaderPath.slice(prefix.length, -markdownExtension.length),
-    ];
-  });
+      return [
+        loaderPath.slice(prefix.length, -markdownExtension.length),
+      ];
+    })
+    .toSorted();
 };
 
 const getFileFromLoaders = async (
@@ -110,9 +114,16 @@ const getVaultFromLoaders = <const Config extends VaultConfig>(
     throw new Error(`Unknown vault: ${name}`);
   }
 
+  const vaultRoot = normalizeVaultsFolder(config.vaultsFolder);
+
+  if (!vaultRoot) {
+    throw new Error(`Invalid vaults folder: ${config.vaultsFolder}`);
+  }
+
   return {
     getFile: (path) => getFileFromLoaders(loaders, config.vaultsFolder, name, path),
     name,
+    paths: getVaultPaths(loaders, vaultRoot, name),
   };
 };
 
