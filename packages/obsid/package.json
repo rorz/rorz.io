@@ -19,8 +19,9 @@
   },
   "exports": {
     "./config": "./src/config/index.ts",
-    "./renderer": "./src/renderer/index.ts",
+    "./react": "./src/react/index.ts",
     "./sync": "./src/sync/index.ts",
+    "./vault": "./src/vault/index.ts",
     "./vite": "./src/vite/index.ts"
   },
   "name": "obsid",

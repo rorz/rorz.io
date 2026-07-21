@@ -1,11 +1,11 @@
 import type { Plugin } from "vite";
-import type { ObsidRendererConfig } from "../renderer/file-store.ts";
-import { normalizeVaultsFolder } from "../renderer/vault-path.ts";
+import type { VaultConfig } from "../vault/file-store.ts";
+import { normalizeVaultsFolder } from "../vault/vault-path.ts";
 
 const virtualModuleId = "virtual:obsid/vault-files";
 const resolvedVirtualModuleId = `\0${virtualModuleId}`;
 
-const renderVaultFilesModule = (config: ObsidRendererConfig): string => {
+const renderVaultFilesModule = (config: VaultConfig): string => {
   const vaultRoot = normalizeVaultsFolder(config.vaultsFolder);
 
   if (!vaultRoot) {
@@ -16,7 +16,7 @@ const renderVaultFilesModule = (config: ObsidRendererConfig): string => {
   return `export const vaultFiles = import.meta.glob(${JSON.stringify(glob)}, { import: "default", query: "?raw" });`;
 };
 
-const obsid = (config: ObsidRendererConfig): Plugin => ({
+const obsid = (config: VaultConfig): Plugin => ({
   load(id) {
     if (id === resolvedVirtualModuleId) {
       return renderVaultFilesModule(config);

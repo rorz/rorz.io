@@ -1,21 +1,29 @@
-import { createObsidianFile, type ObsidianFile } from "./markdown.tsx";
 import { normalizeVaultsFolder } from "./vault-path.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
-interface ObsidRendererConfig {
+
+interface VaultConfig {
   readonly vaults: readonly {
     readonly name: string;
   }[];
   readonly vaultsFolder: string;
 }
-type VaultName<Config extends ObsidRendererConfig> = Config["vaults"][number]["name"];
-type GetFile = (path: string) => Promise<ObsidianFile | null>;
+
+interface VaultFile {
+  readonly path: string;
+  readonly source: string;
+}
+
+type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
+type GetFile = (path: string) => Promise<VaultFile | null>;
+
 interface Vault<Name extends string = string> {
   readonly getFile: GetFile;
   readonly name: Name;
 }
-type GetVault = <const Config extends ObsidRendererConfig>(
+
+type GetVault = <const Config extends VaultConfig>(
   config: Config,
   name: NoInfer<VaultName<Config>>,
 ) => Vault<VaultName<Config>>;
@@ -59,7 +67,7 @@ const getFileFromLoaders = async (
   vaultsFolder: string,
   vaultName: string,
   path: string,
-): Promise<ObsidianFile | null> => {
+): Promise<VaultFile | null> => {
   const vaultRoot = normalizeVaultsFolder(vaultsFolder);
   const normalizedVaultName = normalizeVaultName(vaultName);
   const normalizedPath = normalizePath(path);
@@ -74,10 +82,13 @@ const getFileFromLoaders = async (
     return null;
   }
 
-  return createObsidianFile(normalizedPath, await load());
+  return {
+    path: normalizedPath,
+    source: await load(),
+  };
 };
 
-const getVaultFromLoaders = <const Config extends ObsidRendererConfig>(
+const getVaultFromLoaders = <const Config extends VaultConfig>(
   loaders: FileLoaders,
   config: Config,
   name: NoInfer<VaultName<Config>>,
@@ -92,5 +103,5 @@ const getVaultFromLoaders = <const Config extends ObsidRendererConfig>(
   };
 };
 
-export type { GetFile, GetVault, ObsidRendererConfig, Vault, VaultName };
+export type { GetFile, GetVault, Vault, VaultConfig, VaultFile, VaultName };
 export { getFileFromLoaders, getVaultFromLoaders };

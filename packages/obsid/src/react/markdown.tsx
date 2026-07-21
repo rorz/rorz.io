@@ -1,27 +1,13 @@
-import type { ComponentType } from "react";
-import Markdown, { type Components } from "react-markdown";
+import Markdown from "react-markdown";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import type { ObsidianMarkdownProps, ResolveWikiLink } from "./types.ts";
 
 interface MarkdownNode {
   children?: MarkdownNode[];
   type: string;
   url?: string;
   value?: string;
-}
-
-type ResolveWikiLink = (target: string) => string;
-
-interface ObsidianContentProps {
-  readonly components?: Components;
-  readonly resolveWikiLink?: ResolveWikiLink;
-}
-
-interface ObsidianFile {
-  // biome-ignore lint/style/useNamingConvention: React component values use PascalCase.
-  readonly Content: ComponentType<ObsidianContentProps>;
-  readonly path: string;
-  readonly source: string;
 }
 
 const defaultResolveWikiLink: ResolveWikiLink = (target) => target;
@@ -131,32 +117,23 @@ const createWikiLinkPlugin = (resolveWikiLink: ResolveWikiLink) => () => (tree: 
   transformWikiLinks(tree, resolveWikiLink);
 };
 
-const createObsidianFile = (path: string, source: string): ObsidianFile => {
-  const Content = ({
-    components,
-    resolveWikiLink = defaultResolveWikiLink,
-  }: ObsidianContentProps) => (
-    <Markdown
-      components={components}
-      remarkPlugins={[
-        remarkFrontmatter,
-        removeFrontmatter,
-        remarkGfm,
-        createWikiLinkPlugin(resolveWikiLink),
-      ]}
-      skipHtml={true}
-    >
-      {source}
-    </Markdown>
-  );
+const ObsidianMarkdown = ({
+  components,
+  file,
+  resolveWikiLink = defaultResolveWikiLink,
+}: ObsidianMarkdownProps) => (
+  <Markdown
+    components={components}
+    remarkPlugins={[
+      remarkFrontmatter,
+      removeFrontmatter,
+      remarkGfm,
+      createWikiLinkPlugin(resolveWikiLink),
+    ]}
+    skipHtml={true}
+  >
+    {file.source}
+  </Markdown>
+);
 
-  return {
-    // biome-ignore lint/style/useNamingConvention: React component values use PascalCase.
-    Content,
-    path,
-    source,
-  };
-};
-
-export type { ObsidianContentProps, ObsidianFile, ResolveWikiLink };
-export { createObsidianFile };
+export { ObsidianMarkdown };

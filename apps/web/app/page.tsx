@@ -1,4 +1,5 @@
-import { getVault } from "obsid/renderer";
+import { ObsidianMarkdown } from "obsid/react";
+import { getVault } from "obsid/vault";
 import obsidConfig from "../obsid.config.ts";
 
 const Page = async () => {
@@ -7,7 +8,7 @@ const Page = async () => {
   return (
     <main>
       <p>Rory McMeekin</p>
-      {(file?.Content && <file.Content />) ?? null}
+      {file !== null && <ObsidianMarkdown file={file} />}
     </main>
   );
 };

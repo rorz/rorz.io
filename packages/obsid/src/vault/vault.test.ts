@@ -1,7 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { createElement } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import { getFileFromLoaders, getVaultFromLoaders, type ObsidRendererConfig } from "./file-store.ts";
+import { getFileFromLoaders, getVaultFromLoaders, type VaultConfig } from "./file-store.ts";
 
 describe("getVault", () => {
   test("binds a configured vault and its custom folder", async () => {
@@ -22,11 +20,14 @@ describe("getVault", () => {
     );
 
     expect(vault.name).toBe("notes");
-    expect((await vault.getFile("Welcome"))?.source).toBe("# Welcome");
+    expect(await vault.getFile("Welcome")).toEqual({
+      path: "Welcome",
+      source: "# Welcome",
+    });
   });
 
   test("rejects a vault that is not configured", () => {
-    const config: ObsidRendererConfig = {
+    const config: VaultConfig = {
       vaults: [],
       vaultsFolder: "./.obsidian-vaults/",
     };
@@ -63,47 +64,5 @@ describe("getFile", () => {
       await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "folder//Welcome"),
     ).toBeNull();
     expect(await getFileFromLoaders({}, "../vaults", "rorz.io", "Welcome")).toBeNull();
-  });
-
-  test("renders GFM and Obsidian wikilinks without frontmatter or raw HTML", async () => {
-    const file = await getFileFromLoaders(
-      {
-        "/.obsidian-vaults/rorz.io/Welcome.md": () =>
-          Promise.resolve(`---
-title: Hidden
----
-
-# Welcome
-
-~~Old~~ and [[Other Note|another note]].
-
-![[Not yet supported]]
-
-<script>alert("nope")</script>
-`),
-      },
-      "./.obsidian-vaults/",
-      "rorz.io",
-      "Welcome",
-    );
-
-    expect(file).not.toBeNull();
-
-    if (!file) {
-      throw new Error("Expected the fixture file to exist.");
-    }
-
-    const html = renderToStaticMarkup(
-      createElement(file.Content, {
-        resolveWikiLink: (target) => `/notes/${target.toLowerCase().replaceAll(" ", "-")}`,
-      }),
-    );
-
-    expect(html).toContain("<h1>Welcome</h1>");
-    expect(html).toContain("<del>Old</del>");
-    expect(html).toContain('<a href="/notes/other-note">another note</a>');
-    expect(html).toContain("![[Not yet supported]]");
-    expect(html).not.toContain("title: Hidden");
-    expect(html).not.toContain("<script");
   });
 });

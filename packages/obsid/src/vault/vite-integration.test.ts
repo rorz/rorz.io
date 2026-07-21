@@ -2,19 +2,19 @@ import { expect, test } from "bun:test";
 import { build, type Plugin } from "vite";
 import { obsid } from "../vite/index.ts";
 
-test("Vite replaces the vault glob in the public renderer entry", async () => {
-  const virtualId = "virtual:obsidian-renderer-test";
+test("Vite replaces the vault glob in the public vault entry", async () => {
+  const virtualId = "virtual:obsidian-vault-test";
   const resolvedId = `\0${virtualId}`;
   const entryPlugin: Plugin = {
     load(id) {
       if (id === resolvedId) {
         return [
-          'import { getVault } from "obsid/renderer";',
+          'import { getVault } from "obsid/vault";',
           'void getVault({ vaultsFolder: "./.obsidian-vaults/", vaults: [{ name: "rorz.io" }] }, "rorz.io").getFile("__missing__");',
         ].join("\n");
       }
     },
-    name: "obsidian-renderer-test",
+    name: "obsidian-vault-test",
     resolveId(id) {
       if (id === virtualId) {
         return resolvedId;
