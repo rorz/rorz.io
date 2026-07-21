@@ -9,6 +9,7 @@ type FileLoaders = Readonly<Record<string, FileLoader>>;
 const leadingSlashPattern = /^\/+/u;
 const markdownExtension = ".md";
 const markdownExtensionPattern = /\.md$/iu;
+const trailingSlashPattern = /\/+$/u;
 
 const normalizePath = (path: string): string | null => {
   const normalized = path
@@ -21,6 +22,25 @@ const normalizePath = (path: string): string | null => {
     normalized.length === 0 ||
     segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")
   ) {
+    return null;
+  }
+
+  return normalized;
+};
+
+const normalizeFolderPath = (path: string): string | null => {
+  const normalized = path
+    .replaceAll("\\", "/")
+    .replace(leadingSlashPattern, "")
+    .replace(trailingSlashPattern, "");
+
+  if (normalized.length === 0) {
+    return "";
+  }
+
+  const segments = normalized.split("/");
+
+  if (segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")) {
     return null;
   }
 
@@ -61,6 +81,22 @@ const getVaultPaths = (
       ];
     })
     .toSorted();
+};
+
+const getFolderPaths = (vaultPaths: readonly string[], folderPath: string): readonly string[] => {
+  let prefix = "";
+
+  if (folderPath) {
+    prefix = `${folderPath}/`;
+  }
+
+  return vaultPaths.filter((path) => {
+    if (!path.startsWith(prefix)) {
+      return false;
+    }
+
+    return !path.slice(prefix.length).includes("/");
+  });
 };
 
 const getFileFromLoaders = async (
@@ -120,10 +156,26 @@ const getVaultFromLoaders = <const Config extends VaultConfig>(
     throw new Error(`Invalid vaults folder: ${config.vaultsFolder}`);
   }
 
+  const paths = getVaultPaths(loaders, vaultRoot, name);
+  const getFile = (path: string) => getFileFromLoaders(loaders, config.vaultsFolder, name, path);
+
   return {
-    getFile: (path) => getFileFromLoaders(loaders, config.vaultsFolder, name, path),
+    getFile,
+    getFolder: async (path) => {
+      const folderPath = normalizeFolderPath(path);
+
+      if (folderPath === null) {
+        return [];
+      }
+
+      const files = await Promise.all(
+        getFolderPaths(paths, folderPath).map((filePath) => getFile(filePath)),
+      );
+
+      return files.filter((file): file is VaultFile => file !== null);
+    },
     name,
-    paths: getVaultPaths(loaders, vaultRoot, name),
+    paths,
   };
 };
 

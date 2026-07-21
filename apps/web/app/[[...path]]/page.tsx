@@ -1,5 +1,6 @@
+import { format } from "date-fns/fp";
 import { ObsidianMarkdown } from "obsid/react";
-import type { VaultLink } from "obsid/vault";
+import type { VaultFile, VaultLink } from "obsid/vault";
 import { getVaultRouteManifest, vault } from "../vault.ts";
 import type { VaultRouteManifest } from "../vault-routing.ts";
 
@@ -9,9 +10,9 @@ interface PageProps {
   }>;
 }
 
-interface ResolvedLinkProps {
+interface LinkListProps {
+  readonly files: readonly VaultFile[];
   readonly getHref: VaultRouteManifest["getHref"];
-  readonly link: VaultLink;
 }
 
 const getUnresolvedHref = (link: VaultLink): string =>
@@ -25,33 +26,62 @@ const getTitle = (sourcePath: string, title: unknown): string => {
   return sourcePath.slice(sourcePath.lastIndexOf("/") + 1);
 };
 
+const getDate = (date: unknown): string => {
+  if (typeof date === "string") {
+    return date;
+  }
+
+  return "NO_DATE";
+};
+
 const getArticleHref = (getHref: VaultRouteManifest["getHref"], link: VaultLink): string => {
   if (!link.resolvedPath) {
     return getUnresolvedHref(link);
   }
 
-  return getHref(link.resolvedPath) ?? getUnresolvedHref(link);
+  return getHref(link.resolvedPath) ?? getUnreesolvedHref(link);
 };
 
-const ResolvedLink = ({ getHref, link }: ResolvedLinkProps) => {
-  if (!link.resolvedPath) {
-    return (
-      <li className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-amber-950">
-        <strong>{link.label}</strong>
-        <span className="ml-2 text-sm">Unresolved</span>
-      </li>
-    );
+const getFolderPath = (sourcePath: string): string => {
+  const separatorIndex = sourcePath.lastIndexOf("/");
+
+  if (separatorIndex === -1) {
+    return "";
   }
 
-  return (
-    <li className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
-      <a className="font-medium text-emerald-950 underline" href={getArticleHref(getHref, link)}>
-        {link.label}
-      </a>
-      <code className="mt-1 block text-xs text-emerald-800">{link.resolvedPath}</code>
-    </li>
-  );
+  return sourcePath.slice(0, separatorIndex);
 };
+
+const LinkList = ({ files, getHref }: LinkListProps) => (
+  <ul className="flex flex-col items-start gap-2 w-full">
+    {files
+      .slice()
+      .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
+      .map((file) => {
+        const href = getHref(file.path);
+
+        if (!href) {
+          throw new Error(`Vault file is missing from the route manifest: ${file.path}.md`);
+        }
+
+        return (
+          <li className="w-full" key={file.path}>
+            <a className="flex justify-between items-center w-full group" href={href}>
+              <span className="group-hover:underline underline-offset-2">
+                {getTitle(file.path, file.frontmatter.title)}
+              </span>
+              <div className="w-full flex-1 border-b -mt-2 border-neutral-100 group-hover:border-neutral-800">
+                <span className="no-underline hover:no-underline">&nbsp;</span>
+              </div>
+              <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 px-2 flex justify-end -mt-1.5">
+                <span>{format("do LLL y", new Date(getDate(file.frontmatter.date)))}</span>
+              </span>
+            </a>
+          </li>
+        );
+      })}
+  </ul>
+);
 
 const dynamicParams = false;
 
@@ -80,37 +110,26 @@ const Page = async ({ params }: PageProps) => {
   const title = getTitle(file.path, file.frontmatter.title);
   const resolveWikiLink = (link: VaultLink) => getArticleHref(manifest.getHref, link);
 
+  const displayAsLinkList = file.frontmatter.display_as === "link-list";
+  let linkListFiles: readonly VaultFile[] = [];
+
+  if (displayAsLinkList) {
+    linkListFiles = (await vault.getFolder(getFolderPath(file.path))).filter(
+      (folderFile) => folderFile.path !== file.path,
+    );
+  }
+
   return (
-    <div className="mx-auto grid min-h-screen max-w-6xl gap-10 p-6 md:grid-cols-[minmax(0,1fr)_22rem]">
-      <article>
-        <p className="font-mono text-xs text-neutral-500">{file.path}.md</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight">{title}</h1>
-        <div className="mt-8 text-lg leading-8 text-neutral-800">
+    <div className="w-full">
+      <article className="flex flex-col size-full gap-8 items-start">
+        {title !== "page" && (
+          <h1 className="w-full text-2xl font-semibold tracking-tight">{title}</h1>
+        )}
+        <div className="flex flex-col items-start gap-4 leading-normal text-neutral-800 w-full">
           <ObsidianMarkdown file={file} resolveWikiLink={resolveWikiLink} />
+          {displayAsLinkList && <LinkList files={linkListFiles} getHref={manifest.getHref} />}
         </div>
       </article>
-
-      <aside className="space-y-8 rounded-3xl bg-neutral-950 p-6 text-neutral-100 md:sticky md:top-8 md:self-start">
-        <section>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-            Frontmatter
-          </h2>
-          <pre className="mt-3 overflow-x-auto text-sm text-neutral-200">
-            {JSON.stringify(file.frontmatter, null, 2)}
-          </pre>
-        </section>
-
-        <section>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400">
-            Article links
-          </h2>
-          <ul className="mt-3 space-y-2 text-neutral-950">
-            {file.links.map((link) => (
-              <ResolvedLink getHref={manifest.getHref} key={link.target} link={link} />
-            ))}
-          </ul>
-        </section>
-      </aside>
     </div>
   );
 };

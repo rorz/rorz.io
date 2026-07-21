@@ -20,6 +20,7 @@ const createVault = (files: readonly VaultFile[]): Vault => {
 
   return {
     getFile: (path) => Promise.resolve(filesByPath.get(path) ?? null),
+    getFolder: () => Promise.resolve([]),
     name: "test",
     paths: files.map((file) => file.path),
   };

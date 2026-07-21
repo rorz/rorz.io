@@ -1,12 +1,16 @@
 {
   "dependencies": {
+    "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
     "obsid": "workspace:*",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "@types/bun": "^1.3.14",
+    "@types/date-fns": "^2.6.3",
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",

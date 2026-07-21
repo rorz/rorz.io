@@ -35,9 +35,11 @@ interface VaultFile {
 
 type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
 type GetFile = (path: string) => Promise<VaultFile | null>;
+type GetFolder = (path: string) => Promise<readonly VaultFile[]>;
 
 interface Vault<Name extends string = string> {
   readonly getFile: GetFile;
+  readonly getFolder: GetFolder;
   readonly name: Name;
   readonly paths: readonly string[];
 }
@@ -49,6 +51,7 @@ type GetVault = <const Config extends VaultConfig>(
 
 export type {
   GetFile,
+  GetFolder,
   GetVault,
   Vault,
   VaultConfig,

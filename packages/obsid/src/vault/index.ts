@@ -2,6 +2,7 @@
 export { getVault } from "./get-vault.ts";
 export type {
   GetFile,
+  GetFolder,
   GetVault,
   Vault,
   VaultConfig,

@@ -2,7 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["bun", "vinext/types"]
   },
   "exclude": ["node_modules", "dist", ".vinext"],
   "extends": "../../tsconfig.json",

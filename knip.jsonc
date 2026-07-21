@@ -32,6 +32,7 @@
         "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
         "app/styles.css"
       ],
+      "ignoreDependencies": ["next"],
       "project": ["app/**/*.{ts,tsx}"]
     },
     "packages/obsid": {

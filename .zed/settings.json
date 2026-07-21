@@ -12,7 +12,7 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome"]
+      "language_servers": ["biome", "tailwindcss-intellisense-css"]
     },
     "HTML": {
       "code_actions_on_format": {
@@ -37,7 +37,13 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+      "language_servers": [
+        "biome",
+        "vtsls",
+        "tailwindcss-language-server",
+        "!typescript-language-server",
+        "!eslint"
+      ]
     },
     "JSON": {
       "code_actions_on_format": {
@@ -74,7 +80,13 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+      "language_servers": [
+        "biome",
+        "vtsls",
+        "tailwindcss-language-server",
+        "!typescript-language-server",
+        "!eslint"
+      ]
     },
 
     "TypeScript": {
@@ -88,7 +100,13 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
+      "language_servers": [
+        "biome",
+        "vtsls",
+        "tailwindcss-language-server",
+        "!typescript-language-server",
+        "!eslint"
+      ]
     }
   },
   "line_ending": "prefer_lf",
