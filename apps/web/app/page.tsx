@@ -1,7 +1,9 @@
-import { getFile } from "obsid/renderer";
+import { getVault } from "obsid/renderer";
+import obsidConfig from "../obsid.config.ts";
 
 const Page = async () => {
-  const file = await getFile("rorz.io", "Welcome");
+  const vault = getVault(obsidConfig, "rorz.io");
+  const file = await vault.getFile("Welcome");
   return (
     <main>
       <p>Rory McMeekin</p>

@@ -20,7 +20,8 @@
   "exports": {
     "./config": "./src/config/index.ts",
     "./renderer": "./src/renderer/index.ts",
-    "./sync": "./src/sync/index.ts"
+    "./sync": "./src/sync/index.ts",
+    "./vite": "./src/vite/index.ts"
   },
   "name": "obsid",
   "peerDependencies": {

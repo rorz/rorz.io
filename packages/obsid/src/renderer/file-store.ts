@@ -1,12 +1,27 @@
 import { createObsidianFile, type ObsidianFile } from "./markdown.tsx";
+import { normalizeVaultsFolder } from "./vault-path.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
-type GetFile = (vaultName: string, path: string) => Promise<ObsidianFile | null>;
+interface ObsidRendererConfig {
+  readonly vaults: readonly {
+    readonly name: string;
+  }[];
+  readonly vaultsFolder: string;
+}
+type VaultName<Config extends ObsidRendererConfig> = Config["vaults"][number]["name"];
+type GetFile = (path: string) => Promise<ObsidianFile | null>;
+interface Vault<Name extends string = string> {
+  readonly getFile: GetFile;
+  readonly name: Name;
+}
+type GetVault = <const Config extends ObsidRendererConfig>(
+  config: Config,
+  name: NoInfer<VaultName<Config>>,
+) => Vault<VaultName<Config>>;
 
 const leadingSlashPattern = /^\/+/u;
 const markdownExtensionPattern = /\.md$/iu;
-const vaultRoot = "/.obsidian-vaults";
 
 const normalizePath = (path: string): string | null => {
   const normalized = path
@@ -41,13 +56,15 @@ const normalizeVaultName = (vaultName: string): string | null => {
 
 const getFileFromLoaders = async (
   loaders: FileLoaders,
+  vaultsFolder: string,
   vaultName: string,
   path: string,
 ): Promise<ObsidianFile | null> => {
+  const vaultRoot = normalizeVaultsFolder(vaultsFolder);
   const normalizedVaultName = normalizeVaultName(vaultName);
   const normalizedPath = normalizePath(path);
 
-  if (!(normalizedVaultName && normalizedPath)) {
+  if (!(vaultRoot && normalizedVaultName && normalizedPath)) {
     return null;
   }
 
@@ -60,5 +77,20 @@ const getFileFromLoaders = async (
   return createObsidianFile(normalizedPath, await load());
 };
 
-export type { GetFile };
-export { getFileFromLoaders };
+const getVaultFromLoaders = <const Config extends ObsidRendererConfig>(
+  loaders: FileLoaders,
+  config: Config,
+  name: NoInfer<VaultName<Config>>,
+): Vault<VaultName<Config>> => {
+  if (!config.vaults.some((vault) => vault.name === name)) {
+    throw new Error(`Unknown vault: ${name}`);
+  }
+
+  return {
+    getFile: (path) => getFileFromLoaders(loaders, config.vaultsFolder, name, path),
+    name,
+  };
+};
+
+export type { GetFile, GetVault, ObsidRendererConfig, Vault, VaultName };
+export { getFileFromLoaders, getVaultFromLoaders };

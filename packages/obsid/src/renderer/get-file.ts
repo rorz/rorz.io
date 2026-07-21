@@ -1,10 +1,8 @@
-import { type GetFile, getFileFromLoaders } from "./file-store.ts";
+/// <reference path="./vault-files.d.ts" />
 
-const vaultFiles = import.meta.glob<string>("/.obsidian-vaults/**/*.md", {
-  import: "default",
-  query: "?raw",
-});
+import { vaultFiles } from "virtual:obsid/vault-files";
+import { type GetVault, getVaultFromLoaders } from "./file-store.ts";
 
-const getFile: GetFile = (vaultName, path) => getFileFromLoaders(vaultFiles, vaultName, path);
+const getVault: GetVault = (config, name) => getVaultFromLoaders(vaultFiles, config, name);
 
-export { getFile };
+export { getVault };

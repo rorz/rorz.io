@@ -1,11 +1,13 @@
-import { env, resolveSync } from "bun";
+import { resolve } from "node:path";
+import process from "node:process";
+import { pathToFileURL } from "node:url";
 import { z } from "zod";
 
+const DEFAULT_DEVICE_NAME = `obsid [env == ${process.env.NODE_ENV ?? "NONE"}]`;
+const DEFAULT_VAULTS_FOLDER = "./.obsidian-vaults/";
+
 const ObsidConfigSchema = z.object({
-  deviceName: z
-    .string()
-    .optional()
-    .default(`obsid [env == ${env.NODE_ENV ?? "NONE"}]`),
+  deviceName: z.string().optional().default(DEFAULT_DEVICE_NAME),
   login: z.object({
     email: z.email(),
     password: z.string().min(1),
@@ -16,26 +18,30 @@ const ObsidConfigSchema = z.object({
       name: z.string().min(1),
     }),
   ),
-  vaultsFolder: z.string().optional().default("./.obsidian-vaults/"),
+  vaultsFolder: z.string().optional().default(DEFAULT_VAULTS_FOLDER),
 });
 
 type ObsidConfig = z.output<typeof ObsidConfigSchema>;
 type ObsidConfigInput = z.input<typeof ObsidConfigSchema>;
-
-const defineConfig = (config: ObsidConfigInput): ObsidConfig => ObsidConfigSchema.parse(config);
-
-const resolveConfigModule = (configPath: string): string => {
-  if (configPath.startsWith("/")) {
-    return configPath;
-  }
-
-  let specifier = configPath;
-  if (!specifier.startsWith(".")) {
-    specifier = `./${specifier}`;
-  }
-
-  return resolveSync(specifier, ".");
+type ObsidVault = ObsidConfig["vaults"][number];
+type DefinedObsidConfig<Input extends ObsidConfigInput> = Omit<ObsidConfig, "vaults"> & {
+  vaults: Array<
+    Omit<ObsidVault, "name"> & {
+      name: Input["vaults"][number]["name"];
+    }
+  >;
 };
+
+const defineConfig = <const Input extends ObsidConfigInput>(
+  config: Input,
+): DefinedObsidConfig<Input> =>
+  ({
+    ...config,
+    deviceName: config.deviceName ?? DEFAULT_DEVICE_NAME,
+    vaultsFolder: config.vaultsFolder ?? DEFAULT_VAULTS_FOLDER,
+  }) as DefinedObsidConfig<Input>;
+
+const resolveConfigModule = (configPath: string): string => pathToFileURL(resolve(configPath)).href;
 
 const loadConfig = async (configPath: string): Promise<ObsidConfig> => {
   if (!configPath.endsWith(".ts")) {
@@ -49,5 +55,5 @@ const loadConfig = async (configPath: string): Promise<ObsidConfig> => {
   return ObsidConfigSchema.parse(configModule.default);
 };
 
-export type { ObsidConfig, ObsidConfigInput };
+export type { DefinedObsidConfig, ObsidConfig, ObsidConfigInput };
 export { defineConfig, loadConfig };

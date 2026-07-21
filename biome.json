@@ -131,11 +131,18 @@
       }
     },
     {
-      "includes": ["packages/obsid/src/sync/**", "packages/scripts/src/test-sync.ts"],
+      "includes": [
+        "packages/obsid/src/config/**",
+        "packages/obsid/src/sync/**",
+        "packages/scripts/src/test-sync.ts"
+      ],
       "linter": {
         "rules": {
           "correctness": {
             "noNodejsModules": "off"
+          },
+          "style": {
+            "noProcessEnv": "off"
           }
         }
       }

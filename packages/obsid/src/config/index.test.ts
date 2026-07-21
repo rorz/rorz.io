@@ -26,6 +26,29 @@ afterEach(() => {
   }
 });
 
+test("defineConfig preserves configured vault names as literals", () => {
+  const config = defineConfig({
+    login: {
+      email: "test@example.com",
+      password: "test-password",
+    },
+    vaults: [
+      {
+        name: "primary",
+      },
+      {
+        name: "archive",
+      },
+    ],
+  });
+  const vaultNames: ("archive" | "primary")[] = config.vaults.map((vault) => vault.name);
+
+  expect(vaultNames).toEqual([
+    "primary",
+    "archive",
+  ]);
+});
+
 describe("obsid config", () => {
   test("applies defaults to typed config", () => {
     const config = defineConfig({
@@ -37,18 +60,6 @@ describe("obsid config", () => {
     });
 
     expect(config.vaultsFolder).toBe("./.obsidian-vaults/");
-  });
-
-  test("rejects missing environment-backed values", () => {
-    expect(() =>
-      defineConfig({
-        login: {
-          email: "",
-          password: "",
-        },
-        vaults: [],
-      }),
-    ).toThrow();
   });
 
   test("rejects JSON config files", async () => {

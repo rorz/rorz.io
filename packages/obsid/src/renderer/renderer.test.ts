@@ -1,7 +1,39 @@
 import { describe, expect, test } from "bun:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { getFileFromLoaders } from "./file-store.ts";
+import { getFileFromLoaders, getVaultFromLoaders, type ObsidRendererConfig } from "./file-store.ts";
+
+describe("getVault", () => {
+  test("binds a configured vault and its custom folder", async () => {
+    const config = {
+      vaults: [
+        {
+          name: "notes",
+        },
+      ],
+      vaultsFolder: "./content/vaults/",
+    } as const;
+    const vault = getVaultFromLoaders(
+      {
+        "/content/vaults/notes/Welcome.md": () => Promise.resolve("# Welcome"),
+      },
+      config,
+      "notes",
+    );
+
+    expect(vault.name).toBe("notes");
+    expect((await vault.getFile("Welcome"))?.source).toBe("# Welcome");
+  });
+
+  test("rejects a vault that is not configured", () => {
+    const config: ObsidRendererConfig = {
+      vaults: [],
+      vaultsFolder: "./.obsidian-vaults/",
+    };
+
+    expect(() => getVaultFromLoaders({}, config, "missing")).toThrow("Unknown vault: missing");
+  });
+});
 
 describe("getFile", () => {
   test("loads one exact Markdown file lazily", async () => {
@@ -13,6 +45,7 @@ describe("getFile", () => {
           return Promise.resolve("# Welcome");
         },
       },
+      "./.obsidian-vaults/",
       "rorz.io",
       "/Welcome.md",
     );
@@ -23,10 +56,13 @@ describe("getFile", () => {
   });
 
   test("returns null for missing files and unsafe vault or file paths", async () => {
-    expect(await getFileFromLoaders({}, "rorz.io", "Missing")).toBeNull();
-    expect(await getFileFromLoaders({}, "../rorz.io", "Welcome")).toBeNull();
-    expect(await getFileFromLoaders({}, "rorz.io", "../Welcome")).toBeNull();
-    expect(await getFileFromLoaders({}, "rorz.io", "folder//Welcome")).toBeNull();
+    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "Missing")).toBeNull();
+    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "../rorz.io", "Welcome")).toBeNull();
+    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "../Welcome")).toBeNull();
+    expect(
+      await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "folder//Welcome"),
+    ).toBeNull();
+    expect(await getFileFromLoaders({}, "../vaults", "rorz.io", "Welcome")).toBeNull();
   });
 
   test("renders GFM and Obsidian wikilinks without frontmatter or raw HTML", async () => {
@@ -46,6 +82,7 @@ title: Hidden
 <script>alert("nope")</script>
 `),
       },
+      "./.obsidian-vaults/",
       "rorz.io",
       "Welcome",
     );
