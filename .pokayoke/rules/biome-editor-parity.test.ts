@@ -13,44 +13,84 @@ const settings = {
   format_on_save: "on",
   languages: {
     CSS: {
-      code_actions_on_format: { "source.fixAll.biome": true },
+      code_actions_on_format: {
+        "source.fixAll.biome": true,
+      },
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     HTML: {
-      code_actions_on_format: { "source.fixAll.biome": true },
+      code_actions_on_format: {
+        "source.fixAll.biome": true,
+      },
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     JavaScript: {
       code_actions_on_format: codeActions,
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     JSON: {
-      code_actions_on_format: { "source.fixAll.biome": true },
+      code_actions_on_format: {
+        "source.fixAll.biome": true,
+      },
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     JSONC: {
-      code_actions_on_format: { "source.fixAll.biome": true },
+      code_actions_on_format: {
+        "source.fixAll.biome": true,
+      },
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     JSX: {
       code_actions_on_format: codeActions,
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     TSX: {
       code_actions_on_format: codeActions,
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
     TypeScript: {
       code_actions_on_format: codeActions,
       format_on_save: "on",
-      formatter: { language_server: { name: "biome" } },
+      formatter: {
+        language_server: {
+          name: "biome",
+        },
+      },
     },
   },
   line_ending: "prefer_lf",
@@ -74,9 +114,13 @@ const createContext = (
 ): RuleContext => ({
   files: async () => [],
   fix: false,
-  glob: async () => [".zed/settings.json"],
+  glob: async () => [
+    ".zed/settings.json",
+  ],
   options: undefined,
-  packageJson: async () => ({ scripts: packageScripts }),
+  packageJson: async () => ({
+    scripts: packageScripts,
+  }),
   parseTypescript: () => Promise.reject(new Error("parseTypescript is not used by this rule.")),
   readFile: async () => JSON.stringify(zedSettings),
   report: () => undefined,
@@ -98,7 +142,11 @@ describe("repo/biome-editor-parity", () => {
         ...settings.languages,
         TypeScript: {
           ...settings.languages.TypeScript,
-          formatter: { language_server: { name: "vtsls" } },
+          formatter: {
+            language_server: {
+              name: "vtsls",
+            },
+          },
         },
       },
     };
@@ -110,6 +158,9 @@ describe("repo/biome-editor-parity", () => {
     );
 
     expect(result.findings).toHaveLength(2);
-    expect(result.findings.map(({ file }) => file)).toEqual([".zed/settings.json", "package.json"]);
+    expect(result.findings.map(({ file }) => file)).toEqual([
+      ".zed/settings.json",
+      "package.json",
+    ]);
   });
 });

@@ -31,8 +31,19 @@ interface ZedSettings {
 
 const ruleId = "repo/biome-editor-parity";
 const settingsPath = ".zed/settings.json";
-const javascriptLanguages = ["JavaScript", "JSX", "TypeScript", "TSX"] as const;
-const biomeLanguages = [...javascriptLanguages, "JSON", "JSONC", "CSS", "HTML"] as const;
+const javascriptLanguages = [
+  "JavaScript",
+  "JSX",
+  "TypeScript",
+  "TSX",
+] as const;
+const biomeLanguages = [
+  ...javascriptLanguages,
+  "JSON",
+  "JSONC",
+  "CSS",
+  "HTML",
+] as const;
 
 const finding = (message: string, advice: string, file = settingsPath): Finding => ({
   advice,
@@ -160,11 +171,17 @@ const biomeEditorParity: Rule = {
     kind: "project",
   },
   async run(context) {
-    const files = new Set(await context.glob([settingsPath]));
+    const files = new Set(
+      await context.glob([
+        settingsPath,
+      ]),
+    );
 
     if (!files.has(settingsPath)) {
       return {
-        findings: [finding("Zed's Biome settings are missing.", `Restore ${settingsPath}.`)],
+        findings: [
+          finding("Zed's Biome settings are missing.", `Restore ${settingsPath}.`),
+        ],
       };
     }
 

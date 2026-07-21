@@ -66,7 +66,10 @@ const requiredRootDevelopmentDependencies = [
   "typescript",
 ] as const;
 
-const requiredWebRuntimeDependencies = ["react", "react-dom"] as const;
+const requiredWebRuntimeDependencies = [
+  "react",
+  "react-dom",
+] as const;
 
 const requiredWebDevelopmentDependencies = [
   "@tailwindcss/vite",
@@ -111,7 +114,10 @@ const createZedTasks = (scripts: Readonly<Record<string, string>>): readonly Zed
 
       return {
         allow_concurrent_runs: false,
-        args: ["run", script],
+        args: [
+          "run",
+          script,
+        ],
         command: "bun",
         cwd: "$ZED_WORKTREE_ROOT",
         hide,
@@ -141,7 +147,10 @@ const validateRootPackage = (packageJson: PackageJson): Finding[] => {
     );
   }
 
-  for (const workspace of ["apps/*", "packages/*"]) {
+  for (const workspace of [
+    "apps/*",
+    "packages/*",
+  ]) {
     if (!packageJson.workspaces?.includes(workspace)) {
       findings.push(
         finding(
@@ -240,7 +249,9 @@ const validateZedTasks = async (
   }
 
   if (context.fix) {
-    await mkdir(join(context.root, ".zed"), { recursive: true });
+    await mkdir(join(context.root, ".zed"), {
+      recursive: true,
+    });
     await writeFile(join(context.root, ".zed/tasks.json"), expectedTasks, "utf8");
     return [];
   }
@@ -266,7 +277,12 @@ const toolingContract: Rule = {
     const webPackageJson = (await context.packageJson("apps/web")) as PackageJson;
     const rootScripts = rootPackageJson.scripts ?? {};
     const webScripts = webPackageJson.scripts ?? {};
-    const files = new Set(await context.glob([...requiredFiles, ".zed/tasks.json"]));
+    const files = new Set(
+      await context.glob([
+        ...requiredFiles,
+        ".zed/tasks.json",
+      ]),
+    );
     const findings = [
       ...validateRootPackage(rootPackageJson),
       ...validateScripts(rootScripts, requiredScripts, "package.json"),
@@ -293,7 +309,9 @@ const toolingContract: Rule = {
       ...(await validateZedTasks(context, rootScripts, files)),
     ];
 
-    return { findings };
+    return {
+      findings,
+    };
   },
 };
 

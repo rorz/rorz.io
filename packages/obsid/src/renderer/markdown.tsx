@@ -48,7 +48,10 @@ const splitWikiLinks = (
     const body = matchedBody ?? "";
 
     if (index > cursor) {
-      nodes.push({ type: "text", value: value.slice(cursor, index) });
+      nodes.push({
+        type: "text",
+        value: value.slice(cursor, index),
+      });
     }
 
     const separator = body.indexOf("|");
@@ -62,23 +65,39 @@ const splitWikiLinks = (
 
     if (target) {
       nodes.push({
-        children: [{ type: "text", value: label }],
+        children: [
+          {
+            type: "text",
+            value: label,
+          },
+        ],
         type: "link",
         url: resolveWikiLink(target),
       });
     } else {
-      nodes.push({ type: "text", value: match[0] });
+      nodes.push({
+        type: "text",
+        value: match[0],
+      });
     }
 
     cursor = index + match[0].length;
   }
 
   if (cursor === 0) {
-    return [{ type: "text", value }];
+    return [
+      {
+        type: "text",
+        value,
+      },
+    ];
   }
 
   if (cursor < value.length) {
-    nodes.push({ type: "text", value: value.slice(cursor) });
+    nodes.push({
+      type: "text",
+      value: value.slice(cursor),
+    });
   }
 
   return nodes;

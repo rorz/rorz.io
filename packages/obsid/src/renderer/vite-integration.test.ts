@@ -29,7 +29,9 @@ test("Vite replaces the vault glob in the public renderer entry", async () => {
     },
     configFile: false,
     logLevel: "silent",
-    plugins: [entryPlugin],
+    plugins: [
+      entryPlugin,
+    ],
     root: new URL("../../../../apps/web/", import.meta.url).pathname,
   });
 
@@ -38,7 +40,11 @@ test("Vite replaces the vault glob in the public renderer entry", async () => {
   }
 
   // biome-ignore lint/style/noTernary: Normalizes Vite's single- and multi-build result shapes.
-  const builds = Array.isArray(result) ? result : [result];
+  const builds = Array.isArray(result)
+    ? result
+    : [
+        result,
+      ];
   const bundledCode = builds
     .flatMap((buildResult) => buildResult.output)
     .filter((output) => output.type === "chunk")
