@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import { resolve } from "node:path";
 import type { ObsidConfig } from "../config/index.ts";
 import { logIn, syncConfig, syncSetup, syncVault } from "./obsidian-headless.ts";
 

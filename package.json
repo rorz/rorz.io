@@ -32,7 +32,7 @@
     "pokayoke:fix": "pokayoke check --fix",
     "start": "bun run --filter @rorz/web start",
     "test": "bun test apps packages ./.pokayoke/rules/*.test.ts",
-    "typecheck": "tsc --noEmit && bun run --filter obsidian-oxide typecheck && bun run --filter @rorz/web typecheck",
+    "typecheck": "tsc --noEmit && bun run --filter obsid typecheck && bun run --filter @rorz/web typecheck",
     "verify": "bun run check && bun run build"
   },
   "type": "module",

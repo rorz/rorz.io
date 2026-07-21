@@ -1,47 +1,32 @@
 {
-  "format_on_save": "on",
   "ensure_final_newline_on_save": true,
-  "line_ending": "prefer_lf",
-  "lsp": {
-    "biome": {
-      "settings": {
-        "require_config_file": true
-      }
-    }
-  },
-  "tasks": {
-    "enabled": true,
-    "prefer_lsp": false
-  },
+  "format_on_save": "on",
   "languages": {
+    "CSS": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "language_servers": ["biome"]
+    },
+    "HTML": {
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "language_servers": ["biome", "..."]
+    },
     "JavaScript": {
-      "code_actions_on_format": {
-        "source.fixAll.biome": true,
-        "source.organizeImports.biome": true
-      },
-      "format_on_save": "on",
-      "formatter": {
-        "language_server": {
-          "name": "biome"
-        }
-      },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
-    },
-
-    "TypeScript": {
-      "code_actions_on_format": {
-        "source.fixAll.biome": true,
-        "source.organizeImports.biome": true
-      },
-      "format_on_save": "on",
-      "formatter": {
-        "language_server": {
-          "name": "biome"
-        }
-      },
-      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
-    },
-    "TSX": {
       "code_actions_on_format": {
         "source.fixAll.biome": true,
         "source.organizeImports.biome": true
@@ -78,9 +63,10 @@
       },
       "language_servers": ["biome", "json-language-server"]
     },
-    "CSS": {
+    "TSX": {
       "code_actions_on_format": {
-        "source.fixAll.biome": true
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
       },
       "format_on_save": "on",
       "formatter": {
@@ -88,11 +74,13 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome"]
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     },
-    "HTML": {
+
+    "TypeScript": {
       "code_actions_on_format": {
-        "source.fixAll.biome": true
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
       },
       "format_on_save": "on",
       "formatter": {
@@ -100,7 +88,19 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "..."]
+      "language_servers": ["biome", "vtsls", "!typescript-language-server", "!eslint"]
     }
+  },
+  "line_ending": "prefer_lf",
+  "lsp": {
+    "biome": {
+      "settings": {
+        "require_config_file": true
+      }
+    }
+  },
+  "tasks": {
+    "enabled": true,
+    "prefer_lsp": false
   }
 }

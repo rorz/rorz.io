@@ -2,7 +2,8 @@ import { describe, expect, test } from "bun:test";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import type { RuleContext } from "pokayoke";
-import { renderZedTasks, requiredScripts, toolingContract } from "./tooling-contract.rule.ts";
+import { requiredScripts, toolingContract } from "./tooling-contract.rule.ts";
+import { renderZedTasks } from "./zed-tasks.ts";
 
 const rootPackageJson = {
   devDependencies: {
@@ -81,8 +82,8 @@ const createContext = (root: string, fix: boolean): RuleContext => ({
       root: "apps/web",
     },
     {
-      name: "obsidian-oxide",
-      root: "packages/obsidian",
+      name: "obsid",
+      root: "packages/obsid",
     },
   ],
 });

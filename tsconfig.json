@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "allowJs": false,
     "allowImportingTsExtensions": true,
+    "allowJs": false,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -23,6 +23,6 @@
     "target": "ES2023",
     "types": ["bun"]
   },
-  "include": [".pokayoke/**/*.ts"],
-  "exclude": ["node_modules", "dist", ".vinext"]
+  "exclude": ["node_modules", "dist", ".vinext"],
+  "include": [".pokayoke/**/*.ts"]
 }

@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "incremental": false,
     "jsx": "react-jsx",
     "types": ["bun", "vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

@@ -1,13 +1,11 @@
+import { resolve } from "node:path";
 import { loadConfig } from "obsid/config";
 import { sync } from "obsid/sync";
-import path from "path";
 
 const main = async () => {
-  console.log("RUNNING SYNC");
-
-  const config = await loadConfig(path.resolve("../../private/example-config.json"));
+  const config = await loadConfig(resolve(import.meta.dir, "../../../apps/web/obsid.config.ts"));
 
   await sync(config);
 };
 
-void main();
+await main();

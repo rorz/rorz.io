@@ -1,23 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
-  "workspaces": {
-    ".": {
-      "entry": [".pokayoke/rules/**/*.rule.ts", ".pokayoke/rules/**/*.test.ts"],
-      "project": [".pokayoke/**/*.ts"],
-      "ignoreDependencies": ["obsidian-headless"]
-    },
-    "apps/web": {
-      "entry": [
-        "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
-        "app/styles.css"
-      ],
-      "project": ["app/**/*.{ts,tsx}"],
-      "ignoreDependencies": ["obsidian-oxide"]
-    },
-    "packages/obsidian": {
-      "project": ["src/**/*.{ts,tsx}"]
-    }
-  },
   "include": [
     "files",
     "dependencies",
@@ -38,5 +20,26 @@
   ],
   "includeEntryExports": false,
   "treatConfigHintsAsErrors": true,
-  "treatTagHintsAsErrors": true
+  "treatTagHintsAsErrors": true,
+  "workspaces": {
+    ".": {
+      "entry": [".pokayoke/rules/**/*.rule.ts", ".pokayoke/rules/**/*.test.ts"],
+      "ignoreDependencies": ["obsidian-headless"],
+      "project": [".pokayoke/**/*.ts"]
+    },
+    "apps/web": {
+      "entry": [
+        "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
+        "app/styles.css"
+      ],
+      "project": ["app/**/*.{ts,tsx}"]
+    },
+    "packages/obsid": {
+      "project": ["src/**/*.{ts,tsx}"]
+    },
+    "packages/scripts": {
+      "entry": ["src/test-sync.ts"],
+      "project": ["src/**/*.ts"]
+    }
+  }
 }

@@ -8,7 +8,7 @@ test("Vite replaces the vault glob in the public renderer entry", async () => {
     load(id) {
       if (id === resolvedId) {
         return [
-          'import { getFile } from "obsidian-oxide/renderer";',
+          'import { getFile } from "obsid/renderer";',
           'void getFile("__missing__", "__missing__");',
         ].join("\n");
       }

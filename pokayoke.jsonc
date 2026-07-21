@@ -1,7 +1,6 @@
 {
   "$schema": "https://pokayoke.codes/schema.json",
   "extends": ["pokayoke/recommended", "pokayoke/typescript/recommended"],
-  "localRules": [".pokayoke/rules/**/*.rule.ts"],
   "files": [
     ".pokayoke/rules/**/*.ts",
     ".zed/*.json",
@@ -19,15 +18,16 @@
     "tsconfig.json"
   ],
   "ignores": ["**/node_modules/**", "**/dist/**", "**/.vinext/**", "**/*.d.ts"],
-  "suppressions": {
-    "directive": "pokayoke-ignore",
-    "requireReason": true,
-    "reportUnused": "error"
-  },
+  "localRules": [".pokayoke/rules/**/*.rule.ts"],
   "rules": {
     "package/no-npx-in-scripts": "error",
     "repo/tooling-contract": "error",
     "structure/max-file-lines": ["error", { "max": 300 }],
     "typescript/enforce-arrow-function": "error"
+  },
+  "suppressions": {
+    "directive": "pokayoke-ignore",
+    "reportUnused": "error",
+    "requireReason": true
   }
 }

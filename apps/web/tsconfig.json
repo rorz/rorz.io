@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "vite.config.ts", "vite-env.d.ts"],
-  "exclude": ["node_modules", "dist", ".vinext"]
+  "exclude": ["node_modules", "dist", ".vinext"],
+  "extends": "../../tsconfig.json",
+  "include": ["app/**/*.ts", "app/**/*.tsx", "obsid.config.ts", "vite.config.ts", "vite-env.d.ts"]
 }
