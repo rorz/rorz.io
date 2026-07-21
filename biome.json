@@ -90,6 +90,9 @@
       "includes": ["apps/web/app/**", "apps/web/vite.config.ts"],
       "linter": {
         "rules": {
+          "performance": {
+            "useSolidForComponent": "off"
+          },
           "style": {
             "noDefaultExport": "off"
           }

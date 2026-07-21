@@ -1,5 +1,5 @@
 import type { Plugin } from "vite";
-import type { VaultConfig } from "../vault/file-store.ts";
+import type { VaultConfig } from "../vault/types.ts";
 import { normalizeVaultsFolder } from "../vault/vault-path.ts";
 
 const virtualModuleId = "virtual:obsid/vault-files";

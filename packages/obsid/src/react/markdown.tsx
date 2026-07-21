@@ -1,6 +1,7 @@
 import Markdown from "react-markdown";
-import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import type { VaultLink } from "../vault/types.ts";
+import { findWikiLinks } from "../vault/wiki-link.ts";
 import type { ObsidianMarkdownProps, ResolveWikiLink } from "./types.ts";
 
 interface MarkdownNode {
@@ -10,64 +11,40 @@ interface MarkdownNode {
   value?: string;
 }
 
-const defaultResolveWikiLink: ResolveWikiLink = (target) => target;
-
-const removeFrontmatter = () => (tree: MarkdownNode) => {
-  if (!tree.children) {
-    return;
-  }
-
-  tree.children = tree.children.filter((node) => node.type !== "yaml" && node.type !== "toml");
-};
+const defaultResolveWikiLink: ResolveWikiLink = (link) => link.resolvedPath ?? link.target;
 
 const splitWikiLinks = (
   value: string,
+  links: readonly VaultLink[],
   resolveWikiLink: ResolveWikiLink,
 ): readonly MarkdownNode[] => {
   const nodes: MarkdownNode[] = [];
-  const pattern = /(?<!!)\[\[([^\]\n]+)\]\]/gu;
   let cursor = 0;
 
-  for (const match of value.matchAll(pattern)) {
-    const { index } = match;
-    const [, matchedBody] = match;
-    const body = matchedBody ?? "";
-
-    if (index > cursor) {
+  for (const match of findWikiLinks(value)) {
+    if (match.index > cursor) {
       nodes.push({
         type: "text",
-        value: value.slice(cursor, index),
+        value: value.slice(cursor, match.index),
       });
     }
 
-    const separator = body.indexOf("|");
-    let target = body.trim();
-    let label = target;
+    const link = links.find((candidate) => candidate.target === match.target) ?? {
+      resolvedPath: null,
+      target: match.target,
+    };
+    nodes.push({
+      children: [
+        {
+          type: "text",
+          value: match.label,
+        },
+      ],
+      type: "link",
+      url: resolveWikiLink(link),
+    });
 
-    if (separator !== -1) {
-      target = body.slice(0, separator).trim();
-      label = body.slice(separator + 1).trim() || target;
-    }
-
-    if (target) {
-      nodes.push({
-        children: [
-          {
-            type: "text",
-            value: label,
-          },
-        ],
-        type: "link",
-        url: resolveWikiLink(target),
-      });
-    } else {
-      nodes.push({
-        type: "text",
-        value: match[0],
-      });
-    }
-
-    cursor = index + match[0].length;
+    cursor = match.index + match.raw.length;
   }
 
   if (cursor === 0) {
@@ -91,6 +68,7 @@ const splitWikiLinks = (
 
 const transformWikiLinks = (
   node: MarkdownNode,
+  links: readonly VaultLink[],
   resolveWikiLink: ResolveWikiLink,
   insideLink = false,
 ) => {
@@ -102,10 +80,10 @@ const transformWikiLinks = (
 
   for (const child of node.children) {
     if (child.type === "text" && child.value !== undefined && !insideLink) {
-      children.push(...splitWikiLinks(child.value, resolveWikiLink));
+      children.push(...splitWikiLinks(child.value, links, resolveWikiLink));
     } else {
       const childIsLink = child.type === "link" || child.type === "linkReference";
-      transformWikiLinks(child, resolveWikiLink, insideLink || childIsLink);
+      transformWikiLinks(child, links, resolveWikiLink, insideLink || childIsLink);
       children.push(child);
     }
   }
@@ -113,9 +91,10 @@ const transformWikiLinks = (
   node.children = children;
 };
 
-const createWikiLinkPlugin = (resolveWikiLink: ResolveWikiLink) => () => (tree: MarkdownNode) => {
-  transformWikiLinks(tree, resolveWikiLink);
-};
+const createWikiLinkPlugin =
+  (links: readonly VaultLink[], resolveWikiLink: ResolveWikiLink) => () => (tree: MarkdownNode) => {
+    transformWikiLinks(tree, links, resolveWikiLink);
+  };
 
 const ObsidianMarkdown = ({
   components,
@@ -125,14 +104,12 @@ const ObsidianMarkdown = ({
   <Markdown
     components={components}
     remarkPlugins={[
-      remarkFrontmatter,
-      removeFrontmatter,
       remarkGfm,
-      createWikiLinkPlugin(resolveWikiLink),
+      createWikiLinkPlugin(file.links, resolveWikiLink),
     ]}
     skipHtml={true}
   >
-    {file.source}
+    {file.body}
   </Markdown>
 );
 

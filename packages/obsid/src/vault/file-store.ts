@@ -1,34 +1,13 @@
+import { parseVaultSource } from "./frontmatter.ts";
+import type { Vault, VaultConfig, VaultFile, VaultName } from "./types.ts";
 import { normalizeVaultsFolder } from "./vault-path.ts";
+import { createVaultLinks } from "./wiki-link.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
 
-interface VaultConfig {
-  readonly vaults: readonly {
-    readonly name: string;
-  }[];
-  readonly vaultsFolder: string;
-}
-
-interface VaultFile {
-  readonly path: string;
-  readonly source: string;
-}
-
-type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
-type GetFile = (path: string) => Promise<VaultFile | null>;
-
-interface Vault<Name extends string = string> {
-  readonly getFile: GetFile;
-  readonly name: Name;
-}
-
-type GetVault = <const Config extends VaultConfig>(
-  config: Config,
-  name: NoInfer<VaultName<Config>>,
-) => Vault<VaultName<Config>>;
-
 const leadingSlashPattern = /^\/+/u;
+const markdownExtension = ".md";
 const markdownExtensionPattern = /\.md$/iu;
 
 const normalizePath = (path: string): string | null => {
@@ -62,6 +41,24 @@ const normalizeVaultName = (vaultName: string): string | null => {
   return vaultName;
 };
 
+const getVaultPaths = (
+  loaders: FileLoaders,
+  vaultRoot: string,
+  vaultName: string,
+): readonly string[] => {
+  const prefix = `${vaultRoot}/${vaultName}/`;
+
+  return Object.keys(loaders).flatMap((loaderPath) => {
+    if (!(loaderPath.startsWith(prefix) && loaderPath.toLowerCase().endsWith(markdownExtension))) {
+      return [];
+    }
+
+    return [
+      loaderPath.slice(prefix.length, -markdownExtension.length),
+    ];
+  });
+};
+
 const getFileFromLoaders = async (
   loaders: FileLoaders,
   vaultsFolder: string,
@@ -82,9 +79,21 @@ const getFileFromLoaders = async (
     return null;
   }
 
+  const source = await load();
+  const { body, frontmatter } = parseVaultSource(source, normalizedPath);
+  const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
+
   return {
+    body,
+    frontmatter,
+    links: createVaultLinks({
+      body,
+      currentPath: normalizedPath,
+      frontmatter,
+      vaultPaths,
+    }),
     path: normalizedPath,
-    source: await load(),
+    source,
   };
 };
 
@@ -103,5 +112,4 @@ const getVaultFromLoaders = <const Config extends VaultConfig>(
   };
 };
 
-export type { GetFile, GetVault, Vault, VaultConfig, VaultFile, VaultName };
 export { getFileFromLoaders, getVaultFromLoaders };

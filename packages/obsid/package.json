@@ -5,8 +5,8 @@
   "dependencies": {
     "obsidian-headless": "^0.0.13",
     "react-markdown": "^10.1.0",
-    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
+    "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
