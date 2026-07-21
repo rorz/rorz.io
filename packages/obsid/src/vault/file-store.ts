@@ -1,7 +1,7 @@
 import { parseVaultSource } from "./frontmatter.ts";
 import type { Vault, VaultConfig, VaultFile, VaultName } from "./types.ts";
 import { normalizeVaultsFolder } from "./vault-path.ts";
-import { createVaultLinks } from "./wiki-link.ts";
+import { createVaultLinks, resolveFrontmatterLinks } from "./wiki-link.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
@@ -80,16 +80,20 @@ const getFileFromLoaders = async (
   }
 
   const source = await load();
-  const { body, frontmatter } = parseVaultSource(source, normalizedPath);
+  const { body, frontmatter: rawFrontmatter } = parseVaultSource(source, normalizedPath);
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
 
   return {
     body,
-    frontmatter,
+    frontmatter: resolveFrontmatterLinks({
+      currentPath: normalizedPath,
+      frontmatter: rawFrontmatter,
+      vaultPaths,
+    }),
     links: createVaultLinks({
       body,
       currentPath: normalizedPath,
-      frontmatter,
+      frontmatter: rawFrontmatter,
       vaultPaths,
     }),
     path: normalizedPath,

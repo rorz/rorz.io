@@ -29,9 +29,12 @@ const splitWikiLinks = (
       });
     }
 
-    const link = links.find((candidate) => candidate.target === match.target) ?? {
-      resolvedPath: null,
+    const resolvedLink = links.find((candidate) => candidate.target === match.target);
+    const link: VaultLink = {
+      label: match.label,
+      resolvedPath: resolvedLink?.resolvedPath ?? null,
       target: match.target,
+      type: "link",
     };
     nodes.push({
       children: [

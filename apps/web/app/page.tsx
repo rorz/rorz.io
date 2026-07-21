@@ -26,7 +26,7 @@ const ResolvedLink = ({ link }: ResolvedLinkProps) => {
   if (!link.resolvedPath) {
     return (
       <li className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-amber-950">
-        <strong>{link.target}</strong>
+        <strong>{link.label}</strong>
         <span className="ml-2 text-sm">Unresolved</span>
       </li>
     );
@@ -35,7 +35,7 @@ const ResolvedLink = ({ link }: ResolvedLinkProps) => {
   return (
     <li className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
       <a className="font-medium text-emerald-950 underline" href={getArticleHref(link)}>
-        {link.target}
+        {link.label}
       </a>
       <code className="mt-1 block text-xs text-emerald-800">{link.resolvedPath}</code>
     </li>
@@ -67,7 +67,7 @@ const Page = async ({ searchParams }: PageProps) => {
   const title = file.path.slice(file.path.lastIndexOf("/") + 1);
 
   return (
-    <div className="mx-auto grid min-h-screen max-w-6xl gap-10 p-6 md:grid-cols-[minmax(0,1fr)_22rem] md:p-12">
+    <div className="mx-auto grid min-h-screen max-w-6xl gap-10 p-6 md:grid-cols-[minmax(0,1fr)_22rem]">
       <article>
         <a
           className="text-sm text-neutral-500 underline"

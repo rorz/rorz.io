@@ -15,11 +15,13 @@ test("renders a vault body and resolves its structured wiki links", () => {
 `,
     links: [
       {
+        label: "another note",
         resolvedPath: "notes/Other Note",
         target: "Other Note",
+        type: "link",
       },
     ],
-  };
+  } as const;
   const html = renderToStaticMarkup(
     createElement(ObsidianMarkdown, {
       file,

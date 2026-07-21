@@ -1,5 +1,3 @@
-type VaultFrontmatter = Readonly<Record<string, unknown>>;
-
 interface VaultConfig {
   readonly vaults: readonly {
     readonly name: string;
@@ -8,8 +6,23 @@ interface VaultConfig {
 }
 
 interface VaultLink {
+  readonly label: string;
   readonly resolvedPath: string | null;
   readonly target: string;
+  readonly type: "link";
+}
+
+type VaultFrontmatterValue =
+  | boolean
+  | null
+  | number
+  | string
+  | VaultFrontmatter
+  | VaultLink
+  | readonly VaultFrontmatterValue[];
+
+interface VaultFrontmatter {
+  readonly [key: string]: VaultFrontmatterValue;
 }
 
 interface VaultFile {
@@ -40,6 +53,7 @@ export type {
   VaultConfig,
   VaultFile,
   VaultFrontmatter,
+  VaultFrontmatterValue,
   VaultLink,
   VaultName,
 };

@@ -1,4 +1,4 @@
-import type { VaultFrontmatter, VaultLink } from "./types.ts";
+import type { VaultFrontmatter, VaultFrontmatterValue, VaultLink } from "./types.ts";
 
 interface WikiLinkMatch {
   readonly index: number;
@@ -10,7 +10,7 @@ interface WikiLinkMatch {
 interface CreateVaultLinksOptions {
   readonly body: string;
   readonly currentPath: string;
-  readonly frontmatter: VaultFrontmatter;
+  readonly frontmatter: Readonly<Record<string, unknown>>;
   readonly vaultPaths: readonly string[];
 }
 
@@ -47,13 +47,13 @@ const findWikiLinks = (value: string): readonly WikiLinkMatch[] => {
   return links;
 };
 
-const collectFrontmatterLinks = (
+const collectWikiLinks = (
   value: unknown,
-  targets: string[],
+  matches: WikiLinkMatch[],
   visited: WeakSet<object>,
 ): void => {
   if (typeof value === "string") {
-    targets.push(...findWikiLinks(value).map((link) => link.target));
+    matches.push(...findWikiLinks(value));
     return;
   }
 
@@ -65,13 +65,13 @@ const collectFrontmatterLinks = (
 
   if (Array.isArray(value)) {
     for (const item of value) {
-      collectFrontmatterLinks(item, targets, visited);
+      collectWikiLinks(item, matches, visited);
     }
     return;
   }
 
   for (const child of Object.values(value)) {
-    collectFrontmatterLinks(child, targets, visited);
+    collectWikiLinks(child, matches, visited);
   }
 };
 
@@ -130,26 +130,137 @@ const resolveVaultPath = (
   return matchingPaths[0] ?? null;
 };
 
+const createVaultLink = (
+  match: WikiLinkMatch,
+  currentPath: string,
+  vaultPaths: readonly string[],
+): VaultLink => ({
+  label: match.label,
+  resolvedPath: resolveVaultPath(match.target, currentPath, vaultPaths),
+  target: match.target,
+  type: "link",
+});
+
+const findStandaloneWikiLink = (value: string): WikiLinkMatch | null => {
+  const candidate = value.trim();
+  const matches = findWikiLinks(candidate);
+  const [match] = matches;
+
+  if (
+    !(match && matches.length === 1 && match.index === 0 && match.raw.length === candidate.length)
+  ) {
+    return null;
+  }
+
+  return match;
+};
+
+const resolveFrontmatterValue = (
+  value: unknown,
+  currentPath: string,
+  vaultPaths: readonly string[],
+  resolvedValues: WeakMap<object, VaultFrontmatterValue>,
+): VaultFrontmatterValue => {
+  if (typeof value === "string") {
+    const match = findStandaloneWikiLink(value);
+
+    if (match) {
+      return createVaultLink(match, currentPath, vaultPaths);
+    }
+
+    return value;
+  }
+
+  if (value === null || typeof value === "boolean" || typeof value === "number") {
+    return value;
+  }
+
+  if (typeof value !== "object") {
+    throw new TypeError(`Unsupported frontmatter value: ${typeof value}`);
+  }
+
+  const existingValue = resolvedValues.get(value);
+
+  if (existingValue) {
+    return existingValue;
+  }
+
+  if (Array.isArray(value)) {
+    const resolvedItems: VaultFrontmatterValue[] = [];
+    resolvedValues.set(value, resolvedItems);
+
+    for (const item of value) {
+      resolvedItems.push(resolveFrontmatterValue(item, currentPath, vaultPaths, resolvedValues));
+    }
+
+    return resolvedItems;
+  }
+
+  const resolvedObject: Record<string, VaultFrontmatterValue> = {};
+  resolvedValues.set(value, resolvedObject);
+
+  for (const [key, child] of Object.entries(value)) {
+    resolvedObject[key] = resolveFrontmatterValue(child, currentPath, vaultPaths, resolvedValues);
+  }
+
+  return resolvedObject;
+};
+
+const resolveFrontmatterLinks = ({
+  currentPath,
+  frontmatter,
+  vaultPaths,
+}: Omit<CreateVaultLinksOptions, "body">): VaultFrontmatter => {
+  const resolvedFrontmatter: Record<string, VaultFrontmatterValue> = {};
+  const resolvedValues = new WeakMap<object, VaultFrontmatterValue>();
+  resolvedValues.set(frontmatter, resolvedFrontmatter);
+
+  for (const [key, value] of Object.entries(frontmatter)) {
+    resolvedFrontmatter[key] = resolveFrontmatterValue(
+      value,
+      currentPath,
+      vaultPaths,
+      resolvedValues,
+    );
+  }
+
+  return resolvedFrontmatter;
+};
+
+const isVaultLink = (value: unknown): value is VaultLink => {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const candidate = value as Partial<VaultLink>;
+
+  return (
+    candidate.type === "link" &&
+    typeof candidate.label === "string" &&
+    typeof candidate.target === "string" &&
+    (candidate.resolvedPath === null || typeof candidate.resolvedPath === "string")
+  );
+};
+
 const createVaultLinks = ({
   body,
   currentPath,
   frontmatter,
   vaultPaths,
 }: CreateVaultLinksOptions): readonly VaultLink[] => {
-  const targets: string[] = [];
-  collectFrontmatterLinks(frontmatter, targets, new WeakSet());
-  targets.push(...findWikiLinks(body).map((link) => link.target));
+  const matches: WikiLinkMatch[] = [];
+  collectWikiLinks(frontmatter, matches, new WeakSet());
+  matches.push(...findWikiLinks(body));
 
-  const uniqueTargets = new Map<string, string>();
+  const uniqueMatches = new Map<string, WikiLinkMatch>();
 
-  for (const target of targets) {
-    uniqueTargets.set(target.toLowerCase(), target);
+  for (const match of matches) {
+    uniqueMatches.set(match.target.toLowerCase(), match);
   }
 
-  return Array.from(uniqueTargets.values(), (target) => ({
-    resolvedPath: resolveVaultPath(target, currentPath, vaultPaths),
-    target,
-  }));
+  return Array.from(uniqueMatches.values(), (match) =>
+    createVaultLink(match, currentPath, vaultPaths),
+  );
 };
 
-export { createVaultLinks, findWikiLinks };
+export { createVaultLinks, findWikiLinks, isVaultLink, resolveFrontmatterLinks };

@@ -1,9 +1,8 @@
 import { parse } from "yaml";
-import type { VaultFrontmatter } from "./types.ts";
 
 interface ParsedVaultSource {
   readonly body: string;
-  readonly frontmatter: VaultFrontmatter;
+  readonly frontmatter: Readonly<Record<string, unknown>>;
 }
 
 const frontmatterPattern =

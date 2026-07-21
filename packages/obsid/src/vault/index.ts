@@ -7,6 +7,8 @@ export type {
   VaultConfig,
   VaultFile,
   VaultFrontmatter,
+  VaultFrontmatterValue,
   VaultLink,
   VaultName,
 } from "./types.ts";
+export { isVaultLink } from "./wiki-link.ts";
