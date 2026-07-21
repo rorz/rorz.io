@@ -18,7 +18,7 @@
       "name": "@rorz/web",
       "version": "0.1.0",
       "dependencies": {
-        "obsidian-oxide": "workspace:*",
+        "obsid": "workspace:*",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
       },
@@ -37,23 +37,36 @@
         "vite": "^8.1.4",
       },
     },
-    "packages/obsidian": {
-      "name": "obsidian-oxide",
+    "packages/obsid": {
+      "name": "obsid",
       "version": "0.1.0",
       "dependencies": {
         "react-markdown": "^10.1.0",
         "remark-frontmatter": "^5.0.0",
         "remark-gfm": "^4.0.1",
+        "zod": "^4.4.3",
       },
       "devDependencies": {
+        "@types/bun": "latest",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
+        "obsidian-headless": "^0.0.13",
         "react-dom": "^19.2.7",
         "typescript": "^7.0.2",
         "vite": "^8.1.4",
       },
       "peerDependencies": {
         "react": "^19.2.7",
+      },
+    },
+    "packages/scripts": {
+      "name": "scripts",
+      "devDependencies": {
+        "@types/bun": "latest",
+        "obsid": "workspace:*",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
       },
     },
   },
@@ -714,9 +727,9 @@
 
     "node-releases": ["node-releases@2.0.51", "", {}, "sha512-wRNIrw4DmVLKQlbgOMdkMx27Wrpzes2hh5Jtbi2bjPd+4wJstWIqP5A+lscnqbm0xxmT5Bpg8Lec5ItEBwx6BQ=="],
 
-    "obsidian-headless": ["obsidian-headless@0.0.13", "", { "dependencies": { "better-sqlite3": "12.11.1", "commander": "14.0.3" }, "os": [ "linux", "win32", "darwin", ], "cpu": [ "x64", "arm64", ], "bin": { "ob": "cli.js" } }, "sha512-biu7K0njASixXkV/foG+gmVWiU75oWGxOPrLWeQheYozeIQfImp72VGdKxwkU0kCXrh24js4zbuArCexcXfi2w=="],
+    "obsid": ["obsid@workspace:packages/obsid"],
 
-    "obsidian-oxide": ["obsidian-oxide@workspace:packages/obsidian"],
+    "obsidian-headless": ["obsidian-headless@0.0.13", "", { "dependencies": { "better-sqlite3": "12.11.1", "commander": "14.0.3" }, "os": [ "linux", "win32", "darwin", ], "cpu": [ "x64", "arm64", ], "bin": { "ob": "cli.js" } }, "sha512-biu7K0njASixXkV/foG+gmVWiU75oWGxOPrLWeQheYozeIQfImp72VGdKxwkU0kCXrh24js4zbuArCexcXfi2w=="],
 
     "once": ["once@1.4.0", "", { "dependencies": { "wrappy": "1" } }, "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w=="],
 
@@ -787,6 +800,8 @@
     "scheduler": ["scheduler@0.27.0", "", {}, "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q=="],
 
     "schema-utils": ["schema-utils@4.3.3", "", { "dependencies": { "@types/json-schema": "^7.0.9", "ajv": "^8.9.0", "ajv-formats": "^2.1.1", "ajv-keywords": "^5.1.0" } }, "sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA=="],
+
+    "scripts": ["scripts@workspace:packages/scripts"],
 
     "semver": ["semver@7.8.5", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA=="],
 

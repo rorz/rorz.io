@@ -1,4 +1,4 @@
-import { getFile } from "obsidian-oxide/renderer";
+import { getFile } from "obsid/renderer";
 
 const Page = async () => {
   const file = await getFile("rorz.io", "Welcome");

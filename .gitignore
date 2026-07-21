@@ -24,3 +24,6 @@ coverage/
 *.swp
 
 .obsidian-vaults
+
+# Private files
+private
