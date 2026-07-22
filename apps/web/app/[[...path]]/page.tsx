@@ -53,7 +53,7 @@ const getFolderPath = (sourcePath: string): string => {
 };
 
 const LinkList = ({ files, getHref }: LinkListProps) => (
-  <ul className="flex flex-col items-start gap-2 w-full">
+  <ul className="flex flex-col items-start gap-0 w-full">
     {files
       .slice()
       .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
@@ -66,14 +66,14 @@ const LinkList = ({ files, getHref }: LinkListProps) => (
 
         return (
           <li className="w-full" key={file.path}>
-            <a className="flex justify-between items-center w-full group" href={href}>
-              <span className="group-hover:underline underline-offset-2">
+            <a className="flex justify-between items-center w-full group pb-4" href={href}>
+              <span className="group-hover:underline underline-offset-2 decoration-1">
                 {getTitle(file.path, file.frontmatter.title)}
               </span>
-              <div className="w-full flex-1 border-b -mt-2 border-neutral-100 group-hover:border-neutral-800">
+              <div className="w-full flex-1 border-b-1 -mt-2 border-neutral-100 group-hover:border-neutral-800">
                 <span className="no-underline hover:no-underline">&nbsp;</span>
               </div>
-              <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 px-2 flex justify-end -mt-1.5">
+              <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 border-neutral-200 px-2 pt-0.5 flex justify-end -mt-2.5 border-b group-hover:border-black">
                 <span>{format("do LLL y", new Date(getDate(file.frontmatter.date)))}</span>
               </span>
             </a>

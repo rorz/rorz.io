@@ -40,8 +40,8 @@ const Navigation = ({ items }: NavigationProps) => {
           <a
             aria-current={getAriaCurrent(isActive)}
             className={cn(
-              "bg-transparent w-full px-2 py-0.5 hover:bg-neutral-200",
-              isActive && "bg-black text-white hover:bg-neutral-800",
+              "bg-transparent w-full px-2 py-0.5 pt-1.5 hover:bg-neutral-200",
+              isActive && "bg-black text-white hover:bg-black",
             )}
             href={item.href}
             key={`${item.href}:${item.label}`}

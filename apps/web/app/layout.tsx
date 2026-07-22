@@ -54,7 +54,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         <div className="size-full max-w-5xl grid grid-cols-12 pt-8 mb-4">
           <div className="col-span-2 border-b-4 border-neutral-100">
             <a
-              className="block px-2 bg-neutral-100 pb-0 pt-1 font-bold hover:underline underline-offset-2"
+              className="block px-2 bg-neutral-100/0 pb-0 pt-1 font-bold hover:underline underline-offset-2"
               href="/"
             >
               Rory McMeekin
