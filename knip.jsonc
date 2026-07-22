@@ -29,11 +29,11 @@
     },
     "apps/web": {
       "entry": [
-        "app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
-        "app/styles.css"
+        "src/app/**/{default,error,layout,loading,not-found,page,route,template}.{ts,tsx}",
+        "src/styles.css"
       ],
       "ignoreDependencies": ["next"],
-      "project": ["app/**/*.{ts,tsx}"]
+      "project": ["src/**/*.{ts,tsx}"]
     },
     "packages/obsid": {
       "project": ["src/**/*.{ts,tsx}"]

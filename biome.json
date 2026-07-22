@@ -87,12 +87,19 @@
   },
   "overrides": [
     {
-      "includes": ["apps/web/app/**", "apps/web/vite.config.ts"],
+      "includes": ["apps/web/src/**/*.tsx"],
       "linter": {
         "rules": {
           "performance": {
             "useSolidForComponent": "off"
-          },
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/web/src/app/**", "apps/web/vite.config.ts"],
+      "linter": {
+        "rules": {
           "style": {
             "noDefaultExport": "off"
           }

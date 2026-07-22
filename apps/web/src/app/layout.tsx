@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import "@/styles.css";
-import { isVaultLink, type VaultLink } from "obsid/vault";
-import { Navigation } from "@/components/navigation";
-import { getVaultRouteManifest, vault } from "@/lib/vault";
+import { Navigation } from "@/components/navigation/index.tsx";
+import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
+import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -24,14 +24,6 @@ const getDirectoryHref = (
   return `#unresolved-${encodeURIComponent(target)}`;
 };
 
-const getLinkList = (value: unknown): readonly VaultLink[] => {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-
-  return value.filter(isVaultLink);
-};
-
 const RootLayout = async ({ children }: RootLayoutProps) => {
   const [manifest, rootPage] = await Promise.all([
     getVaultRouteManifest(),
@@ -42,7 +34,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
     throw new Error("Missing vault root page: page");
   }
 
-  const directories = getLinkList(rootPage.frontmatter.directories);
+  const { directories } = parseFrontmatter(rootPage, rootFrontmatterSchema);
   const navigationItems = directories.map((directory) => ({
     href: getDirectoryHref(manifest.getHref, directory.resolvedPath, directory.target),
     label: directory.label,
@@ -51,17 +43,14 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
       <body className="size-full flex flex-col items-center justify-start">
-        <div className="size-full max-w-5xl grid grid-cols-12 pt-8 mb-4">
-          <div className="col-span-2 border-b-4 border-neutral-100">
-            <a
-              className="block px-2 bg-neutral-100/0 pb-0 pt-1 font-bold hover:underline underline-offset-2"
-              href="/"
-            >
+        <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
+          <a className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
+            <span className="block px-2 bg-neutral-100/0 font-bold group-hover:underline underline-offset-2">
               Rory McMeekin
-            </a>
-          </div>
-          <div className="col-span-8 border-b-4 border-neutral-100" />
-          <div className="col-span-2 flex items-start justify-end gap-1">
+            </span>
+          </a>
+          <div className="col-span-8" />
+          <div className="col-span-2 flex items-end justify-end gap-1">
             <div className="size-4 rounded-xs bg-black border" />
             <div className="size-4 rounded-xs bg-neutral-400 border" />
             <div className="size-4 rounded-xs bg-white border" />

@@ -1,8 +1,14 @@
 import { format } from "date-fns/fp";
 import { ObsidianMarkdown } from "obsid/react";
 import type { VaultFile, VaultLink } from "obsid/vault";
-import { getVaultRouteManifest, vault } from "@/lib/vault";
-import type { VaultRouteManifest } from "@/lib/vault/routing";
+import {
+  type Frontmatter,
+  frontmatterSchema,
+  linkListEntryFrontmatterSchema,
+  parseFrontmatter,
+} from "@/lib/vault/frontmatter.ts";
+import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
+import type { VaultRouteManifest } from "@/lib/vault/routing.ts";
 
 interface PageProps {
   readonly params: Promise<{
@@ -18,20 +24,12 @@ interface LinkListProps {
 const getUnresolvedHref = (link: VaultLink): string =>
   `#unresolved-${encodeURIComponent(link.target)}`;
 
-const getTitle = (sourcePath: string, title: unknown): string => {
-  if (typeof title === "string" && title.trim()) {
+const getTitle = (sourcePath: string, title: Frontmatter["title"]): string => {
+  if (title) {
     return title;
   }
 
   return sourcePath.slice(sourcePath.lastIndexOf("/") + 1);
-};
-
-const getDate = (date: unknown): string => {
-  if (typeof date === "string") {
-    return date;
-  }
-
-  return "NO_DATE";
 };
 
 const getArticleHref = (getHref: VaultRouteManifest["getHref"], link: VaultLink): string => {
@@ -39,7 +37,7 @@ const getArticleHref = (getHref: VaultRouteManifest["getHref"], link: VaultLink)
     return getUnresolvedHref(link);
   }
 
-  return getHref(link.resolvedPath) ?? getUnreesolvedHref(link);
+  return getHref(link.resolvedPath) ?? getUnresolvedHref(link);
 };
 
 const getFolderPath = (sourcePath: string): string => {
@@ -55,9 +53,12 @@ const getFolderPath = (sourcePath: string): string => {
 const LinkList = ({ files, getHref }: LinkListProps) => (
   <ul className="flex flex-col items-start gap-0 w-full">
     {files
-      .slice()
-      .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
-      .map((file) => {
+      .map((file) => ({
+        file,
+        frontmatter: parseFrontmatter(file, linkListEntryFrontmatterSchema),
+      }))
+      .toSorted((a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date))
+      .map(({ file, frontmatter }) => {
         const href = getHref(file.path);
 
         if (!href) {
@@ -68,13 +69,13 @@ const LinkList = ({ files, getHref }: LinkListProps) => (
           <li className="w-full" key={file.path}>
             <a className="flex justify-between items-center w-full group pb-4" href={href}>
               <span className="group-hover:underline underline-offset-2 decoration-1">
-                {getTitle(file.path, file.frontmatter.title)}
+                {getTitle(file.path, frontmatter.title)}
               </span>
               <div className="w-full flex-1 border-b-1 -mt-2 border-neutral-100 group-hover:border-neutral-800">
                 <span className="no-underline hover:no-underline">&nbsp;</span>
               </div>
               <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 border-neutral-200 px-2 pt-0.5 flex justify-end -mt-2.5 border-b group-hover:border-black">
-                <span>{format("do LLL y", new Date(getDate(file.frontmatter.date)))}</span>
+                <span>{format("do LLL y", new Date(frontmatter.date))}</span>
               </span>
             </a>
           </li>
@@ -107,10 +108,11 @@ const Page = async ({ params }: PageProps) => {
     throw new Error(`Generated vault file is missing: ${route.sourcePath}.md`);
   }
 
-  const title = getTitle(file.path, file.frontmatter.title);
+  const frontmatter = parseFrontmatter(file, frontmatterSchema);
+  const title = getTitle(file.path, frontmatter.title);
   const resolveWikiLink = (link: VaultLink) => getArticleHref(manifest.getHref, link);
 
-  const displayAsLinkList = file.frontmatter.display_as === "link-list";
+  const displayAsLinkList = frontmatter.display_as === "link-list";
   let linkListFiles: readonly VaultFile[] = [];
 
   if (displayAsLinkList) {

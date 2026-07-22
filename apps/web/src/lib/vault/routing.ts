@@ -1,4 +1,5 @@
 import type { Vault } from "obsid/vault";
+import { frontmatterSchema, parseFrontmatter } from "./frontmatter.ts";
 
 interface VaultRoute {
   readonly href: string;
@@ -38,17 +39,12 @@ const isDirectoryPage = (sourceSegments: readonly string[]): boolean => {
   return parentDirectory !== undefined && filename === `page--${parentDirectory}`;
 };
 
-const getSlugOverride = (
-  sourcePath: string,
-  frontmatter: Readonly<Record<string, unknown>>,
-): string | null => {
-  if (!("slug" in frontmatter)) {
+const getSlugOverride = (sourcePath: string, value: string | undefined): string | null => {
+  if (value === undefined) {
     return null;
   }
 
-  const value = frontmatter.slug;
-
-  if (typeof value !== "string" || value.includes("/") || value.includes("\\")) {
+  if (value.includes("/") || value.includes("\\")) {
     throw new Error(`Frontmatter slug in ${sourcePath}.md must be one path segment`);
   }
 
@@ -77,7 +73,8 @@ const createVaultRoute = async (vault: Vault, sourcePath: string): Promise<Vault
   }
 
   const sourceSegments = sourcePath.split("/");
-  const slugOverride = getSlugOverride(sourcePath, file.frontmatter);
+  const frontmatter = parseFrontmatter(file, frontmatterSchema);
+  const slugOverride = getSlugOverride(sourcePath, frontmatter.slug);
   let routeSourceSegments = sourceSegments;
 
   if (isDirectoryPage(sourceSegments) && slugOverride === null) {

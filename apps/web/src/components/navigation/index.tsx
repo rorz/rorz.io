@@ -2,8 +2,8 @@
 
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/cn";
-import { isActiveNavigationPath } from "./path";
+import { cn } from "@/lib/cn/index.ts";
+import { isActiveNavigationPath } from "./path.ts";
 
 interface NavigationItem {
   readonly href: string;
@@ -22,7 +22,6 @@ const getAriaCurrent = (isActive: boolean): "location" | undefined => {
 
 const Navigation = ({ items }: NavigationProps) => {
   const pathname = usePathname();
-  const isHomeActive = isActiveNavigationPath(pathname, "/");
 
   return (
     <nav className="col-span-2 flex flex-col items-start pt-2 underline-offset-2">
