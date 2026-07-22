@@ -51,16 +51,19 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             </span>
           </a>
           <div className="col-span-8" />
-          <div className="col-span-2 flex items-start justify-end gap-1.5 pt-2 pr-2">
-            <button className="text-black" type="button">
+          <div className="col-span-2 flex items-start justify-end pr-2">
+            <button className="cursor-pointer text-black hover:bg-neutral-200 p-1" type="button">
               <SunIcon className="size-5" weight="regular" />
             </button>
-            <div className="text-black">
+            <button className="cursor-pointer text-black p-1 hover:bg-neutral-200" type="button">
               <MoonIcon className="size-5" weight="regular" />
-            </div>
-            <div className="text-black">
+            </button>
+            <button
+              className="cursor-pointer bg-black text-white p-1 hover:bg-neutral-200"
+              type="button"
+            >
               <CircleHalfTiltIcon className="size-5" weight="regular" />
-            </div>
+            </button>
           </div>
         </div>
         <div className="size-full max-w-5xl grid grid-cols-12">
