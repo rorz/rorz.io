@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import "@/styles.css";
+import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 import { Navigation } from "@/components/navigation/index.tsx";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
@@ -50,10 +51,16 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             </span>
           </a>
           <div className="col-span-8" />
-          <div className="col-span-2 flex items-end justify-end gap-1">
-            <div className="size-4 rounded-xs bg-black border" />
-            <div className="size-4 rounded-xs bg-neutral-400 border" />
-            <div className="size-4 rounded-xs bg-white border" />
+          <div className="col-span-2 flex items-start justify-end gap-1.5 pt-2 pr-2">
+            <button className="text-black" type="button">
+              <SunIcon className="size-5" weight="regular" />
+            </button>
+            <div className="text-black">
+              <MoonIcon className="size-5" weight="regular" />
+            </div>
+            <div className="text-black">
+              <CircleHalfTiltIcon className="size-5" weight="regular" />
+            </div>
           </div>
         </div>
         <div className="size-full max-w-5xl grid grid-cols-12">

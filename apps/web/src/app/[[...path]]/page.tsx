@@ -125,7 +125,7 @@ const Page = async ({ params }: PageProps) => {
     <div className="w-full">
       <article className="flex flex-col size-full gap-8 items-start">
         {title !== "page" && (
-          <h1 className="w-full text-2xl font-semibold tracking-tight">{title}</h1>
+          <h1 className="w-full text-3xl font-medium tracking-tight">{title}</h1>
         )}
         <div className="flex flex-col items-start gap-4 leading-normal text-neutral-800 w-full">
           <ObsidianMarkdown file={file} resolveWikiLink={resolveWikiLink} />
