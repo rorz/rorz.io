@@ -2,8 +2,8 @@
 
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { usePathname } from "next/navigation";
-import { cn } from "./cn.ts";
-import { isActiveNavigationPath } from "./navigation-path.ts";
+import { cn } from "@/lib/cn";
+import { isActiveNavigationPath } from "./path";
 
 interface NavigationItem {
   readonly href: string;

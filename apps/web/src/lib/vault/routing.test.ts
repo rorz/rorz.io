@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { Vault, VaultFile, VaultFrontmatter } from "obsid/vault";
-import { createVaultRouteManifest, slugifySegment } from "./vault-routing.ts";
+import { createVaultRouteManifest, slugifySegment } from "./routing.ts";
 
 const createFile = (path: string, frontmatter: VaultFrontmatter = {}): VaultFile => ({
   body: "",

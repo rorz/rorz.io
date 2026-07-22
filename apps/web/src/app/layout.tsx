@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import "./styles.css";
+import "@/styles.css";
 import { isVaultLink, type VaultLink } from "obsid/vault";
-import { Navigation } from "./navigation.tsx";
-import { getVaultRouteManifest, vault } from "./vault.ts";
+import { Navigation } from "@/components/navigation";
+import { getVaultRouteManifest, vault } from "@/lib/vault";
 
 interface RootLayoutProps {
   readonly children: ReactNode;

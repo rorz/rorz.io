@@ -1,8 +1,8 @@
 import { format } from "date-fns/fp";
 import { ObsidianMarkdown } from "obsid/react";
 import type { VaultFile, VaultLink } from "obsid/vault";
-import { getVaultRouteManifest, vault } from "../vault.ts";
-import type { VaultRouteManifest } from "../vault-routing.ts";
+import { getVaultRouteManifest, vault } from "@/lib/vault";
+import type { VaultRouteManifest } from "@/lib/vault/routing";
 
 interface PageProps {
   readonly params: Promise<{

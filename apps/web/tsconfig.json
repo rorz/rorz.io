@@ -1,11 +1,19 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     },
     "types": ["bun", "vinext/types"]
   },
   "exclude": ["node_modules", "dist", ".vinext"],
   "extends": "../../tsconfig.json",
-  "include": ["app/**/*.ts", "app/**/*.tsx", "obsid.config.ts", "vite.config.ts", "vite-env.d.ts"]
+  "include": [
+    "src/app/**/*.ts",
+    "src/app/**/*.tsx",
+    "obsid.config.ts",
+    "vite.config.ts",
+    "vite-env.d.ts",
+    "src/lib/cn/cn.ts",
+    "src/lib/cn/cn.test.ts"
+  ]
 }

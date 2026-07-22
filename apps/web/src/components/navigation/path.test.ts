@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { isActiveNavigationPath } from "./navigation-path.ts";
+import { isActiveNavigationPath } from "./path.ts";
 
 describe("isActiveNavigationPath", () => {
   test("matches a section and its descendants", () => {

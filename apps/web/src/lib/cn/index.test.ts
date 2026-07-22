@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { cn } from "./cn.ts";
+import { cn } from "./index.ts";
 
 describe("cn", () => {
   test("chains conditional class names", () => {
