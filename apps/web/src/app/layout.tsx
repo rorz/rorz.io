@@ -21,6 +21,15 @@ const zalandoSans = Zalando_Sans({
   variable: "--font-zalando-sans",
 });
 
+const metadata = {
+  icons: {
+    icon: {
+      type: "image/svg+xml",
+      url: "/mark.svg",
+    },
+  },
+};
+
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
@@ -91,4 +100,6 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   );
 };
 
+// biome-ignore lint/style/useComponentExportOnlyModules: App Router layouts export metadata beside the component.
+export { metadata };
 export default RootLayout;

@@ -132,7 +132,7 @@ const Page = async ({ params }: PageProps) => {
             components={{
               p(props) {
                 const { node, ...rest } = props;
-                return <p className="font-serif" {...rest} />;
+                return <p className="font-serif max-w-xl text-base" {...rest} />;
               },
             }}
             file={file}
