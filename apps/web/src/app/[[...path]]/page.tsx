@@ -74,8 +74,8 @@ const LinkList = ({ files, getHref }: LinkListProps) => (
               <div className="w-full flex-1 border-b-1 -mt-2 border-neutral-100 group-hover:border-neutral-800">
                 <span className="no-underline hover:no-underline">&nbsp;</span>
               </div>
-              <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 border-neutral-200 px-2 pt-0.5 flex justify-end -mt-2.5 border-b group-hover:border-black">
-                <span>{format("do LLL y", new Date(frontmatter.date))}</span>
+              <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 border-neutral-200 px-2 pt-0.5 flex justify-end -mt-1.5 border-b group-hover:border-black">
+                <span className="text-sm">{format("do LLLL y", new Date(frontmatter.date))}</span>
               </span>
             </a>
           </li>
