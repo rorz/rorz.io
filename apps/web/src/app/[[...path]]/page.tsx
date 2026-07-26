@@ -128,7 +128,16 @@ const Page = async ({ params }: PageProps) => {
           <h1 className="w-full text-3xl font-medium tracking-tight">{title}</h1>
         )}
         <div className="flex flex-col items-start gap-4 leading-normal text-neutral-800 w-full">
-          <ObsidianMarkdown file={file} resolveWikiLink={resolveWikiLink} />
+          <ObsidianMarkdown
+            components={{
+              p(props) {
+                const { node, ...rest } = props;
+                return <p className="font-serif" {...rest} />;
+              },
+            }}
+            file={file}
+            resolveWikiLink={resolveWikiLink}
+          />
           {displayAsLinkList && <LinkList files={linkListFiles} getHref={manifest.getHref} />}
         </div>
       </article>
