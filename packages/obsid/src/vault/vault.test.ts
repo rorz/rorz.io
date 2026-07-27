@@ -1,6 +1,17 @@
 import { describe, expect, test } from "bun:test";
+import { defineObsidSchema } from "../config/schema.ts";
 import { getFileFromLoaders, getVaultFromLoaders } from "./file-store.ts";
 import type { VaultConfig } from "./types.ts";
+
+const schema = defineObsidSchema({
+  defaultType: "page",
+  registry: {
+    page: {
+      properties: {},
+      renderer: () => null,
+    },
+  },
+});
 
 describe("getVault", () => {
   test("binds a configured vault and its custom folder", async () => {
@@ -17,6 +28,7 @@ describe("getVault", () => {
         "/content/vaults/notes/Welcome.md": () => Promise.resolve("# Welcome"),
       },
       config,
+      schema,
       "notes",
     );
 
@@ -26,9 +38,17 @@ describe("getVault", () => {
     ]);
     expect(await vault.getFile("Welcome")).toEqual({
       body: "# Welcome",
+      currentFolder: {
+        kind: "folder",
+        path: "",
+      },
       frontmatter: {},
       links: [],
+      pageType: "page",
       path: "Welcome",
+      properties: {},
+      resolveFolder: expect.any(Function),
+      resolveNote: expect.any(Function),
       source: "# Welcome",
     });
   });
@@ -39,7 +59,9 @@ describe("getVault", () => {
       vaultsFolder: "./.obsidian-vaults/",
     };
 
-    expect(() => getVaultFromLoaders({}, config, "missing")).toThrow("Unknown vault: missing");
+    expect(() => getVaultFromLoaders({}, config, schema, "missing")).toThrow(
+      "Unknown vault: missing",
+    );
   });
 });
 
@@ -67,6 +89,7 @@ describe("Vault paths", () => {
         "/content/vaults/other/Ignored.md": () => Promise.resolve("Ignored"),
       },
       config,
+      schema,
       "notes",
     );
 
@@ -109,6 +132,7 @@ describe("getFolder", () => {
         },
       },
       config,
+      schema,
       "notes",
     );
 
@@ -141,6 +165,7 @@ describe("getFolder path handling", () => {
         "/content/vaults/notes/Root.md": () => Promise.resolve("Root"),
       },
       config,
+      schema,
       "notes",
     );
 
@@ -165,6 +190,7 @@ describe("getFile", () => {
       "./.obsidian-vaults/",
       "rorz.io",
       "/Welcome.md",
+      schema,
     );
 
     expect(loads).toBe(1);
@@ -173,13 +199,19 @@ describe("getFile", () => {
   });
 
   test("returns null for missing files and unsafe vault or file paths", async () => {
-    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "Missing")).toBeNull();
-    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "../rorz.io", "Welcome")).toBeNull();
-    expect(await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "../Welcome")).toBeNull();
     expect(
-      await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "folder//Welcome"),
+      await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "Missing", schema),
     ).toBeNull();
-    expect(await getFileFromLoaders({}, "../vaults", "rorz.io", "Welcome")).toBeNull();
+    expect(
+      await getFileFromLoaders({}, "./.obsidian-vaults/", "../rorz.io", "Welcome", schema),
+    ).toBeNull();
+    expect(
+      await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "../Welcome", schema),
+    ).toBeNull();
+    expect(
+      await getFileFromLoaders({}, "./.obsidian-vaults/", "rorz.io", "folder//Welcome", schema),
+    ).toBeNull();
+    expect(await getFileFromLoaders({}, "../vaults", "rorz.io", "Welcome", schema)).toBeNull();
   });
 });
 
@@ -199,10 +231,15 @@ Only sells whole pies, but`;
       "./.obsidian-vaults/",
       "rorz.io",
       "lists/best/New York-style pizza (whole)",
+      schema,
     );
 
     expect(file).toEqual({
       body: "Only sells whole pies, but",
+      currentFolder: {
+        kind: "folder",
+        path: "lists/best",
+      },
       frontmatter: {
         description: "Near [[Lauretta's]]",
         where: {
@@ -220,7 +257,11 @@ Only sells whole pies, but`;
           type: "link",
         },
       ],
+      pageType: "page",
       path: "lists/best/New York-style pizza (whole)",
+      properties: {},
+      resolveFolder: expect.any(Function),
+      resolveNote: expect.any(Function),
       source,
     });
   });
@@ -236,6 +277,7 @@ Only sells whole pies, but`;
       "./.obsidian-vaults/",
       "rorz.io",
       "Article",
+      schema,
     );
 
     expect(file?.links).toEqual([
@@ -274,6 +316,7 @@ Home`;
       "./.obsidian-vaults/",
       "rorz.io",
       "page",
+      schema,
     );
 
     if (!file) {

@@ -1,5 +1,4 @@
 import type { Vault } from "obsid/vault";
-import { frontmatterSchema, parseFrontmatter } from "./frontmatter.ts";
 
 interface VaultRoute {
   readonly href: string;
@@ -39,24 +38,6 @@ const isDirectoryPage = (sourceSegments: readonly string[]): boolean => {
   return parentDirectory !== undefined && filename === `page--${parentDirectory}`;
 };
 
-const getSlugOverride = (sourcePath: string, value: string | undefined): string | null => {
-  if (value === undefined) {
-    return null;
-  }
-
-  if (value.includes("/") || value.includes("\\")) {
-    throw new Error(`Frontmatter slug in ${sourcePath}.md must be one path segment`);
-  }
-
-  const slug = slugifySegment(value);
-
-  if (!slug) {
-    throw new Error(`Frontmatter slug in ${sourcePath}.md must contain a letter or number`);
-  }
-
-  return slug;
-};
-
 const getHref = (segments: readonly string[]): string => {
   if (segments.length === 0) {
     return "/";
@@ -65,27 +46,15 @@ const getHref = (segments: readonly string[]): string => {
   return `/${segments.map((segment) => encodeURIComponent(segment)).join("/")}`;
 };
 
-const createVaultRoute = async (vault: Vault, sourcePath: string): Promise<VaultRoute> => {
-  const file = await vault.getFile(sourcePath);
-
-  if (!file) {
-    throw new Error(`Vault path disappeared while creating routes: ${sourcePath}.md`);
-  }
-
+const createVaultRoute = (sourcePath: string): VaultRoute => {
   const sourceSegments = sourcePath.split("/");
-  const frontmatter = parseFrontmatter(file, frontmatterSchema);
-  const slugOverride = getSlugOverride(sourcePath, frontmatter.slug);
   let routeSourceSegments = sourceSegments;
 
-  if (isDirectoryPage(sourceSegments) && slugOverride === null) {
+  if (isDirectoryPage(sourceSegments)) {
     routeSourceSegments = sourceSegments.slice(0, -1);
   }
 
-  const segments = routeSourceSegments.map((segment, index) => {
-    if (index === routeSourceSegments.length - 1 && slugOverride !== null) {
-      return slugOverride;
-    }
-
+  const segments = routeSourceSegments.map((segment) => {
     const slug = slugifySegment(segment);
 
     if (!slug) {
@@ -116,10 +85,8 @@ const compareRoutes = (left: VaultRoute, right: VaultRoute): number => {
   return 0;
 };
 
-const createVaultRouteManifest = async (vault: Vault): Promise<VaultRouteManifest> => {
-  const routes = (
-    await Promise.all(vault.paths.map((sourcePath) => createVaultRoute(vault, sourcePath)))
-  ).toSorted(compareRoutes);
+const createVaultRouteManifest = (vault: Pick<Vault, "paths">): VaultRouteManifest => {
+  const routes = vault.paths.map(createVaultRoute).toSorted(compareRoutes);
   const routesByPath = new Map<string, VaultRoute>();
   const routesBySourcePath = new Map<string, VaultRoute>();
 
@@ -143,5 +110,4 @@ const createVaultRouteManifest = async (vault: Vault): Promise<VaultRouteManifes
   };
 };
 
-export type { VaultRouteManifest };
 export { createVaultRouteManifest, slugifySegment };

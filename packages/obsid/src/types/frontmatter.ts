@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 const StringPropertyValueSchema = z.discriminatedUnion("type", [
   z.object({
@@ -10,7 +10,7 @@ const StringPropertyValueSchema = z.discriminatedUnion("type", [
     label: z.string().exactOptional(),
     path: z.string(),
     raw: z.string(),
-    type: z.literal("page"),
+    type: z.literal("note"),
   }),
   z.object({
     label: z.string().exactOptional(),
@@ -26,7 +26,13 @@ const StringPropertyValueSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-type StringPropertyValue = z.infer<typeof StringPropertyValueSchema>;
+type StringPropertyValue = z.output<typeof StringPropertyValueSchema>;
+type ObsidianNotePropertyValue = Extract<
+  StringPropertyValue,
+  {
+    readonly type: "note";
+  }
+>;
 
 const ObsidianPropertyTypeSchema = z.enum([
   "list",
@@ -36,33 +42,28 @@ const ObsidianPropertyTypeSchema = z.enum([
   "date-and-time",
   "checkbox",
 ]);
-export type ObsidianPropertyType = z.infer<typeof ObsidianPropertyTypeSchema>;
+type ObsidianPropertyType = z.output<typeof ObsidianPropertyTypeSchema>;
 
-const ObsidianPropertyMapSchema = z.record(z.string(), ObsidianPropertyTypeSchema);
-
-export type ObsidianPropertyMap = z.infer<typeof ObsidianPropertyMapSchema>;
-
-export type ObsidianPropertyValueMap = {
-  list: StringPropertyValue[];
-  text: StringPropertyValue;
-  number: number;
-  date: Date;
+type ObsidianPropertyValueMap = {
   "date-and-time": Date;
   checkbox: boolean;
+  date: Date;
+  list: StringPropertyValue[];
+  number: number;
+  text: StringPropertyValue;
 };
 
-export type ObsidianParsedProperties<PM extends ObsidianPropertyMap> = {
-  -readonly [K in keyof PM]: ObsidianPropertyValueMap[PM[K]];
+type ObsidianPropertyMap = Readonly<Record<string, z.ZodType>>;
+
+type ObsidianParsedProperties<PropertyMap extends ObsidianPropertyMap> = z.output<
+  z.ZodObject<PropertyMap>
+>;
+
+export type {
+  ObsidianNotePropertyValue,
+  ObsidianParsedProperties,
+  ObsidianPropertyMap,
+  ObsidianPropertyType,
+  ObsidianPropertyValueMap,
+  StringPropertyValue,
 };
-// const ObsidianPropertyValueMapSchema = z.union([]);
-
-// type ObsidianPropertyValueMap = {
-//   list: StringPropertyValue[];
-//   text: StringPropertyValue;
-//   number: number;
-//   date: Date;
-//   "date-and-time": Date;
-//   checkbox: boolean;
-// };
-
-// export type ObsidianPropertyType = keyof ObsidianPropertyValueMap;

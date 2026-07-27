@@ -1,16 +1,12 @@
 import { parse as parseYaml } from "yaml";
-import z from "zod";
-import type {
-  ObsidianParsedProperties,
-  ObsidianPropertyMap,
-  ObsidianPropertyType,
-  ObsidianPropertyValueMap,
-} from "../types/frontmatter.ts";
+import { z } from "zod";
+import type { ObsidPageForSchema, ObsidSchemaShape } from "../config/schema.ts";
+import type { ObsidianParsedProperties, ObsidianPropertyMap } from "../types/frontmatter.ts";
 
-interface ParsedVaultSource<M extends ObsidianPropertyMap> {
+type ParsedVaultSource<Schema extends ObsidSchemaShape> = ObsidPageForSchema<Schema> & {
   readonly body: string;
-  readonly properties: ObsidianParsedProperties<M>;
-}
+  readonly frontmatter: Readonly<Record<string, unknown>>;
+};
 
 const frontmatterPattern =
   /^(?:\uFEFF)?---[^\S\r\n]*\r?\n([\s\S]*?)\r?\n(?:---|\.\.\.)[^\S\r\n]*(?:\r?\n|$)/u;
@@ -18,90 +14,88 @@ const frontmatterPattern =
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
-type PropertyParsers = {
-  [P in ObsidianPropertyType]: (value: unknown) => ObsidianPropertyValueMap[P];
-};
-
-const propertyParsers: PropertyParsers = {
-  checkbox: (value) => z.boolean().parse(value),
-  date: (value) => {
-    const stringRepresentation = z.iso.date().parse(value);
-    return new Date(stringRepresentation);
-  },
-  "date-and-time": (value) => {
-    const stringRepresentation = z.iso.datetime().parse(value);
-    return new Date(stringRepresentation);
-  },
-  list: (value) => [
-    {
-      type: "string",
-      value: "STUB",
-    },
-  ],
-  number: (value) => z.number().parse(value),
-  text: (value) => ({
-    type: "string",
-    value: "STUB",
-  }),
-};
-
-const parseProperty = <P extends ObsidianPropertyType>(
-  propertyType: P,
-  value: unknown,
-): ObsidianPropertyValueMap[P] => propertyParsers[propertyType](value);
-
-export const parseVaultSource = <Pm extends ObsidianPropertyMap>(
+const parseRawFrontmatter = (
   source: string,
   path: string,
-  propertyMap: Pm,
-): ParsedVaultSource<Pm> => {
-  const frontMatterMatches = frontmatterPattern.exec(source);
-  const frontMatterBlock = frontMatterMatches?.[0];
-  const frontMatterRawYaml = frontMatterMatches?.[1];
-  const noMatches = frontMatterBlock === undefined || frontMatterRawYaml === undefined;
-  const propertyMapEmpty = Object.keys(propertyMap).length === 0;
+): {
+  readonly body: string;
+  readonly frontmatter: Readonly<Record<string, unknown>>;
+} => {
+  const match = frontmatterPattern.exec(source);
 
-  if (noMatches) {
-    if (propertyMapEmpty) {
-      return {
-        body: source,
-        properties: {} as ObsidianParsedProperties<Pm>,
-      };
-    }
-
-    throw new Error(`No frontmatter could be found for vault file at ${path}`);
+  if (!match) {
+    return {
+      body: source,
+      frontmatter: {},
+    };
   }
 
   let parsedFrontmatter: unknown;
 
   try {
-    parsedFrontmatter = parseYaml(frontMatterRawYaml);
+    parsedFrontmatter = parseYaml(match[1] ?? "");
   } catch (error) {
-    throw new Error(`Invalid frontmatter in ${path}`, {
+    throw new Error(`Invalid frontmatter in ${path}.md`, {
       cause: error,
     });
   }
 
-  if (parsedFrontmatter === null || !isRecord(parsedFrontmatter)) {
-    throw new Error(`Frontmatter in ${path} must be a YAML object`);
+  if (parsedFrontmatter !== null && !isRecord(parsedFrontmatter)) {
+    throw new Error(`Frontmatter in ${path}.md must be a YAML object`);
   }
 
-  const properties: ObsidianParsedProperties<Pm> = Object.entries(parsedFrontmatter).reduce(
-    (output, [key, value]) => {
-      const propertyType = propertyMap[key];
-      if (propertyType === undefined) {
-        throw new Error("Property type in frontmatter is undefined");
-      }
-      const propertyValue = parseProperty(propertyType, value);
-      return Object.assign(output, {
-        [key]: propertyValue,
-      });
-    },
-    {} as ObsidianParsedProperties<Pm>,
-  );
-
   return {
-    body: source.slice(frontMatterBlock.length),
-    properties,
+    body: source.slice(match[0].length),
+    frontmatter: parsedFrontmatter ?? {},
   };
 };
+
+const parseProperties = <PropertyMap extends ObsidianPropertyMap>(
+  frontmatter: Readonly<Record<string, unknown>>,
+  propertyMap: PropertyMap,
+  path: string,
+): ObsidianParsedProperties<PropertyMap> => {
+  const result = z.object(propertyMap).safeParse(frontmatter);
+
+  if (!result.success) {
+    throw new Error(`Invalid frontmatter in ${path}.md\n${z.prettifyError(result.error)}`, {
+      cause: result.error,
+    });
+  }
+
+  return result.data as ObsidianParsedProperties<PropertyMap>;
+};
+
+const parseVaultSource = <Schema extends ObsidSchemaShape>(
+  source: string,
+  path: string,
+  schema: Schema,
+): ParsedVaultSource<Schema> => {
+  const { body, frontmatter } = parseRawFrontmatter(source, path);
+  let pageType: unknown = schema.defaultType;
+
+  if (schema.typeIdentifier && Object.hasOwn(frontmatter, schema.typeIdentifier)) {
+    pageType = frontmatter[schema.typeIdentifier];
+  }
+
+  if (typeof pageType !== "string") {
+    throw new Error(
+      `Page type property "${schema.typeIdentifier ?? ""}" in ${path}.md must be text`,
+    );
+  }
+
+  const definition = schema.registry[pageType];
+
+  if (!definition) {
+    throw new Error(`Unknown page type "${pageType}" in ${path}.md`);
+  }
+
+  return {
+    body,
+    frontmatter,
+    pageType,
+    properties: parseProperties(frontmatter, definition.properties, path),
+  } as ParsedVaultSource<Schema>;
+};
+
+export { parseVaultSource };

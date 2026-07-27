@@ -1,3 +1,11 @@
+import type {
+  ObsidPageForSchema,
+  ObsidResolveFolderForSchema,
+  ObsidResolveNoteForSchema,
+  ObsidSchemaShape,
+} from "../config/schema.ts";
+import type { ObsidFolderReference } from "../types/reference.ts";
+
 interface VaultConfig {
   readonly vaults: readonly {
     readonly name: string;
@@ -33,26 +41,41 @@ interface VaultFile {
   readonly source: string;
 }
 
-type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
-type GetFile = (path: string) => Promise<VaultFile | null>;
-type GetFolder = (path: string) => Promise<readonly VaultFile[]>;
+type ObsidVaultFile<Schema extends ObsidSchemaShape> = VaultFile &
+  ObsidPageForSchema<Schema> & {
+    readonly currentFolder: ObsidFolderReference;
+    readonly resolveFolder: ObsidResolveFolderForSchema<Schema>;
+    readonly resolveNote: ObsidResolveNoteForSchema<Schema>;
+  };
 
-interface Vault<Name extends string = string> {
-  readonly getFile: GetFile;
-  readonly getFolder: GetFolder;
+type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
+type GetFile<File extends VaultFile = VaultFile> = (path: string) => Promise<File | null>;
+type GetFolder<File extends VaultFile = VaultFile> = (path: string) => Promise<readonly File[]>;
+
+interface Vault<Name extends string = string, File extends VaultFile = VaultFile> {
+  readonly getFile: GetFile<File>;
+  readonly getFolder: GetFolder<File>;
   readonly name: Name;
   readonly paths: readonly string[];
 }
 
-type GetVault = <const Config extends VaultConfig>(
+type ObsidVault<Schema extends ObsidSchemaShape, Name extends string = string> = Vault<
+  Name,
+  ObsidVaultFile<Schema>
+>;
+
+type GetVault = <const Config extends VaultConfig, const Schema extends ObsidSchemaShape>(
   config: Config,
+  schema: Schema,
   name: NoInfer<VaultName<Config>>,
-) => Vault<VaultName<Config>>;
+) => ObsidVault<Schema, VaultName<Config>>;
 
 export type {
   GetFile,
   GetFolder,
   GetVault,
+  ObsidVault,
+  ObsidVaultFile,
   Vault,
   VaultConfig,
   VaultFile,

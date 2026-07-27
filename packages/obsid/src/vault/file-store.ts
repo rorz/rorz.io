@@ -1,7 +1,13 @@
+import type {
+  ObsidResolveFolderForSchema,
+  ObsidResolveNoteForSchema,
+  ObsidSchemaShape,
+} from "../config/schema.ts";
+import type { ObsidFolderReference } from "../types/reference.ts";
 import { parseVaultSource } from "./frontmatter.ts";
-import type { Vault, VaultConfig, VaultFile, VaultName } from "./types.ts";
+import type { ObsidVault, ObsidVaultFile, VaultConfig, VaultName } from "./types.ts";
 import { normalizeVaultsFolder } from "./vault-path.ts";
-import { createVaultLinks, resolveFrontmatterLinks } from "./wiki-link.ts";
+import { createVaultLinks, resolveFrontmatterLinks, resolveVaultPath } from "./wiki-link.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
@@ -45,6 +51,16 @@ const normalizeFolderPath = (path: string): string | null => {
   }
 
   return normalized;
+};
+
+const getParentFolderPath = (path: string): string => {
+  const separatorIndex = path.lastIndexOf("/");
+
+  if (separatorIndex === -1) {
+    return "";
+  }
+
+  return path.slice(0, separatorIndex);
 };
 
 const normalizeVaultName = (vaultName: string): string | null => {
@@ -99,12 +115,14 @@ const getFolderPaths = (vaultPaths: readonly string[], folderPath: string): read
   });
 };
 
-const getFileFromLoaders = async (
+// biome-ignore lint/complexity/useMaxParams: This test seam exposes the complete file identity plus its schema.
+const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   loaders: FileLoaders,
   vaultsFolder: string,
   vaultName: string,
   path: string,
-): Promise<VaultFile | null> => {
+  schema: Schema,
+): Promise<ObsidVaultFile<Schema> | null> => {
   const vaultRoot = normalizeVaultsFolder(vaultsFolder);
   const normalizedVaultName = normalizeVaultName(vaultName);
   const normalizedPath = normalizePath(path);
@@ -120,32 +138,67 @@ const getFileFromLoaders = async (
   }
 
   const source = await load();
-  const { body, frontmatter: rawFrontmatter } = parseVaultSource(source, normalizedPath);
+  const parsedSource = parseVaultSource(source, normalizedPath, schema);
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
+  const currentFolder: ObsidFolderReference = {
+    kind: "folder",
+    path: getParentFolderPath(normalizedPath),
+  };
+  const resolveNote: ObsidResolveNoteForSchema<Schema> = (reference) => {
+    const resolvedPath = resolveVaultPath(reference.path, normalizedPath, vaultPaths);
+
+    if (!resolvedPath) {
+      return Promise.resolve(null);
+    }
+
+    return getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, resolvedPath, schema);
+  };
+  const resolveFolder: ObsidResolveFolderForSchema<Schema> = async (reference) => {
+    const folderPath = normalizeFolderPath(reference.path);
+
+    if (folderPath === null) {
+      return [];
+    }
+
+    const files = (await Promise.all(
+      getFolderPaths(vaultPaths, folderPath).map((filePath) =>
+        getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, filePath, schema),
+      ),
+    )) as Array<ObsidVaultFile<Schema> | null>;
+
+    return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
+  };
 
   return {
-    body,
+    ...parsedSource,
+    currentFolder,
     frontmatter: resolveFrontmatterLinks({
       currentPath: normalizedPath,
-      frontmatter: rawFrontmatter,
+      frontmatter: parsedSource.frontmatter,
       vaultPaths,
     }),
     links: createVaultLinks({
-      body,
+      body: parsedSource.body,
       currentPath: normalizedPath,
-      frontmatter: rawFrontmatter,
+      frontmatter: parsedSource.frontmatter,
       vaultPaths,
     }),
     path: normalizedPath,
+    resolveFolder,
+    resolveNote,
     source,
   };
 };
 
-const getVaultFromLoaders = <const Config extends VaultConfig>(
+const getVaultFromLoaders = <
+  const Config extends VaultConfig,
+  const Schema extends ObsidSchemaShape,
+>(
   loaders: FileLoaders,
   config: Config,
+  schema: Schema,
   name: NoInfer<VaultName<Config>>,
-): Vault<VaultName<Config>> => {
+): ObsidVault<Schema, VaultName<Config>> => {
   if (!config.vaults.some((vault) => vault.name === name)) {
     throw new Error(`Unknown vault: ${name}`);
   }
@@ -157,7 +210,8 @@ const getVaultFromLoaders = <const Config extends VaultConfig>(
   }
 
   const paths = getVaultPaths(loaders, vaultRoot, name);
-  const getFile = (path: string) => getFileFromLoaders(loaders, config.vaultsFolder, name, path);
+  const getFile = (path: string) =>
+    getFileFromLoaders(loaders, config.vaultsFolder, name, path, schema);
 
   return {
     getFile,
@@ -168,11 +222,11 @@ const getVaultFromLoaders = <const Config extends VaultConfig>(
         return [];
       }
 
-      const files = await Promise.all(
+      const files = (await Promise.all(
         getFolderPaths(paths, folderPath).map((filePath) => getFile(filePath)),
-      );
+      )) as Array<ObsidVaultFile<Schema> | null>;
 
-      return files.filter((file): file is VaultFile => file !== null);
+      return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
     },
     name,
     paths,

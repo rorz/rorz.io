@@ -1,12 +1,19 @@
 import type { Components } from "react-markdown";
-import type { VaultFile, VaultLink } from "../vault/types.ts";
+import type { ObsidResolvedNoteForSchema, ObsidSchemaShape } from "../config/schema.ts";
+import type { VaultLink } from "../vault/types.ts";
 
 type ResolveWikiLink = (link: VaultLink) => string;
 
 interface ObsidianMarkdownProps {
+  readonly children: string;
   readonly components?: Components;
-  readonly file: Pick<VaultFile, "body" | "links">;
+  readonly links?: readonly VaultLink[];
   readonly resolveWikiLink?: ResolveWikiLink;
 }
 
-export type { ObsidianMarkdownProps, ResolveWikiLink };
+interface ObsidProps<Schema extends ObsidSchemaShape> {
+  readonly note: ObsidResolvedNoteForSchema<Schema>;
+  readonly schema: Schema;
+}
+
+export type { ObsidianMarkdownProps, ObsidProps, ResolveWikiLink };

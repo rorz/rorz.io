@@ -263,4 +263,4 @@ const createVaultLinks = ({
   );
 };
 
-export { createVaultLinks, findWikiLinks, isVaultLink, resolveFrontmatterLinks };
+export { createVaultLinks, findWikiLinks, isVaultLink, resolveFrontmatterLinks, resolveVaultPath };

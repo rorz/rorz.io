@@ -19,7 +19,9 @@
   },
   "exports": {
     "./config": "./src/config/index.ts",
+    "./property": "./src/property/index.ts",
     "./react": "./src/react/index.ts",
+    "./schema": "./src/config/schema.ts",
     "./sync": "./src/sync/index.ts",
     "./types": "./src/types/index.ts",
     "./vault": "./src/vault/index.ts",

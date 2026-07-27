@@ -1,30 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import type { Vault, VaultFile, VaultFrontmatter } from "obsid/vault";
+import type { Vault } from "obsid/vault";
 import { createVaultRouteManifest, slugifySegment } from "./routing.ts";
 
-const createFile = (path: string, frontmatter: VaultFrontmatter = {}): VaultFile => ({
-  body: "",
-  frontmatter,
-  links: [],
-  path,
-  source: "",
+const createVault = (paths: readonly string[]): Pick<Vault, "paths"> => ({
+  paths,
 });
-
-const createVault = (files: readonly VaultFile[]): Vault => {
-  const filesByPath = new Map(
-    files.map((file) => [
-      file.path,
-      file,
-    ]),
-  );
-
-  return {
-    getFile: (path) => Promise.resolve(filesByPath.get(path) ?? null),
-    getFolder: () => Promise.resolve([]),
-    name: "test",
-    paths: files.map((file) => file.path),
-  };
-};
 
 describe("slugifySegment", () => {
   test("creates lowercase hyphenated URL segments", () => {
@@ -35,13 +15,13 @@ describe("slugifySegment", () => {
 });
 
 describe("createVaultRouteManifest paths", () => {
-  test("maps source paths to clean routes and treats page files as directory pages", async () => {
-    const manifest = await createVaultRouteManifest(
+  test("maps source paths to clean routes and treats page files as directory pages", () => {
+    const manifest = createVaultRouteManifest(
       createVault([
-        createFile("page"),
-        createFile("about/page"),
-        createFile("projects/page--projects"),
-        createFile("lists/best/New York-style pizza (whole)"),
+        "page",
+        "about/page",
+        "projects/page--projects",
+        "lists/best/New York-style pizza (whole)",
       ]),
     );
 
@@ -79,37 +59,15 @@ describe("createVaultRouteManifest paths", () => {
   });
 });
 
-describe("createVaultRouteManifest overrides and collisions", () => {
-  test("uses a frontmatter slug for the final URL segment", async () => {
-    const manifest = await createVaultRouteManifest(
-      createVault([
-        createFile("lists/New York-style pizza", {
-          slug: "Best Pizza",
-        }),
-      ]),
-    );
-
-    expect(manifest.routes[0]).toEqual({
-      href: "/lists/best-pizza",
-      routePath: "lists/best-pizza",
-      segments: [
-        "lists",
-        "best-pizza",
-      ],
-      sourcePath: "lists/New York-style pizza",
-    });
-  });
-
-  test("rejects routes that collide after slugification", async () => {
-    const manifest = createVaultRouteManifest(
-      createVault([
-        createFile("Hello World"),
-        createFile("hello-world"),
-      ]),
-    );
-
-    await expect(manifest).rejects.toThrow(
-      "Vault route collision at /hello-world: Hello World.md and hello-world.md",
-    );
+describe("createVaultRouteManifest collisions", () => {
+  test("rejects routes that collide after slugification", () => {
+    expect(() =>
+      createVaultRouteManifest(
+        createVault([
+          "Hello World",
+          "hello-world",
+        ]),
+      ),
+    ).toThrow("Vault route collision at /hello-world: Hello World.md and hello-world.md");
   });
 });

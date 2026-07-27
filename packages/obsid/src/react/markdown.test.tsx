@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
-import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ObsidianMarkdown } from "./markdown.tsx";
+import type { ResolveWikiLink } from "./types.ts";
 
 test("renders a vault body and resolves its structured wiki links", () => {
   const file = {
@@ -22,11 +22,11 @@ test("renders a vault body and resolves its structured wiki links", () => {
       },
     ],
   } as const;
+  const resolveWikiLink: ResolveWikiLink = (link) => `/${link.resolvedPath ?? link.target}`;
   const html = renderToStaticMarkup(
-    createElement(ObsidianMarkdown, {
-      file,
-      resolveWikiLink: (link) => `/${link.resolvedPath ?? link.target}`,
-    }),
+    <ObsidianMarkdown links={file.links} resolveWikiLink={resolveWikiLink}>
+      {file.body}
+    </ObsidianMarkdown>,
   );
 
   expect(html).toContain("<h1>Welcome</h1>");

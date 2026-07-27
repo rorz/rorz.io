@@ -100,19 +100,20 @@ const createWikiLinkPlugin =
   };
 
 const ObsidianMarkdown = ({
+  children,
   components,
-  file,
+  links = [],
   resolveWikiLink = defaultResolveWikiLink,
 }: ObsidianMarkdownProps) => (
   <Markdown
     components={components}
     remarkPlugins={[
       remarkGfm,
-      createWikiLinkPlugin(file.links, resolveWikiLink),
+      createWikiLinkPlugin(links, resolveWikiLink),
     ]}
     skipHtml={true}
   >
-    {file.body}
+    {children}
   </Markdown>
 );
 

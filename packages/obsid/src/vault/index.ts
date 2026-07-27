@@ -4,6 +4,8 @@ export type {
   GetFile,
   GetFolder,
   GetVault,
+  ObsidVault,
+  ObsidVaultFile,
   Vault,
   VaultConfig,
   VaultFile,

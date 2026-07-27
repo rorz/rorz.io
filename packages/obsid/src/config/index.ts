@@ -12,6 +12,7 @@ const ObsidConfigSchema = z.object({
     email: z.email(),
     password: z.string().min(1),
   }),
+  schema: z.string().min(1),
   vaults: z.array(
     z.object({
       encryptionPassword: z.string().min(1).optional(),

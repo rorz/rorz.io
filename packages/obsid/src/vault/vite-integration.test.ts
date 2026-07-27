@@ -10,7 +10,9 @@ test("Vite replaces the vault glob in the public vault entry", async () => {
       if (id === resolvedId) {
         return [
           'import { getVault } from "obsid/vault";',
-          'void getVault({ vaultsFolder: "./.obsidian-vaults/", vaults: [{ name: "rorz.io" }] }, "rorz.io").getFile("__missing__");',
+          'import { defineObsidSchema } from "obsid/schema";',
+          'const schema = defineObsidSchema({ defaultType: "page", registry: { page: { properties: {}, renderer: () => null } } });',
+          'void getVault({ vaultsFolder: "./.obsidian-vaults/", vaults: [{ name: "rorz.io" }] }, schema, "rorz.io").getFile("__missing__");',
         ].join("\n");
       }
     },

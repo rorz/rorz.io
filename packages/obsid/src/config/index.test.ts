@@ -32,6 +32,7 @@ test("defineConfig preserves configured vault names as literals", () => {
       email: "test@example.com",
       password: "test-password",
     },
+    schema: "./src/lib/vault/schema.tsx",
     vaults: [
       {
         name: "primary",
@@ -56,6 +57,7 @@ describe("obsid config", () => {
         email: "test@example.com",
         password: "test-password",
       },
+      schema: "./src/lib/vault/schema.tsx",
       vaults: [],
     });
 

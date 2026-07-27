@@ -60,9 +60,6 @@ const parseFrontmatter = <Schema extends z.ZodType>(
   return result.data;
 };
 
-type Frontmatter = z.output<typeof frontmatterSchema>;
-
-export type { Frontmatter };
 export {
   frontmatterSchema,
   linkListEntryFrontmatterSchema,

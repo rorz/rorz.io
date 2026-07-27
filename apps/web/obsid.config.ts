@@ -6,6 +6,7 @@ export default defineConfig({
     email: process.env.OBSID_EMAIL ?? "",
     password: process.env.OBSID_PASSWORD ?? "",
   },
+  schema: "./src/lib/vault/schema.tsx",
   vaults: [
     {
       encryptionPassword: process.env.OBSID_VAULT_PRIMARY_PASSWORD ?? "",
