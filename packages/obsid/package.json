@@ -21,6 +21,7 @@
     "./config": "./src/config/index.ts",
     "./react": "./src/react/index.ts",
     "./sync": "./src/sync/index.ts",
+    "./types": "./src/types/index.ts",
     "./vault": "./src/vault/index.ts",
     "./vite": "./src/vite/index.ts"
   },

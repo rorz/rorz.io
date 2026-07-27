@@ -15,6 +15,9 @@ const robotoSerif = Roboto_Serif({
 });
 
 const zalandoSans = Zalando_Sans({
+  axes: [
+    "wdth",
+  ],
   subsets: [
     "latin",
   ],
@@ -71,7 +74,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
       <body className="size-full flex flex-col items-center justify-start">
         <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
           <a className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
-            <span className="block px-2 bg-neutral-100/0 font-black group-hover:underline underline-offset-2 font-sans text-lg tracking-tight">
+            <span className="block px-2 bg-neutral-100/0 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
               Rory McMeekin
             </span>
           </a>

@@ -72,6 +72,9 @@
         "noUnresolvedImports": "off",
         "useQwikValidLexicalScope": "off"
       },
+      "nursery": {
+        "useExhaustiveSwitchCases": "error"
+      },
       "performance": {
         "noAwaitInLoops": "off"
       },
