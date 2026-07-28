@@ -34,10 +34,9 @@ test("renders a note with its selected schema renderer", () => {
         body: "Hello from Markdown",
         currentFolder: {
           kind: "folder",
-          path: "",
+          vaultPath: "",
         },
         pageType: "page",
-        path: "page",
         properties: {
           title: {
             raw: "Welcome",
@@ -47,6 +46,8 @@ test("renders a note with its selected schema renderer", () => {
         },
         resolveFolder: () => Promise.resolve([]),
         resolveNote: () => Promise.resolve(null),
+        vaultPath: "page",
+        webPath: "/page",
       }}
       schema={schema}
     />,

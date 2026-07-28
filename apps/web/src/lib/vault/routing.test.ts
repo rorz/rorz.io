@@ -1,21 +1,27 @@
 import { describe, expect, test } from "bun:test";
+import { defineObsidSchema } from "obsid/schema";
 import type { Vault } from "obsid/vault";
-import { createVaultRouteManifest, slugifySegment } from "./routing.ts";
+import { createVaultRouteManifest, webPermalink } from "./routing.ts";
 
-const createVault = (paths: readonly string[]): Pick<Vault, "paths"> => ({
-  paths,
+const schema = defineObsidSchema({
+  defaultType: "page",
+  registry: {
+    page: {
+      properties: {},
+      renderer: () => null,
+    },
+  },
+  routing: {
+    permalink: webPermalink,
+  },
 });
 
-describe("slugifySegment", () => {
-  test("creates lowercase hyphenated URL segments", () => {
-    expect(slugifySegment("New York-style pizza (whole)")).toBe("new-york-style-pizza-whole");
-    expect(slugifySegment("Lauretta's")).toBe("laurettas");
-    expect(slugifySegment("Crème brûlée")).toBe("creme-brulee");
-  });
+const createVault = (vaultPaths: readonly string[]): Pick<Vault, "vaultPaths"> => ({
+  vaultPaths,
 });
 
 describe("createVaultRouteManifest paths", () => {
-  test("maps source paths to clean routes and treats page files as directory pages", () => {
+  test("maps vault paths to web paths and treats page files as directory pages", () => {
     const manifest = createVaultRouteManifest(
       createVault([
         "page",
@@ -23,50 +29,52 @@ describe("createVaultRouteManifest paths", () => {
         "projects/page--projects",
         "lists/best/New York-style pizza (whole)",
       ]),
+      schema,
     );
 
     expect(
-      manifest.routes.map(({ routePath, sourcePath }) => [
-        sourcePath,
-        routePath,
+      manifest.routes.map(({ vaultPath, webPath }) => [
+        vaultPath,
+        webPath,
       ]),
     ).toEqual([
       [
         "page",
-        "",
+        "/",
       ],
       [
         "about/page",
-        "about",
+        "/about",
       ],
       [
         "lists/best/New York-style pizza (whole)",
-        "lists/best/new-york-style-pizza-whole",
+        "/lists/best/new-york-style-pizza-whole",
       ],
       [
         "projects/page--projects",
-        "projects",
+        "/projects",
       ],
     ]);
-    expect(manifest.getBySegments()?.sourcePath).toBe("page");
+    expect(manifest.getBySegments()?.vaultPath).toBe("page");
     expect(
       manifest.getBySegments([
         "about",
-      ])?.sourcePath,
+      ])?.vaultPath,
     ).toBe("about/page");
-    expect(manifest.getHref("projects/page--projects")).toBe("/projects");
-    expect(manifest.getHref("missing")).toBeNull();
+    expect(manifest.getWebPath("projects/page--projects")).toBe("/projects");
+    expect(manifest.getWebPath("missing")).toBeNull();
   });
 });
 
 describe("createVaultRouteManifest collisions", () => {
-  test("rejects routes that collide after slugification", () => {
+  test("rejects colliding web paths", () => {
     expect(() =>
       createVaultRouteManifest(
         createVault([
           "Hello World",
           "hello-world",
         ]),
+        schema,
       ),
     ).toThrow("Vault route collision at /hello-world: Hello World.md and hello-world.md");
   });

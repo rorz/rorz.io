@@ -7,7 +7,7 @@ const vault = getVault(obsidConfig, schema, "rorz.io");
 let vaultRouteManifest: ReturnType<typeof createVaultRouteManifest> | undefined;
 
 const getVaultRouteManifest = () => {
-  vaultRouteManifest ??= createVaultRouteManifest(vault);
+  vaultRouteManifest ??= createVaultRouteManifest(vault, schema);
   return vaultRouteManifest;
 };
 

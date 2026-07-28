@@ -33,23 +33,24 @@ describe("getVault", () => {
     );
 
     expect(vault.name).toBe("notes");
-    expect(vault.paths).toEqual([
+    expect(vault.vaultPaths).toEqual([
       "Welcome",
     ]);
     expect(await vault.getFile("Welcome")).toEqual({
       body: "# Welcome",
       currentFolder: {
         kind: "folder",
-        path: "",
+        vaultPath: "",
       },
       frontmatter: {},
       links: [],
       pageType: "page",
-      path: "Welcome",
       properties: {},
       resolveFolder: expect.any(Function),
       resolveNote: expect.any(Function),
       source: "# Welcome",
+      vaultPath: "Welcome",
+      webPath: "/welcome",
     });
   });
 
@@ -93,7 +94,7 @@ describe("Vault paths", () => {
       "notes",
     );
 
-    expect(vault.paths).toEqual([
+    expect(vault.vaultPaths).toEqual([
       "Zebra",
       "nested/Alpha",
     ]);
@@ -138,7 +139,7 @@ describe("getFolder", () => {
 
     const files = await vault.getFolder("/posts/");
 
-    expect(files.map((file) => file.path)).toEqual([
+    expect(files.map((file) => file.vaultPath)).toEqual([
       "posts/Alpha",
       "posts/Zebra",
     ]);
@@ -169,7 +170,7 @@ describe("getFolder path handling", () => {
       "notes",
     );
 
-    expect((await vault.getFolder("")).map((file) => file.path)).toEqual([
+    expect((await vault.getFolder("")).map((file) => file.vaultPath)).toEqual([
       "Root",
     ]);
     expect(await vault.getFolder("../notes")).toEqual([]);
@@ -194,7 +195,8 @@ describe("getFile", () => {
     );
 
     expect(loads).toBe(1);
-    expect(file?.path).toBe("Welcome");
+    expect(file?.vaultPath).toBe("Welcome");
+    expect(file?.webPath).toBe("/welcome");
     expect(file?.source).toBe("# Welcome");
   });
 
@@ -238,7 +240,7 @@ Only sells whole pies, but`;
       body: "Only sells whole pies, but",
       currentFolder: {
         kind: "folder",
-        path: "lists/best",
+        vaultPath: "lists/best",
       },
       frontmatter: {
         description: "Near [[Lauretta's]]",
@@ -258,11 +260,12 @@ Only sells whole pies, but`;
         },
       ],
       pageType: "page",
-      path: "lists/best/New York-style pizza (whole)",
       properties: {},
       resolveFolder: expect.any(Function),
       resolveNote: expect.any(Function),
       source,
+      vaultPath: "lists/best/New York-style pizza (whole)",
+      webPath: "/lists/best/new-york-style-pizza-whole",
     });
   });
 

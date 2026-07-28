@@ -2,7 +2,7 @@ import { z } from "zod";
 
 interface FrontmatterSource {
   readonly frontmatter: unknown;
-  readonly path: string;
+  readonly vaultPath: string;
 }
 
 const dateSchema = z.iso.date();
@@ -52,9 +52,12 @@ const parseFrontmatter = <Schema extends z.ZodType>(
   const result = schema.safeParse(file.frontmatter);
 
   if (!result.success) {
-    throw new Error(`Invalid frontmatter in ${file.path}.md\n${z.prettifyError(result.error)}`, {
-      cause: result.error,
-    });
+    throw new Error(
+      `Invalid frontmatter in ${file.vaultPath}.md\n${z.prettifyError(result.error)}`,
+      {
+        cause: result.error,
+      },
+    );
   }
 
   return result.data;

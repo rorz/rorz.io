@@ -37,8 +37,9 @@ interface VaultFile {
   readonly body: string;
   readonly frontmatter: VaultFrontmatter;
   readonly links: readonly VaultLink[];
-  readonly path: string;
   readonly source: string;
+  readonly vaultPath: string;
+  readonly webPath: string;
 }
 
 type ObsidVaultFile<Schema extends ObsidSchemaShape> = VaultFile &
@@ -49,14 +50,16 @@ type ObsidVaultFile<Schema extends ObsidSchemaShape> = VaultFile &
   };
 
 type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
-type GetFile<File extends VaultFile = VaultFile> = (path: string) => Promise<File | null>;
-type GetFolder<File extends VaultFile = VaultFile> = (path: string) => Promise<readonly File[]>;
+type GetFile<File extends VaultFile = VaultFile> = (vaultPath: string) => Promise<File | null>;
+type GetFolder<File extends VaultFile = VaultFile> = (
+  vaultPath: string,
+) => Promise<readonly File[]>;
 
 interface Vault<Name extends string = string, File extends VaultFile = VaultFile> {
   readonly getFile: GetFile<File>;
   readonly getFolder: GetFolder<File>;
   readonly name: Name;
-  readonly paths: readonly string[];
+  readonly vaultPaths: readonly string[];
 }
 
 type ObsidVault<Schema extends ObsidSchemaShape, Name extends string = string> = Vault<

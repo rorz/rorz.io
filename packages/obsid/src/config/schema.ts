@@ -5,6 +5,7 @@ import type {
   ObsidianPropertyMap,
 } from "../types/frontmatter.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
+import type { ObsidRouting } from "./routing.ts";
 
 type ObsidPageForPropertyMaps<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> =
   {
@@ -26,9 +27,10 @@ type ObsidResolvedNote<PropertyMaps extends Readonly<Record<string, ObsidianProp
   ObsidPageForPropertyMaps<PropertyMaps> & {
     readonly body: string;
     readonly currentFolder: ObsidFolderReference;
-    readonly path: string;
     readonly resolveFolder: ObsidResolveFolder<PropertyMaps>;
     readonly resolveNote: ObsidResolveNote<PropertyMaps>;
+    readonly vaultPath: string;
+    readonly webPath: string;
   };
 
 type ObsidRendererTools<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = {
@@ -36,6 +38,7 @@ type ObsidRendererTools<PropertyMaps extends Readonly<Record<string, ObsidianPro
   readonly markdown: string;
   readonly resolveFolder: ObsidResolveFolder<PropertyMaps>;
   readonly resolveNote: ObsidResolveNote<PropertyMaps>;
+  readonly title: string;
 };
 
 type ObsidPageDefinition<
@@ -54,6 +57,7 @@ type ObsidSchema<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMa
   readonly registry: {
     readonly [Name in keyof PropertyMaps]: ObsidPageDefinition<PropertyMaps[Name], PropertyMaps>;
   };
+  readonly routing?: ObsidRouting;
   readonly typeIdentifier?: string;
 };
 
@@ -68,6 +72,7 @@ type ObsidSchemaShape = {
       }
     >
   >;
+  readonly routing?: ObsidRouting;
   readonly typeIdentifier?: string;
 };
 
@@ -121,9 +126,18 @@ const renderObsidPage = <Schema extends ObsidSchemaShape>(
     markdown: page.body,
     resolveFolder: page.resolveFolder,
     resolveNote: page.resolveNote,
+    title: page.vaultPath.slice(page.vaultPath.lastIndexOf("/") + 1),
   });
 };
 
+export type {
+  ObsidPermalink,
+  ObsidPermalinkContext,
+  ObsidRouting,
+  ObsidSlugify,
+} from "./routing.ts";
+// biome-ignore lint/performance/noBarrelFile: This module is the package's intentional schema entry point.
+export { defaultPermalink, getWebPath, slugify } from "./routing.ts";
 export type {
   ObsidPageDefinition,
   ObsidPageForSchema,

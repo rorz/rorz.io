@@ -38,15 +38,15 @@ interface RootLayoutProps {
 }
 
 const getDirectoryHref = (
-  getHref: (sourcePath: string) => string | null,
+  getWebPath: (vaultPath: string) => string | null,
   resolvedPath: string | null,
   target: string,
 ): string => {
   if (resolvedPath) {
-    const href = getHref(resolvedPath);
+    const webPath = getWebPath(resolvedPath);
 
-    if (href) {
-      return href;
+    if (webPath) {
+      return webPath;
     }
   }
 
@@ -65,7 +65,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   const { directories } = parseFrontmatter(rootPage, rootFrontmatterSchema);
   const navigationItems = directories.map((directory) => ({
-    href: getDirectoryHref(manifest.getHref, directory.resolvedPath, directory.target),
+    href: getDirectoryHref(manifest.getWebPath, directory.resolvedPath, directory.target),
     label: directory.label,
   }));
 

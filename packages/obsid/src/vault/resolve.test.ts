@@ -52,10 +52,11 @@ Parent`),
 
   expect(parent.currentFolder).toEqual({
     kind: "folder",
-    path: "section",
+    vaultPath: "section",
   });
-  expect(child.path).toBe("section/children/Alpha");
-  expect((await parent.resolveFolder(child.currentFolder)).map((note) => note.path)).toEqual([
+  expect(child.vaultPath).toBe("section/children/Alpha");
+  expect(child.webPath).toBe("/section/children/alpha");
+  expect((await parent.resolveFolder(child.currentFolder)).map((note) => note.vaultPath)).toEqual([
     "section/children/Alpha",
     "section/children/Zebra",
   ]);

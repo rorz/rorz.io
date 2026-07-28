@@ -9,9 +9,9 @@ import {
 
 const displayAsKey = "display_as";
 
-const createSource = (frontmatter: unknown, path = "posts/Example") => ({
+const createSource = (frontmatter: unknown, vaultPath = "posts/Example") => ({
   frontmatter,
-  path,
+  vaultPath,
 });
 
 describe("frontmatterSchema", () => {

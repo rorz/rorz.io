@@ -7,3 +7,7 @@
   --font-serif:
     var(--font-roboto-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
+
+p {
+  font-family: var(--font-serif);
+}

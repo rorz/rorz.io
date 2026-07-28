@@ -1,3 +1,4 @@
+import { getWebPath } from "../config/routing.ts";
 import type {
   ObsidResolveFolderForSchema,
   ObsidResolveNoteForSchema,
@@ -120,12 +121,12 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   loaders: FileLoaders,
   vaultsFolder: string,
   vaultName: string,
-  path: string,
+  vaultPath: string,
   schema: Schema,
 ): Promise<ObsidVaultFile<Schema> | null> => {
   const vaultRoot = normalizeVaultsFolder(vaultsFolder);
   const normalizedVaultName = normalizeVaultName(vaultName);
-  const normalizedPath = normalizePath(path);
+  const normalizedPath = normalizePath(vaultPath);
 
   if (!(vaultRoot && normalizedVaultName && normalizedPath)) {
     return null;
@@ -142,7 +143,7 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
   const currentFolder: ObsidFolderReference = {
     kind: "folder",
-    path: getParentFolderPath(normalizedPath),
+    vaultPath: getParentFolderPath(normalizedPath),
   };
   const resolveNote: ObsidResolveNoteForSchema<Schema> = (reference) => {
     const resolvedPath = resolveVaultPath(reference.path, normalizedPath, vaultPaths);
@@ -154,7 +155,7 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
     return getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, resolvedPath, schema);
   };
   const resolveFolder: ObsidResolveFolderForSchema<Schema> = async (reference) => {
-    const folderPath = normalizeFolderPath(reference.path);
+    const folderPath = normalizeFolderPath(reference.vaultPath);
 
     if (folderPath === null) {
       return [];
@@ -183,10 +184,11 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
       frontmatter: parsedSource.frontmatter,
       vaultPaths,
     }),
-    path: normalizedPath,
     resolveFolder,
     resolveNote,
     source,
+    vaultPath: normalizedPath,
+    webPath: getWebPath(schema, normalizedPath),
   };
 };
 
@@ -209,9 +211,9 @@ const getVaultFromLoaders = <
     throw new Error(`Invalid vaults folder: ${config.vaultsFolder}`);
   }
 
-  const paths = getVaultPaths(loaders, vaultRoot, name);
-  const getFile = (path: string) =>
-    getFileFromLoaders(loaders, config.vaultsFolder, name, path, schema);
+  const vaultPaths = getVaultPaths(loaders, vaultRoot, name);
+  const getFile = (vaultPath: string) =>
+    getFileFromLoaders(loaders, config.vaultsFolder, name, vaultPath, schema);
 
   return {
     getFile,
@@ -223,13 +225,13 @@ const getVaultFromLoaders = <
       }
 
       const files = (await Promise.all(
-        getFolderPaths(paths, folderPath).map((filePath) => getFile(filePath)),
+        getFolderPaths(vaultPaths, folderPath).map((filePath) => getFile(filePath)),
       )) as Array<ObsidVaultFile<Schema> | null>;
 
       return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
     },
     name,
-    paths,
+    vaultPaths,
   };
 };
 

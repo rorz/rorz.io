@@ -1,6 +1,6 @@
 interface ObsidFolderReference {
   readonly kind: "folder";
-  readonly path: string;
+  readonly vaultPath: string;
 }
 
 export type { ObsidFolderReference };

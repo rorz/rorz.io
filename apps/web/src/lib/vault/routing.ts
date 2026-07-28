@@ -1,113 +1,104 @@
+import {
+  defaultPermalink,
+  getWebPath as getSchemaWebPath,
+  type ObsidPermalink,
+  type ObsidSchemaShape,
+} from "obsid/schema";
 import type { Vault } from "obsid/vault";
 
 interface VaultRoute {
-  readonly href: string;
-  readonly routePath: string;
   readonly segments: readonly string[];
-  readonly sourcePath: string;
+  readonly vaultPath: string;
+  readonly webPath: string;
 }
 
 interface VaultRouteManifest {
   readonly getBySegments: (segments?: readonly string[]) => VaultRoute | null;
-  readonly getHref: (sourcePath: string) => string | null;
+  readonly getWebPath: (vaultPath: string) => string | null;
   readonly routes: readonly VaultRoute[];
 }
 
-const apostrophePattern = /['’]/gu;
-const combiningMarkPattern = /\p{Mark}+/gu;
-const nonWordPattern = /[^\p{Letter}\p{Number}]+/gu;
-const surroundingHyphenPattern = /(?:^-+|-+$)/gu;
-
-const slugifySegment = (segment: string): string =>
-  segment
-    .normalize("NFKD")
-    .replace(combiningMarkPattern, "")
-    .replace(apostrophePattern, "")
-    .toLowerCase()
-    .replace(nonWordPattern, "-")
-    .replace(surroundingHyphenPattern, "");
-
-const isDirectoryPage = (sourceSegments: readonly string[]): boolean => {
-  const filename = sourceSegments.at(-1)?.toLowerCase();
+const isDirectoryPage = (vaultSegments: readonly string[]): boolean => {
+  const filename = vaultSegments.at(-1)?.toLowerCase();
 
   if (filename === "page") {
     return true;
   }
 
-  const parentDirectory = sourceSegments.at(-2)?.toLowerCase();
+  const parentDirectory = vaultSegments.at(-2)?.toLowerCase();
   return parentDirectory !== undefined && filename === `page--${parentDirectory}`;
 };
 
-const getHref = (segments: readonly string[]): string => {
+const webPermalink: ObsidPermalink = (context) => {
+  const vaultSegments = context.vaultPath.split("/");
+
+  if (isDirectoryPage(vaultSegments)) {
+    vaultSegments.pop();
+  }
+
+  return defaultPermalink({
+    ...context,
+    vaultPath: vaultSegments.join("/"),
+  });
+};
+
+const getSegments = (webPath: string): readonly string[] => {
+  if (webPath === "/") {
+    return [];
+  }
+
+  return webPath.slice(1).split("/");
+};
+
+const getWebPathFromSegments = (segments: readonly string[]): string => {
   if (segments.length === 0) {
     return "/";
   }
 
-  return `/${segments.map((segment) => encodeURIComponent(segment)).join("/")}`;
+  return `/${segments.join("/")}`;
 };
 
-const createVaultRoute = (sourcePath: string): VaultRoute => {
-  const sourceSegments = sourcePath.split("/");
-  let routeSourceSegments = sourceSegments;
-
-  if (isDirectoryPage(sourceSegments)) {
-    routeSourceSegments = sourceSegments.slice(0, -1);
-  }
-
-  const segments = routeSourceSegments.map((segment) => {
-    const slug = slugifySegment(segment);
-
-    if (!slug) {
-      throw new Error(`Path segment in ${sourcePath}.md must contain a letter or number`);
-    }
-
-    return slug;
-  });
-  const routePath = segments.join("/");
+const createVaultRoute = (vaultPath: string, schema: ObsidSchemaShape): VaultRoute => {
+  const webPath = getSchemaWebPath(schema, vaultPath);
 
   return {
-    href: getHref(segments),
-    routePath,
-    segments,
-    sourcePath,
+    segments: getSegments(webPath),
+    vaultPath,
+    webPath,
   };
 };
 
-const compareRoutes = (left: VaultRoute, right: VaultRoute): number => {
-  if (left.routePath < right.routePath) {
-    return -1;
-  }
+const compareRoutes = (left: VaultRoute, right: VaultRoute): number =>
+  left.webPath.localeCompare(right.webPath);
 
-  if (left.routePath > right.routePath) {
-    return 1;
-  }
-
-  return 0;
-};
-
-const createVaultRouteManifest = (vault: Pick<Vault, "paths">): VaultRouteManifest => {
-  const routes = vault.paths.map(createVaultRoute).toSorted(compareRoutes);
-  const routesByPath = new Map<string, VaultRoute>();
-  const routesBySourcePath = new Map<string, VaultRoute>();
+const createVaultRouteManifest = (
+  vault: Pick<Vault, "vaultPaths">,
+  schema: ObsidSchemaShape,
+): VaultRouteManifest => {
+  const routes = vault.vaultPaths
+    .map((vaultPath) => createVaultRoute(vaultPath, schema))
+    .toSorted(compareRoutes);
+  const routesByVaultPath = new Map<string, VaultRoute>();
+  const routesByWebPath = new Map<string, VaultRoute>();
 
   for (const route of routes) {
-    const existingRoute = routesByPath.get(route.routePath);
+    const existingRoute = routesByWebPath.get(route.webPath);
 
     if (existingRoute) {
       throw new Error(
-        `Vault route collision at ${route.href}: ${existingRoute.sourcePath}.md and ${route.sourcePath}.md`,
+        `Vault route collision at ${route.webPath}: ${existingRoute.vaultPath}.md and ${route.vaultPath}.md`,
       );
     }
 
-    routesByPath.set(route.routePath, route);
-    routesBySourcePath.set(route.sourcePath, route);
+    routesByVaultPath.set(route.vaultPath, route);
+    routesByWebPath.set(route.webPath, route);
   }
 
   return {
-    getBySegments: (segments = []) => routesByPath.get(segments.join("/")) ?? null,
-    getHref: (sourcePath) => routesBySourcePath.get(sourcePath)?.href ?? null,
+    getBySegments: (segments = []) => routesByWebPath.get(getWebPathFromSegments(segments)) ?? null,
+    getWebPath: (vaultPath) => routesByVaultPath.get(vaultPath)?.webPath ?? null,
     routes,
   };
 };
 
-export { createVaultRouteManifest, slugifySegment };
+export { createVaultRouteManifest, webPermalink };
