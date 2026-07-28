@@ -12,7 +12,7 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "tailwindcss-intellisense-css"]
+      "language_servers": ["biome", "tailwindcss-intellisense-css", "!oxfmt"]
     },
     "HTML": {
       "code_actions_on_format": {
@@ -24,7 +24,7 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "..."]
+      "language_servers": ["biome", "!oxfmt", "..."]
     },
     "JavaScript": {
       "code_actions_on_format": {
@@ -38,11 +38,15 @@
         }
       },
       "language_servers": [
+        "typescript-language-server",
         "biome",
-        "vtsls",
         "tailwindcss-language-server",
-        "!typescript-language-server",
-        "!eslint"
+        "!typescript-ls",
+        "!vtsls",
+        "!eslint",
+        "!oxfmt",
+        "!oxlint",
+        "..."
       ]
     },
     "JSON": {
@@ -55,7 +59,7 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "json-language-server"]
+      "language_servers": ["biome", "json-language-server", "!oxfmt"]
     },
     "JSONC": {
       "code_actions_on_format": {
@@ -67,7 +71,10 @@
           "name": "biome"
         }
       },
-      "language_servers": ["biome", "json-language-server"]
+      "language_servers": ["biome", "json-language-server", "!oxfmt"]
+    },
+    "Markdown": {
+      "language_servers": ["!oxfmt", "..."]
     },
     "TSX": {
       "code_actions_on_format": {
@@ -81,14 +88,17 @@
         }
       },
       "language_servers": [
+        "typescript-language-server",
         "biome",
-        "vtsls",
         "tailwindcss-language-server",
-        "!typescript-language-server",
-        "!eslint"
+        "!typescript-ls",
+        "!vtsls",
+        "!eslint",
+        "!oxfmt",
+        "!oxlint",
+        "..."
       ]
     },
-
     "TypeScript": {
       "code_actions_on_format": {
         "source.fixAll.biome": true,
@@ -101,11 +111,15 @@
         }
       },
       "language_servers": [
+        "typescript-language-server",
         "biome",
-        "vtsls",
         "tailwindcss-language-server",
-        "!typescript-language-server",
-        "!eslint"
+        "!typescript-ls",
+        "!vtsls",
+        "!eslint",
+        "!oxfmt",
+        "!oxlint",
+        "..."
       ]
     }
   },

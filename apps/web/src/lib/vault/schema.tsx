@@ -1,11 +1,13 @@
-import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeftIcon, StarHalfIcon, StarIcon } from "@phosphor-icons/react/dist/ssr";
 import { format } from "date-fns/fp";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
-import { date, text } from "obsid/property";
+import { date, number, text } from "obsid/property";
 import { ObsidianMarkdown } from "obsid/react";
 import { defineObsidSchema } from "obsid/schema";
 import type { StringPropertyValue } from "obsid/types";
+import type { ReactNode } from "react";
+import { StarRating } from "@/components/star-rating.tsx";
 import { webPermalink } from "@/lib/vault/routing.ts";
 
 const renderTitle = (title: StringPropertyValue | undefined): string | null => {
@@ -32,6 +34,13 @@ const schema = defineObsidSchema({
   // globalProperties: { ... }
   // globalMetadata: { ... }
   registry: {
+    listOfLists: {
+      properties: {},
+      renderer: async (properties, tools) => {
+        //
+        return <div>{tools.markdown}</div>;
+      },
+    },
     page: {
       properties: {
         slug: text().optional(),
@@ -42,6 +51,27 @@ const schema = defineObsidSchema({
       //   title: "title",
       //   slug: "slug"
       // }
+    },
+    place: {
+      properties: {
+        rating: number().optional(),
+      },
+      renderer: (properties, { markdown, title }) => {
+        return (
+          <div className="flex flex-col gap-2 items-start">
+            <h1 className="text-3xl font-semibold">{title}</h1>
+            {properties.rating ? (
+              <div className="flex items-center gap-2">
+                <div className="bg-neutral-200 text-black py-1 px-2">
+                  <StarRating className="text-xl" value={properties.rating} />
+                </div>
+                <span className="text-neutral-500 text-sm">({properties.rating})</span>
+              </div>
+            ) : null}
+            <ObsidianMarkdown>{markdown}</ObsidianMarkdown>
+          </div>
+        );
+      },
     },
     post: {
       properties: {

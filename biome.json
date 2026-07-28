@@ -81,6 +81,7 @@
       "preset": "all",
       "style": {
         "noJsxLiterals": "off",
+        "noTernary": "off",
         "useConsistentTypeDefinitions": "off"
       },
       "suspicious": {

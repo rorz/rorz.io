@@ -7,13 +7,5 @@
   },
   "exclude": ["node_modules", "dist", ".vinext"],
   "extends": "../../tsconfig.json",
-  "include": [
-    "src/app/**/*.ts",
-    "src/app/**/*.tsx",
-    "obsid.config.ts",
-    "vite.config.ts",
-    "vite-env.d.ts",
-    "src/lib/cn/cn.ts",
-    "src/lib/cn/cn.test.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "obsid.config.ts", "vite.config.ts", "vite-env.d.ts"]
 }
