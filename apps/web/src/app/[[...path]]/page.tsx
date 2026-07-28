@@ -8,10 +8,8 @@ interface PageProps {
   }>;
 }
 
-const dynamicParams = false;
-
-const generateStaticParams = async () => {
-  const manifest = await getVaultRouteManifest();
+const generateStaticParams = () => {
+  const manifest = getVaultRouteManifest();
 
   return manifest.routes.map((route) => ({
     path: route.segments,
@@ -19,7 +17,7 @@ const generateStaticParams = async () => {
 };
 
 const Page = async ({ params }: PageProps) => {
-  const manifest = await getVaultRouteManifest();
+  const manifest = getVaultRouteManifest();
   const route = manifest.getBySegments((await params).path);
 
   if (!route) {
@@ -34,6 +32,8 @@ const Page = async ({ params }: PageProps) => {
 
   return <Obsid note={note} schema={schema} />;
 };
+
+const dynamicParams = false;
 
 // biome-ignore lint/style/useComponentExportOnlyModules: App Router pages must export route configuration beside the component.
 export { dynamicParams, generateStaticParams };

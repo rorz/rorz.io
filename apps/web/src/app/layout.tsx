@@ -3,6 +3,7 @@ import "@/styles.css";
 import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { Roboto_Serif, Zalando_Sans } from "next/font/google";
+import Link from "next/link";
 import { Navigation } from "@/components/navigation/index.tsx";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
@@ -73,11 +74,11 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
     <html className={`${zalandoSans.variable} ${robotoSerif.variable}`} lang="en">
       <body className="size-full flex flex-col items-center justify-start">
         <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
-          <a className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
+          <Link className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
             <span className="block px-2 bg-neutral-100/0 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
               Rory McMeekin
             </span>
-          </a>
+          </Link>
           <div className="col-span-8" />
           <div className="col-span-2 flex items-start justify-end pr-2">
             <button className="cursor-pointer text-black hover:bg-neutral-200 p-1" type="button">

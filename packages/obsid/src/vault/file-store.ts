@@ -12,6 +12,9 @@ import { createVaultLinks, resolveFrontmatterLinks, resolveVaultPath } from "./w
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
+type VaultFileLoader<Schema extends ObsidSchemaShape> = (
+  vaultPath: string,
+) => Promise<ObsidVaultFile<Schema> | null>;
 
 const leadingSlashPattern = /^\/+/u;
 const markdownExtension = ".md";
@@ -116,6 +119,51 @@ const getFolderPaths = (vaultPaths: readonly string[], folderPath: string): read
   });
 };
 
+const loadFolderFiles = async <Schema extends ObsidSchemaShape>(
+  vaultPaths: readonly string[],
+  folderPath: string,
+  getFile: VaultFileLoader<Schema>,
+): Promise<readonly ObsidVaultFile<Schema>[]> => {
+  const files = (await Promise.all(
+    getFolderPaths(vaultPaths, folderPath).map((filePath) => getFile(filePath)),
+  )) as Array<ObsidVaultFile<Schema> | null>;
+
+  return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
+};
+
+const createFileResolvers = <Schema extends ObsidSchemaShape>(
+  getFile: VaultFileLoader<Schema>,
+  currentPath: string,
+  vaultPaths: readonly string[],
+): {
+  resolveFolder: ObsidResolveFolderForSchema<Schema>;
+  resolveNote: ObsidResolveNoteForSchema<Schema>;
+} => {
+  const resolveNote: ObsidResolveNoteForSchema<Schema> = (reference) => {
+    const resolvedPath = resolveVaultPath(reference.path, currentPath, vaultPaths);
+
+    if (!resolvedPath) {
+      return Promise.resolve(null);
+    }
+
+    return getFile(resolvedPath);
+  };
+  const resolveFolder: ObsidResolveFolderForSchema<Schema> = (reference) => {
+    const folderPath = normalizeFolderPath(reference.vaultPath);
+
+    if (folderPath === null) {
+      return Promise.resolve([]);
+    }
+
+    return loadFolderFiles(vaultPaths, folderPath, getFile);
+  };
+
+  return {
+    resolveFolder,
+    resolveNote,
+  };
+};
+
 // biome-ignore lint/complexity/useMaxParams: This test seam exposes the complete file identity plus its schema.
 const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   loaders: FileLoaders,
@@ -141,33 +189,12 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   const source = await load();
   const parsedSource = parseVaultSource(source, normalizedPath, schema);
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
+  const getFile = (path: string) =>
+    getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, path, schema);
+  const { resolveFolder, resolveNote } = createFileResolvers(getFile, normalizedPath, vaultPaths);
   const currentFolder: ObsidFolderReference = {
     kind: "folder",
     vaultPath: getParentFolderPath(normalizedPath),
-  };
-  const resolveNote: ObsidResolveNoteForSchema<Schema> = (reference) => {
-    const resolvedPath = resolveVaultPath(reference.path, normalizedPath, vaultPaths);
-
-    if (!resolvedPath) {
-      return Promise.resolve(null);
-    }
-
-    return getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, resolvedPath, schema);
-  };
-  const resolveFolder: ObsidResolveFolderForSchema<Schema> = async (reference) => {
-    const folderPath = normalizeFolderPath(reference.vaultPath);
-
-    if (folderPath === null) {
-      return [];
-    }
-
-    const files = (await Promise.all(
-      getFolderPaths(vaultPaths, folderPath).map((filePath) =>
-        getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, filePath, schema),
-      ),
-    )) as Array<ObsidVaultFile<Schema> | null>;
-
-    return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
   };
 
   return {
@@ -217,18 +244,14 @@ const getVaultFromLoaders = <
 
   return {
     getFile,
-    getFolder: async (path) => {
+    getFolder: (path) => {
       const folderPath = normalizeFolderPath(path);
 
       if (folderPath === null) {
-        return [];
+        return Promise.resolve([]);
       }
 
-      const files = (await Promise.all(
-        getFolderPaths(vaultPaths, folderPath).map((filePath) => getFile(filePath)),
-      )) as Array<ObsidVaultFile<Schema> | null>;
-
-      return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
+      return loadFolderFiles(vaultPaths, folderPath, getFile);
     },
     name,
     vaultPaths,

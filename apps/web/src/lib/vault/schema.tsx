@@ -1,7 +1,8 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import { format } from "date-fns/fp";
+// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
-import { date, list, text } from "obsid/property";
+import { date, text } from "obsid/property";
 import { ObsidianMarkdown } from "obsid/react";
 import { defineObsidSchema } from "obsid/schema";
 import type { StringPropertyValue } from "obsid/types";
@@ -31,19 +32,6 @@ const schema = defineObsidSchema({
   // globalProperties: { ... }
   // globalMetadata: { ... }
   registry: {
-    "link-list": {
-      properties: {
-        date: date().optional(),
-        description: text().optional(),
-        directories: list().optional(),
-        list: list().optional(),
-        rating: text().optional(),
-        slug: text().optional(),
-        title: text().optional(),
-        where: text().optional(),
-      },
-      renderer: ({ title }) => renderTitle(title),
-    },
     page: {
       properties: {
         slug: text().optional(),

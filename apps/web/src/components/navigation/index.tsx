@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn/index.ts";
@@ -36,7 +37,7 @@ const Navigation = ({ items }: NavigationProps) => {
         const isActive = isActiveNavigationPath(pathname, item.href);
 
         return (
-          <a
+          <Link
             aria-current={getAriaCurrent(isActive)}
             className={cn(
               "bg-transparent w-full px-2 py-0.5 pt-1.5 hover:bg-neutral-200 font-semibold",
@@ -46,7 +47,7 @@ const Navigation = ({ items }: NavigationProps) => {
             key={`${item.href}:${item.label}`}
           >
             {item.label}
-          </a>
+          </Link>
         );
       })}
     </nav>
