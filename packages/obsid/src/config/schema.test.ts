@@ -10,13 +10,31 @@ test("renderObsidPage dispatches content and tools to the selected renderer", as
         properties: {
           title: text(),
         },
-        renderer: async ({ title }, { currentFolder, markdown, title: noteTitle }) => {
+        renderer: async ({ title }, { currentFolder, markdown, sortBy, title: noteTitle }) => {
           if (title.type !== "string") {
             throw new Error("Expected a plain text title");
           }
 
           const prefix = await Promise.resolve("Rendered");
-          return `${prefix} ${noteTitle} from ${currentFolder.vaultPath}: ${title.value}\n${markdown}`;
+          const ordered = sortBy(
+            [
+              {
+                label: "second",
+                properties: {
+                  position: 2,
+                },
+              },
+              {
+                label: "first",
+                properties: {
+                  position: 1,
+                },
+              },
+            ],
+            "position",
+          );
+
+          return `${prefix} ${noteTitle} from ${currentFolder.vaultPath}: ${title.value} (${ordered[0]?.label})\n${markdown}`;
         },
       },
     },
@@ -42,5 +60,5 @@ test("renderObsidPage dispatches content and tools to the selected renderer", as
     webPath: "/posts",
   });
 
-  expect(rendered).toBe("Rendered page from posts: Hello\n# Body");
+  expect(rendered).toBe("Rendered page from posts: Hello (first)\n# Body");
 });

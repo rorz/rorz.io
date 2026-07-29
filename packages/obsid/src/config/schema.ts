@@ -6,6 +6,7 @@ import type {
 } from "../types/frontmatter.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import type { ObsidRouting } from "./routing.ts";
+import { sortBy as sortResolvedNotesBy } from "./sort.ts";
 
 type ObsidPageForPropertyMaps<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> =
   {
@@ -19,10 +20,6 @@ type ObsidResolveNote<PropertyMaps extends Readonly<Record<string, ObsidianPrope
   reference: ObsidianNotePropertyValue,
 ) => Promise<ObsidResolvedNote<PropertyMaps> | null>;
 
-type ObsidResolveFolder<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = (
-  reference: ObsidFolderReference,
-) => Promise<readonly ObsidResolvedNote<PropertyMaps>[]>;
-
 type ObsidResolvedNote<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> =
   ObsidPageForPropertyMaps<PropertyMaps> & {
     readonly body: string;
@@ -33,11 +30,30 @@ type ObsidResolvedNote<PropertyMaps extends Readonly<Record<string, ObsidianProp
     readonly webPath: string;
   };
 
+type ObsidResolvedNoteForPageType<
+  PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>,
+  PageType extends keyof PropertyMaps & string,
+> = Extract<
+  ObsidResolvedNote<PropertyMaps>,
+  {
+    readonly pageType: PageType;
+  }
+>;
+
+interface ObsidResolveFolder<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> {
+  (reference: ObsidFolderReference): Promise<readonly ObsidResolvedNote<PropertyMaps>[]>;
+  <PageType extends keyof PropertyMaps & string>(
+    reference: ObsidFolderReference,
+    pageType: PageType,
+  ): Promise<readonly ObsidResolvedNoteForPageType<PropertyMaps, PageType>[]>;
+}
+
 type ObsidRendererTools<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = {
   readonly currentFolder: ObsidFolderReference;
   readonly markdown: string;
   readonly resolveFolder: ObsidResolveFolder<PropertyMaps>;
   readonly resolveNote: ObsidResolveNote<PropertyMaps>;
+  readonly sortBy: typeof sortResolvedNotesBy;
   readonly title: string;
 };
 
@@ -126,6 +142,7 @@ const renderObsidPage = <Schema extends ObsidSchemaShape>(
     markdown: page.body,
     resolveFolder: page.resolveFolder,
     resolveNote: page.resolveNote,
+    sortBy: sortResolvedNotesBy,
     title: page.vaultPath.slice(page.vaultPath.lastIndexOf("/") + 1),
   });
 };
@@ -138,6 +155,8 @@ export type {
 } from "./routing.ts";
 // biome-ignore lint/performance/noBarrelFile: This module is the package's intentional schema entry point.
 export { defaultPermalink, getWebPath, slugify } from "./routing.ts";
+export type { SortablePropertyKey, SortablePropertyValue } from "./sort.ts";
+export { sortBy } from "./sort.ts";
 export type {
   ObsidPageDefinition,
   ObsidPageForSchema,

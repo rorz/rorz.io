@@ -148,15 +148,38 @@ const createFileResolvers = <Schema extends ObsidSchemaShape>(
 
     return getFile(resolvedPath);
   };
-  const resolveFolder: ObsidResolveFolderForSchema<Schema> = (reference) => {
+  function resolveFolder(
+    reference: ObsidFolderReference,
+  ): Promise<readonly ObsidVaultFile<Schema>[]>;
+  function resolveFolder<PageType extends keyof Schema["registry"] & string>(
+    reference: ObsidFolderReference,
+    pageType: PageType,
+  ): Promise<
+    readonly Extract<
+      ObsidVaultFile<Schema>,
+      {
+        readonly pageType: PageType;
+      }
+    >[]
+  >;
+  async function resolveFolder(
+    reference: ObsidFolderReference,
+    pageType?: keyof Schema["registry"] & string,
+  ): Promise<readonly ObsidVaultFile<Schema>[]> {
     const folderPath = normalizeFolderPath(reference.vaultPath);
 
     if (folderPath === null) {
-      return Promise.resolve([]);
+      return [];
     }
 
-    return loadFolderFiles(vaultPaths, folderPath, getFile);
-  };
+    const notes = await loadFolderFiles(vaultPaths, folderPath, getFile);
+
+    if (pageType === undefined) {
+      return notes;
+    }
+
+    return notes.filter((note) => note.pageType === pageType);
+  }
 
   return {
     resolveFolder,

@@ -1,12 +1,12 @@
-import { ArrowLeftIcon, StarHalfIcon, StarIcon } from "@phosphor-icons/react/dist/ssr";
 import { format } from "date-fns/fp";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Link from "next/link";
-import { date, number, text } from "obsid/property";
+import { date, list, number, text } from "obsid/property";
 import { ObsidianMarkdown } from "obsid/react";
 import { defineObsidSchema } from "obsid/schema";
 import type { StringPropertyValue } from "obsid/types";
 import type { ReactNode } from "react";
+import z from "zod";
+import { List, ListItem } from "@/components/list/index.tsx";
+import { Page } from "@/components/page.tsx";
 import { StarRating } from "@/components/star-rating.tsx";
 import { webPermalink } from "@/lib/vault/routing.ts";
 
@@ -26,7 +26,7 @@ const renderTitle = (title: StringPropertyValue | undefined): string | null => {
   return title.label ?? title.path;
 };
 
-const getNoteTitle = (vaultPath: string, title: StringPropertyValue | undefined): string =>
+const getNoteTitle = (vaultPath: string, title?: StringPropertyValue): string =>
   renderTitle(title) ?? vaultPath.slice(vaultPath.lastIndexOf("/") + 1);
 
 const schema = defineObsidSchema({
@@ -34,11 +34,140 @@ const schema = defineObsidSchema({
   // globalProperties: { ... }
   // globalMetadata: { ... }
   registry: {
+    list: {
+      properties: {
+        listOf: text(),
+        sortKey: text().optional(),
+      },
+      renderer: async (properties, { resolveFolder, currentFolder, sortBy }) => {
+        const listTitle = getNoteTitle(currentFolder.vaultPath);
+
+        const listOf = z
+          .enum([
+            "post",
+            "place",
+            "thing",
+          ])
+          .parse(properties.listOf.raw);
+
+        const notes = await resolveFolder(currentFolder, listOf);
+
+        const sorted = (() => {
+          if (listOf === "place") {
+            return sortBy(notes, "date");
+          }
+          if (listOf === "post") {
+            return sortBy(notes, "date");
+          }
+          if (listOf === "thing") {
+            return sortBy(notes, "date");
+          }
+
+          return notes;
+        })();
+
+        return (
+          <Page title={`${listTitle} (All)`}>
+            <List className="mt-6">
+              {sorted.map((note) => {
+                let title = "No title";
+                let decoration: string | ReactNode = "No decoration";
+
+                if (note.pageType === "post") {
+                  title = getNoteTitle(note.vaultPath, note.properties.title);
+                  decoration = format("do LLL y", note.properties.date);
+                }
+                if (note.pageType === "place") {
+                  title = getNoteTitle(note.vaultPath);
+                  decoration = note.properties.rating ? (
+                    <StarRating className="py-0.5" value={note.properties.rating} />
+                  ) : (
+                    "No rating"
+                  );
+                }
+                if (note.pageType === "thing") {
+                  title = getNoteTitle(note.vaultPath);
+                  decoration = format("do LLL y", note.properties.date);
+                }
+
+                return (
+                  <ListItem
+                    decoration={decoration}
+                    href={note.webPath}
+                    key={note.webPath}
+                    title={title}
+                  />
+                );
+              })}
+            </List>
+          </Page>
+        );
+      },
+    },
     listOfLists: {
-      properties: {},
-      renderer: async (properties, tools) => {
-        //
-        return <div>{tools.markdown}</div>;
+      properties: {
+        limitPer: number().optional(),
+        lists: list(),
+      },
+      renderer: async (properties, { title, markdown, ...tools }) => {
+        console.log("STARTING LIST OF LISTS RENDER");
+        const lists = await Promise.all(
+          z
+            .array(
+              z.object({
+                label: z.string(),
+                path: z.string(),
+                type: z.literal("note"),
+              }),
+            )
+            .parse(properties.lists)
+            .map(async (listDefinition) => {
+              console.log("LIST DEFINITION", listDefinition);
+              const folderPath = listDefinition.path.split("/").slice(0, -1).join("/");
+              const indexNotePath = listDefinition.path;
+              const [indexNote] = await tools.resolveFolder(
+                {
+                  kind: "folder",
+                  vaultPath: folderPath,
+                },
+                "list",
+              );
+
+              if (indexNote === undefined) {
+                throw new Error(`Can't find an index note at ${folderPath}`);
+              }
+
+              const listOf = z
+                .enum([
+                  "thing",
+                  "place",
+                ])
+                .parse(indexNote.properties.listOf.raw);
+
+              const title = getNoteTitle(folderPath);
+              const notes = await tools.resolveFolder(
+                {
+                  kind: "folder",
+                  vaultPath: folderPath,
+                },
+                listOf,
+              );
+              console.log("GOT NOTES: Count::", notes.length);
+              return {
+                notes: notes.slice(0, properties.limitPer ?? notes.length - 1),
+                title,
+              };
+            }),
+        );
+        return (
+          <Page title={title}>
+            {lists.map((list) => (
+              <List key={list.title}>
+                <p>{list.notes.length}</p>
+              </List>
+            ))}
+          </Page>
+        );
       },
     },
     page: {
@@ -54,24 +183,23 @@ const schema = defineObsidSchema({
     },
     place: {
       properties: {
+        date: date(),
         rating: number().optional(),
       },
-      renderer: (properties, { markdown, title }) => {
-        return (
-          <div className="flex flex-col gap-2 items-start">
-            <h1 className="text-3xl font-semibold">{title}</h1>
-            {properties.rating ? (
-              <div className="flex items-center gap-2">
-                <div className="bg-neutral-200 text-black py-1 px-2">
-                  <StarRating className="text-xl" value={properties.rating} />
-                </div>
-                <span className="text-neutral-500 text-sm">({properties.rating})</span>
+      renderer: (properties, { markdown, title }) => (
+        <Page
+          subtitle={
+            properties.rating && (
+              <div className="bg-neutral-200 text-black py-1 px-2">
+                <StarRating className="text-xl" value={properties.rating} />
               </div>
-            ) : null}
-            <ObsidianMarkdown>{markdown}</ObsidianMarkdown>
-          </div>
-        );
-      },
+            )
+          }
+          title={title}
+        >
+          <ObsidianMarkdown>{markdown}</ObsidianMarkdown>
+        </Page>
+      ),
     },
     post: {
       properties: {
@@ -80,57 +208,35 @@ const schema = defineObsidSchema({
       },
       renderer: async (properties, { markdown, title, resolveFolder, currentFolder }) => {
         const notes = await resolveFolder(currentFolder);
-        const parent = notes.find((note) => note.pageType === "postList");
+        const parent = notes.find((note) => note.pageType === "list");
         if (parent === undefined) {
           throw new Error(`Missing post list for ${currentFolder.vaultPath}`);
         }
         return (
-          <div className="flex flex-col gap-2 items-start">
-            <Link
-              className="inline-flex items-center gap-1 text-sm hover:underline mb-3"
-              href={parent.webPath}
-            >
-              <ArrowLeftIcon />
-              <span>Posts</span>
-            </Link>
-            <h1 className="font-sans font-stretch-semi-condensed font-bold text-3xl">{title}</h1>
-            <span className="mb-4 text-neutral-700">{format("do MMMM y", properties.date)}</span>
+          <Page
+            backNavigation={{
+              href: parent.webPath,
+              title: "Posts",
+            }}
+            subtitle={format("do MMMM y", properties.date)}
+            title={title}
+          >
             <ObsidianMarkdown>{markdown}</ObsidianMarkdown>
-          </div>
+          </Page>
         );
       },
     },
-    postList: {
-      properties: {},
-      renderer: async (_properties, { currentFolder, resolveFolder }) => {
-        const notes = await resolveFolder(currentFolder);
-        const posts = notes.filter((note) => note.pageType === "post");
-
+    thing: {
+      properties: {
+        date: date(),
+        from: text(),
+      },
+      renderer: (properties, { markdown, title }) => {
+        //
         return (
-          <ul className="flex flex-col items-start gap-0 w-full">
-            {posts
-              .toSorted(
-                (left, right) => right.properties.date.getTime() - left.properties.date.getTime(),
-              )
-              .map((post) => (
-                <li className="w-full" key={post.vaultPath}>
-                  <Link
-                    className="flex justify-between items-center w-full group pb-4"
-                    href={post.webPath}
-                  >
-                    <span className="group-hover:underline underline-offset-2 decoration-1">
-                      {getNoteTitle(post.vaultPath, post.properties.title)}
-                    </span>
-                    <div className="w-full flex-1 border-b-1 -mt-2 border-neutral-100 group-hover:border-neutral-800">
-                      <span className="no-underline hover:no-underline">&nbsp;</span>
-                    </div>
-                    <span className="group-hover:bg-black group-hover:text-white bg-neutral-200 border-neutral-200 px-2 pt-0.5 flex justify-end -mt-1.5 border-b group-hover:border-black">
-                      <span className="text-sm">{format("do LLLL y", post.properties.date)}</span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-          </ul>
+          <Page title={title}>
+            <ObsidianMarkdown>{markdown}</ObsidianMarkdown>
+          </Page>
         );
       },
     },

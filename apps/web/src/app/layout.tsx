@@ -2,17 +2,22 @@ import type { ReactNode } from "react";
 import "@/styles.css";
 import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import { Roboto_Serif, Zalando_Sans } from "next/font/google";
+import { Libertinus_Serif, Zalando_Sans } from "next/font/google";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation/index.tsx";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
-const robotoSerif = Roboto_Serif({
+const libertinusSerif = Libertinus_Serif({
   subsets: [
     "latin",
   ],
-  variable: "--font-roboto-serif",
+  variable: "--font-libertinus-serif",
+  weight: [
+    "400",
+    "600",
+    "700",
+  ],
 });
 
 const zalandoSans = Zalando_Sans({
@@ -71,7 +76,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   }));
 
   return (
-    <html className={`${zalandoSans.variable} ${robotoSerif.variable}`} lang="en">
+    <html className={`${zalandoSans.variable} ${libertinusSerif.variable}`} lang="en">
       <body className="size-full flex flex-col items-center justify-start">
         <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
           <Link className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
