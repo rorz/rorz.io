@@ -1,9 +1,13 @@
 import { getWebPath } from "../config/routing.ts";
 import type {
-  ObsidResolveFolderForSchema,
-  ObsidResolveNoteForSchema,
+  DefinitionsForSchema,
+  ObsidFindManyOptions,
+  ObsidQueryForSchema,
+  ObsidResolvedNoteForSchema,
   ObsidSchemaShape,
 } from "../config/schema.ts";
+import { compareOrderExpressions } from "../config/sort.ts";
+import { getNoteReferenceTarget, type NoteReference } from "../property/index.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import { parseVaultSource } from "./frontmatter.ts";
 import type { ObsidVault, ObsidVaultFile, VaultConfig, VaultName } from "./types.ts";
@@ -131,60 +135,83 @@ const loadFolderFiles = async <Schema extends ObsidSchemaShape>(
   return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
 };
 
-const createFileResolvers = <Schema extends ObsidSchemaShape>(
+const createQuery = <Schema extends ObsidSchemaShape>(
   getFile: VaultFileLoader<Schema>,
   currentPath: string,
   vaultPaths: readonly string[],
-): {
-  resolveFolder: ObsidResolveFolderForSchema<Schema>;
-  resolveNote: ObsidResolveNoteForSchema<Schema>;
-} => {
-  const resolveNote: ObsidResolveNoteForSchema<Schema> = (reference) => {
+): ObsidQueryForSchema<Schema> => {
+  const resolve = async (reference: NoteReference): Promise<ObsidVaultFile<Schema> | null> => {
     const resolvedPath = resolveVaultPath(reference.path, currentPath, vaultPaths);
 
     if (!resolvedPath) {
-      return Promise.resolve(null);
+      return null;
     }
 
-    return getFile(resolvedPath);
+    const resolved = await getFile(resolvedPath);
+
+    if (!resolved) {
+      return null;
+    }
+
+    const target = getNoteReferenceTarget(reference);
+
+    if (resolved.kind !== target.name) {
+      throw new Error(
+        `Note reference "${reference.path}" expected kind "${target.name}" but resolved "${resolved.kind}"`,
+      );
+    }
+
+    return resolved;
   };
-  function resolveFolder(
-    reference: ObsidFolderReference,
-  ): Promise<readonly ObsidVaultFile<Schema>[]>;
-  function resolveFolder<PageType extends keyof Schema["registry"] & string>(
-    reference: ObsidFolderReference,
-    pageType: PageType,
-  ): Promise<
-    readonly Extract<
-      ObsidVaultFile<Schema>,
-      {
-        readonly pageType: PageType;
-      }
-    >[]
-  >;
-  async function resolveFolder(
-    reference: ObsidFolderReference,
-    pageType?: keyof Schema["registry"] & string,
-  ): Promise<readonly ObsidVaultFile<Schema>[]> {
-    const folderPath = normalizeFolderPath(reference.vaultPath);
+
+  const resolveOrThrow = async (reference: NoteReference): Promise<ObsidVaultFile<Schema>> => {
+    const resolved = await resolve(reference);
+
+    if (!resolved) {
+      throw new Error(`Could not resolve note reference "${reference.path}"`);
+    }
+
+    return resolved;
+  };
+
+  const findMany = async (
+    options: ObsidFindManyOptions<DefinitionsForSchema<Schema>, ObsidResolvedNoteForSchema<Schema>>,
+  ): Promise<readonly ObsidVaultFile<Schema>[]> => {
+    const folderPath = normalizeFolderPath(options.folder.vaultPath);
 
     if (folderPath === null) {
       return [];
     }
 
-    const notes = await loadFolderFiles(vaultPaths, folderPath, getFile);
+    let notes = await loadFolderFiles(vaultPaths, folderPath, getFile);
 
-    if (pageType === undefined) {
-      return notes;
+    if (options.kind !== undefined) {
+      notes = notes.filter((note) => note.kind === options.kind);
     }
 
-    return notes.filter((note) => note.pageType === pageType);
-  }
+    if (options.orderBy) {
+      const { orderBy } = options;
+      notes = notes.toSorted((left, right) =>
+        compareOrderExpressions(orderBy(left), orderBy(right)),
+      );
+    }
+
+    if (options.limit !== undefined) {
+      if (!(Number.isSafeInteger(options.limit) && options.limit >= 0)) {
+        throw new RangeError("Query limit must be a non-negative integer");
+      }
+
+      notes = notes.slice(0, options.limit);
+    }
+
+    return notes;
+  };
 
   return {
-    resolveFolder,
-    resolveNote,
-  };
+    findMany,
+    resolve,
+    resolveOrThrow,
+  } as ObsidQueryForSchema<Schema>;
 };
 
 // biome-ignore lint/complexity/useMaxParams: This test seam exposes the complete file identity plus its schema.
@@ -214,15 +241,16 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
   const getFile = (path: string) =>
     getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, path, schema);
-  const { resolveFolder, resolveNote } = createFileResolvers(getFile, normalizedPath, vaultPaths);
-  const currentFolder: ObsidFolderReference = {
+  const query = createQuery(getFile, normalizedPath, vaultPaths);
+  const folder: ObsidFolderReference = {
     kind: "folder",
     vaultPath: getParentFolderPath(normalizedPath),
   };
+  const name = normalizedPath.slice(normalizedPath.lastIndexOf("/") + 1);
 
   return {
     ...parsedSource,
-    currentFolder,
+    folder,
     frontmatter: resolveFrontmatterLinks({
       currentPath: normalizedPath,
       frontmatter: parsedSource.frontmatter,
@@ -234,8 +262,8 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
       frontmatter: parsedSource.frontmatter,
       vaultPaths,
     }),
-    resolveFolder,
-    resolveNote,
+    name,
+    query,
     source,
     vaultPath: normalizedPath,
     webPath: getWebPath(schema, normalizedPath),

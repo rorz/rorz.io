@@ -1,5 +1,17 @@
 import { z } from "zod";
-import type { StringPropertyValue } from "../types/frontmatter.ts";
+import type { ObsidianNotePropertyValue, StringPropertyValue } from "../types/frontmatter.ts";
+
+interface NoteTarget<Name extends string = string> {
+  readonly name: Name;
+}
+
+declare const referenceTargetType: unique symbol;
+
+type NoteReference<Target extends NoteTarget = NoteTarget> = ObsidianNotePropertyValue & {
+  readonly [referenceTargetType]: Target;
+};
+
+const referenceTargets = new WeakMap<object, NoteTarget>();
 
 const markdownLinkPattern = /^\[([^\]\n]*)\]\(([^)\n]+)\)$/u;
 const wikiLinkPattern = /^(!)?\[\[([^\]\n]+)\]\]$/u;
@@ -114,8 +126,81 @@ const parseText = (raw: string): StringPropertyValue => {
 const checkbox = () => z.boolean();
 const date = () => z.iso.date().transform((value) => new Date(value));
 const dateAndTime = () => z.iso.datetime().transform((value) => new Date(value));
+const kind = <
+  const Targets extends readonly [
+    NoteTarget,
+    ...NoteTarget[],
+  ],
+>(
+  ...targets: Targets
+): z.ZodType<Targets[number]["name"]> => {
+  const names = targets.map((target) => target.name);
+
+  if (new Set(names).size !== names.length) {
+    throw new Error("Note kinds must be unique");
+  }
+
+  return z.enum(
+    names as [
+      string,
+      ...string[],
+    ],
+  ) as z.ZodType<Targets[number]["name"]>;
+};
 const list = () => z.array(z.string().transform(parseText));
 const number = () => z.number();
+const ref = <const Target extends NoteTarget>(target: Target): z.ZodType<NoteReference<Target>> =>
+  z.string().transform((raw, context) => {
+    const parsed = parseWikiLink(raw);
+
+    if (parsed?.type !== "note") {
+      context.addIssue({
+        code: "custom",
+        message: "Expected an Obsidian note reference",
+      });
+      return z.NEVER;
+    }
+
+    const reference = parsed as NoteReference<Target>;
+    referenceTargets.set(reference, target);
+    return reference;
+  });
+const string = () => z.string();
 const text = () => z.string().transform(parseText);
 
-export { checkbox, date, dateAndTime, list, number, text };
+const getNoteReferenceTarget = <Target extends NoteTarget>(
+  reference: NoteReference<Target>,
+): Target => {
+  const target = referenceTargets.get(reference);
+
+  if (!target) {
+    throw new Error("Note reference is missing its target kind");
+  }
+
+  return target as Target;
+};
+
+const p = {
+  boolean: checkbox,
+  date,
+  dateTime: dateAndTime,
+  kind,
+  number,
+  ref,
+  string,
+} as const;
+
+export type { NoteReference, NoteTarget };
+export {
+  checkbox,
+  date,
+  dateAndTime,
+  getNoteReferenceTarget,
+  kind,
+  list,
+  number,
+  p,
+  ref,
+  string,
+  text,
+};

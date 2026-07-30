@@ -1,16 +1,14 @@
 import { describe, expect, test } from "bun:test";
-import { defineObsidSchema } from "../config/schema.ts";
+import { defineSchema, note } from "../config/schema.ts";
 import { getFileFromLoaders, getVaultFromLoaders } from "./file-store.ts";
 import type { VaultConfig } from "./types.ts";
 
-const schema = defineObsidSchema({
-  defaultType: "page",
-  registry: {
-    page: {
-      properties: {},
-      renderer: () => null,
-    },
-  },
+const page = note("page", {});
+const schema = defineSchema({
+  default: page,
+  notes: [
+    page,
+  ],
 });
 
 describe("getVault", () => {
@@ -38,16 +36,20 @@ describe("getVault", () => {
     ]);
     expect(await vault.getFile("Welcome")).toEqual({
       body: "# Welcome",
-      currentFolder: {
+      data: {},
+      folder: {
         kind: "folder",
         vaultPath: "",
       },
       frontmatter: {},
+      kind: "page",
       links: [],
-      pageType: "page",
-      properties: {},
-      resolveFolder: expect.any(Function),
-      resolveNote: expect.any(Function),
+      name: "Welcome",
+      query: {
+        findMany: expect.any(Function),
+        resolve: expect.any(Function),
+        resolveOrThrow: expect.any(Function),
+      },
       source: "# Welcome",
       vaultPath: "Welcome",
       webPath: "/welcome",

@@ -1,18 +1,16 @@
 import { describe, expect, test } from "bun:test";
-import { defineObsidSchema } from "../config/schema.ts";
+import { defineSchema, note } from "../config/schema.ts";
 import { getFileFromLoaders } from "./file-store.ts";
 
-const schema = defineObsidSchema({
-  defaultType: "page",
-  registry: {
-    page: {
-      properties: {},
-      renderer: () => null,
-    },
-  },
+const page = note("page", {});
+const schema = defineSchema({
+  default: page,
+  notes: [
+    page,
+  ],
 });
 
-describe("VaultFile resolved metadata", () => {
+describe("VaultFile resolved links", () => {
   test("parses frontmatter and resolves links to unique files", async () => {
     const articlePath = "/.obsidian-vaults/rorz.io/lists/best/New York-style pizza (whole).md";
     const source = `---
@@ -33,7 +31,8 @@ Only sells whole pies, but`;
 
     expect(file).toEqual({
       body: "Only sells whole pies, but",
-      currentFolder: {
+      data: {},
+      folder: {
         kind: "folder",
         vaultPath: "lists/best",
       },
@@ -46,6 +45,7 @@ Only sells whole pies, but`;
           type: "link",
         },
       },
+      kind: "page",
       links: [
         {
           label: "Lauretta's",
@@ -54,10 +54,12 @@ Only sells whole pies, but`;
           type: "link",
         },
       ],
-      pageType: "page",
-      properties: {},
-      resolveFolder: expect.any(Function),
-      resolveNote: expect.any(Function),
+      name: "New York-style pizza (whole)",
+      query: {
+        findMany: expect.any(Function),
+        resolve: expect.any(Function),
+        resolveOrThrow: expect.any(Function),
+      },
       source,
       vaultPath: "lists/best/New York-style pizza (whole)",
       webPath: "/lists/best/new-york-style-pizza-whole",
@@ -65,7 +67,7 @@ Only sells whole pies, but`;
   });
 });
 
-describe("VaultFile unresolved metadata", () => {
+describe("VaultFile unresolved links", () => {
   test("keeps unresolved and ambiguous links explicit", async () => {
     const file = await getFileFromLoaders(
       {

@@ -1,57 +1,46 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { defineObsidSchema } from "../config/schema.ts";
-import { text } from "../property/index.ts";
+import { defineSchema, note, p } from "../config/schema.ts";
+import { getFileFromLoaders } from "../vault/file-store.ts";
 import { Obsid } from "./obsid.tsx";
 
-test("renders a note with its selected schema renderer", () => {
-  const schema = defineObsidSchema({
-    defaultType: "page",
-    registry: {
-      page: {
-        properties: {
-          title: text(),
-        },
-        renderer: ({ title }, { markdown }) => {
-          if (title.type !== "string") {
-            throw new Error("Expected a plain text title");
-          }
-
-          return (
-            <article>
-              <h1>{title.value}</h1>
-              <p>{markdown}</p>
-            </article>
-          );
-        },
-      },
-    },
+test("renders a note with its selected schema renderer", async () => {
+  const page = note("page", {
+    title: p.string(),
   });
-
-  const html = renderToStaticMarkup(
-    <Obsid
-      note={{
-        body: "Hello from Markdown",
-        currentFolder: {
-          kind: "folder",
-          vaultPath: "",
-        },
-        pageType: "page",
-        properties: {
-          title: {
-            raw: "Welcome",
-            type: "string",
-            value: "Welcome",
-          },
-        },
-        resolveFolder: () => Promise.resolve([]),
-        resolveNote: () => Promise.resolve(null),
-        vaultPath: "page",
-        webPath: "/page",
-      }}
-      schema={schema}
-    />,
+  const model = defineSchema({
+    default: page,
+    notes: [
+      page,
+    ],
+  });
+  const schema = model.render({
+    page: ({ note: current }) => (
+      <article>
+        <h1>{current.data.title ?? current.name}</h1>
+        <p>{current.body}</p>
+      </article>
+    ),
+  });
+  const resolved = await getFileFromLoaders(
+    {
+      "/.obsidian-vaults/notes/page.md": () =>
+        Promise.resolve(`---
+title: Welcome
+---
+Hello from Markdown`),
+    },
+    "./.obsidian-vaults/",
+    "notes",
+    "page",
+    schema,
   );
+
+  if (!resolved) {
+    throw new Error("Expected page to resolve");
+  }
+
+  const html = renderToStaticMarkup(<Obsid note={resolved} schema={schema} />);
 
   expect(html).toContain("<h1>Welcome</h1>");
   expect(html).toContain("<p>Hello from Markdown</p>");

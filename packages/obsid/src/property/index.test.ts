@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { z } from "zod";
-import { date, list, text } from "./index.ts";
+import { date, getNoteReferenceTarget, list, p, text } from "./index.ts";
 
 describe("text", () => {
   test("parses plain text and Obsidian links", () => {
@@ -71,5 +71,37 @@ describe("property modifiers", () => {
       ],
       publishedAt: fallbackDate,
     });
+  });
+});
+
+describe("semantic properties", () => {
+  const page = {
+    name: "page",
+  } as const;
+  const post = {
+    name: "post",
+  } as const;
+
+  test("parses plain strings and note-kind literals", () => {
+    expect(p.string().parse("[[Welcome]]")).toBe("[[Welcome]]");
+    expect(p.kind(page, post).parse("post")).toBe("post");
+    expect(() => p.kind(page, post).parse("missing")).toThrow();
+  });
+
+  test("parses references with their declared target", () => {
+    const reference = p.ref(page).parse("[[notes/Welcome|Welcome]]");
+
+    expect({
+      label: reference.label,
+      path: reference.path,
+      raw: reference.raw,
+      type: reference.type,
+    }).toEqual({
+      label: "Welcome",
+      path: "notes/Welcome",
+      raw: "[[notes/Welcome|Welcome]]",
+      type: "note",
+    });
+    expect(getNoteReferenceTarget(reference)).toBe(page);
   });
 });

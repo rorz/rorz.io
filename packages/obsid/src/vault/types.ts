@@ -1,10 +1,4 @@
-import type {
-  ObsidPageForSchema,
-  ObsidResolveFolderForSchema,
-  ObsidResolveNoteForSchema,
-  ObsidSchemaShape,
-} from "../config/schema.ts";
-import type { ObsidFolderReference } from "../types/reference.ts";
+import type { ObsidResolvedNoteForSchema, ObsidSchemaShape } from "../config/schema.ts";
 
 interface VaultConfig {
   readonly vaults: readonly {
@@ -43,11 +37,7 @@ interface VaultFile {
 }
 
 type ObsidVaultFile<Schema extends ObsidSchemaShape> = VaultFile &
-  ObsidPageForSchema<Schema> & {
-    readonly currentFolder: ObsidFolderReference;
-    readonly resolveFolder: ObsidResolveFolderForSchema<Schema>;
-    readonly resolveNote: ObsidResolveNoteForSchema<Schema>;
-  };
+  ObsidResolvedNoteForSchema<Schema>;
 
 type VaultName<Config extends VaultConfig> = Config["vaults"][number]["name"];
 type GetFile<File extends VaultFile = VaultFile> = (vaultPath: string) => Promise<File | null>;

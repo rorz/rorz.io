@@ -44,7 +44,7 @@ describe("frontmatterSchema", () => {
           type: "link",
         },
       ],
-      [displayAsKey]: "link-list",
+      [displayAsKey]: "link-list" as const,
       slug: "journal",
       title: "Journal",
     });

@@ -1,9 +1,13 @@
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
-import type { ObsidPageForSchema, ObsidSchemaShape } from "../config/schema.ts";
+import {
+  getNoteDefinition,
+  type ObsidNoteForSchema,
+  type ObsidSchemaShape,
+} from "../config/schema.ts";
 import type { ObsidianParsedProperties, ObsidianPropertyMap } from "../types/frontmatter.ts";
 
-type ParsedVaultSource<Schema extends ObsidSchemaShape> = ObsidPageForSchema<Schema> & {
+type ParsedVaultSource<Schema extends ObsidSchemaShape> = ObsidNoteForSchema<Schema> & {
   readonly body: string;
   readonly frontmatter: Readonly<Record<string, unknown>>;
 };
@@ -72,29 +76,29 @@ const parseVaultSource = <Schema extends ObsidSchemaShape>(
   schema: Schema,
 ): ParsedVaultSource<Schema> => {
   const { body, frontmatter } = parseRawFrontmatter(source, path);
-  let pageType: unknown = schema.defaultType;
+  let kind: unknown = schema.default.name;
 
-  if (schema.typeIdentifier && Object.hasOwn(frontmatter, schema.typeIdentifier)) {
-    pageType = frontmatter[schema.typeIdentifier];
+  if (schema.discriminator && Object.hasOwn(frontmatter, schema.discriminator)) {
+    kind = frontmatter[schema.discriminator];
   }
 
-  if (typeof pageType !== "string") {
+  if (typeof kind !== "string") {
     throw new Error(
-      `Page type property "${schema.typeIdentifier ?? ""}" in ${path}.md must be text`,
+      `Note kind property "${schema.discriminator ?? ""}" in ${path}.md must be text`,
     );
   }
 
-  const definition = schema.registry[pageType];
+  const definition = getNoteDefinition(schema, kind);
 
   if (!definition) {
-    throw new Error(`Unknown page type "${pageType}" in ${path}.md`);
+    throw new Error(`Unknown note kind "${kind}" in ${path}.md`);
   }
 
   return {
     body,
+    data: parseProperties(frontmatter, definition.properties, path),
     frontmatter,
-    pageType,
-    properties: parseProperties(frontmatter, definition.properties, path),
+    kind,
   } as ParsedVaultSource<Schema>;
 };
 

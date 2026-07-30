@@ -10,8 +10,8 @@ test("Vite replaces the vault glob in the public vault entry", async () => {
       if (id === resolvedId) {
         return [
           'import { getVault } from "obsid/vault";',
-          'import { defineObsidSchema } from "obsid/schema";',
-          'const schema = defineObsidSchema({ defaultType: "page", registry: { page: { properties: {}, renderer: () => null } } });',
+          'import { defineSchema, note } from "obsid/schema";',
+          'const page = note("page", {}); const schema = defineSchema({ default: page, notes: [page] });',
           'void getVault({ vaultsFolder: "./.obsidian-vaults/", vaults: [{ name: "rorz.io" }] }, schema, "rorz.io").getFile("__missing__");',
         ].join("\n");
       }
@@ -50,7 +50,6 @@ test("Vite replaces the vault glob in the public vault entry", async () => {
     throw new Error("Expected a completed Vite build.");
   }
 
-  // biome-ignore lint/style/noTernary: Normalizes Vite's single- and multi-build result shapes.
   const builds = Array.isArray(result)
     ? result
     : [

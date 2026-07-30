@@ -1,5 +1,5 @@
 import type { Components } from "react-markdown";
-import type { ObsidResolvedNoteForSchema, ObsidSchemaShape } from "../config/schema.ts";
+import type { ObsidRenderedSchemaShape, ObsidResolvedNoteForSchema } from "../config/schema.ts";
 import type { VaultLink } from "../vault/types.ts";
 
 type ResolveWikiLink = (link: VaultLink) => string;
@@ -11,7 +11,7 @@ interface ObsidianMarkdownProps {
   readonly resolveWikiLink?: ResolveWikiLink;
 }
 
-interface ObsidProps<Schema extends ObsidSchemaShape> {
+interface ObsidProps<Schema extends ObsidRenderedSchemaShape> {
   readonly note: ObsidResolvedNoteForSchema<Schema>;
   readonly schema: Schema;
 }

@@ -1,16 +1,14 @@
 import { describe, expect, test } from "bun:test";
-import { defineObsidSchema } from "obsid/schema";
+import { defineSchema, note } from "obsid/schema";
 import type { Vault } from "obsid/vault";
 import { createVaultRouteManifest, webPermalink } from "./routing.ts";
 
-const schema = defineObsidSchema({
-  defaultType: "page",
-  registry: {
-    page: {
-      properties: {},
-      renderer: () => null,
-    },
-  },
+const page = note("page", {});
+const schema = defineSchema({
+  default: page,
+  notes: [
+    page,
+  ],
   routing: {
     permalink: webPermalink,
   },

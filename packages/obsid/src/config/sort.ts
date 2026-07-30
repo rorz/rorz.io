@@ -1,4 +1,10 @@
 type SortablePropertyValue = Date | number;
+type ObsidOrderDirection = "asc" | "desc";
+
+interface ObsidOrderExpression {
+  readonly direction: ObsidOrderDirection;
+  readonly value: SortablePropertyValue | undefined;
+}
 
 type SortablePropertyKey<Properties extends object> = {
   [Key in keyof Properties]-?: [
@@ -30,6 +36,7 @@ const getSortValue = (properties: object, key: string): SortablePropertyValue | 
 const compareSortValues = (
   left: SortablePropertyValue | undefined,
   right: SortablePropertyValue | undefined,
+  direction: ObsidOrderDirection = "asc",
 ): number => {
   if (left === undefined) {
     return right === undefined ? 0 : 1;
@@ -42,7 +49,7 @@ const compareSortValues = (
   const leftNumber = left instanceof Date ? left.getTime() : left;
   const rightNumber = right instanceof Date ? right.getTime() : right;
 
-  return leftNumber - rightNumber;
+  return (leftNumber - rightNumber) * (direction === "asc" ? 1 : -1);
 };
 
 const sortBy = <
@@ -56,5 +63,31 @@ const sortBy = <
     compareSortValues(getSortValue(left.properties, key), getSortValue(right.properties, key)),
   );
 
-export type { SortablePropertyKey, SortablePropertyValue };
-export { sortBy };
+const asc = (value: SortablePropertyValue | undefined): ObsidOrderExpression => ({
+  direction: "asc",
+  value,
+});
+
+const desc = (value: SortablePropertyValue | undefined): ObsidOrderExpression => ({
+  direction: "desc",
+  value,
+});
+
+const compareOrderExpressions = (
+  left: ObsidOrderExpression,
+  right: ObsidOrderExpression,
+): number => {
+  if (left.direction !== right.direction) {
+    throw new Error("Order direction must be stable for every note");
+  }
+
+  return compareSortValues(left.value, right.value, left.direction);
+};
+
+export type {
+  ObsidOrderDirection,
+  ObsidOrderExpression,
+  SortablePropertyKey,
+  SortablePropertyValue,
+};
+export { asc, compareOrderExpressions, desc, sortBy };

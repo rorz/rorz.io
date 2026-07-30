@@ -1,64 +1,61 @@
 import { expect, test } from "bun:test";
-import { text } from "../property/index.ts";
-import { defineObsidSchema, renderObsidPage } from "./schema.ts";
+import { p } from "../property/index.ts";
+import { getFileFromLoaders } from "../vault/file-store.ts";
+import { defineSchema, note, renderObsidPage } from "./schema.ts";
 
-test("renderObsidPage dispatches content and tools to the selected renderer", async () => {
-  const schema = defineObsidSchema({
-    defaultType: "page",
-    registry: {
-      page: {
-        properties: {
-          title: text(),
-        },
-        renderer: async ({ title }, { currentFolder, markdown, sortBy, title: noteTitle }) => {
-          if (title.type !== "string") {
-            throw new Error("Expected a plain text title");
-          }
+test("renderObsidPage dispatches the resolved note and its query", async () => {
+  const page = note("page", {
+    title: p.string(),
+  });
+  const model = defineSchema({
+    default: page,
+    notes: [
+      page,
+    ],
+  });
+  const schema = model.render({
+    page: async ({ note: current, query }) => {
+      const prefix = await Promise.resolve("Rendered");
+      const siblings = await query.findMany({
+        folder: current.folder,
+        kind: "page",
+      });
 
-          const prefix = await Promise.resolve("Rendered");
-          const ordered = sortBy(
-            [
-              {
-                label: "second",
-                properties: {
-                  position: 2,
-                },
-              },
-              {
-                label: "first",
-                properties: {
-                  position: 1,
-                },
-              },
-            ],
-            "position",
-          );
-
-          return `${prefix} ${noteTitle} from ${currentFolder.vaultPath}: ${title.value} (${ordered[0]?.label})\n${markdown}`;
-        },
-      },
+      return `${prefix} ${current.data.title ?? current.name} from ${current.folder.vaultPath} (${siblings.length})\n${current.body}`;
     },
   });
-
-  const rendered = await renderObsidPage(schema, {
-    body: "# Body",
-    currentFolder: {
-      kind: "folder",
-      vaultPath: "posts",
+  const resolved = await getFileFromLoaders(
+    {
+      "/.obsidian-vaults/notes/posts/page.md": () =>
+        Promise.resolve(`---
+title: Hello
+---
+# Body`),
     },
-    pageType: "page",
-    properties: {
-      title: {
-        raw: "Hello",
-        type: "string",
-        value: "Hello",
-      },
-    },
-    resolveFolder: () => Promise.resolve([]),
-    resolveNote: () => Promise.resolve(null),
-    vaultPath: "posts/page",
-    webPath: "/posts",
-  });
+    "./.obsidian-vaults/",
+    "notes",
+    "posts/page",
+    schema,
+  );
 
-  expect(rendered).toBe("Rendered page from posts: Hello (first)\n# Body");
+  if (!resolved) {
+    throw new Error("Expected page to resolve");
+  }
+
+  expect(await renderObsidPage(schema, resolved)).toBe("Rendered Hello from posts (1)\n# Body");
+});
+
+test("schema construction rejects duplicate note names", () => {
+  const first = note("page", {});
+  const second = note("page", {});
+
+  expect(() =>
+    defineSchema({
+      default: first,
+      notes: [
+        first,
+        second,
+      ],
+    }),
+  ).toThrow("Schema note names must be unique");
 });

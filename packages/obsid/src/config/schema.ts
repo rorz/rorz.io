@@ -1,170 +1,242 @@
 import type { ReactNode } from "react";
-import type {
-  ObsidianNotePropertyValue,
-  ObsidianParsedProperties,
-  ObsidianPropertyMap,
-} from "../types/frontmatter.ts";
+import type { NoteReference, NoteTarget } from "../property/index.ts";
+import type { ObsidianParsedProperties, ObsidianPropertyMap } from "../types/frontmatter.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import type { ObsidRouting } from "./routing.ts";
-import { sortBy as sortResolvedNotesBy } from "./sort.ts";
+import type { ObsidOrderExpression } from "./sort.ts";
 
-type ObsidPageForPropertyMaps<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> =
+interface ObsidNoteDefinition<Name extends string, PropertyMap extends ObsidianPropertyMap>
+  extends NoteTarget<Name> {
+  readonly name: Name;
+  readonly properties: PropertyMap;
+}
+
+interface ObsidNoteDefinitionShape extends NoteTarget {
+  readonly properties: ObsidianPropertyMap;
+}
+
+type ObsidNoteDefinitions = readonly ObsidNoteDefinitionShape[];
+
+type ObsidNoteForDefinition<Definition extends ObsidNoteDefinitionShape> =
+  Definition extends ObsidNoteDefinition<infer Name, infer PropertyMap>
+    ? {
+        readonly data: ObsidianParsedProperties<PropertyMap>;
+        readonly kind: Name;
+      }
+    : never;
+
+type ObsidNoteForDefinitions<Definitions extends ObsidNoteDefinitions> = ObsidNoteForDefinition<
+  Definitions[number]
+>;
+
+type ObsidNoteKind<Definitions extends ObsidNoteDefinitions> =
+  ObsidNoteForDefinitions<Definitions>["kind"];
+
+type ObsidResolvedNoteForKind<
+  Definitions extends ObsidNoteDefinitions,
+  Kind extends ObsidNoteKind<Definitions>,
+> = Extract<
+  ObsidResolvedNote<Definitions>,
   {
-    [PageType in keyof PropertyMaps & string]: {
-      readonly pageType: PageType;
-      readonly properties: ObsidianParsedProperties<PropertyMaps[PageType]>;
-    };
-  }[keyof PropertyMaps & string];
+    readonly kind: Kind;
+  }
+>;
 
-type ObsidResolveNote<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = (
-  reference: ObsidianNotePropertyValue,
-) => Promise<ObsidResolvedNote<PropertyMaps> | null>;
+interface ObsidFindManyOptions<
+  Definitions extends ObsidNoteDefinitions,
+  Note extends ObsidResolvedNote<Definitions>,
+> {
+  readonly folder: ObsidFolderReference;
+  readonly kind?: ObsidNoteKind<Definitions> | undefined;
+  readonly limit?: number | undefined;
+  readonly orderBy?: ((note: Note) => ObsidOrderExpression) | undefined;
+}
 
-type ObsidResolvedNote<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> =
-  ObsidPageForPropertyMaps<PropertyMaps> & {
+interface ObsidFindMany<Definitions extends ObsidNoteDefinitions> {
+  <const Kind extends ObsidNoteKind<Definitions>>(
+    options: ObsidFindManyOptions<Definitions, ObsidResolvedNoteForKind<Definitions, Kind>> & {
+      readonly kind: Kind;
+    },
+  ): Promise<readonly ObsidResolvedNoteForKind<Definitions, Kind>[]>;
+  (
+    options: ObsidFindManyOptions<Definitions, ObsidResolvedNote<Definitions>>,
+  ): Promise<readonly ObsidResolvedNote<Definitions>[]>;
+}
+
+interface ObsidQuery<Definitions extends ObsidNoteDefinitions> {
+  readonly findMany: ObsidFindMany<Definitions>;
+  readonly resolve: <const Target extends Definitions[number]>(
+    reference: NoteReference<Target>,
+  ) => Promise<ObsidResolvedNoteForKind<
+    Definitions,
+    Target["name"] & ObsidNoteKind<Definitions>
+  > | null>;
+  readonly resolveOrThrow: <const Target extends Definitions[number]>(
+    reference: NoteReference<Target>,
+  ) => Promise<ObsidResolvedNoteForKind<Definitions, Target["name"] & ObsidNoteKind<Definitions>>>;
+}
+
+type ObsidResolvedNote<Definitions extends ObsidNoteDefinitions> =
+  ObsidNoteForDefinitions<Definitions> & {
     readonly body: string;
-    readonly currentFolder: ObsidFolderReference;
-    readonly resolveFolder: ObsidResolveFolder<PropertyMaps>;
-    readonly resolveNote: ObsidResolveNote<PropertyMaps>;
+    readonly folder: ObsidFolderReference;
+    readonly query: ObsidQuery<Definitions>;
+    readonly name: string;
     readonly vaultPath: string;
     readonly webPath: string;
   };
 
-type ObsidResolvedNoteForPageType<
-  PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>,
-  PageType extends keyof PropertyMaps & string,
-> = Extract<
-  ObsidResolvedNote<PropertyMaps>,
-  {
-    readonly pageType: PageType;
-  }
->;
-
-interface ObsidResolveFolder<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> {
-  (reference: ObsidFolderReference): Promise<readonly ObsidResolvedNote<PropertyMaps>[]>;
-  <PageType extends keyof PropertyMaps & string>(
-    reference: ObsidFolderReference,
-    pageType: PageType,
-  ): Promise<readonly ObsidResolvedNoteForPageType<PropertyMaps, PageType>[]>;
+interface ObsidRenderContext<
+  Definitions extends ObsidNoteDefinitions,
+  Kind extends ObsidNoteKind<Definitions>,
+> {
+  readonly note: ObsidResolvedNoteForKind<Definitions, Kind>;
+  readonly query: ObsidQuery<Definitions>;
 }
 
-type ObsidRendererTools<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = {
-  readonly currentFolder: ObsidFolderReference;
-  readonly markdown: string;
-  readonly resolveFolder: ObsidResolveFolder<PropertyMaps>;
-  readonly resolveNote: ObsidResolveNote<PropertyMaps>;
-  readonly sortBy: typeof sortResolvedNotesBy;
-  readonly title: string;
-};
-
-type ObsidPageDefinition<
-  PropertyMap extends ObsidianPropertyMap,
-  PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>,
-> = {
-  readonly properties: PropertyMap;
-  readonly renderer: (
-    properties: ObsidianParsedProperties<PropertyMap>,
-    tools: ObsidRendererTools<PropertyMaps>,
+type ObsidRenderers<Definitions extends ObsidNoteDefinitions> = {
+  readonly [Kind in ObsidNoteKind<Definitions>]: (
+    context: ObsidRenderContext<Definitions, Kind>,
   ) => ReactNode;
 };
 
-type ObsidSchema<PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>> = {
-  readonly defaultType: keyof PropertyMaps & string;
-  readonly registry: {
-    readonly [Name in keyof PropertyMaps]: ObsidPageDefinition<PropertyMaps[Name], PropertyMaps>;
+interface ObsidSchemaShape {
+  readonly default: ObsidNoteDefinitionShape;
+  readonly discriminator: string | undefined;
+  readonly notes: ObsidNoteDefinitions;
+  readonly routing: ObsidRouting | undefined;
+}
+
+interface ObsidRenderedSchemaShape extends ObsidSchemaShape {
+  readonly renderers: Readonly<Record<string, (context: never) => ReactNode>>;
+}
+
+type ObsidSchemaModel<Definitions extends ObsidNoteDefinitions> = {
+  readonly default: Definitions[number];
+  readonly discriminator: string | undefined;
+  readonly notes: Definitions;
+  readonly render: (renderers: ObsidRenderers<Definitions>) => ObsidRenderedSchema<Definitions>;
+  readonly routing: ObsidRouting | undefined;
+};
+
+type ObsidRenderedSchema<Definitions extends ObsidNoteDefinitions> =
+  ObsidSchemaModel<Definitions> & {
+    readonly renderers: ObsidRenderers<Definitions>;
   };
-  readonly routing?: ObsidRouting;
-  readonly typeIdentifier?: string;
-};
 
-type ObsidSchemaShape = {
-  readonly defaultType: string;
-  readonly registry: Readonly<
-    Record<
-      string,
-      {
-        readonly properties: ObsidianPropertyMap;
-        readonly renderer: (...args: never[]) => ReactNode;
-      }
-    >
-  >;
-  readonly routing?: ObsidRouting;
-  readonly typeIdentifier?: string;
-};
+type DefinitionsForSchema<Schema extends ObsidSchemaShape> = Schema["notes"];
 
-type PropertyMapsForSchema<Schema extends ObsidSchemaShape> = {
-  readonly [PageType in keyof Schema["registry"]]: Schema["registry"][PageType]["properties"];
-};
-
-type ObsidPageForSchema<Schema extends ObsidSchemaShape> = ObsidPageForPropertyMaps<
-  PropertyMapsForSchema<Schema>
+type ObsidNoteForSchema<Schema extends ObsidSchemaShape> = ObsidNoteForDefinitions<
+  DefinitionsForSchema<Schema>
 >;
 
 type ObsidResolvedNoteForSchema<Schema extends ObsidSchemaShape> = ObsidResolvedNote<
-  PropertyMapsForSchema<Schema>
+  DefinitionsForSchema<Schema>
 >;
 
-type ObsidRendererToolsForSchema<Schema extends ObsidSchemaShape> = ObsidRendererTools<
-  PropertyMapsForSchema<Schema>
+type ObsidQueryForSchema<Schema extends ObsidSchemaShape> = ObsidQuery<
+  DefinitionsForSchema<Schema>
 >;
 
-type ObsidResolveFolderForSchema<Schema extends ObsidSchemaShape> = ObsidResolveFolder<
-  PropertyMapsForSchema<Schema>
->;
+const note = <const Name extends string, const PropertyMap extends ObsidianPropertyMap>(
+  name: Name,
+  properties: PropertyMap,
+): ObsidNoteDefinition<Name, PropertyMap> => ({
+  name,
+  properties,
+});
 
-type ObsidResolveNoteForSchema<Schema extends ObsidSchemaShape> = ObsidResolveNote<
-  PropertyMapsForSchema<Schema>
->;
+const defineSchema = <
+  const Definitions extends readonly [
+    ObsidNoteDefinitionShape,
+    ...ObsidNoteDefinitionShape[],
+  ],
+>(input: {
+  readonly default: Definitions[number];
+  readonly discriminator?: string;
+  readonly notes: Definitions;
+  readonly routing?: ObsidRouting;
+}): ObsidSchemaModel<Definitions> => {
+  const names = input.notes.map((definition) => definition.name);
 
-const defineObsidSchema = <
-  const PropertyMaps extends Readonly<Record<string, ObsidianPropertyMap>>,
->(
-  schema: ObsidSchema<PropertyMaps>,
-): ObsidSchema<PropertyMaps> => schema;
+  if (new Set(names).size !== names.length) {
+    throw new Error("Schema note names must be unique");
+  }
 
-const renderObsidPage = <Schema extends ObsidSchemaShape>(
+  if (!input.notes.includes(input.default)) {
+    throw new Error(`Default note kind "${input.default.name}" is not registered`);
+  }
+
+  const render: ObsidSchemaModel<Definitions>["render"] = (renderers) => ({
+    ...model,
+    renderers,
+  });
+  const model: ObsidSchemaModel<Definitions> = {
+    default: input.default,
+    discriminator: input.discriminator,
+    notes: input.notes,
+    render,
+    routing: input.routing,
+  };
+
+  return model;
+};
+
+const getNoteDefinition = <Schema extends ObsidSchemaShape>(
+  schema: Schema,
+  kind: string,
+): Schema["notes"][number] | null =>
+  schema.notes.find((definition) => definition.name === kind) ?? null;
+
+const renderObsidPage = <Schema extends ObsidRenderedSchemaShape>(
   schema: Schema,
   page: ObsidResolvedNoteForSchema<Schema>,
 ): ReactNode => {
-  const definition = schema.registry[page.pageType];
+  const renderer = schema.renderers[page.kind];
 
-  if (!definition) {
-    throw new Error(`Unknown page type: ${page.pageType}`);
+  if (!renderer) {
+    throw new Error(`Missing renderer for note kind: ${page.kind}`);
   }
 
-  const renderer = definition.renderer as unknown as (
-    properties: ObsidPageForSchema<Schema>["properties"],
-    tools: ObsidRendererToolsForSchema<Schema>,
-  ) => ReactNode;
-
-  return renderer(page.properties, {
-    currentFolder: page.currentFolder,
-    markdown: page.body,
-    resolveFolder: page.resolveFolder,
-    resolveNote: page.resolveNote,
-    sortBy: sortResolvedNotesBy,
-    title: page.vaultPath.slice(page.vaultPath.lastIndexOf("/") + 1),
-  });
+  return renderer({
+    note: page,
+    query: page.query,
+  } as never);
 };
 
+// biome-ignore lint/performance/noBarrelFile: This module is the package's intentional schema entry point.
+export { p } from "../property/index.ts";
 export type {
   ObsidPermalink,
   ObsidPermalinkContext,
   ObsidRouting,
   ObsidSlugify,
 } from "./routing.ts";
-// biome-ignore lint/performance/noBarrelFile: This module is the package's intentional schema entry point.
 export { defaultPermalink, getWebPath, slugify } from "./routing.ts";
-export type { SortablePropertyKey, SortablePropertyValue } from "./sort.ts";
-export { sortBy } from "./sort.ts";
 export type {
-  ObsidPageDefinition,
-  ObsidPageForSchema,
-  ObsidRendererToolsForSchema,
+  ObsidOrderDirection,
+  ObsidOrderExpression,
+  SortablePropertyKey,
+  SortablePropertyValue,
+} from "./sort.ts";
+export { asc, desc, sortBy } from "./sort.ts";
+export type {
+  DefinitionsForSchema,
+  ObsidFindMany,
+  ObsidFindManyOptions,
+  ObsidNoteDefinition,
+  ObsidNoteDefinitionShape,
+  ObsidNoteForSchema,
+  ObsidNoteKind,
+  ObsidQuery,
+  ObsidQueryForSchema,
+  ObsidRenderedSchema,
+  ObsidRenderedSchemaShape,
+  ObsidRenderers,
+  ObsidResolvedNote,
+  ObsidResolvedNoteForKind,
   ObsidResolvedNoteForSchema,
-  ObsidResolveFolderForSchema,
-  ObsidResolveNoteForSchema,
-  ObsidSchema,
+  ObsidSchemaModel,
   ObsidSchemaShape,
 };
-export { defineObsidSchema, renderObsidPage };
+export { defineSchema, getNoteDefinition, note, renderObsidPage };

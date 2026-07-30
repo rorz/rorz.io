@@ -19,7 +19,7 @@ interface ObsidRouting {
 }
 
 interface ObsidRoutingSchema {
-  readonly routing?: ObsidRouting;
+  readonly routing?: ObsidRouting | undefined;
 }
 
 const slugify = (value: string): string =>
