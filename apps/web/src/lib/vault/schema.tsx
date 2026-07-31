@@ -72,7 +72,7 @@ const schema = model.render({
     const title = current.folder.vaultPath.split("/").at(-1) || current.name;
 
     return (
-      <Page title={`${title} (All)`}>
+      <Page title={title}>
         <List className="mt-6">
           {resolvedEntries.map((entry) => {
             let decoration: ReactNode = format("do LLL y", entry.data.date);
