@@ -96,9 +96,9 @@ const parseVaultSource = <Schema extends ObsidSchemaShape>(
 
   return {
     body,
-    data: parseProperties(frontmatter, definition.properties, path),
     frontmatter,
     kind,
+    properties: parseProperties(frontmatter, definition.properties, path),
   } as ParsedVaultSource<Schema>;
 };
 

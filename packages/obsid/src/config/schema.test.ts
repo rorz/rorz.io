@@ -5,7 +5,7 @@ import { defineSchema, note, renderObsidPage } from "./schema.ts";
 
 test("renderObsidPage dispatches the resolved note and its query", async () => {
   const page = note("page", {
-    title: p.string(),
+    title: p.text(),
   });
   const model = defineSchema({
     default: page,
@@ -21,7 +21,12 @@ test("renderObsidPage dispatches the resolved note and its query", async () => {
         kind: "page",
       });
 
-      return `${prefix} ${current.data.title ?? current.name} from ${current.folder.vaultPath} (${siblings.length})\n${current.body}`;
+      const title =
+        current.properties.title.type === "string"
+          ? current.properties.title.value
+          : current.properties.title.raw;
+
+      return `${prefix} ${title} from ${current.folder.vaultPath} (${siblings.length})\n${current.body}`;
     },
   });
   const resolved = await getFileFromLoaders(

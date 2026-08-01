@@ -1,6 +1,8 @@
 import { format } from "date-fns/fp";
+import Link from "next/link";
 import { ObsidianMarkdown } from "obsid/react";
 import { defineSchema, desc, note, p } from "obsid/schema";
+import type { StringPropertyValue } from "obsid/types";
 import type { ReactNode } from "react";
 import { List, ListItem } from "@/components/list/index.tsx";
 import { Page } from "@/components/page.tsx";
@@ -11,7 +13,7 @@ const dated = {
   date: p.date(),
 };
 const titled = {
-  title: p.string().optional(),
+  title: p.text().optional(),
 };
 
 const page = note("page", {});
@@ -28,7 +30,7 @@ const place = note("place", {
 
 const thing = note("thing", {
   ...dated,
-  from: p.string(),
+  from: p.text(),
 });
 
 const entries = [
@@ -37,13 +39,35 @@ const entries = [
   thing,
 ] as const;
 
+const renderText = (property: StringPropertyValue): string => {
+  if (property.type === "string") {
+    return property.value;
+  }
+  if (property.type === "link") {
+    return property.label ?? property.url;
+  }
+  return property.label ?? property.path;
+};
+
+const getEntryKind = (property: StringPropertyValue): (typeof entries)[number]["name"] => {
+  if (property.type === "string") {
+    const definition = entries.find((entry) => entry.name === property.value);
+
+    if (definition) {
+      return definition.name;
+    }
+  }
+
+  throw new Error(`Invalid list entry kind: ${property.raw}`);
+};
+
 const list = note("list", {
-  listOf: p.kind(...entries),
+  listOf: p.text(),
 });
 
 const listIndex = note("listOfLists", {
   limitPer: p.number().optional(),
-  lists: p.ref(list).array(),
+  lists: p.list(),
 });
 
 const model = defineSchema({
@@ -66,8 +90,8 @@ const schema = model.render({
   list: async ({ note: current, query }) => {
     const resolvedEntries = await query.findMany({
       folder: current.folder,
-      kind: current.data.listOf,
-      orderBy: ({ data }) => desc(data.date),
+      kind: getEntryKind(current.properties.listOf),
+      orderBy: ({ properties }) => desc(properties.date),
     });
     const title = current.folder.vaultPath.split("/").at(-1) || current.name;
 
@@ -75,14 +99,14 @@ const schema = model.render({
       <Page title={title}>
         <List className="mt-6">
           {resolvedEntries.map((entry) => {
-            let decoration: ReactNode = format("do LLL y", entry.data.date);
+            let decoration: ReactNode = format("do LLL y", entry.properties.date);
 
             if (entry.kind === "place") {
               decoration =
-                entry.data.rating === undefined ? (
+                entry.properties.rating === undefined ? (
                   "No rating"
                 ) : (
-                  <StarRating className="py-0.5" value={entry.data.rating} />
+                  <StarRating className="py-0.5" value={entry.properties.rating} />
                 );
             }
 
@@ -91,7 +115,11 @@ const schema = model.render({
                 decoration={decoration}
                 href={entry.webPath}
                 key={entry.webPath}
-                title={entry.kind === "post" ? (entry.data.title ?? entry.name) : entry.name}
+                title={
+                  entry.kind === "post" && entry.properties.title
+                    ? renderText(entry.properties.title)
+                    : entry.name
+                }
               />
             );
           })}
@@ -101,13 +129,22 @@ const schema = model.render({
   },
   listOfLists: async ({ note: current, query }) => {
     const groups = await Promise.all(
-      current.data.lists.map(async (reference) => {
+      current.properties.lists.map(async (reference) => {
+        if (reference.type !== "note") {
+          throw new Error(`Expected a note link, received: ${reference.raw}`);
+        }
+
         const index = await query.resolveOrThrow(reference);
+
+        if (index.kind !== "list") {
+          throw new Error(`Expected a list note, resolved: ${index.kind}`);
+        }
+
         const resolvedEntries = await query.findMany({
           folder: index.folder,
-          kind: index.data.listOf,
-          limit: current.data.limitPer,
-          orderBy: ({ data }) => desc(data.date),
+          kind: getEntryKind(index.properties.listOf),
+          limit: current.properties.limitPer,
+          orderBy: ({ properties }) => desc(properties.date),
         });
 
         return {
@@ -131,9 +168,9 @@ const schema = model.render({
   place: ({ note: current }) => (
     <Page
       subtitle={
-        current.data.rating !== undefined && (
+        current.properties.rating !== undefined && (
           <div className="bg-neutral-200 text-black py-1 px-2">
-            <StarRating className="text-xl" value={current.data.rating} />
+            <StarRating className="text-xl" value={current.properties.rating} />
           </div>
         )
       }
@@ -159,18 +196,31 @@ const schema = model.render({
           href: parent.webPath,
           title: "Posts",
         }}
-        subtitle={format("do MMMM y", current.data.date)}
-        title={current.data.title ?? current.name}
+        subtitle={format("do MMMM y", current.properties.date)}
+        title={current.properties.title ? renderText(current.properties.title) : current.name}
       >
         <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
       </Page>
     );
   },
-  thing: ({ note: current }) => (
-    <Page title={current.name}>
-      <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
-    </Page>
-  ),
+  thing: async ({ note: current, query }) => {
+    const link = await (async () => {
+      const { from } = current.properties;
+      if (from.type === "note") {
+        const note = await query.resolve(from);
+        if (note === null) {
+          return <p>No Note</p>;
+        }
+        return <Link href={note.webPath}>{note.name}</Link>;
+      }
+      return <p>NOT SUPPORTED YET</p>;
+    })();
+    return (
+      <Page subtitle={link} title={current.name}>
+        <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
+      </Page>
+    );
+  },
 });
 
 // biome-ignore lint/style/noDefaultExport: The configured schema path resolves one conventional module value.

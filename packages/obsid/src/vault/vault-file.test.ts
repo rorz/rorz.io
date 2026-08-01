@@ -31,7 +31,6 @@ Only sells whole pies, but`;
 
     expect(file).toEqual({
       body: "Only sells whole pies, but",
-      data: {},
       folder: {
         kind: "folder",
         vaultPath: "lists/best",
@@ -55,6 +54,7 @@ Only sells whole pies, but`;
         },
       ],
       name: "New York-style pizza (whole)",
+      properties: {},
       query: {
         findMany: expect.any(Function),
         resolve: expect.any(Function),

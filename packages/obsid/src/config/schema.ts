@@ -1,17 +1,20 @@
 import type { ReactNode } from "react";
-import type { NoteReference, NoteTarget } from "../property/index.ts";
-import type { ObsidianParsedProperties, ObsidianPropertyMap } from "../types/frontmatter.ts";
+import type {
+  ObsidianNotePropertyValue,
+  ObsidianParsedProperties,
+  ObsidianPropertyMap,
+} from "../types/frontmatter.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import type { ObsidRouting } from "./routing.ts";
 import type { ObsidOrderExpression } from "./sort.ts";
 
-interface ObsidNoteDefinition<Name extends string, PropertyMap extends ObsidianPropertyMap>
-  extends NoteTarget<Name> {
+interface ObsidNoteDefinition<Name extends string, PropertyMap extends ObsidianPropertyMap> {
   readonly name: Name;
   readonly properties: PropertyMap;
 }
 
-interface ObsidNoteDefinitionShape extends NoteTarget {
+interface ObsidNoteDefinitionShape {
+  readonly name: string;
   readonly properties: ObsidianPropertyMap;
 }
 
@@ -20,8 +23,8 @@ type ObsidNoteDefinitions = readonly ObsidNoteDefinitionShape[];
 type ObsidNoteForDefinition<Definition extends ObsidNoteDefinitionShape> =
   Definition extends ObsidNoteDefinition<infer Name, infer PropertyMap>
     ? {
-        readonly data: ObsidianParsedProperties<PropertyMap>;
         readonly kind: Name;
+        readonly properties: ObsidianParsedProperties<PropertyMap>;
       }
     : never;
 
@@ -65,15 +68,12 @@ interface ObsidFindMany<Definitions extends ObsidNoteDefinitions> {
 
 interface ObsidQuery<Definitions extends ObsidNoteDefinitions> {
   readonly findMany: ObsidFindMany<Definitions>;
-  readonly resolve: <const Target extends Definitions[number]>(
-    reference: NoteReference<Target>,
-  ) => Promise<ObsidResolvedNoteForKind<
-    Definitions,
-    Target["name"] & ObsidNoteKind<Definitions>
-  > | null>;
-  readonly resolveOrThrow: <const Target extends Definitions[number]>(
-    reference: NoteReference<Target>,
-  ) => Promise<ObsidResolvedNoteForKind<Definitions, Target["name"] & ObsidNoteKind<Definitions>>>;
+  readonly resolve: (
+    reference: ObsidianNotePropertyValue,
+  ) => Promise<ObsidResolvedNote<Definitions> | null>;
+  readonly resolveOrThrow: (
+    reference: ObsidianNotePropertyValue,
+  ) => Promise<ObsidResolvedNote<Definitions>>;
 }
 
 type ObsidResolvedNote<Definitions extends ObsidNoteDefinitions> =

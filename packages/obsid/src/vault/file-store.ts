@@ -7,7 +7,7 @@ import type {
   ObsidSchemaShape,
 } from "../config/schema.ts";
 import { compareOrderExpressions } from "../config/sort.ts";
-import { getNoteReferenceTarget, type NoteReference } from "../property/index.ts";
+import type { ObsidianNotePropertyValue } from "../types/frontmatter.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import { parseVaultSource } from "./frontmatter.ts";
 import type { ObsidVault, ObsidVaultFile, VaultConfig, VaultName } from "./types.ts";
@@ -140,7 +140,9 @@ const createQuery = <Schema extends ObsidSchemaShape>(
   currentPath: string,
   vaultPaths: readonly string[],
 ): ObsidQueryForSchema<Schema> => {
-  const resolve = async (reference: NoteReference): Promise<ObsidVaultFile<Schema> | null> => {
+  const resolve = async (
+    reference: ObsidianNotePropertyValue,
+  ): Promise<ObsidVaultFile<Schema> | null> => {
     const resolvedPath = resolveVaultPath(reference.path, currentPath, vaultPaths);
 
     if (!resolvedPath) {
@@ -153,18 +155,12 @@ const createQuery = <Schema extends ObsidSchemaShape>(
       return null;
     }
 
-    const target = getNoteReferenceTarget(reference);
-
-    if (resolved.kind !== target.name) {
-      throw new Error(
-        `Note reference "${reference.path}" expected kind "${target.name}" but resolved "${resolved.kind}"`,
-      );
-    }
-
     return resolved;
   };
 
-  const resolveOrThrow = async (reference: NoteReference): Promise<ObsidVaultFile<Schema>> => {
+  const resolveOrThrow = async (
+    reference: ObsidianNotePropertyValue,
+  ): Promise<ObsidVaultFile<Schema>> => {
     const resolved = await resolve(reference);
 
     if (!resolved) {

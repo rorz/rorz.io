@@ -6,7 +6,7 @@ const journal = note("journal", {
   date: p.date(),
 });
 const page = note("page", {
-  title: p.string().optional(),
+  title: p.text().optional(),
 });
 const schema = defineSchema({
   default: page,
@@ -31,14 +31,18 @@ ignored: value
       ),
     ).toEqual({
       body: "# Hello",
-      data: {
-        title: "Welcome",
-      },
       frontmatter: {
         ignored: "value",
         title: "Welcome",
       },
       kind: "page",
+      properties: {
+        title: {
+          raw: "Welcome",
+          type: "string",
+          value: "Welcome",
+        },
+      },
     });
   });
 
@@ -54,7 +58,7 @@ Entry`,
     );
 
     expect(parsed.kind).toBe("journal");
-    expect(parsed.data).toEqual({
+    expect(parsed.properties).toEqual({
       date: new Date("2026-07-27"),
     });
   });

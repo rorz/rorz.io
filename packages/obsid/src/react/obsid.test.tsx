@@ -6,7 +6,7 @@ import { Obsid } from "./obsid.tsx";
 
 test("renders a note with its selected schema renderer", async () => {
   const page = note("page", {
-    title: p.string(),
+    title: p.text(),
   });
   const model = defineSchema({
     default: page,
@@ -17,7 +17,11 @@ test("renders a note with its selected schema renderer", async () => {
   const schema = model.render({
     page: ({ note: current }) => (
       <article>
-        <h1>{current.data.title ?? current.name}</h1>
+        <h1>
+          {current.properties.title.type === "string"
+            ? current.properties.title.value
+            : current.properties.title.raw}
+        </h1>
         <p>{current.body}</p>
       </article>
     ),

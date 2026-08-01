@@ -36,7 +36,6 @@ describe("getVault", () => {
     ]);
     expect(await vault.getFile("Welcome")).toEqual({
       body: "# Welcome",
-      data: {},
       folder: {
         kind: "folder",
         vaultPath: "",
@@ -45,6 +44,7 @@ describe("getVault", () => {
       kind: "page",
       links: [],
       name: "Welcome",
+      properties: {},
       query: {
         findMany: expect.any(Function),
         resolve: expect.any(Function),

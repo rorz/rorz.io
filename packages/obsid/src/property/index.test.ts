@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { z } from "zod";
-import { date, getNoteReferenceTarget, list, p, text } from "./index.ts";
+import { date, list, p, text } from "./index.ts";
 
 describe("text", () => {
   test("parses plain text and Obsidian links", () => {
@@ -74,34 +74,38 @@ describe("property modifiers", () => {
   });
 });
 
-describe("semantic properties", () => {
-  const page = {
-    name: "page",
-  } as const;
-  const post = {
-    name: "post",
-  } as const;
-
-  test("parses plain strings and note-kind literals", () => {
-    expect(p.string().parse("[[Welcome]]")).toBe("[[Welcome]]");
-    expect(p.kind(page, post).parse("post")).toBe("post");
-    expect(() => p.kind(page, post).parse("missing")).toThrow();
-  });
-
-  test("parses references with their declared target", () => {
-    const reference = p.ref(page).parse("[[notes/Welcome|Welcome]]");
-
-    expect({
-      label: reference.label,
-      path: reference.path,
-      raw: reference.raw,
-      type: reference.type,
-    }).toEqual({
+describe("property namespace", () => {
+  test("exposes the Obsidian property types", () => {
+    expect(Object.keys(p)).toEqual([
+      "checkbox",
+      "date",
+      "dateAndTime",
+      "list",
+      "number",
+      "text",
+    ]);
+    expect(p.text().parse("[[notes/Welcome|Welcome]]")).toEqual({
       label: "Welcome",
       path: "notes/Welcome",
       raw: "[[notes/Welcome|Welcome]]",
       type: "note",
     });
-    expect(getNoteReferenceTarget(reference)).toBe(page);
+    expect(
+      p.list().parse([
+        "Hello",
+        "[[Welcome]]",
+      ]),
+    ).toEqual([
+      {
+        raw: "Hello",
+        type: "string",
+        value: "Hello",
+      },
+      {
+        path: "Welcome",
+        raw: "[[Welcome]]",
+        type: "note",
+      },
+    ]);
   });
 });
