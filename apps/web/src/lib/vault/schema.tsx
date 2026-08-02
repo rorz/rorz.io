@@ -1,3 +1,4 @@
+import { ArrowSquareOutIcon, NoteIcon } from "@phosphor-icons/react/dist/ssr";
 import { format } from "date-fns/fp";
 import Link from "next/link";
 import { ObsidianMarkdown } from "obsid/react";
@@ -207,13 +208,37 @@ const schema = model.render({
     const link = await (async () => {
       const { from } = current.properties;
       if (from.type === "note") {
-        const note = await query.resolve(from);
-        if (note === null) {
+        const result = await query.resolve(from);
+        if (result === null) {
           return <p>No Note</p>;
         }
-        return <Link href={note.webPath}>{note.name}</Link>;
+        return (
+          <Link
+            className="inline-flex items-center gap-1 underline font-medium"
+            href={result.webPath}
+          >
+            <span>{result.name}</span>
+            <NoteIcon />
+          </Link>
+        );
       }
-      return <p>NOT SUPPORTED YET</p>;
+      if (from.type === "link") {
+        return (
+          <a
+            className="inline-flex items-center gap-1 underline font-medium"
+            href={from.url}
+            rel="noopener"
+            target="_blank"
+          >
+            <span>{from.label ?? from.url.toString()}</span>
+            <ArrowSquareOutIcon />
+          </a>
+        );
+      }
+      if (from.type === "string") {
+        return <span className="font-medium">{from.value}</span>;
+      }
+      return <p>UNSUPPORTED_UNFURL_TYPE</p>;
     })();
     return (
       <Page subtitle={link} title={current.name}>
