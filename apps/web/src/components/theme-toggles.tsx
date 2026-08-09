@@ -18,7 +18,9 @@ const Toggle: FC<ToggleProps> = ({ icon: Icon, onClick, isSelected }) => (
   <button
     className={cn(
       "cursor-pointer p-1",
-      isSelected ? "text-white bg-black" : "text-black hover:bg-neutral-200",
+      isSelected
+        ? "text-white bg-black dark:bg-zinc-600"
+        : "text-black dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-500",
     )}
     onClick={onClick}
     type="button"
@@ -58,6 +60,12 @@ export const ThemeToggles = () => {
     }
 
     setActiveTheme(wants);
+
+    document.documentElement.classList.toggle(
+      "dark",
+      localStorage.theme === "dark" ||
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+    );
   }, []);
   const onWantsLightTheme = useCallback(
     () => handleThemeChange("light"),

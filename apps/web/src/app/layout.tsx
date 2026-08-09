@@ -87,10 +87,10 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
         );`}
       </Script>
-      <body className="size-full flex flex-col items-center justify-start">
+      <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
         <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
-          <Link className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
-            <span className="block px-2 bg-neutral-100/0 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
+          <Link className="group col-span-2 bg-black dark:bg-zinc-600 text-white pt-18" href="/">
+            <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
               Rory McMeekin
             </span>
           </Link>

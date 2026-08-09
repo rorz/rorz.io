@@ -27,22 +27,15 @@ const Navigation = ({ items }: NavigationProps) => {
 
   return (
     <nav className="col-span-2 flex flex-col items-start pt-2 underline-offset-2">
-      {/*<a
-        aria-current={getAriaCurrent(isHomeActive)}
-        className={cn("mb-2 text-base font-bold hover:underline")}
-        href="/"
-      >
-        Rory McMeekin
-      </a>*/}
       {items.map((item) => {
         const isActive = isActiveNavigationPath(pathname, item.href);
-
         return (
           <Link
             aria-current={getAriaCurrent(isActive)}
             className={cn(
-              "bg-transparent w-full px-2 py-0.5 pt-1.5 hover:bg-neutral-200 font-semibold",
-              isActive && "bg-black text-white hover:bg-black",
+              "bg-transparent w-full px-2 py-0.5 pt-1.5 hover:bg-neutral-200 dark:hover:bg-zinc-800 font-semibold",
+              isActive &&
+                "bg-black dark:bg-zinc-600 text-white hover:bg-black dark:hover:bg-zinc-600",
             )}
             href={item.href}
             key={`${item.href}:${item.label}`}
