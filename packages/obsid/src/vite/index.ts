@@ -5,6 +5,20 @@ import type { VaultConfig } from "../vault/types.ts";
 import { normalizeVaultsFolder } from "../vault/vault-path.ts";
 
 const markdownExtension = ".md";
+const imageExtensions = [
+  "avif",
+  "bmp",
+  "gif",
+  "jpeg",
+  "jpg",
+  "png",
+  "svg",
+  "webp",
+] as const;
+const vaultContentExtensions = new Set([
+  markdownExtension,
+  ...imageExtensions.map((extension) => `.${extension}`),
+]);
 const virtualModuleId = "virtual:obsid/vault-files";
 const resolvedVirtualModuleId = `\0${virtualModuleId}`;
 
@@ -20,11 +34,20 @@ const getVaultRoot = (config: VaultConfig): string => {
 
 const renderVaultFilesModule = (config: VaultConfig): string => {
   const vaultRoot = getVaultRoot(config);
-  const glob = `${vaultRoot}/**/*.md`;
-  return `export const vaultFiles = import.meta.glob(${JSON.stringify(glob)}, { import: "default", query: "?raw" });`;
+  const filesGlob = `${vaultRoot}/**/*.md`;
+  const imageGlobExtensions = imageExtensions.flatMap((extension) => [
+    extension,
+    extension.toUpperCase(),
+  ]);
+  const imagesGlob = `${vaultRoot}/**/*.{${imageGlobExtensions.join(",")}}`;
+
+  return [
+    `export const vaultFiles = import.meta.glob(${JSON.stringify(filesGlob)}, { import: "default", query: "?raw" });`,
+    `export const vaultImages = import.meta.glob(${JSON.stringify(imagesGlob)}, { eager: true, import: "default", query: "?url" });`,
+  ].join("\n");
 };
 
-const isVaultMarkdownFile = (config: VaultConfig, viteRoot: string, file: string): boolean => {
+const isVaultContentFile = (config: VaultConfig, viteRoot: string, file: string): boolean => {
   const vaultRoot = resolve(viteRoot, getVaultRoot(config).slice(1));
   const vaultPath = relative(vaultRoot, file);
 
@@ -32,7 +55,7 @@ const isVaultMarkdownFile = (config: VaultConfig, viteRoot: string, file: string
     vaultPath !== ".." &&
     !vaultPath.startsWith(`..${sep}`) &&
     !isAbsolute(vaultPath) &&
-    extname(vaultPath).toLowerCase() === markdownExtension
+    vaultContentExtensions.has(extname(vaultPath).toLowerCase())
   );
 };
 
@@ -60,7 +83,7 @@ const obsid = (config: VaultConfig): Plugin => {
 
   return {
     hotUpdate({ file, server, timestamp, type }) {
-      if (!isVaultMarkdownFile(config, server.config.root, file)) {
+      if (!isVaultContentFile(config, server.config.root, file)) {
         return;
       }
 

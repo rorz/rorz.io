@@ -60,6 +60,7 @@ Only sells whole pies, but`;
         resolve: expect.any(Function),
         resolveOrThrow: expect.any(Function),
       },
+      resolveImage: expect.any(Function),
       source,
       vaultPath: "lists/best/New York-style pizza (whole)",
       webPath: "/lists/best/new-york-style-pizza-whole",

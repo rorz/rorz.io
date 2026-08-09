@@ -1,13 +1,14 @@
-import { ArrowSquareOutIcon, NoteIcon } from "@phosphor-icons/react/dist/ssr";
 import { format } from "date-fns/fp";
+// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
-import { ObsidianMarkdown } from "obsid/react";
 import { defineSchema, desc, note, p } from "obsid/schema";
-import type { StringPropertyValue } from "obsid/types";
+import { StringPropertyLinkTypeSchema, type StringPropertyValue } from "obsid/types";
 import type { ReactNode } from "react";
 import { List, ListItem } from "@/components/list/index.tsx";
+import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
 import { StarRating } from "@/components/star-rating.tsx";
+import { VaultMarkdown } from "@/components/vault-markdown.tsx";
 import { webPermalink } from "@/lib/vault/routing.ts";
 
 const dated = {
@@ -34,10 +35,19 @@ const thing = note("thing", {
   from: p.text(),
 });
 
+const project = note("project", {
+  ...dated,
+  ...titled,
+  byline: p.text(),
+  image: p.text().pipe(StringPropertyLinkTypeSchema),
+  link: p.text().pipe(StringPropertyLinkTypeSchema),
+});
+
 const entries = [
   post,
   place,
   thing,
+  project,
 ] as const;
 
 const renderText = (property: StringPropertyValue): string => {
@@ -59,7 +69,7 @@ const getEntryKind = (property: StringPropertyValue): (typeof entries)[number]["
     }
   }
 
-  throw new Error(`Invalid list entry kind: ${property.raw}`);
+  throw new Error(`Invalid entry kind: ${property.raw}`);
 };
 
 const list = note("list", {
@@ -71,14 +81,20 @@ const listIndex = note("listOfLists", {
   lists: p.list(),
 });
 
+const grid = note("grid", {
+  gridOf: p.text(),
+});
+
 const model = defineSchema({
   default: page,
   discriminator: "type",
   notes: [
     page,
     post,
+    project,
     place,
     thing,
+    grid,
     list,
     listIndex,
   ],
@@ -88,6 +104,53 @@ const model = defineSchema({
 });
 
 const schema = model.render({
+  grid: async ({ note: current, query }) => {
+    const resolvedEntries = await query.findMany({
+      folder: current.folder,
+      kind: getEntryKind(current.properties.gridOf),
+      orderBy: ({ properties }) => desc(properties.date),
+    });
+    const title = current.folder.vaultPath.split("/").at(-1) || current.name;
+
+    return (
+      <Page title={title}>
+        <div className="grid grid-cols-2 gap-4 w-full">
+          {resolvedEntries.map((entry) => {
+            if (entry.kind === "project") {
+              const entryTitle = entry.properties.title?.raw ?? entry.name;
+
+              return (
+                <Link
+                  className="col-span-1 border border-transparent group hover:border-black cursor-pointer"
+                  href={entry.webPath}
+                  key={entry.webPath}
+                >
+                  <div className="border">
+                    <div className="w-full h-32 relative bg-neutral-300">
+                      <div
+                        aria-hidden="true"
+                        className="size-full bg-cover bg-center"
+                        style={{
+                          backgroundImage: `url("${entry.properties.image.url}")`,
+                        }}
+                      />
+                      <h3 className="absolute bottom-0 left-0 px-2 py-1 bg-black text-white font-semibold font-stretch-semi-condensed">
+                        {entryTitle}
+                      </h3>
+                    </div>
+                    <div className="flex flex-col items-start gap-1 p-2">
+                      <span className="font-serif">{renderText(entry.properties.byline)}</span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            }
+            return null;
+          })}
+        </div>
+      </Page>
+    );
+  },
   list: async ({ note: current, query }) => {
     const resolvedEntries = await query.findMany({
       folder: current.folder,
@@ -129,6 +192,8 @@ const schema = model.render({
     );
   },
   listOfLists: async ({ note: current, query }) => {
+    const title = current.folder.vaultPath.split("/").at(-1) || current.name;
+
     const groups = await Promise.all(
       current.properties.lists.map(async (reference) => {
         if (reference.type !== "note") {
@@ -156,16 +221,40 @@ const schema = model.render({
     );
 
     return (
-      <Page title={current.name}>
-        {groups.map((group) => (
-          <List key={group.index.webPath}>
-            <p>{group.entries.length}</p>
-          </List>
-        ))}
+      <Page className="gap-5" title={title}>
+        {groups.map((group) => {
+          const listTitle = group.index.folder.vaultPath.split("/").at(-1) || group.index.name;
+
+          return (
+            <div className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
+              <Link className="underline" href={group.index.webPath}>
+                <h2 className="font-semibold text-xl">{listTitle}</h2>
+              </Link>
+              <List>
+                {group.entries.map((entry) => {
+                  const decoration = (() => {
+                    if ("rating" in entry.properties && entry.properties.rating !== undefined) {
+                      return <StarRating className="py-0.5" value={entry.properties.rating} />;
+                    }
+                    return null;
+                  })();
+                  return (
+                    <ListItem
+                      decoration={decoration}
+                      href={entry.webPath}
+                      key={entry.webPath}
+                      title={entry.name}
+                    />
+                  );
+                })}
+              </List>
+            </div>
+          );
+        })}
       </Page>
     );
   },
-  page: ({ note: current }) => <ObsidianMarkdown>{current.body}</ObsidianMarkdown>,
+  page: ({ note: current }) => <VaultMarkdown note={current} />,
   place: ({ note: current }) => (
     <Page
       subtitle={
@@ -177,7 +266,7 @@ const schema = model.render({
       }
       title={current.name}
     >
-      <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
+      <VaultMarkdown note={current} />
     </Page>
   ),
   post: async ({ note: current, query }) => {
@@ -200,52 +289,45 @@ const schema = model.render({
         subtitle={format("do MMMM y", current.properties.date)}
         title={current.properties.title ? renderText(current.properties.title) : current.name}
       >
-        <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
+        <VaultMarkdown note={current} />
       </Page>
     );
   },
-  thing: async ({ note: current, query }) => {
-    const link = await (async () => {
-      const { from } = current.properties;
-      if (from.type === "note") {
-        const result = await query.resolve(from);
-        if (result === null) {
-          return <p>No Note</p>;
-        }
-        return (
-          <Link
-            className="inline-flex items-center gap-1 underline font-medium"
-            href={result.webPath}
-          >
-            <span>{result.name}</span>
-            <NoteIcon />
-          </Link>
-        );
-      }
-      if (from.type === "link") {
-        return (
-          <a
-            className="inline-flex items-center gap-1 underline font-medium"
-            href={from.url}
-            rel="noopener"
-            target="_blank"
-          >
-            <span>{from.label ?? from.url.toString()}</span>
-            <ArrowSquareOutIcon />
-          </a>
-        );
-      }
-      if (from.type === "string") {
-        return <span className="font-medium">{from.value}</span>;
-      }
-      return <p>UNSUPPORTED_UNFURL_TYPE</p>;
-    })();
+  project: async ({ note: current, query }) => {
+    const [parent] = await query.findMany({
+      folder: current.folder,
+      kind: "grid",
+      limit: 1,
+    });
+
+    if (!parent) {
+      throw new Error(`Missing project grid for ${current.folder.vaultPath}`);
+    }
+
+    const parentTitle = current.folder.vaultPath.split("/").at(-1) || parent.name;
+
     return (
-      <Page subtitle={link} title={current.name}>
-        <ObsidianMarkdown>{current.body}</ObsidianMarkdown>
+      <Page
+        backNavigation={{
+          href: parent.webPath,
+          title: parentTitle,
+        }}
+        subtitle={renderText(current.properties.byline)}
+        title={current.properties.title ? renderText(current.properties.title) : current.name}
+      >
+        <OmniLink className="mt-2" query={query} value={current.properties.link} />
+        <VaultMarkdown note={current} />
       </Page>
     );
   },
+  thing: async ({ note: current, query }) => (
+    <Page
+      subtitle={<OmniLink query={query} value={current.properties.from} />}
+      title={current.name}
+    >
+      <VaultMarkdown note={current} />
+    </Page>
+  ),
 });
 
 // biome-ignore lint/style/noDefaultExport: The configured schema path resolves one conventional module value.

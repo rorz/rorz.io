@@ -115,3 +115,39 @@ test("ignores Markdown outside the configured vault folder", async () => {
   expect(result).toBeUndefined();
   expect(send).not.toHaveBeenCalled();
 });
+
+test("reloads the browser when a vault image changes", async () => {
+  const send = mock(() => undefined);
+  const server = {
+    config: {
+      root: "/workspace",
+    },
+    environments: {},
+    hot: {
+      send,
+    },
+  } as unknown as ViteDevServer;
+  const hotUpdate = getHotUpdate(
+    obsid({
+      vaults: [
+        {
+          name: "notes",
+        },
+      ],
+      vaultsFolder: "./.obsidian-vaults/",
+    }),
+  );
+
+  await hotUpdate({
+    file: "/workspace/.obsidian-vaults/notes/an_image.png",
+    modules: [],
+    read: () => "",
+    server,
+    timestamp: 1,
+    type: "update",
+  });
+
+  expect(send).toHaveBeenCalledWith({
+    type: "full-reload",
+  });
+});

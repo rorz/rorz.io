@@ -15,15 +15,16 @@ interface CreateVaultLinksOptions {
 }
 
 const wikiLinkPattern = /(?<!!)\[\[([^\]\n]+)\]\]/gu;
+const wikiEmbedPattern = /!\[\[([^\]\n]+)\]\]/gu;
 const linkSubpathPattern = /[#^].*$/u;
 const leadingCurrentDirectoryPattern = /^\.\/+/u;
 const leadingSlashPattern = /^\/+/u;
 const markdownExtensionPattern = /\.md$/iu;
 
-const findWikiLinks = (value: string): readonly WikiLinkMatch[] => {
+const findWikiReferences = (value: string, pattern: RegExp): readonly WikiLinkMatch[] => {
   const links: WikiLinkMatch[] = [];
 
-  for (const match of value.matchAll(wikiLinkPattern)) {
+  for (const match of value.matchAll(pattern)) {
     const body = match[1] ?? "";
     const separator = body.indexOf("|");
     let target = body.trim();
@@ -46,6 +47,12 @@ const findWikiLinks = (value: string): readonly WikiLinkMatch[] => {
 
   return links;
 };
+
+const findWikiEmbeds = (value: string): readonly WikiLinkMatch[] =>
+  findWikiReferences(value, wikiEmbedPattern);
+
+const findWikiLinks = (value: string): readonly WikiLinkMatch[] =>
+  findWikiReferences(value, wikiLinkPattern);
 
 const collectWikiLinks = (
   value: unknown,
@@ -263,4 +270,11 @@ const createVaultLinks = ({
   );
 };
 
-export { createVaultLinks, findWikiLinks, isVaultLink, resolveFrontmatterLinks, resolveVaultPath };
+export {
+  createVaultLinks,
+  findWikiEmbeds,
+  findWikiLinks,
+  isVaultLink,
+  resolveFrontmatterLinks,
+  resolveVaultPath,
+};

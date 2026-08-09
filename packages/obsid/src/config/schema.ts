@@ -35,6 +35,8 @@ type ObsidNoteForDefinitions<Definitions extends ObsidNoteDefinitions> = ObsidNo
 type ObsidNoteKind<Definitions extends ObsidNoteDefinitions> =
   ObsidNoteForDefinitions<Definitions>["kind"];
 
+type ObsidResolveImage = (target: string) => string | null;
+
 type ObsidResolvedNoteForKind<
   Definitions extends ObsidNoteDefinitions,
   Kind extends ObsidNoteKind<Definitions>,
@@ -81,6 +83,7 @@ type ObsidResolvedNote<Definitions extends ObsidNoteDefinitions> =
     readonly body: string;
     readonly folder: ObsidFolderReference;
     readonly query: ObsidQuery<Definitions>;
+    readonly resolveImage: ObsidResolveImage;
     readonly name: string;
     readonly vaultPath: string;
     readonly webPath: string;
@@ -226,6 +229,7 @@ export type {
   ObsidFindManyOptions,
   ObsidNoteDefinition,
   ObsidNoteDefinitionShape,
+  ObsidNoteDefinitions,
   ObsidNoteForSchema,
   ObsidNoteKind,
   ObsidQuery,
@@ -236,6 +240,7 @@ export type {
   ObsidResolvedNote,
   ObsidResolvedNoteForKind,
   ObsidResolvedNoteForSchema,
+  ObsidResolveImage,
   ObsidSchemaModel,
   ObsidSchemaShape,
 };

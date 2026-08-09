@@ -1,29 +1,34 @@
 import { z } from "zod";
 
+const StringPropertyStringTypeSchema = z.object({
+  raw: z.string(),
+  type: z.literal("string"),
+  value: z.string(),
+});
+const StringPropertyNoteTypeSchema = z.object({
+  label: z.string().exactOptional(),
+  path: z.string(),
+  raw: z.string(),
+  type: z.literal("note"),
+});
+const StringPropertyFileTypeSchema = z.object({
+  label: z.string().exactOptional(),
+  path: z.string(),
+  raw: z.string(),
+  type: z.literal("file"),
+});
+const StringPropertyLinkTypeSchema = z.object({
+  label: z.string().exactOptional(),
+  raw: z.string(),
+  type: z.literal("link"),
+  url: z.url(),
+});
+
 const StringPropertyValueSchema = z.discriminatedUnion("type", [
-  z.object({
-    raw: z.string(),
-    type: z.literal("string"),
-    value: z.string(),
-  }),
-  z.object({
-    label: z.string().exactOptional(),
-    path: z.string(),
-    raw: z.string(),
-    type: z.literal("note"),
-  }),
-  z.object({
-    label: z.string().exactOptional(),
-    path: z.string(),
-    raw: z.string(),
-    type: z.literal("file"),
-  }),
-  z.object({
-    label: z.string().exactOptional(),
-    raw: z.string(),
-    type: z.literal("link"),
-    url: z.url(),
-  }),
+  StringPropertyStringTypeSchema,
+  StringPropertyNoteTypeSchema,
+  StringPropertyLinkTypeSchema,
+  StringPropertyFileTypeSchema,
 ]);
 
 type StringPropertyValue = z.output<typeof StringPropertyValueSchema>;
@@ -66,4 +71,11 @@ export type {
   ObsidianPropertyType,
   ObsidianPropertyValueMap,
   StringPropertyValue,
+};
+
+export {
+  StringPropertyFileTypeSchema,
+  StringPropertyLinkTypeSchema,
+  StringPropertyNoteTypeSchema,
+  StringPropertyStringTypeSchema,
 };

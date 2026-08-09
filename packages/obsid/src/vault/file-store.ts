@@ -1,29 +1,23 @@
 import { getWebPath } from "../config/routing.ts";
-import type {
-  DefinitionsForSchema,
-  ObsidFindManyOptions,
-  ObsidQueryForSchema,
-  ObsidResolvedNoteForSchema,
-  ObsidSchemaShape,
-} from "../config/schema.ts";
-import { compareOrderExpressions } from "../config/sort.ts";
-import type { ObsidianNotePropertyValue } from "../types/frontmatter.ts";
+import type { ObsidSchemaShape } from "../config/schema.ts";
 import type { ObsidFolderReference } from "../types/reference.ts";
 import { parseVaultSource } from "./frontmatter.ts";
+import { createResolveImage, type ImageUrls } from "./image-store.ts";
+import { createQuery, loadFolderFiles, normalizeFolderPath } from "./query.ts";
 import type { ObsidVault, ObsidVaultFile, VaultConfig, VaultName } from "./types.ts";
 import { normalizeVaultsFolder } from "./vault-path.ts";
-import { createVaultLinks, resolveFrontmatterLinks, resolveVaultPath } from "./wiki-link.ts";
+import { createVaultLinks, resolveFrontmatterLinks } from "./wiki-link.ts";
 
 type FileLoader = () => Promise<string>;
 type FileLoaders = Readonly<Record<string, FileLoader>>;
-type VaultFileLoader<Schema extends ObsidSchemaShape> = (
-  vaultPath: string,
-) => Promise<ObsidVaultFile<Schema> | null>;
+interface VaultSources {
+  readonly imageUrls: ImageUrls;
+  readonly loaders: FileLoaders;
+}
 
 const leadingSlashPattern = /^\/+/u;
 const markdownExtension = ".md";
 const markdownExtensionPattern = /\.md$/iu;
-const trailingSlashPattern = /\/+$/u;
 
 const normalizePath = (path: string): string | null => {
   const normalized = path
@@ -36,25 +30,6 @@ const normalizePath = (path: string): string | null => {
     normalized.length === 0 ||
     segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")
   ) {
-    return null;
-  }
-
-  return normalized;
-};
-
-const normalizeFolderPath = (path: string): string | null => {
-  const normalized = path
-    .replaceAll("\\", "/")
-    .replace(leadingSlashPattern, "")
-    .replace(trailingSlashPattern, "");
-
-  if (normalized.length === 0) {
-    return "";
-  }
-
-  const segments = normalized.split("/");
-
-  if (segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")) {
     return null;
   }
 
@@ -107,109 +82,6 @@ const getVaultPaths = (
     .toSorted();
 };
 
-const getFolderPaths = (vaultPaths: readonly string[], folderPath: string): readonly string[] => {
-  let prefix = "";
-
-  if (folderPath) {
-    prefix = `${folderPath}/`;
-  }
-
-  return vaultPaths.filter((path) => {
-    if (!path.startsWith(prefix)) {
-      return false;
-    }
-
-    return !path.slice(prefix.length).includes("/");
-  });
-};
-
-const loadFolderFiles = async <Schema extends ObsidSchemaShape>(
-  vaultPaths: readonly string[],
-  folderPath: string,
-  getFile: VaultFileLoader<Schema>,
-): Promise<readonly ObsidVaultFile<Schema>[]> => {
-  const files = (await Promise.all(
-    getFolderPaths(vaultPaths, folderPath).map((filePath) => getFile(filePath)),
-  )) as Array<ObsidVaultFile<Schema> | null>;
-
-  return files.filter((file): file is ObsidVaultFile<Schema> => file !== null);
-};
-
-const createQuery = <Schema extends ObsidSchemaShape>(
-  getFile: VaultFileLoader<Schema>,
-  currentPath: string,
-  vaultPaths: readonly string[],
-): ObsidQueryForSchema<Schema> => {
-  const resolve = async (
-    reference: ObsidianNotePropertyValue,
-  ): Promise<ObsidVaultFile<Schema> | null> => {
-    const resolvedPath = resolveVaultPath(reference.path, currentPath, vaultPaths);
-
-    if (!resolvedPath) {
-      return null;
-    }
-
-    const resolved = await getFile(resolvedPath);
-
-    if (!resolved) {
-      return null;
-    }
-
-    return resolved;
-  };
-
-  const resolveOrThrow = async (
-    reference: ObsidianNotePropertyValue,
-  ): Promise<ObsidVaultFile<Schema>> => {
-    const resolved = await resolve(reference);
-
-    if (!resolved) {
-      throw new Error(`Could not resolve note reference "${reference.path}"`);
-    }
-
-    return resolved;
-  };
-
-  const findMany = async (
-    options: ObsidFindManyOptions<DefinitionsForSchema<Schema>, ObsidResolvedNoteForSchema<Schema>>,
-  ): Promise<readonly ObsidVaultFile<Schema>[]> => {
-    const folderPath = normalizeFolderPath(options.folder.vaultPath);
-
-    if (folderPath === null) {
-      return [];
-    }
-
-    let notes = await loadFolderFiles(vaultPaths, folderPath, getFile);
-
-    if (options.kind !== undefined) {
-      notes = notes.filter((note) => note.kind === options.kind);
-    }
-
-    if (options.orderBy) {
-      const { orderBy } = options;
-      notes = notes.toSorted((left, right) =>
-        compareOrderExpressions(orderBy(left), orderBy(right)),
-      );
-    }
-
-    if (options.limit !== undefined) {
-      if (!(Number.isSafeInteger(options.limit) && options.limit >= 0)) {
-        throw new RangeError("Query limit must be a non-negative integer");
-      }
-
-      notes = notes.slice(0, options.limit);
-    }
-
-    return notes;
-  };
-
-  return {
-    findMany,
-    resolve,
-    resolveOrThrow,
-  } as ObsidQueryForSchema<Schema>;
-};
-
 // biome-ignore lint/complexity/useMaxParams: This test seam exposes the complete file identity plus its schema.
 const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   loaders: FileLoaders,
@@ -217,6 +89,7 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   vaultName: string,
   vaultPath: string,
   schema: Schema,
+  imageUrls: ImageUrls = {},
 ): Promise<ObsidVaultFile<Schema> | null> => {
   const vaultRoot = normalizeVaultsFolder(vaultsFolder);
   const normalizedVaultName = normalizeVaultName(vaultName);
@@ -236,7 +109,7 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
   const parsedSource = parseVaultSource(source, normalizedPath, schema);
   const vaultPaths = getVaultPaths(loaders, vaultRoot, normalizedVaultName);
   const getFile = (path: string) =>
-    getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, path, schema);
+    getFileFromLoaders(loaders, vaultsFolder, normalizedVaultName, path, schema, imageUrls);
   const query = createQuery(getFile, normalizedPath, vaultPaths);
   const folder: ObsidFolderReference = {
     kind: "folder",
@@ -260,17 +133,18 @@ const getFileFromLoaders = async <Schema extends ObsidSchemaShape>(
     }),
     name,
     query,
+    resolveImage: createResolveImage(imageUrls, vaultsFolder, normalizedVaultName, normalizedPath),
     source,
     vaultPath: normalizedPath,
     webPath: getWebPath(schema, normalizedPath),
   };
 };
 
-const getVaultFromLoaders = <
+const getVaultFromSources = <
   const Config extends VaultConfig,
   const Schema extends ObsidSchemaShape,
 >(
-  loaders: FileLoaders,
+  sources: VaultSources,
   config: Config,
   schema: Schema,
   name: NoInfer<VaultName<Config>>,
@@ -285,9 +159,16 @@ const getVaultFromLoaders = <
     throw new Error(`Invalid vaults folder: ${config.vaultsFolder}`);
   }
 
-  const vaultPaths = getVaultPaths(loaders, vaultRoot, name);
+  const vaultPaths = getVaultPaths(sources.loaders, vaultRoot, name);
   const getFile = (vaultPath: string) =>
-    getFileFromLoaders(loaders, config.vaultsFolder, name, vaultPath, schema);
+    getFileFromLoaders(
+      sources.loaders,
+      config.vaultsFolder,
+      name,
+      vaultPath,
+      schema,
+      sources.imageUrls,
+    );
 
   return {
     getFile,
@@ -305,4 +186,23 @@ const getVaultFromLoaders = <
   };
 };
 
-export { getFileFromLoaders, getVaultFromLoaders };
+const getVaultFromLoaders = <
+  const Config extends VaultConfig,
+  const Schema extends ObsidSchemaShape,
+>(
+  loaders: FileLoaders,
+  config: Config,
+  schema: Schema,
+  name: NoInfer<VaultName<Config>>,
+): ObsidVault<Schema, VaultName<Config>> =>
+  getVaultFromSources(
+    {
+      imageUrls: {},
+      loaders,
+    },
+    config,
+    schema,
+    name,
+  );
+
+export { getFileFromLoaders, getVaultFromLoaders, getVaultFromSources };

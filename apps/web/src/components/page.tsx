@@ -2,6 +2,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
 import type { FC, ReactNode } from "react";
+import { cn } from "@/lib/cn/index.ts";
 
 type PageProps = {
   title?: string;
@@ -11,6 +12,7 @@ type PageProps = {
     title: string;
     href: string;
   };
+  className?: string;
 };
 
 export const Page: FC<PageProps> = ({ children, ...props }) => {
@@ -39,7 +41,7 @@ export const Page: FC<PageProps> = ({ children, ...props }) => {
   })();
 
   return (
-    <div className="flex flex-col gap-2 items-start">
+    <div className={cn("flex flex-col gap-2 items-start", props.className)}>
       {backNavigation}
       {title}
       {subtitle}

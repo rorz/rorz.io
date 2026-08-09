@@ -1,4 +1,8 @@
-import type { ObsidResolvedNoteForSchema, ObsidSchemaShape } from "../config/schema.ts";
+import type {
+  ObsidResolvedNoteForSchema,
+  ObsidResolveImage,
+  ObsidSchemaShape,
+} from "../config/schema.ts";
 
 interface VaultConfig {
   readonly vaults: readonly {
@@ -31,6 +35,7 @@ interface VaultFile {
   readonly body: string;
   readonly frontmatter: VaultFrontmatter;
   readonly links: readonly VaultLink[];
+  readonly resolveImage: ObsidResolveImage;
   readonly source: string;
   readonly vaultPath: string;
   readonly webPath: string;

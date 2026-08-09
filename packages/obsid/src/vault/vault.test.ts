@@ -50,6 +50,7 @@ describe("getVault", () => {
         resolve: expect.any(Function),
         resolveOrThrow: expect.any(Function),
       },
+      resolveImage: expect.any(Function),
       source: "# Welcome",
       vaultPath: "Welcome",
       webPath: "/welcome",
@@ -200,6 +201,26 @@ describe("getFile", () => {
     expect(file?.vaultPath).toBe("Welcome");
     expect(file?.webPath).toBe("/welcome");
     expect(file?.source).toBe("# Welcome");
+  });
+
+  test("resolves a local image to its bundled URL", async () => {
+    const file = await getFileFromLoaders(
+      {
+        "/.obsidian-vaults/rorz.io/posts/Welcome.md": () =>
+          Promise.resolve("![[images/an_image.png]]"),
+      },
+      "./.obsidian-vaults/",
+      "rorz.io",
+      "posts/Welcome",
+      schema,
+      {
+        "/.obsidian-vaults/rorz.io/images/an_image.png": "/assets/an_image.123.png",
+      },
+    );
+
+    expect(file?.resolveImage("an_image.png")).toBe("/assets/an_image.123.png");
+    expect(file?.resolveImage("images/an_image.png")).toBe("/assets/an_image.123.png");
+    expect(file?.resolveImage("missing.png")).toBeNull();
   });
 
   test("returns null for missing files and unsafe vault or file paths", async () => {
