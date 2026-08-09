@@ -1,4 +1,4 @@
-import { type ReactNode, useId } from "react";
+import { type FC, type ReactNode, useId } from "react";
 import "@/styles.css";
 import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
@@ -8,6 +8,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { Navigation } from "@/components/navigation/index.tsx";
 import { ThemeToggles } from "@/components/theme-toggles.tsx";
+import { cn } from "@/lib/cn/index.ts";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
@@ -42,8 +43,16 @@ const metadata = {
   },
 };
 
-const Masthead = () => (
-  <Link className="flex-1 group col-span-2 bg-black dark:bg-zinc-600 text-white pt-18" href="/">
+const Masthead: FC<{
+  className?: string;
+}> = ({ className }) => (
+  <Link
+    className={cn(
+      "group col-span-2 bg-black dark:bg-zinc-600 text-white flex items-end pb-1",
+      className,
+    )}
+    href="/"
+  >
     <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
       Rory McMeekin
     </span>
@@ -96,13 +105,18 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         );`}
       </Script>
       <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-        <div className="size-full max-w-5xl grid grid-cols-12">
-          <div className="col-span-2 flex flex-col gap-6">
-            <Masthead />
+        <div className="size-full lg:max-w-5xl lg:grid lg:grid-cols-12 flex flex-col items-start">
+          <div className="lg:col-span-2 flex lg:flex-col gap-2 lg:gap-6 w-full items-start">
+            <div className="flex flex-col lg:min-w-unset lg:w-full">
+              <Masthead className="h-14 lg:h-28 lg:w-full" />
+              <div className="lg:hidden">
+                <ThemeToggles />
+              </div>
+            </div>
             <Navigation items={navigationItems} />
           </div>
-          <main className="col-span-8 pl-8 pt-18">{children}</main>
-          <div className="col-span-2 flex items-start justify-end pr-2">
+          <main className="w-full lg:col-span-8 lg:pl-8 lg:pt-34 pt-12 px-3">{children}</main>
+          <div className="hidden col-span-2 lg:flex items-start justify-end pr-2">
             <ThemeToggles />
           </div>
         </div>

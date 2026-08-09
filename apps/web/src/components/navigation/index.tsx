@@ -26,14 +26,14 @@ const Navigation = ({ items }: NavigationProps) => {
   const pathname = usePathname();
 
   return (
-    <nav className="col-span-2 flex flex-col items-start pt-2 underline-offset-2">
+    <nav className="pt-2 lg:pt-0 lg:w-full flex flex-wrap lg:flex-nowrap lg:flex-col items-start underline-offset-2">
       {items.map((item) => {
         const isActive = isActiveNavigationPath(pathname, item.href);
         return (
           <Link
             aria-current={getAriaCurrent(isActive)}
             className={cn(
-              "bg-transparent w-full px-2 py-0.5 pt-1.5 hover:bg-neutral-200 dark:hover:bg-zinc-800 font-semibold",
+              "bg-transparent lg:w-full mb-2 lg:mb-0 px-2 py-0.5 pt-1.5 hover:bg-neutral-200 dark:hover:bg-zinc-800 font-semibold",
               isActive &&
                 "bg-black dark:bg-zinc-600 text-white hover:bg-black dark:hover:bg-zinc-600",
             )}
