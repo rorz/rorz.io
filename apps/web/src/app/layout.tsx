@@ -1,11 +1,13 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useId } from "react";
 import "@/styles.css";
 import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { Libertinus_Serif, Zalando_Sans } from "next/font/google";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
+import Script from "next/script";
 import { Navigation } from "@/components/navigation/index.tsx";
+import { ThemeToggles } from "@/components/theme-toggles.tsx";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
@@ -78,6 +80,13 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   return (
     <html className={`${zalandoSans.variable} ${libertinusSerif.variable}`} lang="en">
+      <Script id={"detect-theme"} strategy="beforeInteractive">
+        {`document.documentElement.classList.toggle(
+          "dark",
+          localStorage.theme === "dark" ||
+            (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+        );`}
+      </Script>
       <body className="size-full flex flex-col items-center justify-start">
         <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
           <Link className="group col-span-2 border-neutral-100 bg-black text-white pt-18" href="/">
@@ -87,18 +96,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           </Link>
           <div className="col-span-8" />
           <div className="col-span-2 flex items-start justify-end pr-2">
-            <button className="cursor-pointer text-black hover:bg-neutral-200 p-1" type="button">
-              <SunIcon className="size-5" weight="regular" />
-            </button>
-            <button className="cursor-pointer text-black p-1 hover:bg-neutral-200" type="button">
-              <MoonIcon className="size-5" weight="regular" />
-            </button>
-            <button
-              className="cursor-pointer bg-black text-white p-1 hover:bg-neutral-200"
-              type="button"
-            >
-              <CircleHalfTiltIcon className="size-5" weight="regular" />
-            </button>
+            <ThemeToggles />
           </div>
         </div>
         <div className="size-full max-w-5xl grid grid-cols-12">
