@@ -42,6 +42,14 @@ const metadata = {
   },
 };
 
+const Masthead = () => (
+  <Link className="flex-1 group col-span-2 bg-black dark:bg-zinc-600 text-white pt-18" href="/">
+    <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
+      Rory McMeekin
+    </span>
+  </Link>
+);
+
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
@@ -88,20 +96,15 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         );`}
       </Script>
       <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-        <div className="size-full max-w-5xl grid grid-cols-12 mb-4">
-          <Link className="group col-span-2 bg-black dark:bg-zinc-600 text-white pt-18" href="/">
-            <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
-              Rory McMeekin
-            </span>
-          </Link>
-          <div className="col-span-8" />
+        <div className="size-full max-w-5xl grid grid-cols-12">
+          <div className="col-span-2 flex flex-col gap-6">
+            <Masthead />
+            <Navigation items={navigationItems} />
+          </div>
+          <main className="col-span-8 pl-8 pt-18">{children}</main>
           <div className="col-span-2 flex items-start justify-end pr-2">
             <ThemeToggles />
           </div>
-        </div>
-        <div className="size-full max-w-5xl grid grid-cols-12">
-          <Navigation items={navigationItems} />
-          <main className="col-span-8 pl-8 pt-2">{children}</main>
         </div>
       </body>
     </html>
