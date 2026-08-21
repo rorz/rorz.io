@@ -12,6 +12,10 @@ const titled = {
 
 const page = note("page", {});
 
+const index = note("index", {
+  sections: p.list(),
+});
+
 const post = note("post", {
   ...dated,
   ...titled,
@@ -84,6 +88,7 @@ const model = defineSchema({
   discriminator: "type",
   notes: [
     page,
+    index,
     book,
     post,
     project,

@@ -84,10 +84,10 @@ const getRatingDecoration = (entry: VaultEntry) => {
   return null;
 };
 
-const renderListGroup = (group: ListGroup) => (
+const renderListGroup = (group: ListGroup, title = getFolderTitle(group.index)) => (
   <div className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <Link className="underline" href={group.index.webPath}>
-      <h2 className="font-semibold text-xl">{getFolderTitle(group.index)}</h2>
+      <h2 className="font-semibold text-xl">{title}</h2>
     </Link>
     <List>
       {group.entries.map((entry) => (
@@ -101,6 +101,28 @@ const renderListGroup = (group: ListGroup) => (
     </List>
   </div>
 );
+
+type ListContext = VaultRenderContext<"list">;
+
+const renderListSection = async (
+  index: ListContext["note"],
+  title: string,
+  query: ListContext["query"],
+) => {
+  const entries = await query.findMany({
+    folder: index.folder,
+    kind: getEntryKind(index.properties.listOf),
+    orderBy: ({ properties }) => desc(properties.date),
+  });
+
+  return renderListGroup(
+    {
+      entries,
+      index,
+    },
+    title,
+  );
+};
 
 const list: VaultRenderer<"list"> = async ({ note: current, query }) => {
   const [entries, backNavigation] = await Promise.all([
@@ -133,7 +155,7 @@ const listOfLists: VaultRenderer<"listOfLists"> = async ({ note: current, query 
 
   return (
     <Page className="gap-5" title={getFolderTitle(current)}>
-      {groups.map(renderListGroup)}
+      {groups.map((group) => renderListGroup(group))}
     </Page>
   );
 };
@@ -169,4 +191,4 @@ const listRenderers = {
   post,
 } satisfies Pick<VaultRenderers, "list" | "listOfLists" | "post">;
 
-export { listRenderers };
+export { listRenderers, renderListSection };

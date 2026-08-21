@@ -117,6 +117,17 @@ const renderCollectionSection = (group: GridGroup) => (
   </section>
 );
 
+const renderGridSection = async (
+  index: GridContext["note"],
+  title: string,
+  query: GridContext["query"],
+) =>
+  renderCollectionSection({
+    entries: await findCollectionEntries(index.folder, index.properties.gridOf, query),
+    index,
+    title,
+  });
+
 const renderImageView = (name: string, source: string) => (
   <a
     aria-label={`Open ${name} at full size`}
@@ -263,4 +274,4 @@ const collectionRenderers = {
   video,
 } satisfies Pick<VaultRenderers, "grid" | "gridOfGrids" | "image" | "project" | "video">;
 
-export { collectionRenderers };
+export { collectionRenderers, renderGridSection };

@@ -2,13 +2,45 @@ import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
 import { StarRating } from "@/components/star-rating.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
-import { collectionRenderers } from "@/lib/vault/schema/collections.tsx";
+import { collectionRenderers, renderGridSection } from "@/lib/vault/schema/collections.tsx";
 import {
+  getFolderTitle,
   model,
   type VaultRenderContext,
   type VaultRenderers,
 } from "@/lib/vault/schema/definitions.ts";
-import { listRenderers } from "@/lib/vault/schema/lists.tsx";
+import { listRenderers, renderListSection } from "@/lib/vault/schema/lists.tsx";
+
+type IndexContext = VaultRenderContext<"index">;
+type SectionReference = IndexContext["note"]["properties"]["sections"][number];
+
+const renderIndexSection = async (reference: SectionReference, query: IndexContext["query"]) => {
+  if (reference.type !== "note") {
+    throw new Error(`Expected a note link, received: ${reference.raw}`);
+  }
+
+  const section = await query.resolveOrThrow(reference);
+
+  if (section.kind === "list") {
+    return renderListSection(section, reference.label ?? getFolderTitle(section), query);
+  }
+
+  if (section.kind === "grid") {
+    return renderGridSection(section, reference.label ?? getFolderTitle(section), query);
+  }
+
+  throw new Error(`Expected a list or grid note, resolved: ${section.kind}`);
+};
+
+const index: VaultRenderers["index"] = async ({ note: current, query }) => (
+  <Page className="gap-6">
+    {
+      await Promise.all(
+        current.properties.sections.map((reference) => renderIndexSection(reference, query)),
+      )
+    }
+  </Page>
+);
 
 type RatedNote = VaultRenderContext<"book">["note"] | VaultRenderContext<"place">["note"];
 
@@ -45,6 +77,7 @@ const schema = model.render({
   ...collectionRenderers,
   ...listRenderers,
   ...simpleRenderers,
+  index,
 });
 
 // biome-ignore lint/style/noDefaultExport: The configured schema path resolves one conventional module value.
