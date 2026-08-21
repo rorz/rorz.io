@@ -114,6 +114,26 @@ test("renders a linked collection card with its image and description", () => {
   expect(html).toContain("1st Mar 2026");
 });
 
+test("routes assets.rorz.io thumbnails through the restricted image endpoint", () => {
+  const imageSrc = "https://assets.rorz.io/videos/nara.thumbnail.png";
+  const html = renderToStaticMarkup(
+    <CollectionGrid>
+      <CollectionGridItem
+        href="/images/preview"
+        imageAlt=""
+        imageSrc={imageSrc}
+        title="Preview"
+        variant="icon"
+      />
+    </CollectionGrid>,
+  );
+
+  expect(html).toContain('src="/_images/thumbnail?');
+  expect(html).toContain("w=256 256w");
+  expect(html).toContain("w=640 640w");
+  expect(html).not.toContain(`src="${imageSrc}`);
+});
+
 test("renders at most four collection previews in a responsive row", () => {
   const html = renderToStaticMarkup(
     <CollectionGrid layout="row">

@@ -1,5 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
+import { imagesOptimizer } from "@vinext/cloudflare/images/images-optimizer";
 import { obsid } from "obsid/vite";
 import vinext from "vinext";
 import { defineConfig } from "vite";
@@ -9,7 +10,13 @@ export default defineConfig({
   plugins: [
     obsid(obsidConfig),
     tailwindcss(),
-    vinext(),
+    vinext({
+      images: {
+        optimizer: {
+          adapter: imagesOptimizer().adapter,
+        },
+      },
+    }),
     cloudflare({
       viteEnvironment: {
         childEnvironments: [

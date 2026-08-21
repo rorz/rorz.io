@@ -1,4 +1,5 @@
 import vinextHandler from "vinext/server/fetch-handler";
+import { handleThumbnailRequest, isThumbnailRequest } from "@/lib/image/thumbnail-worker.ts";
 
 const POSTHOG_API_ORIGIN = "https://us.i.posthog.com";
 const POSTHOG_ASSET_ORIGIN = "https://us-assets.i.posthog.com";
@@ -75,9 +76,15 @@ const proxyPostHogRequest = async (
 
 export default {
   fetch(request, env, ctx) {
+    const requestUrl = new URL(request.url);
+
+    if (isThumbnailRequest(requestUrl)) {
+      return handleThumbnailRequest(request);
+    }
+
     const proxyPath = getProxyPath(env.NEXT_PUBLIC_POSTHOG_HOST);
 
-    if (proxyPath && isPostHogRequest(new URL(request.url).pathname, proxyPath)) {
+    if (proxyPath && isPostHogRequest(requestUrl.pathname, proxyPath)) {
       return proxyPostHogRequest(request, proxyPath, ctx);
     }
 

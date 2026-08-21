@@ -5,8 +5,14 @@
     "directory": "dist/client",
     "not_found_handling": "none"
   },
+  "cache": {
+    "enabled": true
+  },
   "compatibility_date": "2026-08-21",
   "compatibility_flags": ["nodejs_compat"],
+  "images": {
+    "binding": "IMAGES"
+  },
   "main": "src/worker.ts",
   "name": "rorz-io",
   "vars": {
