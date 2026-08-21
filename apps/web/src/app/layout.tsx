@@ -114,7 +114,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
         );`}
       </Script>
-      <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+      <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 min-h-screen">
         {postHogConfig.apiHost && postHogConfig.projectToken ? (
           <PostHog apiHost={postHogConfig.apiHost} projectToken={postHogConfig.projectToken} />
         ) : null}
@@ -133,6 +133,19 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <ThemeToggles />
           </div>
         </div>
+        <footer className="mt-auto pt-12 pb-8">
+          <span className="font-sans text-xs text-zinc-500">
+            Rory McMeekin &copy; {new Date().getFullYear()}.{" "}
+            <a
+              className="underline"
+              href="https://github.com/rorz/rorz.io"
+              rel="noopener"
+              target="_blank"
+            >
+              Open source.
+            </a>
+          </span>
+        </footer>
       </body>
     </html>
   );
