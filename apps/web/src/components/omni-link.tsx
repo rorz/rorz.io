@@ -1,8 +1,6 @@
-import { ArrowSquareOutIcon, NoteIcon } from "@phosphor-icons/react/ssr";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Link from "next/link";
 import type { ObsidNoteDefinitions, ObsidQuery } from "obsid/schema";
 import type { StringPropertyValue } from "obsid/types";
+import { ExternalLink, InternalLink } from "@/components/content-link.tsx";
 import { cn } from "@/lib/cn/index.ts";
 
 type OmniLinkProps<Definitions extends ObsidNoteDefinitions> = {
@@ -22,26 +20,16 @@ export const OmniLink = async <Definitions extends ObsidNoteDefinitions>({
       return <p>No Note</p>;
     }
     return (
-      <Link
-        className={cn("inline-flex items-center gap-1 underline font-medium", className)}
-        href={result.webPath}
-      >
-        <span>{result.name}</span>
-        <NoteIcon />
-      </Link>
+      <InternalLink className={className} href={result.webPath}>
+        {result.name}
+      </InternalLink>
     );
   }
   if (value.type === "link") {
     return (
-      <a
-        className={cn("inline-flex items-center gap-1 underline font-medium", className)}
-        href={value.url}
-        rel="noopener"
-        target="_blank"
-      >
-        <span>{value.label ?? value.url.toString()}</span>
-        <ArrowSquareOutIcon />
-      </a>
+      <ExternalLink className={className} href={value.url.toString()}>
+        {value.label ?? value.url.toString()}
+      </ExternalLink>
     );
   }
   if (value.type === "string") {

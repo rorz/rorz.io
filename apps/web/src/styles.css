@@ -24,18 +24,60 @@ html {
     "Segoe UI", sans-serif;
   --font-serif:
     var(--font-libertinus-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-mono, "Courier New", Courier;
 
   --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-accent: var(--accent);
 }
 
-p {
+.markdown p {
   font-family: var(--font-serif);
   font-size: var(--text-lg);
+  max-width: 70ch;
+  margin-bottom: calc(var(--spacing) * 2);
 }
 
-p {
+.markdown p:has(+ :where(ol, ul)) {
+  margin-bottom: calc(var(--spacing) * -2);
+}
+
+.markdown h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+}
+
+.markdown h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  font-stretch: semi-condensed;
+  font-weight: 700;
+}
+
+.markdown :where(ol, ul) {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
   margin-bottom: calc(var(--spacing) * 2);
   max-width: 70ch;
+  padding-left: calc(var(--spacing) * 6);
+}
+
+.markdown ol {
+  list-style-type: decimal;
+}
+
+.markdown ul {
+  list-style-type: disc;
+}
+
+.markdown :where(ol, ul) :where(ol, ul) {
+  margin-bottom: 0;
+}
+
+.markdown code {
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  padding: calc(var(--spacing) * 0.5) calc(var(--spacing) * 1);
+  background-color: var(--color-zinc-200);
+  border-radius: var(--radius-sm);
 }

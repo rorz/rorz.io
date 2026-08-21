@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react";
 import "@/styles.css";
 import { env } from "cloudflare:workers";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import { Libertinus_Serif, Zalando_Sans } from "next/font/google";
+import { JetBrains_Mono, Libertinus_Serif, Zalando_Sans } from "next/font/google";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
@@ -34,6 +34,13 @@ const zalandoSans = Zalando_Sans({
     "latin",
   ],
   variable: "--font-zalando-sans",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: [
+    "latin",
+  ],
+  variable: "--font-jetbrains-mono",
 });
 
 const metadata = {
@@ -105,7 +112,10 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   }));
 
   return (
-    <html className={`${zalandoSans.variable} ${libertinusSerif.variable}`} lang="en">
+    <html
+      className={`${zalandoSans.variable} ${libertinusSerif.variable} ${jetBrainsMono.variable}`}
+      lang="en"
+    >
       {/* biome-ignore lint/correctness/useUniqueElementIds: The root layout renders once and Next Script needs a stable id. */}
       <Script id="detect-theme" strategy="beforeInteractive">
         {`document.documentElement.classList.toggle(
