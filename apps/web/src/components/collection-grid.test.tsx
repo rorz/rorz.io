@@ -7,6 +7,7 @@ interface MockImageProps {
   readonly fill?: boolean;
   readonly sizes?: string;
   readonly src: string;
+  readonly unoptimized?: boolean;
 }
 
 interface MockLinkProps {
@@ -16,10 +17,22 @@ interface MockLinkProps {
   readonly href: string;
 }
 
+interface MockFindManyOptions {
+  readonly kind?: string;
+  readonly limit?: number;
+}
+
 mock.module("next/image", () => ({
-  default: ({ alt, className, src }: MockImageProps) => (
+  default: ({ alt, className, src, unoptimized }: MockImageProps) => (
     // biome-ignore lint/performance/noImgElement: This native element is the test double for Next Image.
-    <img alt={alt} className={className} height={1} src={src} width={1} />
+    <img
+      alt={alt}
+      className={className}
+      data-unoptimized={unoptimized || undefined}
+      height={1}
+      src={src}
+      width={1}
+    />
   ),
 }));
 
@@ -33,6 +46,53 @@ mock.module("next/link", () => ({
 
 const { CollectionGrid, CollectionGridItem } = await import("./collection-grid.tsx");
 const { default: schema } = await import("@/lib/vault/schema.tsx");
+
+const imageEntry = {
+  kind: "image",
+  name: "Shibuya HD",
+  properties: {
+    date: new Date("2026-03-01"),
+    src: {
+      raw: "https://images.example.com/shibuya.jpg",
+      type: "link",
+      url: "https://images.example.com/shibuya.jpg",
+    },
+  },
+  webPath: "/images/photographs/shibuya-hd",
+} as const;
+
+const videoEntry = {
+  kind: "video",
+  name: "Crossing",
+  properties: {
+    date: new Date("2026-03-02"),
+    src: {
+      raw: "https://videos.example.com/crossing.mp4",
+      type: "link",
+      url: "https://videos.example.com/crossing.mp4",
+    },
+    thumbnail: {
+      raw: "https://images.example.com/crossing.jpg",
+      type: "link",
+      url: "https://images.example.com/crossing.jpg",
+    },
+  },
+  webPath: "/images/photographs/crossing",
+} as const;
+
+const findMediaEntries = (options: MockFindManyOptions) => {
+  if (options.kind === "image") {
+    return Promise.resolve([
+      imageEntry,
+    ]);
+  }
+  if (options.kind === "video") {
+    return Promise.resolve([
+      videoEntry,
+    ]);
+  }
+  return Promise.resolve([]);
+};
 
 test("renders a linked collection card with its image and description", () => {
   const html = renderToStaticMarkup(
@@ -54,25 +114,35 @@ test("renders a linked collection card with its image and description", () => {
   expect(html).toContain("1st Mar 2026");
 });
 
-test("renders collection previews as a single non-wrapping row", () => {
+test("renders at most four collection previews in a responsive row", () => {
   const html = renderToStaticMarkup(
     <CollectionGrid layout="row">
-      <CollectionGridItem
-        href="/images/photographs/shibuya-hd"
-        imageAlt=""
-        imageSrc="https://images.example.com/shibuya.jpg"
-        title="Shibuya HD"
-        variant="icon"
-      />
+      {[
+        "Shibuya HD",
+        "Shinjuku",
+        "Hiroshima",
+        "Kyoto",
+        "Osaka",
+      ].map((title) => (
+        <CollectionGridItem
+          href={`/images/photographs/${title.toLowerCase().replace(" ", "-")}`}
+          imageAlt=""
+          imageSrc="https://images.example.com/shibuya.jpg"
+          key={title}
+          title={title}
+          variant="icon"
+        />
+      ))}
     </CollectionGrid>,
   );
 
-  expect(html).toContain("grid-flow-col");
-  expect(html).toContain("auto-cols-[calc((100%_-_2rem)/3)]");
-  expect(html).toContain("lg:auto-cols-[calc((100%_-_3rem)/4)]");
-  expect(html).toContain("overflow-x-auto");
+  expect(html).toContain("grid-cols-3");
+  expect(html).toContain("lg:grid-cols-4");
+  expect(html).toContain("[&amp;&gt;li:nth-child(4)]:hidden");
+  expect(html).not.toContain("overflow-x-auto");
   expect(html).toContain("aspect-square");
   expect(html).toContain('aria-label="Shibuya HD"');
+  expect(html).not.toContain('aria-label="Osaka"');
   expect(html).toContain("hover:border-black");
   expect(html).toContain('<article class="border">');
   expect(html).not.toContain("<h3");
@@ -80,24 +150,8 @@ test("renders collection previews as a single non-wrapping row", () => {
   expect(html).not.toContain("font-serif");
 });
 
-test("renders every root image preview in one responsive row", async () => {
-  const findMany = mock((_options: Readonly<Record<string, unknown>>) =>
-    Promise.resolve([
-      {
-        kind: "image",
-        name: "Shibuya HD",
-        properties: {
-          date: new Date("2026-03-01"),
-          src: {
-            raw: "https://images.example.com/shibuya.jpg",
-            type: "link",
-            url: "https://images.example.com/shibuya.jpg",
-          },
-        },
-        webPath: "/images/photographs/shibuya-hd",
-      },
-    ]),
-  );
+test("renders image and video previews together in one responsive row", async () => {
+  const findMany = mock(findMediaEntries);
   const rendered = await schema.renderers.gridOfGrids({
     note: {
       folder: {
@@ -138,8 +192,82 @@ test("renders every root image preview in one responsive row", async () => {
   const html = renderToStaticMarkup(rendered);
 
   expect(html).toContain("Photographs");
-  expect(html).toContain("grid-flow-col");
+  expect(html).toContain("grid-cols-3");
   expect(html).toContain("Shibuya HD");
+  expect(html).toContain('aria-label="Crossing"');
+  expect(html).toContain('src="https://images.example.com/crossing.jpg"');
+  expect(html).toContain("size-9 flex items-center justify-center bg-black text-white");
   expect(html).not.toContain("1st Mar 2026");
-  expect(findMany.mock.calls[0]?.[0]).not.toHaveProperty("limit");
+  expect(findMany.mock.calls.map(([options]) => options.kind)).toEqual([
+    "image",
+    "video",
+  ]);
+  expect(findMany.mock.calls.every(([options]) => options.limit === undefined)).toBe(true);
+});
+
+test("renders a complete image at its intrinsic aspect ratio", async () => {
+  const rendered = await schema.renderers.image({
+    note: {
+      body: "",
+      folder: {
+        vaultPath: "Images/Photographs",
+      },
+      name: "Shibuya HD",
+      properties: imageEntry.properties,
+      resolveImage: () => null,
+    },
+    query: {
+      findMany: () => Promise.resolve([]),
+    },
+  } as never);
+  const html = renderToStaticMarkup(rendered);
+
+  expect(html).toContain('class="block max-w-full h-auto"');
+  expect(html).toContain('data-unoptimized="true"');
+  expect(html).not.toContain("aspect-4/3");
+  expect(html).not.toContain("object-contain");
+});
+
+test("renders a video note with a native controlled player", async () => {
+  const rendered = await schema.renderers.video({
+    note: {
+      body: "",
+      folder: {
+        vaultPath: "Images/Photographs",
+      },
+      name: "Crossing",
+      properties: {
+        date: new Date("2026-03-02"),
+        src: {
+          raw: "https://videos.example.com/crossing.mp4",
+          type: "link",
+          url: "https://videos.example.com/crossing.mp4",
+        },
+        thumbnail: {
+          raw: "https://images.example.com/crossing.jpg",
+          type: "link",
+          url: "https://images.example.com/crossing.jpg",
+        },
+      },
+      resolveImage: () => null,
+    },
+    query: {
+      findMany: () =>
+        Promise.resolve([
+          {
+            kind: "grid",
+            webPath: "/images/photographs",
+          },
+        ]),
+    },
+  } as never);
+  const html = renderToStaticMarkup(rendered);
+
+  expect(html).toContain("<video");
+  expect(html).toContain("controls");
+  expect(html).toContain("playsInline");
+  expect(html).toContain('class="block max-w-full h-auto bg-black"');
+  expect(html).not.toContain("w-full max-h-[70vh]");
+  expect(html).not.toContain("poster=");
+  expect(html).toContain('src="https://videos.example.com/crossing.mp4"');
 });

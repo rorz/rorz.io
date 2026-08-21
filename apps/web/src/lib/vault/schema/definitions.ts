@@ -38,6 +38,12 @@ const image = note("image", {
   src: p.text().pipe(StringPropertyLinkTypeSchema).nullish(),
 });
 
+const video = note("video", {
+  ...dated,
+  src: p.text().pipe(StringPropertyLinkTypeSchema).nullish(),
+  thumbnail: p.text().pipe(StringPropertyLinkTypeSchema),
+});
+
 const project = note("project", {
   ...dated,
   ...titled,
@@ -52,6 +58,7 @@ const entries = [
   book,
   thing,
   image,
+  video,
   project,
 ] as const;
 
@@ -83,6 +90,7 @@ const model = defineSchema({
     place,
     thing,
     image,
+    video,
     grid,
     gridOfGrids,
     list,
@@ -127,8 +135,23 @@ const getEntryKind = (property: StringPropertyValue): EntryKind => {
   throw new Error(`Invalid entry kind: ${property.raw}`);
 };
 
+const getCollectionEntryKinds = (property: StringPropertyValue): readonly EntryKind[] => {
+  const kind = getEntryKind(property);
+
+  if (kind === "image") {
+    return [
+      "image",
+      "video",
+    ];
+  }
+
+  return [
+    kind,
+  ];
+};
+
 const getFolderTitle = ({ folder, name }: Pick<VaultNote, "folder" | "name">): string =>
   folder.vaultPath.split("/").at(-1) || name;
 
 export type { VaultEntry, VaultRenderContext, VaultRenderer, VaultRenderers };
-export { getEntryKind, getFolderTitle, model, renderText };
+export { getCollectionEntryKinds, getEntryKind, getFolderTitle, model, renderText };

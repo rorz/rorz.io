@@ -41,6 +41,7 @@ const metadata = {
       url: "/mark.svg",
     },
   },
+  title: "Rory McMeekin",
 };
 
 const Masthead: FC<{
