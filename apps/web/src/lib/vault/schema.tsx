@@ -30,6 +30,12 @@ const place = note("place", {
   rating: p.number().optional(),
 });
 
+const book = note("book", {
+  ...dated,
+  author: p.text(),
+  rating: p.number().optional(),
+});
+
 const thing = note("thing", {
   ...dated,
   from: p.text(),
@@ -46,6 +52,7 @@ const project = note("project", {
 const entries = [
   post,
   place,
+  book,
   thing,
   project,
 ] as const;
@@ -90,6 +97,7 @@ const model = defineSchema({
   discriminator: "type",
   notes: [
     page,
+    book,
     post,
     project,
     place,
@@ -104,6 +112,20 @@ const model = defineSchema({
 });
 
 const schema = model.render({
+  book: ({ note: current }) => (
+    <Page
+      subtitle={
+        current.properties.rating !== undefined && (
+          <div className="bg-neutral-200 text-black py-1 px-2">
+            <StarRating className="text-xl" value={current.properties.rating} />
+          </div>
+        )
+      }
+      title={current.name}
+    >
+      <VaultMarkdown note={current} />
+    </Page>
+  ),
   grid: async ({ note: current, query }) => {
     const resolvedEntries = await query.findMany({
       folder: current.folder,

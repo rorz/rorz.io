@@ -1,5 +1,7 @@
 import { ObsidianMarkdown } from "obsid/react";
 import type { VaultFile } from "obsid/vault";
+import { MarkdownBlockquote } from "@/components/markdown-blockquote.tsx";
+import { MarkdownHorizontalRule } from "@/components/markdown-horizontal-rule.tsx";
 import { MarkdownImage } from "@/components/markdown-image.tsx";
 
 interface VaultMarkdownProps {
@@ -7,6 +9,8 @@ interface VaultMarkdownProps {
 }
 
 const markdownComponents = {
+  blockquote: MarkdownBlockquote,
+  hr: MarkdownHorizontalRule,
   img: MarkdownImage,
 };
 

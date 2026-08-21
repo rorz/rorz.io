@@ -54,7 +54,7 @@ const Masthead: FC<{
     href="/"
   >
     <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
-      Rory McMeekin
+      Rory&nbsp;McMeekin
     </span>
   </Link>
 );
