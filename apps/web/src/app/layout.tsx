@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from "react";
 import "@/styles.css";
+import { env } from "cloudflare:workers";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { Libertinus_Serif, Zalando_Sans } from "next/font/google";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
@@ -7,6 +8,7 @@ import Link from "next/link";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Script from "next/script";
 import { Navigation } from "@/components/navigation/index.tsx";
+import { PostHog } from "@/components/posthog.tsx";
 import { ThemeToggles } from "@/components/theme-toggles.tsx";
 import { cn } from "@/lib/cn/index.ts";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
@@ -64,6 +66,11 @@ interface RootLayoutProps {
   readonly children: ReactNode;
 }
 
+const getPostHogConfig = () => ({
+  apiHost: env.NEXT_PUBLIC_POSTHOG_HOST,
+  projectToken: env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
+});
+
 const getDirectoryHref = (
   getWebPath: (vaultPath: string) => string | null,
   resolvedPath: string | null,
@@ -81,6 +88,7 @@ const getDirectoryHref = (
 };
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
+  const postHogConfig = getPostHogConfig();
   const [manifest, rootPage] = await Promise.all([
     getVaultRouteManifest(),
     vault.getFile("page"),
@@ -107,6 +115,9 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         );`}
       </Script>
       <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+        {postHogConfig.apiHost && postHogConfig.projectToken ? (
+          <PostHog apiHost={postHogConfig.apiHost} projectToken={postHogConfig.projectToken} />
+        ) : null}
         <div className="size-full lg:max-w-5xl lg:grid lg:grid-cols-12 flex flex-col items-start">
           <div className="lg:col-span-2 flex lg:flex-col gap-2 lg:gap-6 w-full items-start">
             <div className="flex flex-col lg:min-w-unset lg:w-full">

@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "dist/client",
+    "not_found_handling": "none"
+  },
+  "compatibility_date": "2026-08-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "src/worker.ts",
+  "name": "rorz-io",
+  "vars": {
+    "NEXT_PUBLIC_POSTHOG_HOST": "/x",
+    "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN": "phc_ufKQAPQ2uWNyoQTGC3C3VkDs5TkuKQkaxVf4wPcFwky2"
+  }
+}

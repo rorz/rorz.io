@@ -3,9 +3,16 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["bun", "vinext/types"]
+    "types": ["bun", "vinext/types", "@cloudflare/workers-types"]
   },
   "exclude": ["node_modules", "dist", ".vinext"],
   "extends": "../../tsconfig.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx", "obsid.config.ts", "vite.config.ts", "vite-env.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "obsid.config.ts",
+    "vite.config.ts",
+    "vite-env.d.ts",
+    "worker-configuration.d.ts"
+  ]
 }

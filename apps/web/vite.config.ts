@@ -1,3 +1,4 @@
+import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { obsid } from "obsid/vite";
 import vinext from "vinext";
@@ -9,5 +10,13 @@ export default defineConfig({
     obsid(obsidConfig),
     tailwindcss(),
     vinext(),
+    cloudflare({
+      viteEnvironment: {
+        childEnvironments: [
+          "ssr",
+        ],
+        name: "rsc",
+      },
+    }),
   ],
 });

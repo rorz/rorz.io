@@ -17,7 +17,15 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!!node_modules", "!!dist", "!!.next", "!!.vinext", "!!coverage"],
+    "includes": [
+      "**",
+      "!!node_modules",
+      "!!dist",
+      "!!.next",
+      "!!.vinext",
+      "!!coverage",
+      "!!apps/web/worker-configuration.d.ts"
+    ],
     "maxSize": 1048576
   },
   "formatter": {
@@ -101,7 +109,7 @@
       }
     },
     {
-      "includes": ["apps/web/src/app/**", "apps/web/vite.config.ts"],
+      "includes": ["apps/web/src/app/**", "apps/web/src/worker.ts", "apps/web/vite.config.ts"],
       "linter": {
         "rules": {
           "style": {
