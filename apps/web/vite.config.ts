@@ -16,6 +16,9 @@ export default defineConfig({
           adapter: imagesOptimizer().adapter,
         },
       },
+      nextConfig: {
+        output: "export",
+      },
     }),
     cloudflare({
       viteEnvironment: {

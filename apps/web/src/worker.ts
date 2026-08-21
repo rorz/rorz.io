@@ -1,9 +1,11 @@
 import vinextHandler from "vinext/server/fetch-handler";
 import { handleThumbnailRequest, isThumbnailRequest } from "@/lib/image/thumbnail-worker.ts";
+import { postHogConfig } from "@/lib/posthog/config.ts";
 
 const POSTHOG_API_ORIGIN = "https://us.i.posthog.com";
 const POSTHOG_ASSET_ORIGIN = "https://us-assets.i.posthog.com";
 const TRAILING_SLASHES = /\/+$/;
+const VINEXT_IMAGE_PATH = "/_next/image";
 
 const getProxyPath = (apiHost: string): string | null => {
   if (!apiHost.startsWith("/")) {
@@ -78,16 +80,24 @@ export default {
   fetch(request, env, ctx) {
     const requestUrl = new URL(request.url);
 
+    if (requestUrl.pathname === VINEXT_IMAGE_PATH) {
+      return vinextHandler.fetch(request, env, ctx);
+    }
+
     if (isThumbnailRequest(requestUrl)) {
       return handleThumbnailRequest(request);
     }
 
-    const proxyPath = getProxyPath(env.NEXT_PUBLIC_POSTHOG_HOST);
+    const proxyPath = getProxyPath(env.NEXT_PUBLIC_POSTHOG_HOST || postHogConfig.apiHost);
 
     if (proxyPath && isPostHogRequest(requestUrl.pathname, proxyPath)) {
       return proxyPostHogRequest(request, proxyPath, ctx);
     }
 
-    return vinextHandler.fetch(request, env, ctx);
+    if (import.meta.env.DEV || !env.ASSETS) {
+      return vinextHandler.fetch(request, env, ctx);
+    }
+
+    return env.ASSETS.fetch(request);
   },
 } satisfies ExportedHandler<Env>;

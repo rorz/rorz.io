@@ -32,7 +32,7 @@
         "src/app/**/{default,error,global-error,layout,loading,not-found,page,route,template}.{ts,tsx}",
         "src/styles.css"
       ],
-      "ignoreDependencies": ["cloudflare", "next"],
+      "ignoreDependencies": ["next"],
       "project": ["src/**/*.{ts,tsx}"]
     },
     "packages/obsid": {

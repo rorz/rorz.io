@@ -3,7 +3,7 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "dist/client",
-    "not_found_handling": "none"
+    "not_found_handling": "404-page"
   },
   "cache": {
     "enabled": true
