@@ -148,6 +148,7 @@
       "includes": [
         "packages/obsid/src/config/**",
         "packages/obsid/src/sync/**",
+        "packages/scripts/src/check-biome.ts",
         "packages/scripts/src/test-sync.ts"
       ],
       "linter": {

@@ -104,8 +104,10 @@ const settings = {
 } as const;
 
 const scripts = {
-  "check:biome:fix": "biome check --write .",
-  "check:biome:fix:unsafe": "biome check --write --unsafe .",
+  "check:biome": "bun packages/scripts/src/check-biome.ts",
+  "check:biome:fix": "biome check --write --diagnostic-level=info --max-diagnostics=none .",
+  "check:biome:fix:unsafe":
+    "biome check --write --unsafe --diagnostic-level=info --max-diagnostics=none .",
 } as const;
 
 const createContext = (

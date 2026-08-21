@@ -19,9 +19,10 @@ const requiredScripts = {
   build: "bun run --filter @rorz/web build",
   check:
     "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
-  "check:biome": "biome check .",
-  "check:biome:fix": "biome check --write .",
-  "check:biome:fix:unsafe": "biome check --write --unsafe .",
+  "check:biome": "bun packages/scripts/src/check-biome.ts",
+  "check:biome:fix": "biome check --write --diagnostic-level=info --max-diagnostics=none .",
+  "check:biome:fix:unsafe":
+    "biome check --write --unsafe --diagnostic-level=info --max-diagnostics=none .",
   "check:vinext": "bun run --filter @rorz/web check:vinext",
   dev: "bun run --filter @rorz/web dev",
   format: "biome format --write .",
@@ -77,6 +78,7 @@ const requiredFiles = [
   "apps/web/vite.config.ts",
   "biome.json",
   "knip.jsonc",
+  "packages/scripts/src/check-biome.ts",
   "pokayoke.jsonc",
   "tsconfig.json",
 ] as const;

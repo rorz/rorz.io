@@ -1,10 +1,10 @@
-import { type FC, type ReactNode, useId } from "react";
+import type { FC, ReactNode } from "react";
 import "@/styles.css";
-import { CircleHalfTiltIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { Libertinus_Serif, Zalando_Sans } from "next/font/google";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
+// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Script from "next/script";
 import { Navigation } from "@/components/navigation/index.tsx";
 import { ThemeToggles } from "@/components/theme-toggles.tsx";
@@ -97,7 +97,8 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   return (
     <html className={`${zalandoSans.variable} ${libertinusSerif.variable}`} lang="en">
-      <Script id={"detect-theme"} strategy="beforeInteractive">
+      {/* biome-ignore lint/correctness/useUniqueElementIds: The root layout renders once and Next Script needs a stable id. */}
+      <Script id="detect-theme" strategy="beforeInteractive">
         {`document.documentElement.classList.toggle(
           "dark",
           localStorage.theme === "dark" ||

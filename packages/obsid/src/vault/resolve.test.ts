@@ -2,44 +2,45 @@ import { expect, test } from "bun:test";
 import { defineSchema, desc, note, p } from "../config/schema.ts";
 import { getFileFromLoaders } from "./file-store.ts";
 
-test("resolves parsed note links and folders from the current vault", async () => {
-  const child = note("child", {});
-  const page = note("page", {
-    children: p.list().optional(),
-  });
-  const schema = defineSchema({
-    default: page,
-    discriminator: "type",
-    notes: [
-      child,
-      page,
-    ],
-  });
-  const parent = await getFileFromLoaders(
-    {
-      "/.obsidian-vaults/rorz.io/section/children/Alpha.md": () =>
-        Promise.resolve(`---
+const linkedChild = note("child", {});
+const linkedPage = note("page", {
+  children: p.list().optional(),
+});
+const linkedNotesSchema = defineSchema({
+  default: linkedPage,
+  discriminator: "type",
+  notes: [
+    linkedChild,
+    linkedPage,
+  ],
+});
+const linkedNoteLoaders = {
+  "/.obsidian-vaults/rorz.io/section/children/Alpha.md": () =>
+    Promise.resolve(`---
 type: child
 ---
 Alpha`),
-      "/.obsidian-vaults/rorz.io/section/children/nested/Ignored.md": () =>
-        Promise.resolve("Ignored"),
-      "/.obsidian-vaults/rorz.io/section/children/Zebra.md": () =>
-        Promise.resolve(`---
+  "/.obsidian-vaults/rorz.io/section/children/nested/Ignored.md": () => Promise.resolve("Ignored"),
+  "/.obsidian-vaults/rorz.io/section/children/Zebra.md": () =>
+    Promise.resolve(`---
 type: child
 ---
 Zebra`),
-      "/.obsidian-vaults/rorz.io/section/Parent.md": () =>
-        Promise.resolve(`---
+  "/.obsidian-vaults/rorz.io/section/Parent.md": () =>
+    Promise.resolve(`---
 children:
   - "[[section/children/Alpha]]"
 ---
 Parent`),
-    },
+} as const;
+
+test("resolves parsed note links and folders from the current vault", async () => {
+  const parent = await getFileFromLoaders(
+    linkedNoteLoaders,
     "./.obsidian-vaults/",
     "rorz.io",
     "section/Parent",
-    schema,
+    linkedNotesSchema,
   );
 
   if (!parent) {

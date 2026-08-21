@@ -52,6 +52,7 @@ const toolingFiles = [
   "apps/web/vite.config.ts",
   "biome.json",
   "knip.jsonc",
+  "packages/scripts/src/check-biome.ts",
   "pokayoke.jsonc",
   "tsconfig.json",
 ];

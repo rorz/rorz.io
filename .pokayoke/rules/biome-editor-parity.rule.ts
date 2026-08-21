@@ -140,21 +140,37 @@ const validateScripts = (packageJson: PackageJson): Finding[] => {
   const scripts = packageJson.scripts ?? {};
   const findings: Finding[] = [];
 
-  if (scripts["check:biome:fix"] !== "biome check --write .") {
+  if (scripts["check:biome"] !== "bun packages/scripts/src/check-biome.ts") {
     findings.push(
       finding(
-        "The default Bun fix script must match Zed's safe save actions.",
-        'Set scripts.check:biome:fix to "biome check --write .".',
+        "The Bun Biome check must fail on every diagnostic visible in Zed.",
+        'Set scripts.check:biome to "bun packages/scripts/src/check-biome.ts".',
         "package.json",
       ),
     );
   }
 
-  if (scripts["check:biome:fix:unsafe"] !== "biome check --write --unsafe .") {
+  if (
+    scripts["check:biome:fix"] !==
+    "biome check --write --diagnostic-level=info --max-diagnostics=none ."
+  ) {
+    findings.push(
+      finding(
+        "The default Bun fix script must match Zed's safe save actions.",
+        "Include info-level diagnostics and remove the diagnostic cap from check:biome:fix.",
+        "package.json",
+      ),
+    );
+  }
+
+  if (
+    scripts["check:biome:fix:unsafe"] !==
+    "biome check --write --unsafe --diagnostic-level=info --max-diagnostics=none ."
+  ) {
     findings.push(
       finding(
         "The explicit unsafe Biome script is missing.",
-        'Set scripts.check:biome:fix:unsafe to "biome check --write --unsafe .".',
+        "Include info-level diagnostics and remove the diagnostic cap from check:biome:fix:unsafe.",
         "package.json",
       ),
     );

@@ -16,7 +16,7 @@ export const StarRating: FC<StarRatingProps> = ({ value, outOf, className }) => 
   const total = outOf ?? DEFAULT_OUT_OF;
   const wholeStars = Number(whole);
   const hasHalfStar = Number(remainder) !== 0;
-  const emptyStars = Number(Math.max(total - (wholeStars + +hasHalfStar), 0));
+  const emptyStars = Number(Math.max(total - (wholeStars + Number(hasHalfStar)), 0));
 
   return (
     <div className={cn("flex items-center gap-0.5 text-base", className)}>

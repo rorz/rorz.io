@@ -1,5 +1,4 @@
 import type { ComponentProps } from "react";
-import { cn } from "@/lib/cn/index.ts";
 
 type MarkdownHorizontalRuleProps = ComponentProps<"hr"> & {
   readonly node?: unknown;

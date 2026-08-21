@@ -8,13 +8,18 @@ import { cn } from "@/lib/cn/index.ts";
 
 type ThemeValue = "light" | "dark" | undefined;
 
+const themeSchema = z.enum([
+  "light",
+  "dark",
+]);
+
 type ToggleProps = {
   icon: Icon;
   isSelected: boolean;
   onClick: () => void;
 };
 
-const Toggle: FC<ToggleProps> = ({ icon: Icon, onClick, isSelected }) => (
+const Toggle: FC<ToggleProps> = ({ icon: ToggleIcon, onClick, isSelected }) => (
   <button
     className={cn(
       "cursor-pointer p-1",
@@ -25,31 +30,25 @@ const Toggle: FC<ToggleProps> = ({ icon: Icon, onClick, isSelected }) => (
     onClick={onClick}
     type="button"
   >
-    <Icon className="size-5" weight="regular" />
+    <ToggleIcon className="size-5" weight="regular" />
   </button>
 );
+
+const getStoredTheme = (): ThemeValue => {
+  const result = themeSchema.safeParse(localStorage.getItem("theme"));
+
+  if (result.success) {
+    return result.data;
+  }
+
+  localStorage.removeItem("theme");
+};
 
 export const ThemeToggles = () => {
   const [activeTheme, setActiveTheme] = useState<ThemeValue>(undefined);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("theme");
-    if (storedValue === null) {
-      setActiveTheme(undefined);
-    } else {
-      const result = z
-        .enum([
-          "light",
-          "dark",
-        ])
-        .safeParse(storedValue);
-      if (result.success) {
-        setActiveTheme(result.data);
-      } else {
-        localStorage.removeItem("theme");
-        setActiveTheme(undefined);
-      }
-    }
+    setActiveTheme(getStoredTheme());
   }, []);
 
   const handleThemeChange = useCallback((wants: ThemeValue) => {
@@ -64,7 +63,8 @@ export const ThemeToggles = () => {
     document.documentElement.classList.toggle(
       "dark",
       localStorage.theme === "dark" ||
-        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+        (!("theme" in localStorage) &&
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches),
     );
   }, []);
   const onWantsLightTheme = useCallback(
