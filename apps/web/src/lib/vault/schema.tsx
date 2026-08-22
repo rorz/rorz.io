@@ -1,11 +1,10 @@
-import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
-import { StarRating } from "@/components/star-rating.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
 import { collectionRenderers, renderGridSection } from "@/lib/vault/schema/collections.tsx";
 import {
   getFolderTitle,
   model,
+  renderText,
   type VaultRenderContext,
   type VaultRenderers,
 } from "@/lib/vault/schema/definitions.ts";
@@ -42,36 +41,16 @@ const index: VaultRenderers["index"] = async ({ note: current, query }) => (
   </Page>
 );
 
-type RatedNote = VaultRenderContext<"book">["note"] | VaultRenderContext<"place">["note"];
-
-const renderRatedPage = (current: RatedNote) => (
-  <Page
-    subtitle={
-      current.properties.rating !== undefined && (
-        <div className="bg-neutral-200 text-black py-1 px-2">
-          <StarRating className="text-xl" value={current.properties.rating} />
-        </div>
-      )
-    }
-    title={current.name}
-  >
-    <VaultMarkdown note={current} />
-  </Page>
-);
-
 const simpleRenderers = {
-  book: ({ note: current }) => renderRatedPage(current),
-  page: ({ note: current }) => <VaultMarkdown note={current} />,
-  place: ({ note: current }) => renderRatedPage(current),
-  thing: ({ note: current, query }) => (
-    <Page
-      subtitle={<OmniLink query={query} value={current.properties.from} />}
-      title={current.name}
-    >
+  page: ({ note: current }) =>
+    current.properties.title ? (
+      <Page title={renderText(current.properties.title)}>
+        <VaultMarkdown note={current} />
+      </Page>
+    ) : (
       <VaultMarkdown note={current} />
-    </Page>
-  ),
-} satisfies Pick<VaultRenderers, "book" | "page" | "place" | "thing">;
+    ),
+} satisfies Pick<VaultRenderers, "page">;
 
 const schema = model.render({
   ...collectionRenderers,

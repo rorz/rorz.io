@@ -131,3 +131,34 @@ test("rejects aggregate notes as index sections", async () => {
     } as never),
   ).rejects.toThrow("Expected a list or grid note, resolved: listOfLists");
 });
+
+test("renders a page title only when one is set", async () => {
+  const titled = await schema.renderers.page({
+    note: {
+      body: "About page body.",
+      properties: {
+        title: {
+          raw: "About me",
+          type: "string",
+          value: "About me",
+        },
+      },
+      resolveImage: () => null,
+    },
+  } as never);
+  const untitled = await schema.renderers.page({
+    note: {
+      body: "Untitled page body.",
+      properties: {},
+      resolveImage: () => null,
+    },
+  } as never);
+  const titledHtml = renderToStaticMarkup(titled);
+  const untitledHtml = renderToStaticMarkup(untitled);
+
+  expect(titledHtml).toContain("<h1");
+  expect(titledHtml).toContain("About me</h1>");
+  expect(titledHtml).toContain("About page body.");
+  expect(untitledHtml).not.toContain("<h1");
+  expect(untitledHtml).toContain("Untitled page body.");
+});

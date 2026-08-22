@@ -10,7 +10,9 @@ const titled = {
   title: p.text().optional(),
 };
 
-const page = note("page", {});
+const page = note("page", {
+  ...titled,
+});
 
 const index = note("index", {
   sections: p.list(),

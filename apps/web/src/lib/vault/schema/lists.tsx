@@ -4,6 +4,7 @@ import Link from "next/link";
 import { desc } from "obsid/schema";
 import type { ReactNode } from "react";
 import { List, ListItem } from "@/components/list/index.tsx";
+import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
 import { StarRating } from "@/components/star-rating.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
@@ -104,6 +105,52 @@ const renderListGroup = (group: ListGroup, title = getFolderTitle(group.index)) 
 
 type ListContext = VaultRenderContext<"list">;
 
+type ListEntryNote =
+  | VaultRenderContext<"book">["note"]
+  | VaultRenderContext<"place">["note"]
+  | VaultRenderContext<"thing">["note"];
+
+const getListEntryNavigation = async (current: ListEntryNote, query: ListContext["query"]) => {
+  const [parent] = await query.findMany({
+    folder: current.folder,
+    kind: "list",
+    limit: 1,
+  });
+
+  return parent
+    ? {
+        href: parent.webPath,
+        title: getFolderTitle(current),
+      }
+    : undefined;
+};
+
+type RatedNote = VaultRenderContext<"book">["note"] | VaultRenderContext<"place">["note"];
+
+const renderRatedPage = async (current: RatedNote, query: ListContext["query"]) => {
+  const backNavigation = await getListEntryNavigation(current, query);
+
+  return (
+    <Page
+      {...(backNavigation
+        ? {
+            backNavigation,
+          }
+        : {})}
+      subtitle={
+        current.properties.rating !== undefined && (
+          <div className="bg-neutral-200 text-black py-1 px-2">
+            <StarRating className="text-xl" value={current.properties.rating} />
+          </div>
+        )
+      }
+      title={current.name}
+    >
+      <VaultMarkdown note={current} />
+    </Page>
+  );
+};
+
 const renderListSection = async (
   index: ListContext["note"],
   title: string,
@@ -185,10 +232,35 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
   );
 };
 
+const book: VaultRenderer<"book"> = ({ note: current, query }) => renderRatedPage(current, query);
+
+const place: VaultRenderer<"place"> = ({ note: current, query }) => renderRatedPage(current, query);
+
+const thing: VaultRenderer<"thing"> = async ({ note: current, query }) => {
+  const backNavigation = await getListEntryNavigation(current, query);
+
+  return (
+    <Page
+      {...(backNavigation
+        ? {
+            backNavigation,
+          }
+        : {})}
+      subtitle={<OmniLink query={query} value={current.properties.from} />}
+      title={current.name}
+    >
+      <VaultMarkdown note={current} />
+    </Page>
+  );
+};
+
 const listRenderers = {
+  book,
   list,
   listOfLists,
+  place,
   post,
-} satisfies Pick<VaultRenderers, "list" | "listOfLists" | "post">;
+  thing,
+} satisfies Pick<VaultRenderers, "book" | "list" | "listOfLists" | "place" | "post" | "thing">;
 
 export { listRenderers, renderListSection };

@@ -28,3 +28,5 @@ coverage/
 
 # Private files
 private
+
+apps/web/index.html
