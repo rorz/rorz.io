@@ -45,6 +45,26 @@ test("does not proxy thumbnails from another origin", () => {
   ).toBeNull();
 });
 
+test("builds wider responsive sources for a detail thumbnail", () => {
+  const attributes = getCloudflareThumbnailAttributes(
+    "https://assets.rorz.io/images/project-thumbnails/marble.png",
+    "detail",
+  );
+
+  expect(attributes).not.toBeNull();
+
+  if (!attributes) {
+    throw new Error("Expected Cloudflare thumbnail attributes");
+  }
+
+  expect(attributes.sizes).toBe("(min-width: 1024px) 41rem, calc(100vw - 1.5rem)");
+  expect(attributes.srcSet.split(", ").map((candidate) => candidate.split(" ").at(-1))).toEqual([
+    "640w",
+    "960w",
+    "1280w",
+  ]);
+});
+
 test("transforms an allowed thumbnail request", async () => {
   let fetchedSource: string | undefined;
   let fetchedInit: RequestInit<RequestInitCfProperties> | undefined;

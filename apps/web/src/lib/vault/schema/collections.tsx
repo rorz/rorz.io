@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CollectionGrid, CollectionGridItem } from "@/components/collection-grid.tsx";
 import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
+import { ResponsiveThumbnail } from "@/components/responsive-thumbnail.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
 import { getParentDirectoryNavigation } from "@/lib/vault/parent-directory.ts";
 import {
@@ -230,10 +231,22 @@ const project: VaultRenderer<"project"> = async ({ note: current, query }) => {
         href: parent.webPath,
         title: getFolderTitle(current),
       }}
-      subtitle={renderText(current.properties.byline)}
+      subtitle={
+        <div className="mb-4 flex flex-col items-start gap-2">
+          <span className="text-neutral-700">{renderText(current.properties.byline)}</span>
+          <OmniLink query={query} value={current.properties.link} />
+        </div>
+      }
       title={current.properties.title ? renderText(current.properties.title) : current.name}
     >
-      <OmniLink className="mt-2" query={query} value={current.properties.link} />
+      <div className="relative aspect-video w-full overflow-hidden bg-neutral-300 dark:bg-zinc-700">
+        <ResponsiveThumbnail
+          alt=""
+          loading="eager"
+          source={current.properties.image.url}
+          variant="detail"
+        />
+      </div>
       <VaultMarkdown note={current} />
     </Page>
   );

@@ -1,11 +1,11 @@
-import { assetImageOrigin, thumbnailPath, thumbnailWidths } from "./thumbnail.ts";
+import { allowedThumbnailWidths, assetImageOrigin, thumbnailPath } from "./thumbnail.ts";
 
 type ImageFetcher = (
   source: string,
   init: RequestInit<RequestInitCfProperties>,
 ) => Promise<Response>;
 
-const allowedWidths = new Set<number>(thumbnailWidths);
+const allowedWidths = new Set<number>(allowedThumbnailWidths);
 const digits = /^\d+$/u;
 
 const defaultImageFetcher: ImageFetcher = (source, init) => fetch(source, init);

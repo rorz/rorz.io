@@ -1,11 +1,9 @@
 import { PlayIcon } from "@phosphor-icons/react/ssr";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Image from "next/image";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Link from "next/link";
 import { Children, type ReactNode } from "react";
+import { ResponsiveThumbnail } from "@/components/responsive-thumbnail.tsx";
 import { cn } from "@/lib/cn/index.ts";
-import { getCloudflareThumbnailAttributes } from "@/lib/image/thumbnail.ts";
 
 interface CollectionGridProps {
   readonly children: ReactNode;
@@ -42,41 +40,6 @@ const CollectionGrid = ({ children, layout = "grid" }: CollectionGridProps) => {
   );
 };
 
-const CollectionThumbnail = ({
-  alt,
-  source,
-}: {
-  readonly alt: string;
-  readonly source: string;
-}) => {
-  const cloudflareAttributes = getCloudflareThumbnailAttributes(source);
-
-  if (cloudflareAttributes) {
-    return (
-      // biome-ignore lint/performance/noImgElement: This responsive image uses the Worker transform endpoint that next/image cannot use for remote sources.
-      <img
-        {...cloudflareAttributes}
-        alt={alt}
-        className="absolute inset-0 size-full object-cover"
-        decoding="async"
-        height={1}
-        loading="lazy"
-        width={1}
-      />
-    );
-  }
-
-  return (
-    <Image
-      alt={alt}
-      className="object-cover"
-      fill={true}
-      sizes="(min-width: 1024px) 20rem, 50vw"
-      src={source}
-    />
-  );
-};
-
 const CollectionGridItem = ({
   description,
   href,
@@ -89,7 +52,7 @@ const CollectionGridItem = ({
   <li className="col-span-1">
     <Link
       aria-label={variant === "icon" ? title : undefined}
-      className="block border border-transparent group hover:border-black focus-visible:border-black focus-visible:outline-none dark:hover:border-white dark:focus-visible:border-white"
+      className="block border border-transparent group hover:border-black focus-visible:border-black focus-visible:outline-none dark:hover:border-white dark:focus-visible:border-white grayscale-75 hover:grayscale-0"
       href={href}
     >
       <article className="border">
@@ -99,7 +62,7 @@ const CollectionGridItem = ({
             variant === "icon" ? "aspect-square" : "h-32",
           )}
         >
-          <CollectionThumbnail alt={imageAlt} source={imageSrc} />
+          <ResponsiveThumbnail alt={imageAlt} source={imageSrc} />
           {thumbnailKind === "video" ? (
             <span
               aria-hidden={true}
