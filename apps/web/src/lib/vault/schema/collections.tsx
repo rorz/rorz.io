@@ -32,6 +32,7 @@ const renderCollectionEntry = (entry: VaultEntry) => {
         imageAlt=""
         imageSrc={entry.properties.image.url}
         key={entry.webPath}
+        kind="card"
         title={getCollectionEntryTitle(entry)}
       />
     );
@@ -44,8 +45,8 @@ const renderCollectionEntry = (entry: VaultEntry) => {
         imageAlt=""
         imageSrc={entry.properties.src.url}
         key={entry.webPath}
+        kind="image"
         title={entry.name}
-        variant="icon"
       />
     );
   }
@@ -57,9 +58,8 @@ const renderCollectionEntry = (entry: VaultEntry) => {
         imageAlt=""
         imageSrc={entry.properties.thumbnail.url}
         key={entry.webPath}
-        thumbnailKind="video"
+        kind="video"
         title={entry.name}
-        variant="icon"
       />
     );
   }

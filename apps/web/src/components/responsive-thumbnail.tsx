@@ -27,7 +27,7 @@ const ResponsiveThumbnail = ({
       <img
         {...cloudflareAttributes}
         alt={alt}
-        className="absolute inset-0 size-full object-cover"
+        className="size-full object-cover"
         decoding="async"
         height={1}
         loading={loading}
