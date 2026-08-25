@@ -15,6 +15,7 @@ import {
   resolveCollectionDetail,
 } from "@/lib/vault/schema/collections-data.ts";
 import {
+  getEntryKind,
   getFolderTitle,
   renderText,
   type VaultEntry,
@@ -94,10 +95,15 @@ const resolveGridGroup = async (reference: GridReference, query: GridIndexContex
 
 type GridGroup = Awaited<ReturnType<typeof resolveGridGroup>>;
 
+const getCollectionGridVariant = (index: GridContext["note"]) =>
+  getEntryKind(index.properties.gridOf) === "project" ? "cards" : "media";
+
 const renderCollectionSection = (group: GridGroup) => (
   <section className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <SectionHeading count={group.entries.length} href={group.index.webPath} title={group.title} />
-    <CollectionGrid layout="row">{group.entries.map(renderCollectionEntry)}</CollectionGrid>
+    <CollectionGrid layout="row" variant={getCollectionGridVariant(group.index)}>
+      {group.entries.map(renderCollectionEntry)}
+    </CollectionGrid>
   </section>
 );
 
@@ -153,7 +159,9 @@ const grid: VaultRenderer<"grid"> = async ({ note: current, query }) => {
         : {})}
       title={getFolderTitle(current)}
     >
-      <CollectionGrid>{entries.map(renderCollectionEntry)}</CollectionGrid>
+      <CollectionGrid variant={getCollectionGridVariant(current)}>
+        {entries.map(renderCollectionEntry)}
+      </CollectionGrid>
     </Page>
   );
 };

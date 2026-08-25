@@ -13,7 +13,7 @@ const SectionHeading = ({ count, href, title }: SectionHeadingProps) => (
       <h2 className="font-semibold text-xl">{title}</h2>
     </Link>
     <Link className="ml-auto text-sm underline underline-offset-2" href={href}>
-      View All ({count})
+      View all ({count})
     </Link>
   </div>
 );

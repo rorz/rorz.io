@@ -123,7 +123,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         <div className="size-full lg:max-w-5xl lg:grid lg:grid-cols-12 flex flex-col items-start">
           <div className="lg:col-span-2 flex lg:flex-col gap-2 lg:gap-6 w-full items-start">
             <div className="flex flex-col lg:min-w-unset lg:w-full">
-              <Masthead className="h-14 lg:h-28 lg:w-full" />
+              <Masthead className="h-14 lg:h-28 lg:w-full mb-1 lg:mb-0" />
               <div className="lg:hidden">
                 <ThemeToggles />
               </div>

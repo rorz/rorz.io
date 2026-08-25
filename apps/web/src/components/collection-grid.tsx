@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn/index.ts";
 interface CollectionGridProps {
   readonly children: ReactNode;
   readonly layout?: "grid" | "row";
+  readonly variant: "cards" | "media";
 }
 
 interface CollectionGridItemBaseProps {
@@ -35,24 +36,25 @@ type CollectionGridItemProps =
   | CollectionGridImageProps
   | CollectionGridVideoProps;
 
-const collectionRowLimit = 4;
+const collectionGridVariants = {
+  cards: {
+    grid: "grid-cols-2 md:grid-cols-3",
+    row: "grid-cols-2 md:grid-cols-3 [&>li:nth-child(3)]:hidden lg:[&>li:nth-child(3)]:block",
+    rowLimit: 3,
+  },
+  media: {
+    grid: "grid-cols-2",
+    row: "grid-cols-3 lg:grid-cols-4 [&>li:nth-child(4)]:hidden lg:[&>li:nth-child(4)]:block",
+    rowLimit: 4,
+  },
+} as const;
 
-const CollectionGrid = ({ children, layout = "grid" }: CollectionGridProps) => {
+const CollectionGrid = ({ children, layout = "grid", variant }: CollectionGridProps) => {
+  const config = collectionGridVariants[variant];
   const items = Children.toArray(children);
-  const displayedItems = layout === "row" ? items.slice(0, collectionRowLimit) : items;
+  const displayedItems = layout === "row" ? items.slice(0, config.rowLimit) : items;
 
-  return (
-    <ul
-      className={cn(
-        "grid gap-4 w-full",
-        layout === "grid"
-          ? "grid-cols-3"
-          : "grid-cols-3 lg:grid-cols-4 [&>li:nth-child(4)]:hidden lg:[&>li:nth-child(4)]:block",
-      )}
-    >
-      {displayedItems}
-    </ul>
-  );
+  return <ul className={cn("grid gap-4 w-full", config[layout])}>{displayedItems}</ul>;
 };
 
 const CollectionGridCard = ({
