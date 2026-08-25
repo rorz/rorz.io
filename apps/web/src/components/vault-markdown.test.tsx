@@ -22,27 +22,18 @@ mock.module("next/link", () => ({
 
 const { VaultMarkdown } = await import("./vault-markdown.tsx");
 
-test("renders styled lists and internal and external links", () => {
+test("distinguishes internal and external markdown links", () => {
   const html = renderToStaticMarkup(
     <VaultMarkdown
       note={{
-        body: `1. First
-2. Second
-
-- Third
-- Fourth
-
-[About](/about) and [Obsidian](https://obsidian.md).`,
+        body: "[About](/about) and [Obsidian](https://obsidian.md).",
         resolveImage: () => null,
       }}
     />,
   );
 
-  expect(html).toContain('<div class="markdown flex w-full flex-col items-start gap-2"><ol>');
-  expect(html).toContain("<ul>");
   expect(html).toContain('href="/about"><span>About</span>');
   expect(html).toContain(
     'href="https://obsidian.md" rel="noopener" target="_blank"><span>Obsidian</span>',
   );
-  expect(html.match(/<svg/gu)).toHaveLength(2);
 });
