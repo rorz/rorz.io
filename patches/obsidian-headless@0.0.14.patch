@@ -1,0 +1,52 @@
+diff --git a/package.json b/package.json
+index edbe0fe63c85bb70f85bb35b16d3c831e56d29cd..3ba59dd002ba7076ce516141330ca488ff471ec0 100644
+--- a/package.json
++++ b/package.json
+@@ -2,15 +2,16 @@
+ 	"name": "obsidian-headless",
+ 	"version": "0.0.14",
+ 	"description": "Headless client for Obsidian services",
+-	"main": "cli.js",
++	"main": "patched-cli.cjs",
+ 	"bin": {
+-		"ob": "cli.js"
++		"ob": "patched-cli.cjs"
+ 	},
+ 	"engines": {
+ 		"node": ">=22.0.0"
+ 	},
+ 	"files": [
+ 		"cli.js",
++		"patched-cli.cjs",
+ 		"btime",
+ 		"package.json",
+ 		"README.md"
+diff --git a/node_modules/obsidian-headless/patched-cli.cjs b/patched-cli.cjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c9509342a07f57dcc16917f808aad5aed69e937b
+--- /dev/null
++++ b/patched-cli.cjs
+@@ -0,0 +1,23 @@
++#!/usr/bin/env node
++const fs = require("node:fs");
++const Module = require("node:module");
++const path = require("node:path");
++
++const cliPath = path.join(__dirname, "cli.js");
++const source = fs.readFileSync(cliPath, "utf8");
++const syncFileDownMarker =
++  'async syncFileDown(e,t){let i=t.path;if(this.log("Downloading",i),t.folder){';
++const syncFileDownReplacement =
++  'async syncFileDown(e,t){let i=t.path;if(this.adapter.insensitive){let n=Object.keys(this.adapter.files).find(r=>r!==i&&r.toLowerCase()===i.toLowerCase());n&&await this.adapter.rename(n,i)}if(this.log("Downloading",i),t.folder){';
++const markerCount = source.split(syncFileDownMarker).length - 1;
++
++if (markerCount !== 1) {
++  throw new Error(
++    `Cannot patch obsidian-headless: expected one syncFileDown marker, found ${markerCount}.`,
++  );
++}
++
++const cliModule = new Module(cliPath, module);
++cliModule.filename = cliPath;
++cliModule.paths = Module._nodeModulePaths(__dirname);
++cliModule._compile(source.replace(syncFileDownMarker, syncFileDownReplacement), cliPath);

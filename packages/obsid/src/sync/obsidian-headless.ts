@@ -1,4 +1,5 @@
-import { $, resolveSync } from "bun";
+import { createRequire } from "node:module";
+import { $ } from "bun";
 import type { ObsidConfig } from "../config/index.ts";
 
 const OB_COMMANDS = [
@@ -10,7 +11,8 @@ const OB_COMMANDS = [
 
 type ObCommand = (typeof OB_COMMANDS)[number];
 
-const OB_CLI_PATH = resolveSync("obsidian-headless/cli.js", import.meta.dir);
+const require = createRequire(import.meta.url);
+const OB_CLI_PATH = require.resolve("obsidian-headless/patched-cli.cjs");
 
 const logger = (level: "info" | "warn" | "error", command: ObCommand, ...args: unknown[]) => {
   // biome-ignore lint/suspicious/noConsole: CLI progress is intentionally written to the terminal.

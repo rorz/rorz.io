@@ -24,7 +24,6 @@
   "workspaces": {
     ".": {
       "entry": [".pokayoke/rules/**/*.rule.ts", ".pokayoke/rules/**/*.test.ts"],
-      "ignoreDependencies": ["obsidian-headless"],
       "project": [".pokayoke/**/*.ts"]
     },
     "apps/web": {

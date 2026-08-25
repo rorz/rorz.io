@@ -3,7 +3,7 @@
     "obsid": "./src/cli/index.ts"
   },
   "dependencies": {
-    "obsidian-headless": "^0.0.13",
+    "obsidian-headless": "^0.0.14",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "yaml": "^2.9.0",
