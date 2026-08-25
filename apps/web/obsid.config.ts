@@ -16,9 +16,5 @@ export default defineConfig({
       encryptionPassword: process.env.OBSID_VAULT_PRIMARY_PASSWORD ?? "",
       name: "rorz.io",
     },
-    {
-      encryptionPassword: process.env.OBSID_VAULT_ALT_PASSWORD ?? "",
-      name: "rorz.io--alt",
-    },
   ],
 });
