@@ -17,6 +17,41 @@ mock.module("next/link", () => ({
 
 const { default: schema } = await import("@/lib/vault/schema.tsx");
 
+const projectProperties = {
+  byline: {
+    raw: "OSS GTM engineering tool",
+    type: "string",
+    value: "OSS GTM engineering tool",
+  },
+  date: new Date("2026-01-01"),
+  image: {
+    raw: "https://assets.rorz.io/images/project-thumbnails/marble.png",
+    type: "link",
+    url: "https://assets.rorz.io/images/project-thumbnails/marble.png",
+  },
+  link: {
+    raw: "https://marble.space",
+    type: "link",
+    url: "https://marble.space",
+  },
+} as const;
+
+const projectGrid = {
+  folder: {
+    vaultPath: "Work",
+  },
+  kind: "grid",
+  name: "page",
+  properties: {
+    gridOf: {
+      raw: "project",
+      type: "string",
+      value: "project",
+    },
+  },
+  webPath: "/work",
+} as const;
+
 test("composes project metadata in the subtitle and keeps its thumbnail in the content", async () => {
   const rendered = await schema.renderers.project({
     note: {
@@ -25,34 +60,26 @@ test("composes project metadata in the subtitle and keeps its thumbnail in the c
         vaultPath: "Work",
       },
       name: "Marble",
-      properties: {
-        byline: {
-          raw: "OSS GTM engineering tool",
-          type: "string",
-          value: "OSS GTM engineering tool",
-        },
-        date: new Date("2026-01-01"),
-        image: {
-          raw: "https://assets.rorz.io/images/project-thumbnails/marble.png",
-          type: "link",
-          url: "https://assets.rorz.io/images/project-thumbnails/marble.png",
-        },
-        link: {
-          raw: "https://marble.space",
-          type: "link",
-          url: "https://marble.space",
-        },
-      },
+      properties: projectProperties,
       resolveImage: () => null,
+      webPath: "/work/marble",
     },
     query: {
-      findMany: () =>
-        Promise.resolve([
+      findMany: ({ kind }: { readonly kind: string }) => {
+        if (kind === "grid") {
+          return Promise.resolve([
+            projectGrid,
+          ]);
+        }
+        return Promise.resolve([
           {
-            kind: "grid",
-            webPath: "/work",
+            kind: "project",
+            name: "Marble",
+            properties: projectProperties,
+            webPath: "/work/marble",
           },
-        ]),
+        ]);
+      },
     },
   } as never);
   const page = rendered as ReactElement<{

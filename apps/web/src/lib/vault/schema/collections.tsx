@@ -1,16 +1,20 @@
 import { format } from "date-fns/fp";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Image from "next/image";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Link from "next/link";
 import { CollectionGrid, CollectionGridItem } from "@/components/collection-grid.tsx";
+import { EntryNavigation } from "@/components/entry-navigation.tsx";
 import { OmniLink } from "@/components/omni-link.tsx";
 import { Page } from "@/components/page.tsx";
 import { ResponsiveThumbnail } from "@/components/responsive-thumbnail.tsx";
+import { SectionHeading } from "@/components/section-heading.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
 import { getParentDirectoryNavigation } from "@/lib/vault/parent-directory.ts";
 import {
-  getCollectionEntryKinds,
+  findCollectionEntries,
+  getCollectionEntryTitle,
+  resolveCollectionDetail,
+} from "@/lib/vault/schema/collections-data.ts";
+import {
   getFolderTitle,
   renderText,
   type VaultEntry,
@@ -28,7 +32,7 @@ const renderCollectionEntry = (entry: VaultEntry) => {
         imageAlt=""
         imageSrc={entry.properties.image.url}
         key={entry.webPath}
-        title={entry.properties.title?.raw ?? entry.name}
+        title={getCollectionEntryTitle(entry)}
       />
     );
   }
@@ -65,25 +69,6 @@ const renderCollectionEntry = (entry: VaultEntry) => {
 
 type GridContext = VaultRenderContext<"grid">;
 
-const findCollectionEntries = async (
-  folder: GridContext["note"]["folder"],
-  property: GridContext["note"]["properties"]["gridOf"],
-  query: GridContext["query"],
-) => {
-  const entryGroups = await Promise.all(
-    getCollectionEntryKinds(property).map((kind) =>
-      query.findMany({
-        folder,
-        kind,
-      }),
-    ),
-  );
-
-  return entryGroups
-    .flat()
-    .toSorted((left, right) => right.properties.date.getTime() - left.properties.date.getTime());
-};
-
 type GridIndexContext = VaultRenderContext<"gridOfGrids">;
 type GridReference = GridIndexContext["note"]["properties"]["grids"][number];
 
@@ -111,9 +96,7 @@ type GridGroup = Awaited<ReturnType<typeof resolveGridGroup>>;
 
 const renderCollectionSection = (group: GridGroup) => (
   <section className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
-    <Link className="underline" href={group.index.webPath}>
-      <h2 className="font-semibold text-xl">{group.title}</h2>
-    </Link>
+    <SectionHeading count={group.entries.length} href={group.index.webPath} title={group.title} />
     <CollectionGrid layout="row">{group.entries.map(renderCollectionEntry)}</CollectionGrid>
   </section>
 );
@@ -188,11 +171,7 @@ const gridOfGrids: VaultRenderer<"gridOfGrids"> = async ({ note: current, query 
 };
 
 const image: VaultRenderer<"image"> = async ({ note: current, query }) => {
-  const [parent] = await query.findMany({
-    folder: current.folder,
-    kind: "grid",
-    limit: 1,
-  });
+  const { navigation, parent } = await resolveCollectionDetail(current, query);
   const source = current.properties.src?.url;
 
   return (
@@ -210,16 +189,13 @@ const image: VaultRenderer<"image"> = async ({ note: current, query }) => {
     >
       {source ? renderImageView(current.name, source) : null}
       <VaultMarkdown note={current} />
+      <EntryNavigation {...navigation} />
     </Page>
   );
 };
 
 const project: VaultRenderer<"project"> = async ({ note: current, query }) => {
-  const [parent] = await query.findMany({
-    folder: current.folder,
-    kind: "grid",
-    limit: 1,
-  });
+  const { navigation, parent } = await resolveCollectionDetail(current, query);
 
   if (!parent) {
     throw new Error(`Missing project grid for ${current.folder.vaultPath}`);
@@ -248,16 +224,13 @@ const project: VaultRenderer<"project"> = async ({ note: current, query }) => {
         />
       </div>
       <VaultMarkdown note={current} />
+      <EntryNavigation {...navigation} />
     </Page>
   );
 };
 
 const video: VaultRenderer<"video"> = async ({ note: current, query }) => {
-  const [parent] = await query.findMany({
-    folder: current.folder,
-    kind: "grid",
-    limit: 1,
-  });
+  const { navigation, parent } = await resolveCollectionDetail(current, query);
   const source = current.properties.src?.url;
 
   return (
@@ -275,6 +248,7 @@ const video: VaultRenderer<"video"> = async ({ note: current, query }) => {
     >
       {source ? renderVideoView(current.name, source) : null}
       <VaultMarkdown note={current} />
+      <EntryNavigation {...navigation} />
     </Page>
   );
 };

@@ -111,6 +111,14 @@ test("renders list and grid references as ordered index sections", async () => {
 
   expect(html).toContain("An entry");
   expect(html).toContain('src="https://images.example.com/shibuya.jpg"');
+  expect(html).toContain(
+    '<a href="/writing"><h2 class="font-semibold text-xl">Recent writing</h2></a>',
+  );
+  expect(html).toContain(
+    '<a href="/images/photographs"><h2 class="font-semibold text-xl">Photographs</h2></a>',
+  );
+  expect(html).toContain('<a href="/writing">View All (1)</a>');
+  expect(html).toContain('<a href="/images/photographs">View All (1)</a>');
   expect(html.indexOf("Recent writing")).toBeLessThan(html.indexOf("Photographs"));
 });
 

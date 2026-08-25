@@ -1,5 +1,6 @@
 import { expect, mock, test } from "bun:test";
 import type { ReactElement, ReactNode } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 mock.module("next/image", () => ({
   default: () => null,
@@ -27,6 +28,7 @@ interface FindManyOptions {
   };
   readonly kind?: string;
   readonly limit?: number;
+  readonly orderBy?: unknown;
 }
 
 interface EntryCase {
@@ -83,15 +85,88 @@ const entryCases: EntryCase[] = [
   },
 ];
 
-test.each(entryCases)("links a nested $kind entry back to its containing list", async (entry) => {
-  const findMany = mock(({ folder }: FindManyOptions) =>
-    Promise.resolve([
-      {
-        kind: "list" as const,
-        webPath: `/${folder.vaultPath.toLowerCase().replaceAll(" ", "-")}`,
+const readingEntries = [
+  {
+    kind: "book",
+    name: "Animal Farm",
+    properties: {
+      author: {
+        raw: "George Orwell",
+        type: "string",
+        value: "George Orwell",
       },
-    ]),
-  );
+      date: new Date("2026-08-01"),
+      rating: 4,
+    },
+    webPath: "/lists/reading/animal-farm",
+  },
+  {
+    kind: "book",
+    name: "The Hobbit",
+    properties: {
+      author: {
+        raw: "J. R. R. Tolkien",
+        type: "string",
+        value: "J. R. R. Tolkien",
+      },
+      date: new Date("2026-07-01"),
+      rating: 5,
+    },
+    webPath: "/lists/reading/the-hobbit",
+  },
+] as const;
+
+const readingList = {
+  folder: {
+    vaultPath: "Lists/Reading",
+  },
+  kind: "list",
+  name: "page",
+  properties: {
+    listOf: {
+      raw: "book",
+      type: "string",
+      value: "book",
+    },
+  },
+  webPath: "/lists/reading",
+} as const;
+
+const createEntryFindMany = (entry: EntryCase, currentWebPath: string) =>
+  mock(({ kind }: FindManyOptions) => {
+    if (kind === "list") {
+      return Promise.resolve([
+        {
+          folder: {
+            vaultPath: entry.folder,
+          },
+          kind: "list" as const,
+          name: "page",
+          properties: {
+            listOf: {
+              raw: entry.kind,
+              type: "string",
+              value: entry.kind,
+            },
+          },
+          webPath: entry.expectedHref,
+        },
+      ]);
+    }
+
+    return Promise.resolve([
+      {
+        kind: entry.kind,
+        name: entry.name,
+        properties: entry.properties,
+        webPath: currentWebPath,
+      },
+    ]);
+  });
+
+test.each(entryCases)("links a nested $kind entry back to its containing list", async (entry) => {
+  const currentWebPath = `${entry.expectedHref}/entry`;
+  const findMany = createEntryFindMany(entry, currentWebPath);
   const query = {
     findMany,
   };
@@ -107,6 +182,7 @@ test.each(entryCases)("links a nested $kind entry back to its containing list", 
       name: entry.name,
       properties: entry.properties,
       resolveImage: () => null,
+      webPath: currentWebPath,
     },
     query,
   } as never);
@@ -117,12 +193,58 @@ test.each(entryCases)("links a nested $kind entry back to its containing list", 
     href: entry.expectedHref,
     title: entry.expectedTitle,
   });
-  expect(findMany).toHaveBeenCalledTimes(1);
-  expect(findMany).toHaveBeenCalledWith({
+  expect(findMany).toHaveBeenCalledTimes(2);
+  expect(findMany.mock.calls[0]?.[0]).toEqual({
     folder: {
       vaultPath: entry.folder,
     },
     kind: "list",
     limit: 1,
+  });
+  expect(findMany.mock.calls[1]?.[0]).toEqual({
+    folder: {
+      vaultPath: entry.folder,
+    },
+    kind: entry.kind,
+    orderBy: expect.any(Function),
+  });
+});
+
+test("shows the total record count when a list preview is limited", async () => {
+  const findMany = mock(() => Promise.resolve(readingEntries));
+  const rendered = await schema.renderers.listOfLists({
+    note: {
+      folder: {
+        vaultPath: "Lists",
+      },
+      name: "page",
+      properties: {
+        limitPer: 1,
+        lists: [
+          {
+            label: "Reading",
+            path: "Lists/Reading/page",
+            raw: "[[Lists/Reading/page|Reading]]",
+            type: "note",
+          },
+        ],
+      },
+    },
+    query: {
+      findMany,
+      resolveOrThrow: () => Promise.resolve(readingList),
+    },
+  } as never);
+  const html = renderToStaticMarkup(rendered);
+
+  expect(html).toContain("Animal Farm");
+  expect(html).not.toContain("The Hobbit");
+  expect(html).toContain('<a href="/lists/reading">View All (2)</a>');
+  expect(findMany).toHaveBeenCalledWith({
+    folder: {
+      vaultPath: "Lists/Reading",
+    },
+    kind: "book",
+    orderBy: expect.any(Function),
   });
 });

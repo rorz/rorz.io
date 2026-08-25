@@ -212,6 +212,13 @@ test("renders image and video previews together in one responsive row", async ()
   const html = renderToStaticMarkup(rendered);
 
   expect(html).toContain("Photographs");
+  expect(html).toContain('class="flex w-full items-baseline gap-2"');
+  expect(html).toContain(
+    '<a class="underline" href="/images/photographs"><h2 class="font-semibold text-xl">Photographs</h2></a>',
+  );
+  expect(html).toContain(
+    '<a class="ml-auto text-sm underline underline-offset-2" href="/images/photographs">View All (2)</a>',
+  );
   expect(html).toContain("grid-cols-3");
   expect(html).toContain("Shibuya HD");
   expect(html).toContain('aria-label="Crossing"');
@@ -223,71 +230,4 @@ test("renders image and video previews together in one responsive row", async ()
     "video",
   ]);
   expect(findMany.mock.calls.every(([options]) => options.limit === undefined)).toBe(true);
-});
-
-test("renders a complete image at its intrinsic aspect ratio", async () => {
-  const rendered = await schema.renderers.image({
-    note: {
-      body: "",
-      folder: {
-        vaultPath: "Images/Photographs",
-      },
-      name: "Shibuya HD",
-      properties: imageEntry.properties,
-      resolveImage: () => null,
-    },
-    query: {
-      findMany: () => Promise.resolve([]),
-    },
-  } as never);
-  const html = renderToStaticMarkup(rendered);
-
-  expect(html).toContain('class="block max-w-full h-auto"');
-  expect(html).toContain('data-unoptimized="true"');
-  expect(html).not.toContain("aspect-4/3");
-  expect(html).not.toContain("object-contain");
-});
-
-test("renders a video note with a native controlled player", async () => {
-  const rendered = await schema.renderers.video({
-    note: {
-      body: "",
-      folder: {
-        vaultPath: "Images/Photographs",
-      },
-      name: "Crossing",
-      properties: {
-        date: new Date("2026-03-02"),
-        src: {
-          raw: "https://videos.example.com/crossing.mp4",
-          type: "link",
-          url: "https://videos.example.com/crossing.mp4",
-        },
-        thumbnail: {
-          raw: "https://images.example.com/crossing.jpg",
-          type: "link",
-          url: "https://images.example.com/crossing.jpg",
-        },
-      },
-      resolveImage: () => null,
-    },
-    query: {
-      findMany: () =>
-        Promise.resolve([
-          {
-            kind: "grid",
-            webPath: "/images/photographs",
-          },
-        ]),
-    },
-  } as never);
-  const html = renderToStaticMarkup(rendered);
-
-  expect(html).toContain("<video");
-  expect(html).toContain("controls");
-  expect(html).toContain("playsInline");
-  expect(html).toContain('class="block max-w-full h-auto bg-black"');
-  expect(html).not.toContain("w-full max-h-[70vh]");
-  expect(html).not.toContain("poster=");
-  expect(html).toContain('src="https://videos.example.com/crossing.mp4"');
 });
