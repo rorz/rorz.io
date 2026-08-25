@@ -42,6 +42,16 @@ const webPermalink: ObsidPermalink = (context) => {
   });
 };
 
+const getVaultWebPath = (vaultPath: string): string =>
+  getSchemaWebPath(
+    {
+      routing: {
+        permalink: webPermalink,
+      },
+    },
+    vaultPath,
+  );
+
 const getSegments = (webPath: string): readonly string[] => {
   if (webPath === "/") {
     return [];
@@ -101,4 +111,4 @@ const createVaultRouteManifest = (
   };
 };
 
-export { createVaultRouteManifest, webPermalink };
+export { createVaultRouteManifest, getVaultWebPath, webPermalink };

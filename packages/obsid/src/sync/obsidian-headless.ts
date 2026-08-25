@@ -25,7 +25,7 @@ const obCommand = async (command: ObCommand, args: string[]) => {
   return output;
 };
 
-export const logIn = async (opts: ObsidConfig["login"]) => {
+const logIn = async (opts: ObsidConfig["login"]) => {
   const output = await obCommand("login", [
     "--email",
     opts.email,
@@ -35,7 +35,7 @@ export const logIn = async (opts: ObsidConfig["login"]) => {
   return output;
 };
 
-export const syncSetup = async (opts: {
+const syncSetup = async (opts: {
   vault: string;
   deviceName: string;
   path: string;
@@ -57,20 +57,31 @@ export const syncSetup = async (opts: {
   return output;
 };
 
-export const syncConfig = async (opts: { path: string }) => {
-  const output = await obCommand("sync-config", [
-    "--path",
-    opts.path,
-    "--mode",
-    "mirror-remote",
-  ]);
+interface SyncConfigOptions {
+  readonly excludedFolders: readonly string[];
+  readonly path: string;
+}
+
+const getSyncConfigArgs = (opts: SyncConfigOptions): string[] => [
+  "--path",
+  opts.path,
+  "--mode",
+  "mirror-remote",
+  "--excluded-folders",
+  opts.excludedFolders.join(","),
+];
+
+const syncConfig = async (opts: SyncConfigOptions) => {
+  const output = await obCommand("sync-config", getSyncConfigArgs(opts));
   return output;
 };
 
-export const syncVault = async (opts: { path: string }) => {
+const syncVault = async (opts: { path: string }) => {
   const output = await obCommand("sync", [
     "--path",
     opts.path,
   ]);
   return output;
 };
+
+export { getSyncConfigArgs, logIn, syncConfig, syncSetup, syncVault };

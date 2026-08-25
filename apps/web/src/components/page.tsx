@@ -5,6 +5,7 @@ import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/cn/index.ts";
 
 type PageProps = {
+  as?: "article" | "div";
   title?: string;
   subtitle?: string | ReactNode;
   children: ReactNode;
@@ -16,6 +17,7 @@ type PageProps = {
 };
 
 export const Page: FC<PageProps> = ({ children, ...props }) => {
+  const Element = props.as ?? "div";
   const backNavigation = props.backNavigation ? (
     <Link
       className="inline-flex items-center gap-1 text-sm hover:underline mb-3"
@@ -41,11 +43,11 @@ export const Page: FC<PageProps> = ({ children, ...props }) => {
   })();
 
   return (
-    <div className={cn("flex flex-col gap-2 items-start", props.className)}>
+    <Element className={cn("flex flex-col gap-2 items-start", props.className)}>
       {backNavigation}
       {title}
       {subtitle}
       {children}
-    </div>
+    </Element>
   );
 };

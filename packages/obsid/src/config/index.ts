@@ -5,9 +5,15 @@ import { z } from "zod";
 
 const DEFAULT_DEVICE_NAME = `obsid [env == ${process.env.NODE_ENV ?? "NONE"}]`;
 const DEFAULT_VAULTS_FOLDER = "./.obsidian-vaults/";
+const excludedFolderSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .refine((folder) => !folder.includes(","), "Excluded folder paths cannot contain commas");
 
 const ObsidConfigSchema = z.object({
   deviceName: z.string().optional().default(DEFAULT_DEVICE_NAME),
+  excludedFolders: z.array(excludedFolderSchema).optional().default([]),
   login: z.object({
     email: z.email(),
     password: z.string().min(1),
@@ -39,6 +45,7 @@ const defineConfig = <const Input extends ObsidConfigInput>(
   ({
     ...config,
     deviceName: config.deviceName ?? DEFAULT_DEVICE_NAME,
+    excludedFolders: config.excludedFolders ?? [],
     vaultsFolder: config.vaultsFolder ?? DEFAULT_VAULTS_FOLDER,
   }) as DefinedObsidConfig<Input>;
 

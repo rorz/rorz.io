@@ -45,7 +45,10 @@ const findCollectionEntries = async (
 
   return entryGroups
     .flat()
-    .toSorted((left, right) => right.properties.date.getTime() - left.properties.date.getTime());
+    .toSorted(
+      (left, right) =>
+        (right.properties.date?.getTime() ?? 0) - (left.properties.date?.getTime() ?? 0),
+    );
 };
 
 const resolveCollectionDetail = async (

@@ -2,6 +2,10 @@ import process from "node:process";
 import { defineConfig } from "obsid/config";
 
 export default defineConfig({
+  excludedFolders: [
+    "__templates",
+    "__drafts",
+  ],
   login: {
     email: process.env.OBSID_EMAIL ?? "",
     password: process.env.OBSID_PASSWORD ?? "",

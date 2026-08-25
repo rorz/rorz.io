@@ -1,4 +1,17 @@
+// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
+import type { Metadata } from "next";
 import { Obsid } from "obsid/react";
+import {
+  getNoteDescription,
+  getNoteModifiedAt,
+  getNotePublishedAt,
+  getNoteTitle,
+  isIndexableNote,
+  type SeoNote,
+} from "@/lib/seo/content.ts";
+import { RSS_ALTERNATES, SITE_LOCALE, SITE_NAME } from "@/lib/seo/site.ts";
+import { getPublishedSiteEntries } from "@/lib/seo/site-content.ts";
+import { StructuredData } from "@/lib/seo/structured-data.tsx";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 import schema from "@/lib/vault/schema.tsx";
 
@@ -8,12 +21,106 @@ interface PageProps {
   }>;
 }
 
-const generateStaticParams = () => {
-  const manifest = getVaultRouteManifest();
-
-  return manifest.routes.map((route) => ({
+const generateStaticParams = async () =>
+  (await getPublishedSiteEntries()).map(({ route }) => ({
     path: route.segments,
   }));
+
+const getRobotsMetadata = (note: SeoNote): Metadata["robots"] =>
+  isIndexableNote(note)
+    ? {
+        follow: true,
+        googleBot: {
+          follow: true,
+          index: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+        index: true,
+      }
+    : {
+        follow: false,
+        index: false,
+      };
+
+const getOpenGraphMetadata = (note: SeoNote): Metadata["openGraph"] => {
+  const description = getNoteDescription(note);
+  const title = getNoteTitle(note);
+  const shared = {
+    description: description ?? undefined,
+    locale: SITE_LOCALE,
+    siteName: SITE_NAME,
+    title,
+    url: note.webPath,
+  };
+
+  return note.kind === "post"
+    ? {
+        ...shared,
+        authors: [
+          SITE_NAME,
+        ],
+        modifiedTime: getNoteModifiedAt(note)?.toISOString(),
+        publishedTime: getNotePublishedAt(note)?.toISOString(),
+        type: "article",
+      }
+    : {
+        ...shared,
+        type: "website",
+      };
+};
+
+const getTwitterMetadata = (note: SeoNote): Metadata["twitter"] => {
+  const description = getNoteDescription(note);
+
+  return {
+    card: "summary",
+    creator: "@rorzio",
+    description: description ?? undefined,
+    title: getNoteTitle(note),
+  };
+};
+
+const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
+  const manifest = getVaultRouteManifest();
+  const route = manifest.getBySegments((await params).path);
+
+  if (!route) {
+    return {
+      robots: {
+        follow: false,
+        index: false,
+      },
+      title: "Page not found",
+    };
+  }
+
+  const note = await vault.getFile(route.vaultPath);
+
+  if (!note) {
+    throw new Error(`Generated vault note is missing: ${route.vaultPath}.md`);
+  }
+
+  const description = getNoteDescription(note);
+  const title = getNoteTitle(note);
+
+  return {
+    alternates: {
+      canonical: route.webPath,
+      types: RSS_ALTERNATES,
+    },
+    description: description ?? undefined,
+    openGraph: getOpenGraphMetadata(note),
+    robots: getRobotsMetadata(note),
+    title:
+      route.webPath === "/"
+        ? {
+            absolute: title,
+          }
+        : title,
+    twitter: getTwitterMetadata(note),
+  };
 };
 
 const Page = async ({ params }: PageProps) => {
@@ -30,11 +137,16 @@ const Page = async ({ params }: PageProps) => {
     throw new Error(`Generated vault note is missing: ${route.vaultPath}.md`);
   }
 
-  return <Obsid note={note} schema={schema} />;
+  return (
+    <>
+      <StructuredData note={note} />
+      <Obsid note={note} schema={schema} />
+    </>
+  );
 };
 
 const dynamicParams = false;
 
 // biome-ignore lint/style/useComponentExportOnlyModules: App Router pages must export route configuration beside the component.
-export { dynamicParams, generateStaticParams };
+export { dynamicParams, generateMetadata, generateStaticParams };
 export default Page;

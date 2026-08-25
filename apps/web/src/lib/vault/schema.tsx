@@ -33,6 +33,7 @@ const renderIndexSection = async (reference: SectionReference, query: IndexConte
 
 const index: VaultRenderers["index"] = async ({ note: current, query }) => (
   <Page className="gap-6">
+    <h1 className="sr-only">Rory McMeekin</h1>
     {
       await Promise.all(
         current.properties.sections.map((reference) => renderIndexSection(reference, query)),

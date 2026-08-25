@@ -24,6 +24,7 @@ type ListContext = VaultRenderContext<"list">;
 
 type ListEntryNote =
   | VaultRenderContext<"book">["note"]
+  | VaultRenderContext<"film">["note"]
   | VaultRenderContext<"place">["note"]
   | VaultRenderContext<"post">["note"]
   | VaultRenderContext<"thing">["note"];
@@ -39,25 +40,34 @@ const findListEntries = (index: ListContext["note"], query: ListContext["query"]
   });
 
 const getListDecoration = (entry: VaultEntry): ReactNode => {
-  if (entry.kind !== "place") {
-    return format("do LLL y", entry.properties.date);
+  if (entry.kind === "place") {
+    if (entry.properties.rating === undefined) {
+      return "No rating";
+    }
+
+    return <StarRating className="py-0.5" value={entry.properties.rating} />;
   }
 
-  if (entry.properties.rating === undefined) {
-    return "No rating";
+  if (entry.kind === "film") {
+    if (entry.properties.rating !== undefined) {
+      return <StarRating className="py-0.5" value={entry.properties.rating} />;
+    }
+
+    if (entry.properties.date === undefined) {
+      return null;
+    }
   }
 
-  return <StarRating className="py-0.5" value={entry.properties.rating} />;
+  if (entry.properties.date !== undefined) {
+    return (
+      <time dateTime={format("yyyy-MM-dd", entry.properties.date)}>
+        {format("do LLL y", entry.properties.date)}
+      </time>
+    );
+  }
+
+  return null;
 };
-
-const renderListEntry = (entry: VaultEntry) => (
-  <ListItem
-    decoration={getListDecoration(entry)}
-    href={entry.webPath}
-    key={entry.webPath}
-    title={getListEntryTitle(entry)}
-  />
-);
 
 type ListIndexContext = VaultRenderContext<"listOfLists">;
 type ListReference = ListIndexContext["note"]["properties"]["lists"][number];
@@ -99,19 +109,27 @@ const getRatingDecoration = (entry: VaultEntry) => {
   return null;
 };
 
-const renderListGroup = (group: ListGroup, title = getFolderTitle(group.index)) => (
+const renderListEntries = (
+  entries: readonly VaultEntry[],
+  getDecoration: (entry: VaultEntry) => ReactNode = getListDecoration,
+) =>
+  entries.map((entry) => (
+    <ListItem
+      decoration={getDecoration(entry)}
+      href={entry.webPath}
+      key={entry.webPath}
+      title={getListEntryTitle(entry)}
+    />
+  ));
+
+const renderListGroup = (
+  group: ListGroup,
+  title = getFolderTitle(group.index),
+  getDecoration: (entry: VaultEntry) => ReactNode = getRatingDecoration,
+) => (
   <div className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <SectionHeading count={group.totalCount} href={group.index.webPath} title={title} />
-    <List>
-      {group.entries.map((entry) => (
-        <ListItem
-          decoration={getRatingDecoration(entry)}
-          href={entry.webPath}
-          key={entry.webPath}
-          title={entry.name}
-        />
-      ))}
-    </List>
+    <List>{renderListEntries(group.entries, getDecoration)}</List>
   </div>
 );
 
@@ -136,7 +154,10 @@ const resolveListDetail = async (current: ListEntryNote, query: ListContext["que
   };
 };
 
-type RatedNote = VaultRenderContext<"book">["note"] | VaultRenderContext<"place">["note"];
+type RatedNote =
+  | VaultRenderContext<"book">["note"]
+  | VaultRenderContext<"film">["note"]
+  | VaultRenderContext<"place">["note"];
 
 const renderRatedPage = async (current: RatedNote, query: ListContext["query"]) => {
   const { navigation, parent } = await resolveListDetail(current, query);
@@ -180,6 +201,7 @@ const renderListSection = async (
       totalCount: entries.length,
     },
     title,
+    getListDecoration,
   );
 };
 
@@ -198,7 +220,7 @@ const list: VaultRenderer<"list"> = async ({ note: current, query }) => {
         : {})}
       title={getFolderTitle(current)}
     >
-      <List className="mt-6">{entries.map(renderListEntry)}</List>
+      <List className="mt-6">{renderListEntries(entries)}</List>
     </Page>
   );
 };
@@ -224,11 +246,16 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
 
   return (
     <Page
+      as="article"
       backNavigation={{
         href: parent.webPath,
         title: "Posts",
       }}
-      subtitle={format("do MMMM y", current.properties.date)}
+      subtitle={
+        <time dateTime={format("yyyy-MM-dd", current.properties.date)}>
+          {format("do MMMM y", current.properties.date)}
+        </time>
+      }
       title={current.properties.title ? renderText(current.properties.title) : current.name}
     >
       <VaultMarkdown note={current} />
@@ -238,6 +265,8 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
 };
 
 const book: VaultRenderer<"book"> = ({ note: current, query }) => renderRatedPage(current, query);
+
+const film: VaultRenderer<"film"> = ({ note: current, query }) => renderRatedPage(current, query);
 
 const place: VaultRenderer<"place"> = ({ note: current, query }) => renderRatedPage(current, query);
 
@@ -265,11 +294,15 @@ const thing: VaultRenderer<"thing"> = async ({ note: current, query }) => {
 
 const listRenderers = {
   book,
+  film,
   list,
   listOfLists,
   place,
   post,
   thing,
-} satisfies Pick<VaultRenderers, "book" | "list" | "listOfLists" | "place" | "post" | "thing">;
+} satisfies Pick<
+  VaultRenderers,
+  "book" | "film" | "list" | "listOfLists" | "place" | "post" | "thing"
+>;
 
 export { listRenderers, renderListSection };

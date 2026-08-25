@@ -61,6 +61,7 @@ describe("obsid config", () => {
       vaults: [],
     });
 
+    expect(config.excludedFolders).toEqual([]);
     expect(config.vaultsFolder).toBe("./.obsidian-vaults/");
   });
 
@@ -79,6 +80,10 @@ describe("obsid config", () => {
     const configPath = resolveSync("../../../../apps/web/obsid.config.ts", import.meta.dir);
     const config = await loadConfig(configPath);
 
+    expect(config.excludedFolders).toEqual([
+      "__templates",
+      "__drafts",
+    ]);
     expect(config.vaults.map((vault) => vault.name)).toEqual([
       "rorz.io",
       "rorz.io--alt",

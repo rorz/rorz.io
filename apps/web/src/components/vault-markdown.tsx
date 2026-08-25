@@ -6,9 +6,12 @@ import { MarkdownBlockquote } from "@/components/markdown-blockquote.tsx";
 import { MarkdownHorizontalRule } from "@/components/markdown-horizontal-rule.tsx";
 import { MarkdownImage } from "@/components/markdown-image.tsx";
 import { cn } from "@/lib/cn/index.ts";
+import { getVaultLinkUrl } from "@/lib/vault/link.ts";
 
 interface VaultMarkdownProps {
-  readonly note: Pick<VaultFile, "body" | "resolveImage">;
+  readonly note: Pick<VaultFile, "body" | "resolveImage"> & {
+    readonly links?: VaultFile["links"];
+  };
 }
 
 type MarkdownLinkProps = ComponentProps<"a"> & {
@@ -42,7 +45,12 @@ const markdownComponents = {
 
 const VaultMarkdown = ({ note }: VaultMarkdownProps) => (
   <div className="markdown flex w-full flex-col items-start gap-2">
-    <ObsidianMarkdown components={markdownComponents} resolveWikiImage={note.resolveImage}>
+    <ObsidianMarkdown
+      components={markdownComponents}
+      links={note.links ?? []}
+      resolveWikiImage={note.resolveImage}
+      resolveWikiLink={getVaultLinkUrl}
+    >
       {note.body}
     </ObsidianMarkdown>
   </div>

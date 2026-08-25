@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { createRequire } from "node:module";
 import { file, spawn } from "bun";
+import { getSyncConfigArgs } from "./obsidian-headless.ts";
 
 const require = createRequire(import.meta.url);
 const patchedCliPath = require.resolve("obsidian-headless/patched-cli.cjs");
@@ -34,4 +35,33 @@ test("routes case-only collisions through the upstream adapter rename", async ()
 
   expect(patchSource).toContain("this.adapter.insensitive");
   expect(patchSource).toContain("this.adapter.rename(n,i)");
+});
+
+test("passes excluded folders to the upstream sync configuration", () => {
+  expect(
+    getSyncConfigArgs({
+      excludedFolders: [
+        "__templates",
+        "__drafts",
+      ],
+      path: "/tmp/example-vault",
+    }),
+  ).toEqual([
+    "--path",
+    "/tmp/example-vault",
+    "--mode",
+    "mirror-remote",
+    "--excluded-folders",
+    "__templates,__drafts",
+  ]);
+
+  expect(
+    getSyncConfigArgs({
+      excludedFolders: [],
+      path: "/tmp/example-vault",
+    }).slice(-2),
+  ).toEqual([
+    "--excluded-folders",
+    "",
+  ]);
 });

@@ -29,6 +29,7 @@
     "apps/web": {
       "entry": [
         "src/app/**/{default,error,global-error,layout,loading,not-found,page,route,template}.{ts,tsx}",
+        "src/app/**/{robots,sitemap}.{ts,tsx}",
         "src/styles.css"
       ],
       "ignoreDependencies": ["next"],

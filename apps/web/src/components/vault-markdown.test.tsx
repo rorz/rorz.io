@@ -22,17 +22,26 @@ mock.module("next/link", () => ({
 
 const { VaultMarkdown } = await import("./vault-markdown.tsx");
 
-test("distinguishes internal and external markdown links", () => {
+test("distinguishes external links and resolves internal Markdown and wiki links", () => {
   const html = renderToStaticMarkup(
     <VaultMarkdown
       note={{
-        body: "[About](/about) and [Obsidian](https://obsidian.md).",
+        body: "[About](/about), [[Verdn]], and [Obsidian](https://obsidian.md).",
+        links: [
+          {
+            label: "Verdn",
+            resolvedPath: "Work/Verdn",
+            target: "Verdn",
+            type: "link",
+          },
+        ],
         resolveImage: () => null,
       }}
     />,
   );
 
   expect(html).toContain('href="/about"><span>About</span>');
+  expect(html).toContain('href="/work/verdn"><span>Verdn</span>');
   expect(html).toContain(
     'href="https://obsidian.md" rel="noopener" target="_blank"><span>Obsidian</span>',
   );

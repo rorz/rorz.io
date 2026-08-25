@@ -1,3 +1,5 @@
+// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
+import type { Metadata, Viewport } from "next";
 import type { FC, ReactNode } from "react";
 import "@/styles.css";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
@@ -11,6 +13,14 @@ import { PostHog } from "@/components/posthog.tsx";
 import { ThemeToggles } from "@/components/theme-toggles.tsx";
 import { cn } from "@/lib/cn/index.ts";
 import { postHogConfig } from "@/lib/posthog/config.ts";
+import {
+  RSS_ALTERNATES,
+  SITE_LANGUAGE,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/seo/site.ts";
 import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
 import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
@@ -43,14 +53,68 @@ const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
-const metadata = {
+const metadata: Metadata = {
+  alternates: {
+    types: RSS_ALTERNATES,
+  },
+  applicationName: SITE_NAME,
+  authors: [
+    {
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  ],
+  creator: SITE_NAME,
   icons: {
     icon: {
       type: "image/svg+xml",
       url: "/mark.svg",
     },
   },
-  title: "Rory McMeekin",
+  metadataBase: SITE_URL,
+  openGraph: {
+    locale: SITE_LOCALE,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    type: "website",
+    url: "/",
+  },
+  publisher: SITE_NAME,
+  referrer: "origin-when-cross-origin",
+  robots: {
+    follow: true,
+    googleBot: {
+      follow: true,
+      index: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+    index: true,
+  },
+  title: {
+    default: SITE_TITLE,
+    template: `%s — ${SITE_NAME}`,
+  },
+  twitter: {
+    card: "summary",
+    creator: "@rorzio",
+    title: SITE_TITLE,
+  },
+};
+
+const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    {
+      color: "#ffffff",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      color: "#18181b",
+      media: "(prefers-color-scheme: dark)",
+    },
+  ],
 };
 
 const Masthead: FC<{
@@ -108,7 +172,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html
       className={`${zalandoSans.variable} ${libertinusSerif.variable} ${jetBrainsMono.variable}`}
-      lang="en"
+      lang={SITE_LANGUAGE}
     >
       {/* biome-ignore lint/correctness/useUniqueElementIds: The root layout renders once and Next Script needs a stable id. */}
       <Script id="detect-theme" strategy="beforeInteractive">
@@ -137,7 +201,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
         </div>
         <footer className="mt-auto pt-12 pb-8">
           <span className="font-sans text-xs text-zinc-500">
-            Rory McMeekin &copy; {new Date().getFullYear()}.{" "}
+            {SITE_NAME} &copy; {new Date().getFullYear()}.{" "}
             <a
               className="underline"
               href="https://github.com/rorz/rorz.io"
@@ -154,5 +218,5 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 };
 
 // biome-ignore lint/style/useComponentExportOnlyModules: App Router layouts export metadata beside the component.
-export { metadata };
+export { metadata, viewport };
 export default RootLayout;

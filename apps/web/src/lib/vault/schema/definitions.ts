@@ -34,6 +34,12 @@ const book = note("book", {
   rating: p.number().optional(),
 });
 
+const film = note("film", {
+  ...titled,
+  date: p.date().optional(),
+  rating: p.number().optional(),
+});
+
 const thing = note("thing", {
   ...dated,
   from: p.text(),
@@ -62,6 +68,7 @@ const entries = [
   post,
   place,
   book,
+  film,
   thing,
   image,
   video,
@@ -92,6 +99,7 @@ const model = defineSchema({
     page,
     index,
     book,
+    film,
     post,
     project,
     place,

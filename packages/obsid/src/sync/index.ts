@@ -15,6 +15,7 @@ const sync = async (config: ObsidConfig) => {
       vault: vault.name,
     });
     await syncConfig({
+      excludedFolders: config.excludedFolders,
       path,
     });
     await syncVault({
