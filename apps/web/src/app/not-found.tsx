@@ -15,7 +15,7 @@ const metadata: Metadata = {
 const NotFound = () => (
   <Page title="Page not found">
     <p className="font-serif text-lg">
-      That page does not exist. <Link href="/">Go home.</Link>
+      That page does not exist.
     </p>
   </Page>
 );
