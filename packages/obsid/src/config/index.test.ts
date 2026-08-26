@@ -86,7 +86,6 @@ describe("obsid config", () => {
     ]);
     expect(config.vaults.map((vault) => vault.name)).toEqual([
       "rorz.io",
-      "rorz.io--alt",
     ]);
   });
 });
