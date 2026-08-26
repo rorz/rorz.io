@@ -37,7 +37,7 @@ export const Page: FC<PageProps> = ({ children, ...props }) => {
       return null;
     }
     if (typeof props.subtitle === "string") {
-      return <span className="mb-4 text-neutral-700">{props.subtitle}</span>;
+      return <span className="mb-4 text-zinc-700 dark:text-zinc-300">{props.subtitle}</span>;
     }
     return props.subtitle;
   })();

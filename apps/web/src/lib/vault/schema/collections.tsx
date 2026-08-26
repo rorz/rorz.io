@@ -217,7 +217,7 @@ const project: VaultRenderer<"project"> = async ({ note: current, query }) => {
       }}
       subtitle={
         <div className="mb-4 flex flex-col items-start gap-2">
-          <span className="text-neutral-700">{renderText(current.properties.byline)}</span>
+          <span className="text-zinc-700 dark:text-zinc-400">{renderText(current.properties.byline)}</span>
           <OmniLink query={query} value={current.properties.link} />
         </div>
       }

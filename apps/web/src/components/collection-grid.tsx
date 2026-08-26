@@ -115,10 +115,10 @@ const CollectionGridItem = (props: CollectionGridItemProps) => (
   <li className="col-span-1">
     <Link
       aria-label={props.kind === "card" ? undefined : props.title}
-      className="block border border-transparent group hover:border-black focus-visible:border-black focus-visible:outline-none dark:hover:border-white dark:focus-visible:border-white grayscale-0 hover:grayscale-0"
+      className="block border border-transparent group hover:border-black focus-visible:border-black focus-visible:outline-none dark:hover:border-zinc-200 dark:focus-visible:border-zinc-200 grayscale-0 hover:grayscale-0"
       href={props.href}
     >
-      <article className="border">{renderCollectionGridItem(props)}</article>
+      <article className="border border-black dark:border-zinc-200">{renderCollectionGridItem(props)}</article>
     </Link>
   </li>
 );

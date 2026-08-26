@@ -174,7 +174,7 @@ const renderRatedPage = async (current: RatedNote, query: ListContext["query"]) 
         : {})}
       subtitle={
         current.properties.rating !== undefined && (
-          <div className="bg-neutral-200 text-black py-1 px-2">
+          <div className="bg-zinc-300 dark:bg-zinc-700 py-1 px-2">
             <StarRating className="text-xl" value={current.properties.rating} />
           </div>
         )

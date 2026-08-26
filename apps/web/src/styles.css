@@ -81,3 +81,7 @@ html {
   background-color: var(--color-zinc-200);
   border-radius: var(--radius-sm);
 }
+
+.dark .markdown code {
+  background-color: var(--color-zinc-700);
+}
