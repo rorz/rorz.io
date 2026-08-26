@@ -18,11 +18,14 @@
   "private": true,
   "scripts": {
     "build": "bun run --filter @rorz/web build",
+    "build:cloudflare": "bun run sync:vault && bun run build",
     "check": "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
     "check:biome": "bun packages/scripts/src/check-biome.ts",
     "check:biome:fix": "biome check --write --diagnostic-level=info --max-diagnostics=none .",
     "check:biome:fix:unsafe": "biome check --write --unsafe --diagnostic-level=info --max-diagnostics=none .",
     "check:vinext": "bun run --filter @rorz/web check:vinext",
+    "deploy:cloudflare": "bun --cwd apps/web wrangler deploy",
+    "deploy:cloudflare:preview": "bun --cwd apps/web wrangler versions upload",
     "dev": "bun run --filter @rorz/web dev",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -33,6 +36,7 @@
     "pokayoke": "pokayoke check",
     "pokayoke:fix": "pokayoke check --fix",
     "start": "bun run --filter @rorz/web start",
+    "sync:vault": "bun --cwd apps/web ../../packages/obsid/src/cli/index.ts sync",
     "test": "bun test apps packages ./.pokayoke/rules/*.test.ts",
     "typecheck": "tsc --noEmit && bun run --filter obsid typecheck && bun run --filter @rorz/web typecheck",
     "verify": "bun run check && bun run build"

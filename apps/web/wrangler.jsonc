@@ -8,10 +8,6 @@
   "cache": {
     "enabled": true
   },
-  "routes": [{
-    "custom_domain": true,
-    "pattern": "rorz.io"
-  }],
   "compatibility_date": "2026-08-21",
   "compatibility_flags": ["nodejs_compat"],
   "images": {
@@ -19,6 +15,12 @@
   },
   "main": "src/worker.ts",
   "name": "rorz-io",
+  "routes": [
+    {
+      "custom_domain": true,
+      "pattern": "rorz.io"
+    }
+  ],
   "vars": {
     "NEXT_PUBLIC_POSTHOG_HOST": "/x",
     "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN": "phc_ufKQAPQ2uWNyoQTGC3C3VkDs5TkuKQkaxVf4wPcFwky2"

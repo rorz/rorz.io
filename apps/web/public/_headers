@@ -1,0 +1,4 @@
+# Vinext's generated immutable wildcard also applies to missing assets. Revalidate
+# these requests so a transient edge 404 cannot poison a chunk URL for a year.
+/_next/static/*
+  Cache-Control: public, max-age=0, must-revalidate

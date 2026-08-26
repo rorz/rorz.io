@@ -12,6 +12,17 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "build:cloudflare"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:cloudflare",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "check"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -61,6 +72,28 @@
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
     "label": "bun: check:vinext",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:cloudflare"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:cloudflare",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:cloudflare:preview"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:cloudflare:preview",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
@@ -174,6 +207,17 @@
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "sync:vault"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: sync:vault",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
   },
   {
     "allow_concurrent_runs": false,
