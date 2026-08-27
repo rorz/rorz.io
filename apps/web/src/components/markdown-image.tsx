@@ -6,6 +6,8 @@ type MarkdownImageProps = ComponentProps<"img"> & {
   readonly node?: unknown;
 };
 
+const externalImagePattern = /^(?:https?:)?\/\//iu;
+
 const toDimension = (value: number | string | undefined): number | undefined => {
   const dimension = typeof value === "string" ? Number(value) : value;
 
@@ -41,6 +43,7 @@ const MarkdownImage = ({
           })}
       sizes={sizes}
       src={src}
+      unoptimized={externalImagePattern.test(src)}
       {...(width === undefined
         ? {}
         : {

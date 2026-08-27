@@ -29,6 +29,29 @@ interface CollectionDetail {
 const getCollectionEntryTitle = (entry: VaultEntry): string =>
   entry.kind === "project" ? (entry.properties.title?.raw ?? entry.name) : entry.name;
 
+const compareCollectionEntryDates = (left: VaultEntry, right: VaultEntry): number =>
+  (right.properties.date?.getTime() ?? 0) - (left.properties.date?.getTime() ?? 0);
+
+const sortCollectionPreviewEntries = (entries: readonly VaultEntry[]): readonly VaultEntry[] =>
+  entries.toSorted((left, right) => {
+    const leftRank = left.properties.previewRank;
+    const rightRank = right.properties.previewRank;
+
+    if (leftRank === undefined && rightRank !== undefined) {
+      return 1;
+    }
+
+    if (leftRank !== undefined && rightRank === undefined) {
+      return -1;
+    }
+
+    if (leftRank !== undefined && rightRank !== undefined && leftRank !== rightRank) {
+      return leftRank - rightRank;
+    }
+
+    return compareCollectionEntryDates(left, right);
+  });
+
 const findCollectionEntries = async (
   folder: GridContext["note"]["folder"],
   property: GridContext["note"]["properties"]["gridOf"],
@@ -43,12 +66,7 @@ const findCollectionEntries = async (
     ),
   );
 
-  return entryGroups
-    .flat()
-    .toSorted(
-      (left, right) =>
-        (right.properties.date?.getTime() ?? 0) - (left.properties.date?.getTime() ?? 0),
-    );
+  return entryGroups.flat().toSorted(compareCollectionEntryDates);
 };
 
 const resolveCollectionDetail = async (
@@ -75,4 +93,9 @@ const resolveCollectionDetail = async (
   };
 };
 
-export { findCollectionEntries, getCollectionEntryTitle, resolveCollectionDetail };
+export {
+  findCollectionEntries,
+  getCollectionEntryTitle,
+  resolveCollectionDetail,
+  sortCollectionPreviewEntries,
+};

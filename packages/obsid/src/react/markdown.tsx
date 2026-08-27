@@ -65,6 +65,39 @@ const parseImageDimensions = (
       };
 };
 
+const parseExternalImageAlt = (
+  value: string,
+): Readonly<{
+  alt: string;
+  dimensions: NonNullable<ReturnType<typeof parseImageDimensions>>;
+}> | null => {
+  const dimensions = parseImageDimensions(value);
+
+  if (dimensions !== null) {
+    return {
+      alt: "",
+      dimensions,
+    };
+  }
+
+  const separatorIndex = value.lastIndexOf("|");
+
+  if (separatorIndex === -1) {
+    return null;
+  }
+
+  const labelledDimensions = parseImageDimensions(value.slice(separatorIndex + 1));
+
+  if (labelledDimensions === null) {
+    return null;
+  }
+
+  return {
+    alt: value.slice(0, separatorIndex),
+    dimensions: labelledDimensions,
+  };
+};
+
 const findWikiMatches = (value: string): readonly WikiMatch[] =>
   [
     ...findWikiLinks(value).map((match) => ({
@@ -199,6 +232,31 @@ const createWikiLinkPlugin =
     });
   };
 
+const transformExternalImageDimensions = (node: MarkdownNode) => {
+  if (node.type === "image" && node.alt !== undefined) {
+    const parsed = parseExternalImageAlt(node.alt);
+
+    if (parsed !== null) {
+      node.alt = parsed.alt;
+      node.data = {
+        ...node.data,
+        hProperties: {
+          ...node.data?.hProperties,
+          ...parsed.dimensions,
+        },
+      };
+    }
+  }
+
+  for (const child of node.children ?? []) {
+    transformExternalImageDimensions(child);
+  }
+};
+
+const createExternalImageDimensionsPlugin = () => (tree: MarkdownNode) => {
+  transformExternalImageDimensions(tree);
+};
+
 const ObsidianMarkdown = ({
   children,
   components,
@@ -211,6 +269,7 @@ const ObsidianMarkdown = ({
     remarkPlugins={[
       remarkGfm,
       createWikiLinkPlugin(links, resolveWikiImage, resolveWikiLink),
+      createExternalImageDimensionsPlugin,
     ]}
     skipHtml={true}
   >

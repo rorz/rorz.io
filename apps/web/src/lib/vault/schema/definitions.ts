@@ -2,7 +2,12 @@ import { defineSchema, note, type ObsidResolvedNote, p } from "obsid/schema";
 import { StringPropertyLinkTypeSchema, type StringPropertyValue } from "obsid/types";
 import { webPermalink } from "@/lib/vault/routing.ts";
 
+const previewable = {
+  previewRank: p.number().optional(),
+};
+
 const dated = {
+  ...previewable,
   date: p.date(),
 };
 
@@ -35,6 +40,7 @@ const book = note("book", {
 });
 
 const film = note("film", {
+  ...previewable,
   ...titled,
   date: p.date().optional(),
   rating: p.number().optional(),

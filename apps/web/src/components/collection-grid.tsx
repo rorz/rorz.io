@@ -118,7 +118,9 @@ const CollectionGridItem = (props: CollectionGridItemProps) => (
       className="block border border-transparent group hover:border-black focus-visible:border-black focus-visible:outline-none dark:hover:border-zinc-200 dark:focus-visible:border-zinc-200 grayscale-0 hover:grayscale-0"
       href={props.href}
     >
-      <article className="border border-black dark:border-zinc-200">{renderCollectionGridItem(props)}</article>
+      <article className="border border-black dark:border-zinc-200">
+        {renderCollectionGridItem(props)}
+      </article>
     </Link>
   </li>
 );

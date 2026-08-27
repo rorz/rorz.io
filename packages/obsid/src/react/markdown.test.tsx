@@ -65,3 +65,23 @@ test("renders resolved local Obsidian image embeds, dimensions, and missing imag
   );
   expect(html).toContain("![[missing.png]]");
 });
+
+test("renders external Obsidian image dimensions and preserves alt text", () => {
+  const html = renderToStaticMarkup(
+    <ObsidianMarkdown>
+      {`![320](https://assets.example/narrow.webp)
+
+![640x360](https://assets.example/fixed.webp)
+
+![A labelled image|480](https://assets.example/labelled.webp)`}
+    </ObsidianMarkdown>,
+  );
+
+  expect(html).toContain('<img src="https://assets.example/narrow.webp" alt="" width="320"/>');
+  expect(html).toContain(
+    '<img src="https://assets.example/fixed.webp" alt="" height="360" width="640"/>',
+  );
+  expect(html).toContain(
+    '<img src="https://assets.example/labelled.webp" alt="A labelled image" width="480"/>',
+  );
+});

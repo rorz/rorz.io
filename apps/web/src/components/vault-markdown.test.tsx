@@ -1,5 +1,5 @@
 import { expect, mock, test } from "bun:test";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 interface MockLinkProps {
@@ -8,8 +8,15 @@ interface MockLinkProps {
   readonly href: string;
 }
 
+type MockImageProps = ComponentProps<"img"> & {
+  readonly unoptimized?: boolean;
+};
+
+const renderNextImage = mock((_properties: MockImageProps) => null);
+const externalImageUrl = "https://example.com/dithered.webp";
+
 mock.module("next/image", () => ({
-  default: () => null,
+  default: renderNextImage,
 }));
 
 mock.module("next/link", () => ({
@@ -45,4 +52,26 @@ test("distinguishes external links and resolves internal Markdown and wiki links
   expect(html).toContain(
     'href="https://obsidian.md" rel="noopener" target="_blank"><span>Obsidian</span>',
   );
+});
+
+test("renders external Markdown images directly with parsed dimensions", () => {
+  renderNextImage.mockClear();
+
+  renderToStaticMarkup(
+    <VaultMarkdown
+      note={{
+        body: `![640](${externalImageUrl})`,
+        resolveImage: () => null,
+      }}
+    />,
+  );
+
+  expect(renderNextImage).toHaveBeenCalledTimes(1);
+  expect(renderNextImage.mock.calls[0]?.[0]).toMatchObject({
+    alt: "",
+    sizes: "(max-width: 640px) 100vw, 640px",
+    src: externalImageUrl,
+    unoptimized: true,
+    width: 640,
+  });
 });

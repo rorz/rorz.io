@@ -1,7 +1,5 @@
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import type { Metadata } from "next";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Link from "next/link";
 import { Page } from "@/components/page.tsx";
 
 const metadata: Metadata = {
@@ -14,9 +12,7 @@ const metadata: Metadata = {
 
 const NotFound = () => (
   <Page title="Page not found">
-    <p className="font-serif text-lg">
-      That page does not exist.
-    </p>
+    <p className="font-serif text-lg">That page does not exist.</p>
   </Page>
 );
 

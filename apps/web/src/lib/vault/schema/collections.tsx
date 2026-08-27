@@ -13,6 +13,7 @@ import {
   findCollectionEntries,
   getCollectionEntryTitle,
   resolveCollectionDetail,
+  sortCollectionPreviewEntries,
 } from "@/lib/vault/schema/collections-data.ts";
 import {
   getEntryKind,
@@ -102,7 +103,7 @@ const renderCollectionSection = (group: GridGroup) => (
   <section className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <SectionHeading count={group.entries.length} href={group.index.webPath} title={group.title} />
     <CollectionGrid layout="row" variant={getCollectionGridVariant(group.index)}>
-      {group.entries.map(renderCollectionEntry)}
+      {sortCollectionPreviewEntries(group.entries).map(renderCollectionEntry)}
     </CollectionGrid>
   </section>
 );
@@ -217,7 +218,9 @@ const project: VaultRenderer<"project"> = async ({ note: current, query }) => {
       }}
       subtitle={
         <div className="mb-4 flex flex-col items-start gap-2">
-          <span className="text-zinc-700 dark:text-zinc-400">{renderText(current.properties.byline)}</span>
+          <span className="text-zinc-700 dark:text-zinc-400">
+            {renderText(current.properties.byline)}
+          </span>
           <OmniLink query={query} value={current.properties.link} />
         </div>
       }
