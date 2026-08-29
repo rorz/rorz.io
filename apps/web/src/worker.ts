@@ -4,6 +4,7 @@ import { postHogConfig } from "@/lib/posthog/config.ts";
 
 const POSTHOG_API_ORIGIN = "https://us.i.posthog.com";
 const POSTHOG_ASSET_ORIGIN = "https://us-assets.i.posthog.com";
+const NOT_FOUND_STATUS = 404;
 const TRAILING_SLASHES = /\/+$/;
 const VINEXT_IMAGE_PATH = "/_next/image";
 
@@ -77,7 +78,7 @@ const proxyPostHogRequest = async (
 };
 
 export default {
-  fetch(request, env, ctx) {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     const requestUrl = new URL(request.url);
 
     if (requestUrl.pathname === VINEXT_IMAGE_PATH) {
@@ -98,6 +99,12 @@ export default {
       return vinextHandler.fetch(request, env, ctx);
     }
 
-    return env.ASSETS.fetch(request);
+    const assetResponse = await env.ASSETS.fetch(request);
+
+    if (assetResponse.status !== NOT_FOUND_STATUS) {
+      return assetResponse;
+    }
+
+    return vinextHandler.fetch(request, env, ctx);
   },
 } satisfies ExportedHandler<Env>;
