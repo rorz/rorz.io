@@ -1,7 +1,6 @@
 # rorz.io
 
-Coning soon...
-
+This is the repository for my personal website.
 
 A Bun monorepo containing a Vinext App Router project.
 
