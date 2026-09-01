@@ -1,23 +1,10 @@
 # rorz.io
 
-This is the repository for my personal website.
+This is the repository for my personal site.
 
-A Bun monorepo containing a Vinext App Router project.
+It's a Bun monorepo, comprising two core parts:
 
-## Workspaces
+1. `apps/web` (a.k.a. "the website") -- The UI of the site, as well as some models and schema for how I think about the content that's loaded into it.
+2. `packages/obsid` -- A work-in-progress package called `obsid` whose goal is to make it as easy as possible to take _content_ from an Obsidian vault and turn it into static pages / a content system.
 
-- `apps/web` — the rorz.io web app
-
-## Commands
-
-- `bun run dev` — run the web app locally
-- `bun run build` — build the web app
-- `bun run check` — Biome, TypeScript, Knip, tests, and Pokayoke
-- `bun run verify` — the complete check plus a production Vinext build
-- `bun run check:biome:fix` — apply Biome's safe and unsafe fixes
-- `bun run knip:fix` — apply Knip fixes
-- `bun run pokayoke:fix` — apply project-policy fixes
-
-Run commands from the repository root. Zed exposes every root package script as a
-project task. Install Zed's Biome extension to get the same formatter and diagnostics
-in the editor. Pokayoke regenerates the task file and rejects drift from `package.json`.
+My aim is to de-monorepo-isise (new contender for the next OED) this project and _just_ make it the `apps/web` project, and to eventually create a proper standalone package for `obsid` once it's ready for public release.
