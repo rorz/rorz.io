@@ -6,6 +6,11 @@
     ".zed/*.json",
     "AGENTS.md",
     "README.md",
+    "apps/diffly/src/**/*.ts",
+    "apps/diffly/src/**/*.tsx",
+    "apps/diffly/package.json",
+    "apps/diffly/tsconfig.json",
+    "apps/diffly/vite.config.ts",
     "apps/web/app/**/*.ts",
     "apps/web/app/**/*.tsx",
     "apps/web/package.json",
@@ -22,7 +27,8 @@
   "rules": {
     "package/no-npx-in-scripts": "error",
     "repo/tooling-contract": "error",
-    "structure/max-file-lines": ["error", { "max": 300 }],
+    // Generated editor tasks grow with root scripts; repo/tooling-contract checks their contents.
+    "structure/max-file-lines": ["error", { "ignore": [".zed/tasks.json"], "max": 300 }],
     "typescript/enforce-arrow-function": "error"
   },
   "suppressions": {

@@ -26,6 +26,10 @@
       "entry": [".pokayoke/rules/**/*.rule.ts", ".pokayoke/rules/**/*.test.ts"],
       "project": [".pokayoke/**/*.ts"]
     },
+    "apps/diffly": {
+      "entry": ["src/styles.css"],
+      "project": ["src/**/*.{ts,tsx}"]
+    },
     "apps/web": {
       "entry": [
         "src/app/**/{default,error,global-error,layout,loading,not-found,page,route,template}.{ts,tsx}",

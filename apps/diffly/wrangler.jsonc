@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "account_id": "8715fe32117162efcdfaf18fac4ce28d",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "compatibility_date": "2026-07-07",
+  "name": "diffly",
+  "routes": [
+    {
+      "custom_domain": true,
+      "pattern": "diffly.rorz.io"
+    }
+  ],
+  "workers_dev": false
+}

@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.4",
+    "wrangler": "^4.125.0"
+  },
+  "name": "@rorz/diffly",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "deploy": "bun run build && wrangler deploy",
+    "deploy:dry": "bun run build && wrangler deploy --dry-run",
+    "dev": "vite --host 127.0.0.1 --port 4445 --strictPort",
+    "start": "vite preview --host 127.0.0.1 --port 4445 --strictPort",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "0.1.0"
+}

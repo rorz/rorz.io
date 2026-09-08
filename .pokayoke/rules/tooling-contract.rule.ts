@@ -16,7 +16,7 @@ const ruleId = "repo/tooling-contract";
 const foreignPackageManagerPattern = /\b(?:npm|npx|pnpm|yarn)\b/u;
 
 const requiredScripts = {
-  build: "bun run --filter @rorz/web build",
+  build: "bun run --filter './apps/*' build",
   check:
     "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
   "check:biome": "bun packages/scripts/src/check-biome.ts",
@@ -35,8 +35,7 @@ const requiredScripts = {
   "pokayoke:fix": "pokayoke check --fix",
   start: "bun run --filter @rorz/web start",
   test: "bun test apps packages ./.pokayoke/rules/*.test.ts",
-  typecheck:
-    "tsc --noEmit && bun run --filter obsid typecheck && bun run --filter @rorz/web typecheck",
+  typecheck: "tsc --noEmit && bun run --workspaces --if-present typecheck",
   verify: "bun run check && bun run build",
 } as const;
 

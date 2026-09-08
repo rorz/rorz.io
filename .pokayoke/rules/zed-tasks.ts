@@ -11,12 +11,13 @@ interface ZedTask {
 }
 
 const expandedArgsPattern = /"args": \[\n {6}"run",\n {6}"([^"]+)"\n {4}\]/gu;
+const longRunningScriptPattern = /^(?:dev|start)(?::|$)/u;
 
 const createZedTasks = (scripts: Readonly<Record<string, string>>): readonly ZedTask[] =>
   Object.keys(scripts)
     .toSorted()
     .map((script) => {
-      const keepsRunning = script === "dev" || script === "start";
+      const keepsRunning = longRunningScriptPattern.test(script);
       let hide: ZedTask["hide"] = "on_success";
 
       if (keepsRunning) {

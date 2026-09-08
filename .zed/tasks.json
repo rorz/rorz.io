@@ -23,6 +23,28 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "build:diffly"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:diffly",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "build:web"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:web",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "check"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -100,11 +122,44 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "deploy:diffly"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:diffly",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:diffly:dry"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:diffly:dry",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "dev"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
     "label": "bun: dev",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "dev:diffly"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: dev:diffly",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true
@@ -204,6 +259,17 @@
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
     "label": "bun: start",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "start:diffly"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: start:diffly",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true

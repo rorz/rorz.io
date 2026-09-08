@@ -1,10 +1,16 @@
 # rorz.io
 
-This is the repository for my personal site.
+This is the repository for my personal site and small projects hosted on its subdomains.
 
-It's a Bun monorepo, comprising two core parts:
+It's a Bun monorepo:
 
-1. `apps/web` (a.k.a. "the website") -- The UI of the site, as well as some models and schema for how I think about the content that's loaded into it.
-2. `packages/obsid` -- A work-in-progress package called `obsid` whose goal is to make it as easy as possible to take _content_ from an Obsidian vault and turn it into static pages / a content system.
+| Workspace | Purpose |
+| --- | --- |
+| `apps/web` | The personal site at `rorz.io`, built with Vinext and Obsidian content. |
+| [`apps/diffly`](apps/diffly/README.md) | The text diff tool at `diffly.rorz.io`, built with React, TypeScript, and Vite. |
+| `packages/obsid` | A work-in-progress package for turning Obsidian vault content into static pages. |
+| `packages/scripts` | Repository maintenance scripts. |
 
-My aim is to de-monorepo-isise (new contender for the next OED) this project and _just_ make it the `apps/web` project, and to eventually create a proper standalone package for `obsid` once it's ready for public release.
+Run `bun install` from the root. `bun run check` checks the repository and its workspaces; `bun run build` builds every app; `bun run verify` does both.
+
+`bun run dev` starts the personal site on port 4444. `bun run dev:diffly` starts Diffly on port 4445. Each app is developed and deployed independently. `bun run build:cloudflare` still syncs the vault and builds only the personal site.

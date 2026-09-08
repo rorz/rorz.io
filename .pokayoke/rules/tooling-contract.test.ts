@@ -90,6 +90,26 @@ const createContext = (root: string, fix: boolean): RuleContext => ({
 });
 
 describe("repo/tooling-contract", () => {
+  test("rejects quality gates that omit new app workspaces", async () => {
+    const context = createContext("/unused", false);
+    context.packageJson = (workspace) =>
+      Promise.resolve(
+        workspace === "apps/web"
+          ? webPackageJson
+          : {
+              ...rootPackageJson,
+              scripts: {
+                ...requiredScripts,
+                build: "bun run --filter @rorz/web build",
+                typecheck: "tsc --noEmit && bun run --filter @rorz/web typecheck",
+              },
+            },
+      );
+    const result = await toolingContract.run(context);
+
+    expect(result.findings.filter((finding) => finding.file === "package.json")).toHaveLength(2);
+  });
+
   test("reports Zed task drift", async () => {
     const root = await mkdtemp(`${tmpdir()}/pokayoke-tooling-contract-`);
     const result = await toolingContract.run(createContext(root, false));

@@ -99,7 +99,7 @@
   },
   "overrides": [
     {
-      "includes": ["apps/web/src/**/*.tsx"],
+      "includes": ["apps/*/src/**/*.tsx"],
       "linter": {
         "rules": {
           "performance": {
@@ -109,7 +109,7 @@
       }
     },
     {
-      "includes": ["apps/web/src/app/**", "apps/web/src/worker.ts", "apps/web/vite.config.ts"],
+      "includes": ["apps/web/src/app/**", "apps/web/src/worker.ts", "apps/*/vite.config.ts"],
       "linter": {
         "rules": {
           "style": {
