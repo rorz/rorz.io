@@ -1,3 +1,5 @@
+ALWAYS review ALL RELEVANT skills for every task or change, which can be [found here.](./skills)
+
 # Project contract
 
 - Use Bun for installs, scripts, tests, and one-off executables.

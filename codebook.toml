@@ -1,0 +1,10 @@
+include_paths = ["**/*.ts", "**/*.tsx", "**/*.json", "**/*.md", "**/*.txt"]
+ignore_paths = ["node_modules/**/*", "dist/**/*"]
+
+dictionaries = ["en_us"]
+
+[[overrides]]
+paths = ["**/*.md", "**/*.mdx"]
+extra_dictionaries = ["en_gb"]
+
+words = ["rorz", "rorz's", "natively"]
