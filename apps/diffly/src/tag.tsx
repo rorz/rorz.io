@@ -10,7 +10,7 @@ const Tag = ({
 }) => (
   <span
     className={clsx(
-      "rounded-[5px] border border-[#30343a] bg-[#17191d] px-1.5 py-0.5 text-[11px]/[1.3] text-[#aeb6c2] uppercase",
+      "rounded-sm border border-zinc-700 bg-zinc-900 px-1.5 py-0.5 text-xs/4 text-zinc-400 uppercase",
       inBar ? "static flex-none" : "absolute top-2.5 left-3 z-10",
     )}
   >

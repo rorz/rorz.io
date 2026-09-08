@@ -13,18 +13,18 @@ Always use native Tailwind syntax for class names:
 - ✅ `bg-zinc-200`
 - ❌ `bg-[#eee2ee]`
 
-If you _must_ use class names or CSS property values that are not supported natively, they must first be defined as custom `@theme` variables inside the relevant `style.css` file...
+If you _must_ use class names or CSS property values that are not supported natively, they must first be defined as custom `@theme` variables inside the relevant `styles.css` file...
 
 - If you are creating a custom variable you must first ask yourself if this variable is likely to be reused. If it is not likely to be reused, then exercise caution and restraint and try to figure out a way to use native class names, or adjust another part of your workflow to accommodate it natively.
 - If you intend to create custom variables for colors, fonts, or sizing you _must_ alert me (the human) first. Only create custom palettes if you have been expressly permitted to do so.
 
-### `style.css`
+### `styles.css`
 
-There should be only **one, single** `style.css` file per project, app or module, i.e. per _consumer_ of Tailwind.
+There should be only **one, single** `styles.css` file per project, app or module, i.e. per _consumer_ of Tailwind.
 
-It is imperative that the `style.css` file stays as small as possible, and is not bloated with overrides, workarounds, or shims.
+It is imperative that the `styles.css` file stays as small as possible, and is not bloated with overrides, workarounds, or shims.
 
-The core function of the `style.css` file is to:
+The core function of the `styles.css` file is to:
 
 1. Import Tailwind
 2. Provide variable overrides under the `@theme` scope

@@ -4,6 +4,6 @@ A selection of opinionated skills used for development in any repository that ha
 
 Use all that you require below:
 
-| Type    | Location                       | Description                                          |
-| :------ | :----------------------------- | :--------------------------------------------------- |
-| Styling | [`./styling.md`](./styling.md) | Mandates and opinions on styling, including Tailwind |
+| Type    | Location                       | Description                                            |
+| :------ | :----------------------------- | :----------------------------------------------------- |
+| Styling | [`./styling.md`](./styling.md) | Directives and opinions on styling, including Tailwind |

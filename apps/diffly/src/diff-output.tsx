@@ -11,7 +11,7 @@ const copyLabels: Record<CopyState, string> = {
 };
 const copiedFeedbackMs = 1500;
 const failedFeedbackMs = 2000;
-const lineClass = "block min-h-[21px] px-3.5";
+const lineClass = "block min-h-5 px-3.5";
 
 const CopyIcon = () => (
   <svg
@@ -46,7 +46,7 @@ const CopyButton = ({ diff }: { readonly diff: string }) => {
   return (
     <button
       aria-label="Copy generated diff"
-      className="inline-flex px-2 py-0.5 cursor-pointer items-center justify-center gap-1 rounded-sm border border-zinc-200 bg-zinc-100 text-[13px]/none font-bold text-[#0c140b] hover:bg-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e0ffd8] disabled:cursor-not-allowed disabled:border-[#343941] disabled:bg-[#202329] disabled:text-[#747d89] disabled:hover:bg-[#202329] max-[720px]:min-w-[78px]"
+      className="inline-flex px-2 py-0.5 cursor-pointer items-center justify-center gap-1 rounded-sm border border-zinc-200 bg-zinc-100 text-xs/none font-bold text-zinc-950 hover:bg-zinc-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-200 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:hover:bg-zinc-800 max-md:min-w-20"
       disabled={!diff}
       onClick={copyDiff}
       type="button"
@@ -65,16 +65,16 @@ const MetadataToggle = ({
   readonly onChange: ChangeEventHandler<HTMLInputElement>;
 }) => {
   const trackClass = clsx(
-    "relative h-[19px] w-[34px] flex-none rounded-full border transition-colors",
-    checked ? "border-[#7d9f73] bg-[#22301f]" : "border-[#424852] bg-[#17191d]",
+    "relative h-5 w-9 flex-none rounded-full border transition-colors",
+    checked ? "border-green-400 bg-green-950" : "border-zinc-600 bg-zinc-900",
   );
   const knobClass = clsx(
-    "absolute top-0.5 left-0.5 size-[13px] rounded-full transition",
-    checked ? "translate-x-[15px] bg-[#a7d69a]" : "translate-x-0 bg-[#aeb6c2]",
+    "absolute top-0.5 left-0.5 size-3.5 rounded-full transition",
+    checked ? "translate-x-4 bg-green-300" : "translate-x-0 bg-zinc-400",
   );
 
   return (
-    <label className="flex min-w-0 cursor-pointer items-center gap-2 rounded-full text-xs/none text-[#aeb6c2] select-none focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#7d9f73]">
+    <label className="flex min-w-0 cursor-pointer items-center gap-2 rounded-full text-xs/none text-zinc-400 select-none focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-green-400">
       <input checked={checked} className="sr-only" onChange={onChange} type="checkbox" />
       <span aria-hidden="true" className={trackClass}>
         <span className={knobClass} />
@@ -88,22 +88,22 @@ const MetadataToggle = ({
 
 const getDiffLineClass = (line: string): string => {
   if (line.startsWith("@@")) {
-    return clsx(lineClass, "bg-[#17152b] text-[#b7a7ff]");
+    return clsx(lineClass, "bg-violet-950 text-violet-300");
   }
 
   if (line.startsWith("diff --git") || line.startsWith("--- ") || line.startsWith("+++ ")) {
-    return clsx(lineClass, "text-[#8b949e]");
+    return clsx(lineClass, "text-zinc-400");
   }
 
   if (line.startsWith("+")) {
-    return clsx(lineClass, "bg-[#10251a] text-[#baf0c0]");
+    return clsx(lineClass, "bg-green-950 text-green-200");
   }
 
   if (line.startsWith("-")) {
-    return clsx(lineClass, "bg-[#2a1214] text-[#ffb8b8]");
+    return clsx(lineClass, "bg-red-950 text-red-200");
   }
 
-  return clsx(lineClass, "text-[#c9d1d9]");
+  return clsx(lineClass, "text-zinc-300");
 };
 
 const selectDiffOutput = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -130,18 +130,15 @@ interface DiffOutputProps {
 
 const DiffOutput = ({ diff, includeGitMetadata, onMetadataChange }: DiffOutputProps) => {
   const diffOutputClass = clsx(
-    "h-full w-full overflow-auto bg-[#0c0d0f] font-mono text-[14px]/[1.5] whitespace-pre select-text [tab-size:2] focus:bg-zinc-900 focus:outline-offset-[-2px] focus:outline-[#7d9f73]",
-    diff ? "pt-[52px] pb-[52px] text-[#dce7d7]" : "px-3.5 py-[52px] text-[#6f7782]",
+    "h-full w-full overflow-auto bg-zinc-950 font-mono text-sm leading-normal whitespace-pre select-text tab-2 focus:bg-zinc-900 focus:-outline-offset-2 focus:outline-green-400",
+    diff ? "py-13 text-zinc-200" : "px-3.5 py-13 text-zinc-500",
   );
 
   return (
-    <section
-      aria-label="Generated diff"
-      className="relative block min-h-0 min-w-0 border-b-0 max-[720px]:border-r-0"
-    >
-      <div className="absolute inset-x-0 top-0 z-20 flex h-[38px] items-center justify-between gap-4 border-b border-[#25282d] bg-[#0c0d0f] px-3 py-2 max-[720px]:gap-2.5">
+    <section aria-label="Generated diff" className="relative min-h-0 min-w-0 md:col-span-5">
+      <div className="absolute inset-x-0 top-0 z-20 flex h-9.5 items-center justify-between gap-4 border-b border-zinc-800 bg-zinc-950 px-3 py-2 max-md:gap-2.5">
         <Tag inBar={true}>diff</Tag>
-        <div className="flex min-w-0 items-center justify-end gap-3 max-[720px]:gap-2">
+        <div className="flex min-w-0 items-center justify-end gap-3 max-md:gap-2">
           <MetadataToggle checked={includeGitMetadata} onChange={onMetadataChange} />
           <CopyButton diff={diff} />
         </div>
