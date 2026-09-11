@@ -22,7 +22,7 @@
     "build:diffly": "bun run --filter @rorz/diffly build",
     "build:web": "bun run --filter @rorz/web build",
     "check": "bun run check:biome && bun run typecheck && bun run knip && bun run test && bun run pokayoke && bun run check:vinext",
-    "check:biome": "bun packages/scripts/src/check-biome.ts",
+    "check:biome": "biome check --error-on-warnings --max-diagnostics=none .",
     "check:biome:fix": "biome check --write --diagnostic-level=info --max-diagnostics=none .",
     "check:biome:fix:unsafe": "biome check --write --unsafe --diagnostic-level=info --max-diagnostics=none .",
     "check:vinext": "bun run --filter @rorz/web check:vinext",

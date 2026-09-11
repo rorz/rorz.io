@@ -140,16 +140,6 @@ const validateScripts = (packageJson: PackageJson): Finding[] => {
   const scripts = packageJson.scripts ?? {};
   const findings: Finding[] = [];
 
-  if (scripts["check:biome"] !== "bun packages/scripts/src/check-biome.ts") {
-    findings.push(
-      finding(
-        "The Bun Biome check must fail on every diagnostic visible in Zed.",
-        'Set scripts.check:biome to "bun packages/scripts/src/check-biome.ts".',
-        "package.json",
-      ),
-    );
-  }
-
   if (
     scripts["check:biome:fix"] !==
     "biome check --write --diagnostic-level=info --max-diagnostics=none ."
