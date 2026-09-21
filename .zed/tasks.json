@@ -12,17 +12,6 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "build:cloudflare"],
-    "command": "bun",
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "hide": "on_success",
-    "label": "bun: build:cloudflare",
-    "reveal": "always",
-    "save": "all",
-    "use_new_terminal": false
-  },
-  {
-    "allow_concurrent_runs": false,
     "args": ["run", "build:diffly"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -34,11 +23,44 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "build:jevball"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:jevball",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "build:web"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
     "label": "bun: build:web",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "build:web:code"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:web:code",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "build:web:content"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:web:content",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
@@ -100,28 +122,6 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "deploy:cloudflare"],
-    "command": "bun",
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "hide": "on_success",
-    "label": "bun: deploy:cloudflare",
-    "reveal": "always",
-    "save": "all",
-    "use_new_terminal": false
-  },
-  {
-    "allow_concurrent_runs": false,
-    "args": ["run", "deploy:cloudflare:preview"],
-    "command": "bun",
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "hide": "on_success",
-    "label": "bun: deploy:cloudflare:preview",
-    "reveal": "always",
-    "save": "all",
-    "use_new_terminal": false
-  },
-  {
-    "allow_concurrent_runs": false,
     "args": ["run", "deploy:diffly"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -144,6 +144,50 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "deploy:jevball"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:jevball",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:jevball:dry"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:jevball:dry",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:web"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:web",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:web:preview"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:web:preview",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "dev"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -160,6 +204,28 @@
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
     "label": "bun: dev:diffly",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "dev:jevball"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: dev:jevball",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "dev:web"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: dev:web",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true
@@ -276,14 +342,25 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "sync:vault"],
+    "args": ["run", "start:jevball"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
-    "hide": "on_success",
-    "label": "bun: sync:vault",
+    "hide": "never",
+    "label": "bun: start:jevball",
     "reveal": "always",
     "save": "all",
-    "use_new_terminal": false
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "start:web"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: start:web",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
   },
   {
     "allow_concurrent_runs": false,

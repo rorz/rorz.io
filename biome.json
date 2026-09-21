@@ -24,7 +24,7 @@
       "!!.next",
       "!!.vinext",
       "!!coverage",
-      "!!apps/web/worker-configuration.d.ts"
+      "!!apps/*/worker-configuration.d.ts"
     ],
     "maxSize": 1048576
   },
@@ -109,7 +109,12 @@
       }
     },
     {
-      "includes": ["apps/web/src/app/**", "apps/web/src/worker.ts", "apps/*/vite.config.ts"],
+      "includes": [
+        "apps/web/src/app/**",
+        "apps/web/src/worker.ts",
+        "apps/jevball/src/worker/index.ts",
+        "apps/*/vite.config.ts"
+      ],
       "linter": {
         "rules": {
           "style": {

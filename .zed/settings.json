@@ -126,6 +126,10 @@
   "line_ending": "prefer_lf",
   "lsp": {
     "biome": {
+      "binary": {
+        "arguments": ["lsp-proxy"],
+        "path": "./node_modules/.bin/biome"
+      },
       "settings": {
         "require_config_file": true
       }
