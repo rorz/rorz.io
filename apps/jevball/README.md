@@ -1,6 +1,14 @@
 # Magic-Jev-Ball
 
-A React + Vite app with a Cloudflare Worker backend and the 20 classic Magic 8 Ball answers. The user supplies one question. Three.js can later use the stable `faceIndex` returned by the API.
+A React + Vite app with a Cloudflare Worker backend and the 20 classic Magic 8 Ball answers. The user supplies one question, and a Three.js ball turns upward to reveal the answer on its floating die.
+
+## The ball
+
+React Three Fiber renders the ball, with Drei's procedural studio lighting. The shell flips upward through 180 degrees with a sharp initial impulse and a long ease out. The separate twenty-sided die follows a slightly different spiral and twisting rise each time, finishing alongside the shell when the response arrives promptly. Its downward-pointing face sits against a curved, refractive window, with light absorbed through the liquid and slight movement against the glass. Each inscription's line breaks and font size are fitted to the triangle. The API's stable `faceIndex` selects the physical face. A closed black interior keeps the window opaque from every angle. Mouse parallax moves the ball and surfaced die together, with a small amount of slip.
+
+The [React Bits Balatro shader](https://reactbits.dev/backgrounds/balatro) is adapted into the same canvas. It swirls before and during the turn, with smoothly eased hue shifts and a restrained ball wobble as you type. The ball's coloured reflections share the shader's hue and fade. The answer reveal fades the background almost to black, leaving a faint spotlight. Its licence is retained in [REACT-BITS-LICENSE.md](REACT-BITS-LICENSE.md). The scene uses the existing Tailwind colour palette, a capped pixel ratio, and reduced-motion support. The accessible form and answer also work if WebGL is unavailable.
+
+The large answer uses the locally bundled, open-licensed [Lacquer](https://fonts.google.com/specimen/Lacquer) typeface. It approximates the distressed lettering of the reference; the original [FF Confidential](https://www.myfonts.com/collections/ff-confidential-font-fontfont) requires its own webfont licence. The alternatives table includes miniature inscriptions and the actual selection chances.
 
 ## Run
 

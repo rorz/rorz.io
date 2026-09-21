@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@import "@fontsource/lacquer/latin-400.css";
+
+/* These Tailwind colours are also read by the Three.js materials and shaders. */
+@source inline("bg-indigo-500 bg-blue-600 bg-violet-500 bg-violet-200 bg-zinc-950 bg-zinc-700 bg-zinc-100");
+
+@theme {
+  --font-oracle: "Lacquer", fantasy;
+}
