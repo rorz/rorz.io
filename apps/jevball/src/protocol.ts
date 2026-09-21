@@ -26,10 +26,6 @@ const askResultSchema = z.object({
       }),
     )
     .length(answerCatalog.length),
-  mode: z.enum([
-    "evidence",
-    "playful",
-  ]),
 });
 const apiErrorSchema = z.object({
   error: z.object({

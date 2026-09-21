@@ -22,7 +22,7 @@ const AnswerOptions = ({ result }: { readonly result: AskResult }) => {
             Answer
           </th>
           <th className="pb-2 text-right font-normal" scope="col">
-            {result.mode === "playful" ? "Selection chance" : "Answer weight"}
+            Selection chance
           </th>
         </tr>
       </thead>

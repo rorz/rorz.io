@@ -65,9 +65,6 @@ const App = () => {
       <div className="space-y-6">
         <output aria-live="polite" className="block min-h-20 text-3xl font-medium text-violet-200">
           {result?.answer.text}
-          {result?.mode === "playful" && (
-            <span className="mt-3 block text-xs font-normal text-zinc-500">A playful nudge.</span>
-          )}
         </output>
         {result !== null && <AnswerOptions result={result} />}
       </div>

@@ -2,7 +2,7 @@ import { answerCatalog } from "../answers.ts";
 import { askInputSchema } from "../protocol.ts";
 import { HttpError, httpStatus, jsonResponse, readJson } from "./http.ts";
 import { evaluateQuestion } from "./jev.ts";
-import { questionSet, questionSetVersion, selectionPolicy } from "./question-set.ts";
+import { questionSet, questionSetVersion } from "./question-set.ts";
 import { selectAnswer } from "./select-answer.ts";
 
 const retryAfterSeconds = "60";
@@ -128,7 +128,6 @@ const worker = {
       if (pathname === "/api/question-set") {
         return jsonResponse({
           model: env.JEV_MODEL,
-          policy: selectionPolicy,
           questions: questionSet,
           version: questionSetVersion,
         });
