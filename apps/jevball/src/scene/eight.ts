@@ -17,7 +17,7 @@ const createEight = (palette: Palette) => {
   context.arc(256, 256, 245, 0, Math.PI * 2);
   context.fill();
   context.fillStyle = palette.ink.getStyle();
-  context.font = "500 360px Arial, sans-serif";
+  context.font = `500 360px ${getComputedStyle(document.body).fontFamily}`;
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillText("8", 256, 278);

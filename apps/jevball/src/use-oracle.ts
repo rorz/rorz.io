@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { trackQuestion } from "./analytics.ts";
 import { askBall } from "./ask.ts";
 import type { AskResult } from "./protocol.ts";
 
@@ -22,13 +23,37 @@ const useReducedMotion = () => {
   return reduced;
 };
 
+const useQuestionInput = (turning: boolean, reducedMotion: boolean) => {
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!(turning && matchMedia("(width < 40rem)").matches)) {
+      return;
+    }
+    const returnToBall = () =>
+      window.scrollTo({
+        behavior: reducedMotion ? "instant" : "smooth",
+        top: 0,
+      });
+    input.current?.blur();
+    returnToBall();
+    // Keep the reveal in view as the mobile keyboard closes.
+    const viewport = window.visualViewport;
+    viewport?.addEventListener("resize", returnToBall);
+    return () => viewport?.removeEventListener("resize", returnToBall);
+  }, [
+    turning,
+    reducedMotion,
+  ]);
+  return input;
+};
+
 const useOracle = () => {
   const [question, setQuestion] = useState("");
   const [result, setResult] = useState<AskResult | null>(null);
   const [phase, setPhase] = useState<"idle" | "turning" | "revealed">("idle");
   const [error, setError] = useState("");
-  const input = useRef<HTMLInputElement>(null);
   const reducedMotion = useReducedMotion();
+  const input = useQuestionInput(phase === "turning", reducedMotion);
   const reveal = useCallback(() => setPhase("revealed"), []);
   const changeQuestion: ChangeEventHandler<HTMLInputElement> = (event) =>
     setQuestion(event.target.value);
@@ -45,6 +70,7 @@ const useOracle = () => {
       return;
     }
     setPhase("turning");
+    trackQuestion(question);
     setResult(null);
     setError("");
     try {

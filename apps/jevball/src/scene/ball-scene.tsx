@@ -81,6 +81,7 @@ const BallScene = (props: BallSceneProps) => {
           palette={palette}
           question={props.question}
           reducedMotion={props.reducedMotion}
+          thinking={props.phase === "turning"}
         />
         <ambientLight intensity={0.35} />
         <directionalLight

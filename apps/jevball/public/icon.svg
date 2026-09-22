@@ -1,0 +1,44 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <title>Magic Jev Ball</title>
+  <defs>
+    <radialGradient cx="30%" cy="22%" id="shell" r="78%">
+      <stop stop-color="#71717a" />
+      <stop offset=".4" stop-color="#18181b" />
+      <stop offset=".8" stop-color="#000" />
+      <stop offset="1" stop-color="#a78bfa" />
+    </radialGradient>
+    <linearGradient id="rim" x2="0" y2="1">
+      <stop stop-color="#fff" stop-opacity=".5" />
+      <stop offset=".5" stop-color="#52525b" stop-opacity=".2" />
+      <stop offset="1" stop-color="#c4b5fd" stop-opacity=".6" />
+    </linearGradient>
+    <linearGradient id="badge" x2=".8" y2="1">
+      <stop stop-color="#fff" />
+      <stop offset="1" stop-color="#d4d4d8" />
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" fill="url(#shell)" r="21" stroke="url(#rim)" />
+  <path
+    d="M9 19A16 16 0 0 1 20 8"
+    fill="none"
+    stroke="#fff"
+    stroke-linecap="round"
+    stroke-opacity=".7"
+    stroke-width="2"
+  />
+  <path
+    d="M15 40Q28 46 38 34"
+    fill="none"
+    stroke="#ddd6fe"
+    stroke-linecap="round"
+    stroke-opacity=".6"
+  />
+  <g transform="rotate(-18 26 23)">
+    <ellipse cx="26" cy="23" fill="url(#badge)" rx="9" ry="10" />
+    <path
+      d="M26 16c-2.5 0-4 1.5-4 3.5 0 1.3.6 2.3 1.6 2.9-1.4.6-2.2 1.8-2.2 3.4 0 2.5 1.9 4.2 4.6 4.2s4.6-1.7 4.6-4.2c0-1.6-.8-2.8-2.2-3.4 1-.6 1.6-1.6 1.6-2.9 0-2-1.5-3.5-4-3.5Zm0 2c1.3 0 2 .7 2 1.7s-.7 1.8-2 1.8-2-.8-2-1.8.7-1.7 2-1.7Zm0 5.5c1.6 0 2.5.8 2.5 2.2s-.9 2.3-2.5 2.3-2.5-.9-2.5-2.3.9-2.2 2.5-2.2Z"
+      fill="#09090b"
+      fill-rule="evenodd"
+    />
+  </g>
+</svg>

@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { answerCatalog, answerGroups } from "./answers.ts";
 
-const maxQuestionLength = 1000;
+const maxQuestionLength = 80;
 const askInputSchema = z.strictObject({
-  question: z.string().trim().min(1).max(maxQuestionLength),
+  question: z.string().max(maxQuestionLength).trim().min(1),
 });
 
 const answerSchema = z.object({

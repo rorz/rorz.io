@@ -26,9 +26,10 @@ const createFaceTexture = (text: string, palette: Palette) => {
   context.fillStyle = palette.paper.getStyle();
   context.textAlign = "center";
   context.textBaseline = "middle";
-  context.font = "600 100px Arial, sans-serif";
+  const font = getComputedStyle(document.body).fontFamily;
+  context.font = `600 100px ${font}`;
   const layout = faceLayout(text, (line) => context.measureText(line).width);
-  context.font = `600 ${layout.fontSize}px Arial, sans-serif`;
+  context.font = `600 ${layout.fontSize}px ${font}`;
   for (const line of layout.lines) {
     context.fillText(line.text, 256, line.y);
   }

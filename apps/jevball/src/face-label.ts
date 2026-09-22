@@ -45,7 +45,7 @@ const fitLines = (lines: string[], measure: (line: string) => number) => {
   };
 };
 
-const faceLayout = (text: string, measure = (line: string) => line.length * 58) =>
+const faceLayout = (text: string, measure = (line: string) => line.length * 60) =>
   lineBreaks(text)
     .filter((lines) => lines.length <= 4)
     .map((lines) => fitLines(lines, measure))

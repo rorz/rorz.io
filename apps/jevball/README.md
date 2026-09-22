@@ -1,4 +1,4 @@
-# Magic-Jev-Ball
+# Magic Jev Ball
 
 A React + Vite app with a Cloudflare Worker backend and the 20 classic Magic 8 Ball answers. The user supplies one question, and a Three.js ball turns upward to reveal the answer on its floating die.
 
@@ -9,6 +9,12 @@ React Three Fiber renders the ball, with Drei's procedural studio lighting. The 
 The [React Bits Balatro shader](https://reactbits.dev/backgrounds/balatro) is adapted into the same canvas. It swirls before and during the turn, with smoothly eased hue shifts and a restrained ball wobble as you type. The ball's coloured reflections share the shader's hue and fade. The answer reveal fades the background almost to black, leaving a faint spotlight. Its licence is retained in [REACT-BITS-LICENSE.md](REACT-BITS-LICENSE.md). The scene uses the existing Tailwind colour palette, a capped pixel ratio, and reduced-motion support. The accessible form and answer also work if WebGL is unavailable.
 
 The large answer uses the locally bundled, open-licensed [Lacquer](https://fonts.google.com/specimen/Lacquer) typeface. It approximates the distressed lettering of the reference; the original [FF Confidential](https://www.myfonts.com/collections/ff-confidential-font-fontfont) requires its own webfont licence. The alternatives table includes miniature inscriptions and the actual selection chances.
+
+The logo and question heading also use Lacquer; all supporting text and die inscriptions use the same system monospace stack. The reflective SVG is shared by the header and favicon, with PNG icons and a brief social preview in `public/`. The controls have a single ink-like edge and use the Phosphor spiral. While a question is pending, the input is disabled and the background smoothly dims and desaturates; the prompt stays unchanged.
+
+## Analytics
+
+The app uses the main site's PostHog project with `cookieless_mode: "always"` and no person profiles, autocapture, or session replay. It sends one `$pageview` when the app loads and `jevball_question_asked` with the trimmed question when it is submitted. Events include `app: "jevball"` and the Vite `environment`, so development traffic can be filtered out. Unsubmitted typing is not captured. The project's existing cookieless server hash setting must stay enabled.
 
 ## Run
 
@@ -45,7 +51,7 @@ Edit the instructions in [question-set.ts](src/worker/question-set.ts). The `pla
 
 All behavior comes from that one question and the returned distribution. Sampling supplies the randomness; changing the context changes which replies Jev favors. There is no separate routing guarantee or confidence threshold, and low confidence between similar phrases does not force an uncertain answer.
 
-The table shows the other 19 answers in descending order. Percentages are actual selection chances across all twenty options, not the probability that a future event happens. API diagnostics retain the raw Jev result and question-set version. The `Server-Timing` response header records the Jev call duration, including network time and any SDK retry.
+The table shows the other 19 answers in descending order, fading in beside the ball on wide screens and sitting below it on smaller screens. Percentages are actual selection chances across all twenty options, not the probability that a future event happens. API diagnostics retain the raw Jev result and question-set version. The `Server-Timing` response header records the Jev call duration, including network time and any SDK retry.
 
 ## API
 
@@ -59,7 +65,7 @@ The table shows the other 19 answers in descending order. Percentages are actual
 { "question": "Should I get a new job?" }
 ```
 
-Questions are limited to 1000 characters. User-supplied policy or context fields are rejected. Provider failures return an error rather than a made-up fortune. The Worker has request limits, bounded SDK retries/timeouts, and no response caching.
+Questions are limited to 80 characters in both the input and the API. User-supplied policy or context fields are rejected. Provider failures return an error rather than a made-up fortune. The Worker has request limits, bounded SDK retries/timeouts, and no response caching.
 
 ## Jev references
 

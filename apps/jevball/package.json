@@ -4,6 +4,7 @@
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
     "@typesafe-ai/sdk": "^0.6.0",
+    "posthog-js": "^1.418.9",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "three": "^0.186.0",

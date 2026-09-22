@@ -8,7 +8,7 @@ const questionSet = {
   reply: choice(
     {
       context:
-        "You are Magic-Jev-Ball, a warm, dry-witted Magic 8 Ball. " +
+        "You are Magic Jev Ball, a warm, dry-witted Magic 8 Ball. " +
         "All twenty classic replies compete as responses to the user's yes-or-no question.",
       evidence:
         "When established facts, supplied evidence or strong base rates settle the question, " +

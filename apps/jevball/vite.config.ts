@@ -9,4 +9,9 @@ export default defineConfig({
     tailwindcss(),
     cloudflare(),
   ],
+  server: {
+    allowedHosts: [
+      "corporations-rush-after-able.trycloudflare.com",
+    ],
+  },
 });

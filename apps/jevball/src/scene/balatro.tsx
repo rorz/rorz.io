@@ -18,6 +18,7 @@ void main() {
 const fragmentShader = `
 uniform float uTime;
 uniform float uActivity;
+uniform float uThinking;
 uniform float uNudge;
 uniform float uHue;
 uniform vec2 uResolution;
@@ -62,7 +63,10 @@ void main() {
   vec3 quiet = uInk * 0.12 + uLight * halo * 0.0015;
   vec3 color = quiet;
   if (uActivity > 0.001) {
-    color = mix(quiet, paint(uResolution, vUv * uResolution), uActivity);
+    vec3 swirl = paint(uResolution, vUv * uResolution);
+    float gray = dot(swirl, vec3(0.2126, 0.7152, 0.0722));
+    swirl = mix(swirl, vec3(gray), uThinking * 0.6) * (1.0 - uThinking * 0.25);
+    color = mix(quiet, swirl, uActivity);
   }
   float vignette = 1.0 - smoothstep(0.2, 1.05, length(offset));
   color *= 0.45 + 0.55 * vignette;
@@ -95,6 +99,9 @@ const createUniforms = (palette: Palette) => ({
   uResolution: {
     value: new Vector2(1, 1),
   },
+  uThinking: {
+    value: 0,
+  },
   uTime: {
     value: 0,
   },
@@ -112,14 +119,19 @@ const advanceShader = (
   {
     active,
     reducedMotion,
+    thinking,
   }: {
     active: boolean;
     reducedMotion: boolean;
+    thinking: boolean;
   },
 ) => {
   uniforms.uActivity.value = reducedMotion
     ? Number(active)
     : MathUtils.damp(uniforms.uActivity.value, active ? 1 : 0, active ? 6 : 2.4, delta);
+  uniforms.uThinking.value = reducedMotion
+    ? Number(thinking)
+    : MathUtils.damp(uniforms.uThinking.value, Number(thinking), 4, delta);
   if (reducedMotion) {
     return false;
   }
@@ -135,12 +147,14 @@ const Balatro = ({
   palette,
   question,
   reducedMotion,
+  thinking,
 }: {
   readonly active: boolean;
   readonly atmosphere: Atmosphere;
   readonly palette: Palette;
   readonly question: string;
   readonly reducedMotion: boolean;
+  readonly thinking: boolean;
 }) => {
   const uniforms = useMemo(
     () => createUniforms(palette),
@@ -174,12 +188,14 @@ const Balatro = ({
       advanceShader(animated, targets.current, delta, {
         active,
         reducedMotion,
+        thinking,
       })
     ) {
       invalidate();
     }
     atmosphere.hue.value = animated.uHue.value;
     atmosphere.activity.value = animated.uActivity.value;
+    atmosphere.thinking.value = animated.uThinking.value;
   });
   return (
     <mesh frustumCulled={false} renderOrder={-10}>

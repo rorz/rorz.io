@@ -1,5 +1,5 @@
 import { answerCatalog } from "../answers.ts";
-import { askInputSchema } from "../protocol.ts";
+import { askInputSchema, maxQuestionLength } from "../protocol.ts";
 import { HttpError, httpStatus, jsonResponse, readJson } from "./http.ts";
 import { evaluateQuestion } from "./jev.ts";
 import { questionSet, questionSetVersion } from "./question-set.ts";
@@ -14,7 +14,7 @@ const errorResponse = (error: unknown): Response => {
       : new HttpError(
           httpStatus.serviceUnavailable,
           "unavailable",
-          "Magic-Jev-Ball is temporarily unavailable.",
+          "Magic Jev Ball is temporarily unavailable.",
           {
             cause: error,
           },
@@ -57,14 +57,14 @@ const ask = async (request: Request, env: Env): Promise<Response> => {
     throw new HttpError(
       httpStatus.badRequest,
       "invalid-input",
-      "Provide a question of 1–1000 characters.",
+      `Provide a question of 1–${maxQuestionLength} characters.`,
     );
   }
   if (!env.TYPESAFE_API_KEY?.trim()) {
     throw new HttpError(
       httpStatus.serviceUnavailable,
       "not-configured",
-      "Magic-Jev-Ball is waiting for its Jev connection.",
+      "Magic Jev Ball is waiting for its Jev connection.",
     );
   }
   const { success } = await env.ASK_LIMITER.limit({
