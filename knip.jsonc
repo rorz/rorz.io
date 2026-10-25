@@ -35,7 +35,7 @@
       "project": ["src/**/*.{ts,tsx,css}"]
     },
     "apps/paradigm-puzzles": {
-      "entry": ["src/styles.css"],
+      "entry": ["src/styles.css", "src/**/*.test.{ts,tsx}"],
       "project": ["src/**/*.{ts,tsx,css}"]
     },
     "apps/web": {
