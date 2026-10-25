@@ -27,23 +27,29 @@
       "project": [".pokayoke/**/*.ts"]
     },
     "apps/diffly": {
-      "entry": ["src/styles.css"],
-      "project": ["src/**/*.{ts,tsx}"]
+      "entry": ["src/styles.css", "src/**/*.test.{ts,tsx}"],
+      "project": ["src/**/*.{ts,tsx,css}"]
     },
     "apps/jevball": {
+      "entry": ["src/styles.css", "src/**/*.test.{ts,tsx}"],
+      "project": ["src/**/*.{ts,tsx,css}"]
+    },
+    "apps/paradigm-puzzles": {
       "entry": ["src/styles.css"],
-      "project": ["src/**/*.{ts,tsx}"]
+      "project": ["src/**/*.{ts,tsx,css}"]
     },
     "apps/web": {
       "entry": [
         "src/app/**/{default,error,global-error,layout,loading,not-found,page,route,template}.{ts,tsx}",
         "src/app/**/{robots,sitemap}.{ts,tsx}",
-        "src/styles.css"
+        "src/styles.css",
+        "src/**/*.test.{ts,tsx}"
       ],
       "ignoreDependencies": ["next"],
-      "project": ["src/**/*.{ts,tsx}"]
+      "project": ["src/**/*.{ts,tsx,css}"]
     },
     "packages/obsid": {
+      "entry": ["src/**/*.test.{ts,tsx}"],
       "project": ["src/**/*.{ts,tsx}"]
     },
     "packages/scripts": {

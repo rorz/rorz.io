@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.3/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -76,6 +76,7 @@
     "enabled": true,
     "rules": {
       "correctness": {
+        "noReactNativeRawText": "off",
         "noSolidDestructuredProps": "off",
         "noUnresolvedImports": "off",
         "useQwikValidLexicalScope": "off"
@@ -90,6 +91,13 @@
       "style": {
         "noJsxLiterals": "off",
         "noTernary": "off",
+        "useConsistentTestIt": {
+          "level": "error",
+          "options": {
+            "function": "test",
+            "withinDescribe": "test"
+          }
+        },
         "useConsistentTypeDefinitions": "off"
       },
       "suspicious": {
@@ -170,6 +178,16 @@
           },
           "style": {
             "noProcessEnv": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["skills/*.md"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noEmptySource": "off"
           }
         }
       }

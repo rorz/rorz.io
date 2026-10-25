@@ -44,9 +44,9 @@ const evaluationSchema = z.object({
   model: z.string().min(1),
   usage: z.object({
     // biome-ignore lint/style/useNamingConvention: The TypeSafe API uses snake_case.
-    input_tokens: z.int().nonnegative(),
+    input_tokens: z.int().nonnegative().nullable(),
     // biome-ignore lint/style/useNamingConvention: The TypeSafe API uses snake_case.
-    output_tokens: z.int().nonnegative(),
+    output_tokens: z.int().nonnegative().nullable(),
   }),
 });
 

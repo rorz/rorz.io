@@ -1,17 +1,39 @@
 {
+  "catalog": {
+    "@cloudflare/vite-plugin": "^1.65.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/bun": "^1.4.4",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "clsx": "^2.1.1",
+    "posthog-js": "^1.438.21",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "wrangler": "^4.152.0",
+    "zod": "^4.6.7"
+  },
   "devDependencies": {
-    "@biomejs/biome": "2.5.5",
-    "@types/bun": "^1.4.2",
-    "@types/node": "^26.1.1",
-    "knip": "^6.25.0",
-    "pokayoke": "^0.0.6",
-    "typescript": "^6.0.3"
+    "@biomejs/biome": "2.6.3",
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "knip": "^6.43.0",
+    "pokayoke": "^0.0.7",
+    "typescript": "catalog:"
   },
   "engines": {
-    "bun": ">=1.4.2"
+    "bun": ">=1.4.4"
   },
   "name": "rorz.io",
-  "packageManager": "bun@1.4.2",
+  "overrides": {
+    "miniflare>undici": "7.30.1",
+    "satori>fflate": "0.7.5"
+  },
+  "packageManager": "bun@1.4.4",
   "patchedDependencies": {
     "obsidian-headless@0.0.14": "patches/obsidian-headless@0.0.14.patch"
   },
@@ -20,6 +42,7 @@
     "build": "bun run --filter './apps/*' build",
     "build:diffly": "bun run --filter @rorz/diffly build",
     "build:jevball": "bun run --filter @rorz/jevball build",
+    "build:paradigm-puzzles": "bun run --filter @rorz/paradigm-puzzles build",
     "build:web": "bun run build:web:content && bun run build:web:code",
     "build:web:code": "bun run --filter @rorz/web build",
     "build:web:content": "bun --cwd apps/web ../../packages/obsid/src/cli/index.ts sync",
@@ -32,11 +55,16 @@
     "deploy:diffly:dry": "bun run --filter @rorz/diffly deploy:dry",
     "deploy:jevball": "bun run --filter @rorz/jevball deploy",
     "deploy:jevball:dry": "bun run --filter @rorz/jevball deploy:dry",
+    "deploy:paradigm-puzzles": "bun run --filter @rorz/paradigm-puzzles deploy",
+    "deploy:paradigm-puzzles:dry": "bun run --filter @rorz/paradigm-puzzles deploy:dry",
     "deploy:web": "bun --cwd apps/web wrangler deploy",
     "deploy:web:preview": "bun --cwd apps/web wrangler versions upload",
+    "deps:audit": "bun audit",
+    "deps:outdated": "bun outdated --recursive",
     "dev": "bun run --filter @rorz/web dev",
     "dev:diffly": "bun run --filter @rorz/diffly dev",
     "dev:jevball": "bun run --filter @rorz/jevball dev",
+    "dev:paradigm-puzzles": "bun run --filter @rorz/paradigm-puzzles dev",
     "dev:web": "bun run --filter @rorz/web dev",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -49,6 +77,7 @@
     "start": "bun run --filter @rorz/web start",
     "start:diffly": "bun run --filter @rorz/diffly start",
     "start:jevball": "bun run --filter @rorz/jevball start",
+    "start:paradigm-puzzles": "bun run --filter @rorz/paradigm-puzzles start",
     "start:web": "bun run --filter @rorz/web start",
     "test": "bun test apps packages ./.pokayoke/rules/*.test.ts",
     "typecheck": "tsc --noEmit && bun run --workspaces --if-present typecheck",

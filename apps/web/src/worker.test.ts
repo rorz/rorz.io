@@ -45,6 +45,7 @@ test("serves assets before falling back to Vinext for an asset miss", async () =
     get exports() {
       return failUnexpectedCall();
     },
+    mapVirtualHost: failUnexpectedCall,
     passThroughOnException: failUnexpectedCall,
     props: undefined,
     get tracing() {

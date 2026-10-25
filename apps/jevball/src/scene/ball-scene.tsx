@@ -33,7 +33,9 @@ class SceneBoundary extends Component<
     failed: boolean;
   }
 > {
-  override state = {
+  override state: {
+    failed: boolean;
+  } = {
     failed: false,
   };
 

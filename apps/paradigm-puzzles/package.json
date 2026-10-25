@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "wrangler": "catalog:"
+  },
+  "name": "@rorz/paradigm-puzzles",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "deploy": "bun run build && wrangler deploy",
+    "deploy:dry": "bun run build && wrangler deploy --dry-run",
+    "dev": "vite --host 127.0.0.1 --port 4447 --strictPort",
+    "start": "vite preview --host 127.0.0.1 --port 4447 --strictPort",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "0.1.0"
+}

@@ -22,10 +22,13 @@ import {
 
 type ListContext = VaultRenderContext<"list">;
 
-type ListEntryNote =
+type RatedNote =
   | VaultRenderContext<"book">["note"]
   | VaultRenderContext<"film">["note"]
-  | VaultRenderContext<"place">["note"]
+  | VaultRenderContext<"place">["note"];
+
+type ListEntryNote =
+  | RatedNote
   | VaultRenderContext<"post">["note"]
   | VaultRenderContext<"thing">["note"];
 
@@ -154,11 +157,6 @@ const resolveListDetail = async (current: ListEntryNote, query: ListContext["que
   };
 };
 
-type RatedNote =
-  | VaultRenderContext<"book">["note"]
-  | VaultRenderContext<"film">["note"]
-  | VaultRenderContext<"place">["note"];
-
 const renderRatedPage = async (current: RatedNote, query: ListContext["query"]) => {
   const { navigation, parent } = await resolveListDetail(current, query);
 
@@ -264,12 +262,6 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
   );
 };
 
-const book: VaultRenderer<"book"> = ({ note: current, query }) => renderRatedPage(current, query);
-
-const film: VaultRenderer<"film"> = ({ note: current, query }) => renderRatedPage(current, query);
-
-const place: VaultRenderer<"place"> = ({ note: current, query }) => renderRatedPage(current, query);
-
 const thing: VaultRenderer<"thing"> = async ({ note: current, query }) => {
   const { navigation, parent } = await resolveListDetail(current, query);
 
@@ -293,11 +285,11 @@ const thing: VaultRenderer<"thing"> = async ({ note: current, query }) => {
 };
 
 const listRenderers = {
-  book,
-  film,
+  book: ({ note: current, query }) => renderRatedPage(current, query),
+  film: ({ note: current, query }) => renderRatedPage(current, query),
   list,
   listOfLists,
-  place,
+  place: ({ note: current, query }) => renderRatedPage(current, query),
   post,
   thing,
 } satisfies Pick<

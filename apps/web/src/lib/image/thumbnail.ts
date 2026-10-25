@@ -46,20 +46,15 @@ const thumbnailWidthsByVariant = {
 } satisfies Record<ThumbnailVariant, readonly number[]>;
 
 const getThumbnailSource = (source: string): ThumbnailSource | null => {
-  try {
-    const sourceUrl = new URL(source);
-    const path = `${sourceUrl.pathname}${sourceUrl.search}`;
+  const sourceUrl = URL.parse(source);
 
-    if (sourceUrl.origin === assetImageOrigin) {
-      return {
-        path,
-      };
-    }
-
-    return null;
-  } catch {
+  if (!sourceUrl || sourceUrl.origin !== assetImageOrigin) {
     return null;
   }
+
+  return {
+    path: `${sourceUrl.pathname}${sourceUrl.search}`,
+  };
 };
 
 const getThumbnailUrl = (source: ThumbnailSource, width: number): string => {

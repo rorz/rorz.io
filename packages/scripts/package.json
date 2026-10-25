@@ -1,11 +1,13 @@
 {
   "devDependencies": {
-    "@types/bun": "latest",
-    "obsid": "workspace:*"
+    "@types/bun": "catalog:",
+    "obsid": "workspace:*",
+    "typescript": "catalog:"
   },
   "name": "scripts",
-  "peerDependencies": {
-    "typescript": "^6.0.3"
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   },
   "type": "module"
 }

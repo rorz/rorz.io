@@ -55,11 +55,11 @@ The table shows the other 19 answers in descending order, fading in beside the b
 
 ## API
 
-| Endpoint | Result |
-| --- | --- |
-| `GET /api/answers` | Canonical answer catalogue and stable face indices. |
-| `GET /api/question-set` | The SDK question definition, version, and model. |
-| `POST /api/ask` | `answer`, 20-option `distribution`, and `diagnostics`. |
+| Endpoint                | Result                                                 |
+| ----------------------- | ------------------------------------------------------ |
+| `GET /api/answers`      | Canonical answer catalogue and stable face indices.    |
+| `GET /api/question-set` | The SDK question definition, version, and model.       |
+| `POST /api/ask`         | `answer`, 20-option `distribution`, and `diagnostics`. |
 
 ```json
 { "question": "Should I get a new job?" }

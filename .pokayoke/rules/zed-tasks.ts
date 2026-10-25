@@ -14,6 +14,7 @@ const expandedArgsPattern = /"args": \[\n {6}"run",\n {6}"([^"]+)"\n {4}\]/gu;
 const longRunningScriptPattern = /^(?:dev|start)(?::|$)/u;
 
 const createZedTasks = (scripts: Readonly<Record<string, string>>): readonly ZedTask[] =>
+  // biome-ignore lint/suspicious/useArraySortCompare: Task names use stable UTF-16 string ordering.
   Object.keys(scripts)
     .toSorted()
     .map((script) => {

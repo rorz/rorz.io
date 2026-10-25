@@ -5,7 +5,7 @@ import { postHogConfig } from "@/lib/posthog/config.ts";
 const POSTHOG_API_ORIGIN = "https://us.i.posthog.com";
 const POSTHOG_ASSET_ORIGIN = "https://us-assets.i.posthog.com";
 const NOT_FOUND_STATUS = 404;
-const TRAILING_SLASHES = /\/+$/;
+const TRAILING_SLASHES = /\/+$/u;
 const VINEXT_IMAGE_PATH = "/_next/image";
 
 const getProxyPath = (apiHost: string): string | null => {

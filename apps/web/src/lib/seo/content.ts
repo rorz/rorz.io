@@ -1,5 +1,5 @@
 import type { VaultFrontmatter } from "obsid/vault";
-import { getAbsoluteUrl, SITE_TITLE } from "@/lib/seo/site.ts";
+import { getAbsoluteUrl, SITE_TITLE, SITE_URL } from "@/lib/seo/site.ts";
 
 interface SeoNote {
   readonly body: string;
@@ -184,12 +184,8 @@ const getNoteImage = (note: SeoNote): string | null => {
   for (const key of keys) {
     const value = getFrontmatterString(note, key);
 
-    if (value) {
-      try {
-        return getAbsoluteUrl(value);
-      } catch {
-        // Try the next supported image field when an override is not a valid URL.
-      }
+    if (value && URL.canParse(value, SITE_URL)) {
+      return getAbsoluteUrl(value);
     }
   }
 

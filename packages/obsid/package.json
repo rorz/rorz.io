@@ -6,16 +6,16 @@
     "obsidian-headless": "^0.0.14",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "yaml": "^2.9.0",
-    "zod": "^4.4.3"
+    "yaml": "^2.9.1",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "react-dom": "^19.2.7",
-    "typescript": "^6.0.3",
-    "vite": "^8.1.4"
+    "@types/bun": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   },
   "exports": {
     "./config": "./src/config/index.ts",
@@ -29,7 +29,7 @@
   },
   "name": "obsid",
   "peerDependencies": {
-    "react": "^19.2.7"
+    "react": "catalog:"
   },
   "private": true,
   "scripts": {

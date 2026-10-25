@@ -11,10 +11,13 @@ const getVaultImagePaths = (
 ): readonly string[] => {
   const prefix = `${vaultRoot}/${vaultName}/`;
 
-  return Object.keys(imageUrls)
-    .filter((path) => path.startsWith(prefix))
-    .map((path) => path.slice(prefix.length))
-    .toSorted();
+  return (
+    // biome-ignore lint/suspicious/useArraySortCompare: Vault paths use stable UTF-16 string ordering.
+    Object.keys(imageUrls)
+      .filter((path) => path.startsWith(prefix))
+      .map((path) => path.slice(prefix.length))
+      .toSorted()
+  );
 };
 
 const createResolveImage = (
