@@ -12,7 +12,7 @@ const Button = ({
   title?: string;
 }) => (
   <button
-    className="border border-black bg-white px-3 py-1 text-xs hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-30"
+    className="border border-black bg-white px-3 py-1 text-xs text-black hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-30"
     disabled={disabled}
     onClick={onClick}
     title={title}

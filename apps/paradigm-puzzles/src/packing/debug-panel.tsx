@@ -1,5 +1,6 @@
 import { type MouseEvent, useState } from "react";
 import { Button } from "./controls.tsx";
+import type { InspectorTab } from "./editor-settings.ts";
 import { type Circle, type Collision, exportPlacements, type Scene, type Shape } from "./model.ts";
 
 type DebugPanelProps = {
@@ -8,9 +9,18 @@ type DebugPanelProps = {
   scene: Scene;
   select: (id: string) => void;
   shapes: Shape[];
+  tab: InspectorTab;
+  setTab: (tab: InspectorTab) => void;
 };
-const DebugPanel = ({ circle, collisions, scene, select, shapes }: DebugPanelProps) => {
-  const [tab, setTab] = useState("placements");
+const DebugPanel = ({
+  circle,
+  collisions,
+  scene,
+  select,
+  shapes,
+  tab,
+  setTab,
+}: DebugPanelProps) => {
   const [notice, setNotice] = useState<{
     json: string;
     message: string;
@@ -51,7 +61,10 @@ const DebugPanel = ({ circle, collisions, scene, select, shapes }: DebugPanelPro
     report("Downloaded.");
   };
   const pickTab = (event: MouseEvent<HTMLButtonElement>) => {
-    setTab(event.currentTarget.value);
+    const value = event.currentTarget.value;
+    if (value === "placements" || value === "scene" || value === "diagnostics") {
+      setTab(value);
+    }
     setNotice(null);
   };
   const pickFan = (event: MouseEvent<HTMLButtonElement>) => select(event.currentTarget.value);
@@ -85,7 +98,7 @@ const DebugPanel = ({ circle, collisions, scene, select, shapes }: DebugPanelPro
               {message}
             </span>
             <Button onClick={copy}>Copy JSON</Button>
-            <Button onClick={download}>Save</Button>
+            <Button onClick={download}>Download</Button>
           </div>
         )}
       </div>

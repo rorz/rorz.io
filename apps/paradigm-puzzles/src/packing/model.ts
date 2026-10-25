@@ -17,6 +17,7 @@ type Fan = Point & {
   phase: number;
   spread: number;
   tilt: number;
+  holdTilt?: boolean;
 };
 type Scene = {
   fans: Fan[];
@@ -87,6 +88,19 @@ const exportPlacements = (shapes: Shape[]): Placement[] =>
     y,
   }));
 
+// Shorten the fan by one endpoint while retaining the original angular spacing.
+const removeLastSemicircle = (fan: Fan): Fan => {
+  if (fan.count <= 1) {
+    return fan;
+  }
+  const spacing = fan.spread / (fan.spread === 360 ? fan.count : fan.count - 1);
+  return {
+    ...fan,
+    count: fan.count - 1,
+    spread: spacing * (fan.count - 2),
+  };
+};
+
 const updateFan = (scene: Scene, id: string, patch: Partial<Fan>): Scene => ({
   ...scene,
   fans: scene.fans.map((fan) => ({
@@ -108,6 +122,7 @@ export {
   MAX_SHAPES,
   makeFan,
   OVERLAP_TOLERANCE,
+  removeLastSemicircle,
   TAU,
   updateFan,
 };

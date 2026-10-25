@@ -1,26 +1,20 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { PackingCanvas } from "../packing/canvas.tsx";
 import { Button } from "../packing/controls.tsx";
 import { DebugPanel } from "../packing/debug-panel.tsx";
-import type { Display } from "../packing/draw.ts";
 import { enclosingCircle } from "../packing/enclosure.ts";
 import { FanPanel } from "../packing/fan-panel.tsx";
-import { generateShapes, initialScene, makeFan, type Point, updateFan } from "../packing/model.ts";
+import { generateShapes } from "../packing/model.ts";
 import { findCollisions } from "../packing/overlap.ts";
-import { useScene } from "../packing/use-scene.ts";
+import { SaveDialog } from "../packing/save-dialog.tsx";
+import { SavedDrawer } from "../packing/saved-drawer.tsx";
+import { TightenDrawer } from "../packing/tighten-drawer.tsx";
+import { usePackingEditor } from "../packing/use-packing-editor.ts";
 
 const PUZZLE_COUNT = 15;
 const ShapePackingView = () => {
-  const { scene, change, undo, redo, canUndo, canRedo } = useScene();
-  const [selectedId, select] = useState("1");
-  const [debug, setDebug] = useState(false);
-  const [display, setDisplay] = useState<Display>({
-    circle: true,
-    grid: true,
-    guides: false,
-    labels: false,
-  });
-  const selected = scene.fans.find((fan) => fan.id === selectedId) ?? scene.fans[0] ?? makeFan("1");
+  const editor = usePackingEditor();
+  const { scene, history, search, library, preview } = editor;
   const shapes = useMemo(
     () => generateShapes(scene),
     [
@@ -39,14 +33,10 @@ const ShapePackingView = () => {
       shapes,
     ],
   );
-  const reset = () => {
-    change(initialScene());
-    select("1");
-  };
-  const toggleDebug = () => setDebug(!debug);
-  const moveFan = (id: string, point: Point) => change(updateFan(scene, id, point));
   return (
-    <main className="flex min-h-dvh flex-col bg-white font-sans text-black scheme-light lg:h-dvh">
+    <main
+      className={`flex min-h-dvh flex-col bg-white font-sans text-black scheme-light lg:h-dvh ${editor.drawer ? "lg:pr-80" : ""}`}
+    >
       <title>Shape Packing · Paradigm Puzzles</title>
       <header className="flex flex-wrap items-center justify-between gap-3 bg-black px-3 py-2 text-white">
         <div className="flex items-center gap-3">
@@ -84,44 +74,62 @@ const ShapePackingView = () => {
             {collisions.length > 0 ? `${collisions.length} overlap pairs` : "No overlaps"}
           </p>
         </div>
-        <div className="flex gap-1">
-          <Button disabled={!canUndo} onClick={undo}>
+        <div className="flex flex-wrap gap-1">
+          <Button disabled={search.running} onClick={editor.openSave}>
+            Save…
+          </Button>
+          <Button onClick={editor.openSaved}>Saved ({library.items.length})</Button>
+          <Button onClick={editor.openTighten}>
+            {search.running ? "Tightening…" : "Tighten…"}
+          </Button>
+          <Button disabled={preview || !history.canUndo} onClick={history.undo}>
             Undo
           </Button>
-          <Button disabled={!canRedo} onClick={redo}>
+          <Button disabled={preview || !history.canRedo} onClick={history.redo}>
             Redo
           </Button>
-          <Button onClick={reset}>Reset</Button>
-          <Button onClick={toggleDebug}>{debug ? "Hide inspector" : "Show inspector"}</Button>
+          <Button disabled={preview} onClick={editor.reset}>
+            Reset
+          </Button>
+          <Button onClick={editor.toggleInspector}>
+            {editor.inspector ? "Hide inspector" : "Show inspector"}
+          </Button>
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <FanPanel
-          change={change}
-          display={display}
-          scene={scene}
-          select={select}
-          selected={selected}
-          setDisplay={setDisplay}
-        />
+        <fieldset aria-label="Arrangement controls" className="contents" disabled={preview}>
+          <FanPanel
+            change={history.change}
+            display={editor.display}
+            scene={scene}
+            select={editor.select}
+            selected={editor.selected}
+            setDisplay={editor.setDisplay}
+          />
+        </fieldset>
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <PackingCanvas
+            camera={editor.camera}
             circle={circle}
             collisions={collisions}
-            display={display}
+            display={editor.display}
             fans={scene.fans}
-            moveFan={moveFan}
-            selected={selected.id}
-            selectFan={select}
+            moveFan={editor.moveFan}
+            readOnly={preview}
+            selected={editor.selected.id}
+            selectFan={editor.select}
+            setCamera={editor.setCamera}
             shapes={shapes}
           />
-          {debug ? (
+          {editor.inspector ? (
             <DebugPanel
               circle={circle}
               collisions={collisions}
               scene={scene}
-              select={select}
+              select={editor.select}
+              setTab={editor.setInspectorTab}
               shapes={shapes}
+              tab={editor.inspectorTab}
             />
           ) : null}
         </div>
@@ -134,6 +142,42 @@ const ShapePackingView = () => {
         </p>
         <p>Analytic intersections · area tolerance 1e−6</p>
       </footer>
+      {editor.drawer === "saved" ? (
+        <SavedDrawer
+          error={library.error}
+          items={library.items}
+          onClose={editor.closeDrawer}
+          onLoad={editor.load}
+          onRemove={library.remove}
+          onSave={editor.openSave}
+          onUndoRemove={library.undoRemove}
+          removedName={library.removed?.name}
+          savingDisabled={search.running}
+        />
+      ) : null}
+      {editor.drawer === "tighten" ? (
+        <TightenDrawer
+          error={search.error}
+          onClose={editor.closeDrawer}
+          onDiscard={search.discard}
+          onKeep={editor.keepSearch}
+          onStart={editor.startSearch}
+          onStop={search.stop}
+          options={editor.options}
+          overlaps={collisions.length}
+          result={search.result}
+          running={search.running}
+          setOptions={editor.setOptions}
+        />
+      ) : null}
+      {editor.pendingSave ? (
+        <SaveDialog
+          defaultName={`Arrangement ${library.items.length + 1}`}
+          error={library.error}
+          onClose={editor.closeSave}
+          onSave={editor.save}
+        />
+      ) : null}
     </main>
   );
 };

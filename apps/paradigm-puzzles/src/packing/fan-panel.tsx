@@ -2,7 +2,14 @@
 import type { MouseEvent } from "react";
 import { Button, NumberControl, Toggle } from "./controls.tsx";
 import type { Display } from "./draw.ts";
-import { type Fan, MAX_SHAPES, makeFan, type Scene, updateFan } from "./model.ts";
+import {
+  type Fan,
+  MAX_SHAPES,
+  makeFan,
+  removeLastSemicircle,
+  type Scene,
+  updateFan,
+} from "./model.ts";
 
 type Property = "count" | "orbit" | "phase" | "spread" | "tilt" | "x" | "y";
 type PropertySpec = {
@@ -84,7 +91,8 @@ const FanProperty = ({
     update({
       [spec.key]: spec.key === "count" ? Math.round(value) : value,
     });
-  return (
+  const removeOne = () => update(removeLastSemicircle(fan));
+  const control = (
     <NumberControl
       label={spec.label}
       max={spec.key === "count" ? maxCount : spec.max}
@@ -94,6 +102,20 @@ const FanProperty = ({
       unit={spec.unit ?? ""}
       value={fan[spec.key]}
     />
+  );
+  return spec.key === "count" ? (
+    <div className="space-y-2">
+      {control}
+      <Button disabled={fan.count <= 1} onClick={removeOne}>
+        Remove last, keep positions
+      </Button>
+      <p className="text-xs leading-relaxed opacity-60">
+        Changing N redistributes the fan. Removing the last shape preserves the others and adjusts
+        the spread.
+      </p>
+    </div>
+  ) : (
+    control
   );
 };
 const DisplayToggle = ({
@@ -126,6 +148,10 @@ const FanPanel = ({ change, display, scene, selected, select, setDisplay }: FanP
   const total = scene.fans.reduce((sum, fan) => sum + fan.count, 0);
   const maxCount = MAX_SHAPES - total + selected.count;
   const update = (patch: Partial<Fan>) => change(updateFan(scene, selected.id, patch));
+  const holdTilt = (held: boolean) =>
+    update({
+      holdTilt: held,
+    });
   const add = () => {
     const id = String(Math.max(...scene.fans.map((fan) => Number(fan.id))) + 1);
     change({
@@ -206,6 +232,16 @@ const FanPanel = ({ change, display, scene, selected, select, setDisplay }: FanP
           />
         ))}
         <Toggle checked={scene.linked} label="Lock θ across all fans" onChange={link} />
+        <Toggle
+          checked={selected.holdTilt ?? false}
+          label="Hold this fan’s θ during Tighten"
+          onChange={holdTilt}
+        />
+        {scene.linked && scene.fans.some((fan) => fan.holdTilt) ? (
+          <p className="text-xs">
+            Shared θ is held for all fans. Unlink θ to adjust them independently.
+          </p>
+        ) : null}
         <p className="text-xs leading-relaxed opacity-60">
           θ tilts each curved half from its radial direction. φ rotates the whole fan. A 360° spread
           closes the ring.

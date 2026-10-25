@@ -12,6 +12,7 @@ type Action =
       type: "edit";
       scene: Scene;
       time: number;
+      isolated: boolean;
     }
   | {
       type: "undo";
@@ -27,14 +28,14 @@ const reducer = (state: History, action: Action): History => {
       return {
         future: [],
         past:
-          action.time - state.time < GESTURE_INTERVAL
+          !action.isolated && action.time - state.time < GESTURE_INTERVAL
             ? state.past
             : [
                 ...state.past,
                 state.scene,
               ].slice(-HISTORY_LIMIT),
         scene: action.scene,
-        time: action.time,
+        time: action.isolated ? 0 : action.time,
       };
     case "undo": {
       const previous = state.past.at(-1);
@@ -78,8 +79,9 @@ const useScene = () => {
   return {
     canRedo: history.future.length > 0,
     canUndo: history.past.length > 0,
-    change: (scene: Scene) =>
+    change: (scene: Scene, isolated = false) =>
       dispatch({
+        isolated,
         scene,
         time: Date.now(),
         type: "edit",

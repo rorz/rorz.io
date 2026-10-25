@@ -11,6 +11,9 @@ type Drag = {
   viewport: Viewport;
 };
 type CanvasProps = Omit<Drawing, "size" | "viewport"> & {
+  camera: Viewport | null;
+  setCamera: (camera: Viewport | null) => void;
+  readOnly: boolean;
   moveFan: (id: string, point: Point) => void;
   selectFan: (id: string) => void;
 };
@@ -26,7 +29,7 @@ const PackingCanvas = (props: CanvasProps) => {
     height: 600,
     width: 800,
   });
-  const [camera, setCamera] = useState<Viewport | undefined>(undefined);
+  const { camera, setCamera } = props;
   const viewport = camera ?? {
     scale: Math.min(size.width, size.height) / (Math.max(1.5, props.circle.radius) * 2 + 1.5),
     x: props.circle.x,
@@ -96,6 +99,7 @@ const PackingCanvas = (props: CanvasProps) => {
     });
     return () => canvas.removeEventListener("wheel", wheel);
   }, [
+    setCamera,
     size,
     viewport,
   ]);
@@ -121,7 +125,7 @@ const PackingCanvas = (props: CanvasProps) => {
       return dx * dx + dy * dy <= 1 && dx * Math.cos(shape.theta) + dy * Math.sin(shape.theta) >= 0;
     });
     let fanId = hub ? selected.id : hit?.fanId;
-    if (event.shiftKey) {
+    if (event.shiftKey || props.readOnly) {
       fanId = undefined;
     }
     const fan = props.fans.find((item) => item.id === fanId);
@@ -160,7 +164,7 @@ const PackingCanvas = (props: CanvasProps) => {
   };
   const zoomIn = () => zoom(1.2);
   const zoomOut = () => zoom(1 / 1.2);
-  const fit = () => setCamera(undefined);
+  const fit = () => setCamera(null);
   const stopDrag = () => {
     drag.current = undefined;
   };
@@ -238,7 +242,10 @@ const PackingCanvas = (props: CanvasProps) => {
         />
       </div>
       <p className="shrink-0 border-t border-black px-3 py-2 text-xs">
-        Drag shape: move fan · Empty space / Shift-drag: pan · Scroll: zoom · Hatching: overlap
+        {props.readOnly
+          ? "Search preview · Drag: pan"
+          : "Drag shape: move fan · Empty space / Shift-drag: pan"}{" "}
+        · Scroll: zoom · Hatching: overlap
       </p>
     </section>
   );
