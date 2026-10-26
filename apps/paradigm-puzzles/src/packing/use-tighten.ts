@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Scene } from "./model.ts";
+import { canResumeRelax } from "./relax-checkpoint.ts";
 import type { TightenOptions } from "./search-space.ts";
 import { evaluateScene, type SearchUpdate } from "./tighten.ts";
 
@@ -14,22 +15,36 @@ const useTighten = () => {
     setRunning(false);
   };
   useEffect(() => () => worker.current?.terminate(), []);
-  const start = (scene: Scene, options: TightenOptions) => {
+  const start = (scene: Scene, options: TightenOptions, mode: "tighten" | "relax" = "tighten") => {
+    const checkpoint =
+      mode === "relax" && canResumeRelax(result?.checkpoint, scene, options)
+        ? result?.checkpoint
+        : undefined;
     stop();
     setError("");
     const initial = evaluateScene(scene);
     setResult({
       best: initial,
+      ...(checkpoint
+        ? {
+            checkpoint,
+          }
+        : {}),
       elapsed: 0,
-      evaluations: 1,
+      evaluations: checkpoint?.evaluations ?? 1,
       finished: false,
       initial: {
         overlaps: initial.overlaps,
         radius: initial.radius,
       },
-      reason: initial.overlaps > 0 ? "Repairing overlaps…" : "Searching…",
-      restarts: 0,
-      scale: 1,
+      mode,
+      reason: checkpoint
+        ? "Continuing exploration…"
+        : initial.overlaps > 0
+          ? "Repairing overlaps…"
+          : "Searching…",
+      restarts: checkpoint?.restarts ?? 0,
+      scale: checkpoint?.amplitude ?? 1,
       seed: options.seed ?? 42,
     });
     try {
@@ -55,6 +70,8 @@ const useTighten = () => {
       };
       setRunning(true);
       active.postMessage({
+        checkpoint,
+        mode,
         options,
         scene,
       });

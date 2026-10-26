@@ -2,7 +2,7 @@
 import type { Display, Viewport } from "./draw.ts";
 import type { EditorSettings, Snapshot } from "./editor-settings.ts";
 import { type Fan, MAX_SHAPES, type Scene } from "./model.ts";
-import type { TightenOptions } from "./search-space.ts";
+import { MAX_SEARCH_SECONDS, type TightenOptions } from "./search-space.ts";
 
 const record = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -39,6 +39,8 @@ const validScene = (value: unknown): value is Scene => {
 };
 const validDisplay = (value: unknown): value is Display =>
   record(value) &&
+  (value.contacts === undefined || typeof value.contacts === "boolean") &&
+  (value.fullPrecision === undefined || typeof value.fullPrecision === "boolean") &&
   [
     value.circle,
     value.grid,
@@ -60,7 +62,8 @@ const validOptions = (value: unknown): value is TightenOptions =>
     value.spread,
     value.tilt,
   ].every((item) => typeof item === "boolean") &&
-  range(value.seconds, 1, 60) &&
+  range(value.seconds, 1, MAX_SEARCH_SECONDS) &&
+  (value.threefold === undefined || typeof value.threefold === "boolean") &&
   (value.seed === undefined || (range(value.seed, 1, 999_999) && Number.isInteger(value.seed)));
 const validSettings = (value: unknown): value is EditorSettings =>
   record(value) &&
@@ -110,4 +113,4 @@ const parseSnapshots = (raw: string | null): Snapshot[] => {
   return data.items;
 };
 
-export { parseSnapshots };
+export { parseSnapshots, validScene };

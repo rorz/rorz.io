@@ -1,31 +1,45 @@
 import { type MouseEvent, useState } from "react";
-import { Button } from "./controls.tsx";
+import type { Contact } from "./clearance.ts";
+import { ContactDiagnostics } from "./contact-diagnostics.tsx";
+import { Button, Toggle } from "./controls.tsx";
 import type { InspectorTab } from "./editor-settings.ts";
 import { type Circle, type Collision, exportPlacements, type Scene, type Shape } from "./model.ts";
 
 type DebugPanelProps = {
   circle: Circle;
   collisions: Collision[];
+  contacts: Contact[];
+  fullPrecision: boolean;
+  precisionLocked: boolean;
   scene: Scene;
   select: (id: string) => void;
   shapes: Shape[];
   tab: InspectorTab;
   setTab: (tab: InspectorTab) => void;
+  setFullPrecision: (value: boolean) => void;
 };
 const DebugPanel = ({
   circle,
   collisions,
+  contacts,
+  fullPrecision,
+  precisionLocked,
   scene,
   select,
   shapes,
   tab,
   setTab,
+  setFullPrecision,
 }: DebugPanelProps) => {
   const [notice, setNotice] = useState<{
     json: string;
     message: string;
   } | null>(null);
   const data = tab === "placements" ? exportPlacements(shapes) : scene;
+  const placementFilename = fullPrecision ? "packing-unrounded.json" : "packing.json";
+  const placementHint = fullPrecision
+    ? "Unrounded coordinates · x/y = diameter midpoint · θ = radians · puzzle checker rounds to 6 decimals"
+    : "Puzzle format · x/y = diameter midpoint · θ = absolute radians · rounded to 6 decimals";
   const json = JSON.stringify(data, null, 2);
   const message = notice?.json === json ? notice.message : "";
   const report = (text: string) =>
@@ -55,7 +69,7 @@ const DebugPanel = ({
     );
     const link = document.createElement("a");
     link.href = url;
-    link.download = tab === "placements" ? "packing.json" : "packing-scene.json";
+    link.download = tab === "placements" ? placementFilename : "packing-scene.json";
     link.click();
     URL.revokeObjectURL(url);
     report("Downloaded.");
@@ -92,6 +106,9 @@ const DebugPanel = ({
             </button>
           ))}
         </fieldset>
+        <fieldset disabled={precisionLocked}>
+          <Toggle checked={fullPrecision} label="Full precision" onChange={setFullPrecision} />
+        </fieldset>
         {tab !== "diagnostics" && (
           <div className="flex items-center gap-2">
             <span aria-live="polite" className="text-xs">
@@ -126,12 +143,13 @@ const DebugPanel = ({
               </li>
             ))}
           </ul>
+          <ContactDiagnostics circle={circle} contacts={contacts} select={select} shapes={shapes} />
         </div>
       ) : (
         <>
           <p className="shrink-0 border-b border-black/20 px-3 py-1 text-xs opacity-60">
             {tab === "placements"
-              ? "Puzzle format · x/y = diameter midpoint · θ = absolute radians · rounded to 6 decimals"
+              ? placementHint
               : "Editor parameters · angles in degrees · coordinates in unit radii"}
           </p>
           <textarea

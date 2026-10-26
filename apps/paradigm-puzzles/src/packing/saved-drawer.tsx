@@ -18,7 +18,8 @@ const SnapshotCard = ({
     <li className="space-y-2 border-b border-black p-3">
       <h3 className="break-words text-sm font-bold">{item.name}</h3>
       <p className="font-mono text-xs">
-        R {item.radius.toFixed(6)} · N {count} · {item.overlaps} overlaps
+        R {item.radius.toFixed(9)} · N {count} · {item.overlaps} overlaps
+        {item.settings.display.fullPrecision ? " · unrounded" : ""}
       </p>
       <p className="text-xs opacity-60">
         <time dateTime={item.createdAt}>{new Date(item.createdAt).toLocaleString()}</time>

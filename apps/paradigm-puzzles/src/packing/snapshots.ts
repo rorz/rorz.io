@@ -20,7 +20,7 @@ const updateSnapshots = (
   return items;
 };
 const captureSnapshot = (name: string, settings: EditorSettings): Snapshot => {
-  const { radius, overlaps } = evaluateScene(settings.scene);
+  const { radius, overlaps } = evaluateScene(settings.scene, settings.display.fullPrecision);
   return {
     createdAt: new Date().toISOString(),
     id: crypto.randomUUID(),

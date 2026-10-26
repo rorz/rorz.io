@@ -134,7 +134,7 @@ const DisplayToggle = ({
       ...display,
       [field]: value,
     });
-  return <Toggle checked={display[field]} label={label} onChange={change} />;
+  return <Toggle checked={display[field] ?? false} label={label} onChange={change} />;
 };
 type FanPanelProps = {
   change: (scene: Scene) => void;
@@ -234,7 +234,7 @@ const FanPanel = ({ change, display, scene, selected, select, setDisplay }: FanP
         <Toggle checked={scene.linked} label="Lock θ across all fans" onChange={link} />
         <Toggle
           checked={selected.holdTilt ?? false}
-          label="Hold this fan’s θ during Tighten"
+          label="Hold this fan’s θ during search"
           onChange={holdTilt}
         />
         {scene.linked && scene.fans.some((fan) => fan.holdTilt) ? (

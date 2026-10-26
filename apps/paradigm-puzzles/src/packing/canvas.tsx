@@ -1,6 +1,6 @@
 // biome-ignore-all lint/style/noMagicNumbers: viewport interaction and display limits.
 import { type KeyboardEvent, type PointerEvent, useEffect, useRef, useState } from "react";
-import { Button } from "./controls.tsx";
+import { Button, Toggle } from "./controls.tsx";
 import { type Drawing, drawScene, type Size, type Viewport } from "./draw.ts";
 import type { Point } from "./model.ts";
 
@@ -16,6 +16,7 @@ type CanvasProps = Omit<Drawing, "size" | "viewport"> & {
   readOnly: boolean;
   moveFan: (id: string, point: Point) => void;
   selectFan: (id: string) => void;
+  setContacts: (value: boolean) => void;
 };
 const worldPoint = (point: Point, size: Size, viewport: Viewport): Point => ({
   x: viewport.x + (point.x - size.width / 2) / viewport.scale,
@@ -215,6 +216,11 @@ const PackingCanvas = (props: CanvasProps) => {
           VIEW / XY <span className="ml-2 opacity-50">+Y ↑</span>
         </span>
         <div className="flex gap-1">
+          <Toggle
+            checked={props.display.contacts ?? false}
+            label="Contacts"
+            onChange={props.setContacts}
+          />
           <Button onClick={zoomOut} title="Zoom out">
             −
           </Button>
@@ -247,6 +253,22 @@ const PackingCanvas = (props: CanvasProps) => {
           : "Drag shape: move fan · Empty space / Shift-drag: pan"}{" "}
         · Scroll: zoom · Hatching: overlap
       </p>
+      {props.display.contacts ? (
+        <p className="shrink-0 border-t border-black px-3 py-2 font-mono text-xs">
+          ○ gap ≤ 0.02 · × penetration · □ circle contact
+          {props.contacts[0] ? (
+            <>
+              {" "}
+              · Min gap {props.contacts[0].gap.toExponential(2)} ({props.contacts[0].a} ↔{" "}
+              {props.contacts[0].b})
+            </>
+          ) : null}
+          <span className="block opacity-60">
+            Negative gaps include penetration below the area tolerance. Details: Inspector →
+            Diagnostics.
+          </span>
+        </p>
+      ) : null}
     </section>
   );
 };

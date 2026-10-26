@@ -2,6 +2,7 @@
 import { enclosingCircle } from "./enclosure.ts";
 import { generateShapes, OVERLAP_TOLERANCE, type Scene } from "./model.ts";
 import { findCollisions } from "./overlap.ts";
+import type { RelaxCheckpoint } from "./relax-checkpoint.ts";
 import { candidateScene, searchDirections, type TightenOptions } from "./search-space.ts";
 
 type Evaluation = {
@@ -22,18 +23,22 @@ type Search = SearchProgress & {
   directions: ReturnType<typeof searchDirections>;
 };
 type SearchRequest = {
+  checkpoint?: RelaxCheckpoint;
   scene: Scene;
   options: TightenOptions;
+  mode?: "tighten" | "relax";
 };
 type SearchUpdate = SearchProgress & {
+  checkpoint?: RelaxCheckpoint;
+  mode: "tighten" | "relax";
   initial: Pick<Evaluation, "radius" | "overlaps">;
   elapsed: number;
   reason: string;
   restarts: number;
   seed: number;
 };
-const evaluateScene = (scene: Scene): Evaluation => {
-  const shapes = generateShapes(scene);
+const evaluateScene = (scene: Scene, fullPrecision = false): Evaluation => {
+  const shapes = generateShapes(scene, fullPrecision);
   const collisions = findCollisions(shapes);
   return {
     overlaps: collisions.length,
@@ -45,7 +50,7 @@ const evaluateScene = (scene: Scene): Evaluation => {
 // Feasibility comes first. A feasible incumbent can never be replaced by an overlap.
 const improves = (candidate: Evaluation, incumbent: Evaluation) => {
   if (incumbent.overlaps === 0) {
-    return candidate.overlaps === 0 && candidate.radius < incumbent.radius - 1e-8;
+    return candidate.overlaps === 0 && candidate.radius < incumbent.radius - 1e-10;
   }
   if (candidate.overlaps === 0) {
     return true;
@@ -55,7 +60,7 @@ const improves = (candidate: Evaluation, incumbent: Evaluation) => {
   }
   return (
     Math.abs(candidate.violation - incumbent.violation) <= 1e-12 &&
-    candidate.radius < incumbent.radius - 1e-8
+    candidate.radius < incumbent.radius - 1e-10
   );
 };
 const createSearch = (scene: Scene, options: TightenOptions): Search => {

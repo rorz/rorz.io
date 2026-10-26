@@ -1,5 +1,6 @@
 // biome-ignore-all lint/style/noMagicNumbers: analytic unit-circle integration and numerical tolerances.
 import { type Collision, OVERLAP_TOLERANCE, type Placement, type Shape, TAU } from "./model.ts";
+import { POLYGON_AREA_DEFICIT, polygonIntersectionArea } from "./polygon-overlap.ts";
 
 type Plane = {
   nx: number;
@@ -141,7 +142,10 @@ const findCollisions = (shapes: Shape[]): Collision[] => {
   const collisions: Collision[] = [];
   for (const [index, shape] of shapes.entries()) {
     for (const other of shapes.slice(index + 1)) {
-      const area = intersectionArea(shape, other);
+      let area = intersectionArea(shape, other);
+      if (area > OVERLAP_TOLERANCE && area <= OVERLAP_TOLERANCE + POLYGON_AREA_DEFICIT) {
+        area = polygonIntersectionArea(shape, other);
+      }
       if (area > OVERLAP_TOLERANCE) {
         collisions.push({
           a: shape.id,

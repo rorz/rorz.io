@@ -1,6 +1,10 @@
 // biome-ignore-all lint/style/noMagicNumbers: search steps and bounds match the fan controls.
 import { type Fan, type Scene, updateFan } from "./model.ts";
 
+const MAX_SEARCH_SECONDS = 600;
+const searchDuration = (seconds: number) =>
+  Number.isFinite(seconds) ? Math.max(1, Math.min(MAX_SEARCH_SECONDS, seconds)) : 10;
+
 type TightenOptions = {
   orbit: boolean;
   phase: boolean;
@@ -9,6 +13,7 @@ type TightenOptions = {
   spread: boolean;
   seconds: number;
   seed?: number;
+  threefold?: boolean;
 };
 type SearchField = "orbit" | "phase" | "tilt" | "spread" | "x" | "y";
 type Direction = {
@@ -139,4 +144,12 @@ const candidateScene = (scene: Scene, direction: Direction, scale: number): Scen
 };
 
 export type { TightenOptions };
-export { candidateScene, constrain, defaultTightenOptions, searchDirections, searchVariables };
+export {
+  candidateScene,
+  constrain,
+  defaultTightenOptions,
+  MAX_SEARCH_SECONDS,
+  searchDirections,
+  searchDuration,
+  searchVariables,
+};

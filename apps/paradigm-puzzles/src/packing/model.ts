@@ -38,6 +38,11 @@ const OVERLAP_TOLERANCE = 1e-6;
 const MAX_SHAPES = 120;
 const degrees = (value: number) => (value * Math.PI) / 180;
 const roundExport = (value: number) => Number(value.toFixed(6)) || 0;
+// Normalize before rounding so a validator cannot shift the six-decimal grid.
+const roundAngle = (angle: number) => {
+  const rounded = roundExport(Math.atan2(Math.sin(angle), Math.cos(angle)));
+  return Math.abs(rounded) > Math.PI ? roundExport(rounded - Math.sign(rounded) * TAU) : rounded;
+};
 const makeFan = (id: string): Fan => ({
   count: 3,
   id,
@@ -61,7 +66,7 @@ const initialScene = (): Scene => ({
 });
 
 // A full ring has no repeated endpoint; a partial fan includes both ends.
-const generateShapes = (scene: Scene): Shape[] =>
+const generateShapes = (scene: Scene, fullPrecision = false): Shape[] =>
   scene.fans.flatMap((fan) => {
     const divisor = fan.spread === 360 ? fan.count : Math.max(1, fan.count - 1);
     return Array.from(
@@ -70,12 +75,15 @@ const generateShapes = (scene: Scene): Shape[] =>
       },
       (_, index) => {
         const angle = degrees(fan.phase + (index * fan.spread) / divisor);
+        const theta = angle + degrees(fan.tilt);
+        const x = fan.x + fan.orbit * Math.cos(angle);
+        const y = fan.y + fan.orbit * Math.sin(angle);
         return {
           fanId: fan.id,
           id: `${fan.id}.${index + 1}`,
-          theta: roundExport((((angle + degrees(fan.tilt)) % TAU) + TAU) % TAU),
-          x: roundExport(fan.x + fan.orbit * Math.cos(angle)),
-          y: roundExport(fan.y + fan.orbit * Math.sin(angle)),
+          theta: fullPrecision ? Math.atan2(Math.sin(theta), Math.cos(theta)) : roundAngle(theta),
+          x: fullPrecision ? x : roundExport(x),
+          y: fullPrecision ? y : roundExport(y),
         };
       },
     );

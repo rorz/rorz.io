@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { PackingCanvas } from "../packing/canvas.tsx";
+import { nearbyContacts } from "../packing/clearance.ts";
 import { Button } from "../packing/controls.tsx";
 import { DebugPanel } from "../packing/debug-panel.tsx";
 import { enclosingCircle } from "../packing/enclosure.ts";
@@ -15,10 +16,12 @@ const PUZZLE_COUNT = 15;
 const ShapePackingView = () => {
   const editor = usePackingEditor();
   const { scene, history, search, library, preview } = editor;
+  const fullPrecision = editor.display.fullPrecision === true;
   const shapes = useMemo(
-    () => generateShapes(scene),
+    () => generateShapes(scene, fullPrecision),
     [
       scene,
+      fullPrecision,
     ],
   );
   const circle = useMemo(
@@ -31,6 +34,15 @@ const ShapePackingView = () => {
     () => findCollisions(shapes),
     [
       shapes,
+    ],
+  );
+  const showContacts =
+    editor.display.contacts || (editor.inspector && editor.inspectorTab === "diagnostics");
+  const contacts = useMemo(
+    () => (showContacts ? nearbyContacts(shapes) : []),
+    [
+      shapes,
+      showContacts,
     ],
   );
   return (
@@ -63,8 +75,9 @@ const ShapePackingView = () => {
           <p>
             R{" "}
             <strong className="text-base font-normal tabular-nums">
-              {circle.radius.toFixed(6)}
+              {circle.radius.toFixed(9)}
             </strong>
+            {fullPrecision ? " · unrounded" : ""}
           </p>
           <p>
             N <strong className="text-base font-normal">{shapes.length}</strong>
@@ -79,8 +92,14 @@ const ShapePackingView = () => {
             Save…
           </Button>
           <Button onClick={editor.openSaved}>Saved ({library.items.length})</Button>
-          <Button onClick={editor.openTighten}>
-            {search.running ? "Tightening…" : "Tighten…"}
+          <Button
+            disabled={preview && search.result?.mode !== "tighten"}
+            onClick={editor.openTighten}
+          >
+            {search.running && search.result?.mode === "tighten" ? "Tightening…" : "Tighten…"}
+          </Button>
+          <Button disabled={preview && search.result?.mode !== "relax"} onClick={editor.openRelax}>
+            {search.running && search.result?.mode === "relax" ? "Relaxing…" : "Relax…"}
           </Button>
           <Button disabled={preview || !history.canUndo} onClick={history.undo}>
             Undo
@@ -112,6 +131,7 @@ const ShapePackingView = () => {
             camera={editor.camera}
             circle={circle}
             collisions={collisions}
+            contacts={contacts}
             display={editor.display}
             fans={scene.fans}
             moveFan={editor.moveFan}
@@ -119,14 +139,19 @@ const ShapePackingView = () => {
             selected={editor.selected.id}
             selectFan={editor.select}
             setCamera={editor.setCamera}
+            setContacts={editor.setContacts}
             shapes={shapes}
           />
           {editor.inspector ? (
             <DebugPanel
               circle={circle}
               collisions={collisions}
+              contacts={contacts}
+              fullPrecision={fullPrecision}
+              precisionLocked={preview}
               scene={scene}
               select={editor.select}
+              setFullPrecision={editor.setFullPrecision}
               setTab={editor.setInspectorTab}
               shapes={shapes}
               tab={editor.inspectorTab}
@@ -140,7 +165,7 @@ const ShapePackingView = () => {
             ? "15 unit semicircles"
             : `Exploration mode · ${PUZZLE_COUNT} shapes required for the puzzle`}
         </p>
-        <p>Analytic intersections · area tolerance 1e−6</p>
+        <p>Overlap tolerance 1e−6</p>
       </footer>
       {editor.drawer === "saved" ? (
         <SavedDrawer
@@ -155,18 +180,22 @@ const ShapePackingView = () => {
           savingDisabled={search.running}
         />
       ) : null}
-      {editor.drawer === "tighten" ? (
+      {editor.drawer === "tighten" || editor.drawer === "relax" ? (
         <TightenDrawer
           error={search.error}
+          mode={editor.drawer}
           onClose={editor.closeDrawer}
           onDiscard={search.discard}
           onKeep={editor.keepSearch}
           onStart={editor.startSearch}
           onStop={search.stop}
           options={editor.options}
-          overlaps={collisions.length}
+          overlaps={
+            fullPrecision ? findCollisions(generateShapes(scene)).length : collisions.length
+          }
           result={search.result}
           running={search.running}
+          scene={scene}
           setOptions={editor.setOptions}
         />
       ) : null}

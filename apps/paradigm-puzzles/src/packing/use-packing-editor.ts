@@ -17,7 +17,7 @@ const usePackingEditor = () => {
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>("placements");
   const [camera, setCamera] = useState<Viewport | null>(null);
   const [options, setOptions] = useState(defaultTightenOptions);
-  const [drawer, setDrawer] = useState<"saved" | "tighten" | null>(null);
+  const [drawer, setDrawer] = useState<"saved" | "tighten" | "relax" | null>(null);
   const [pendingSave, setPendingSave] = useState<EditorSettings | null>(null);
   const [display, setDisplay] = useState<Display>({
     circle: true,
@@ -66,7 +66,15 @@ const usePackingEditor = () => {
     select(settings.selectedId);
     setDrawer(null);
   };
-  const startSearch = () => search.start(scene, options);
+  const setFullPrecision = (fullPrecision: boolean) =>
+    setDisplay({
+      ...display,
+      fullPrecision,
+    });
+  const startSearch = () => {
+    setFullPrecision(false);
+    search.start(scene, options, drawer === "relax" ? "relax" : "tighten");
+  };
   const keepSearch = () => {
     if (search.result && !search.running && search.result.best.overlaps === 0) {
       history.change(search.result.best.scene, true);
@@ -76,6 +84,15 @@ const usePackingEditor = () => {
   const closeDrawer = () => setDrawer(null);
   const openSaved = () => setDrawer("saved");
   const openTighten = () => setDrawer("tighten");
+  const setContacts = (contacts: boolean) =>
+    setDisplay({
+      ...display,
+      contacts,
+    });
+  const openRelax = () => {
+    setContacts(true);
+    setDrawer("relax");
+  };
   return {
     camera,
     closeDrawer,
@@ -89,6 +106,7 @@ const usePackingEditor = () => {
     library,
     load,
     moveFan,
+    openRelax,
     openSave,
     openSaved,
     openTighten,
@@ -102,7 +120,9 @@ const usePackingEditor = () => {
     select,
     selected,
     setCamera,
+    setContacts,
     setDisplay,
+    setFullPrecision,
     setInspectorTab,
     setOptions,
     startSearch,

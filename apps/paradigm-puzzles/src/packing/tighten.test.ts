@@ -2,7 +2,45 @@
 import { expect, test } from "bun:test";
 import { makeFan } from "./model.ts";
 import { defaultTightenOptions } from "./search-space.ts";
-import { advanceSearch, createSearch } from "./tighten.ts";
+import { advanceSearch, createSearch, improves } from "./tighten.ts";
+
+test("score improvements visible at nine decimals are retained above the enclosure error bound", () => {
+  const incumbent = {
+    overlaps: 0,
+    radius: 2.948_527,
+    scene: {
+      fans: [
+        makeFan("1"),
+      ],
+      linked: false,
+    },
+    violation: 0,
+  };
+  const better = {
+    ...incumbent,
+    radius: incumbent.radius - 5e-9,
+  };
+  expect(improves(better, incumbent)).toBe(true);
+  expect(improves(incumbent, better)).toBe(false);
+  expect(
+    improves(
+      {
+        ...better,
+        overlaps: 1,
+      },
+      incumbent,
+    ),
+  ).toBe(false);
+  expect(
+    improves(
+      {
+        ...incumbent,
+        radius: incumbent.radius - 1e-12,
+      },
+      incumbent,
+    ),
+  ).toBe(false);
+});
 
 test("tightening lowers a feasible radius without accepting overlap or changing fixed fields", () => {
   const scene = {

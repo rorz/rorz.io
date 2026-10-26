@@ -20,6 +20,7 @@
     "deploy": "bun run build && wrangler deploy",
     "deploy:dry": "bun run build && wrangler deploy --dry-run",
     "dev": "vite --host 127.0.0.1 --port 4447 --strictPort",
+    "search": "bun scripts/search.ts",
     "start": "vite preview --host 127.0.0.1 --port 4447 --strictPort",
     "typecheck": "tsc --noEmit"
   },

@@ -2,8 +2,9 @@
 import { expect, test } from "bun:test";
 import type { EditorSettings } from "./editor-settings.ts";
 import { initialScene, makeFan, updateFan } from "./model.ts";
-import { defaultTightenOptions } from "./search-space.ts";
+import { defaultTightenOptions, searchDuration } from "./search-space.ts";
 import { captureSnapshot, readSnapshots, SNAPSHOTS_KEY, updateSnapshots } from "./snapshots.ts";
+import { evaluateScene } from "./tighten.ts";
 
 const settings = (): EditorSettings => ({
   camera: {
@@ -13,6 +14,7 @@ const settings = (): EditorSettings => ({
   },
   display: {
     circle: true,
+    contacts: true,
     grid: false,
     guides: true,
     labels: true,
@@ -26,6 +28,8 @@ const settings = (): EditorSettings => ({
   tighten: {
     ...defaultTightenOptions(),
     origins: true,
+    seconds: 600,
+    threefold: false,
   },
 });
 const memoryStorage = () => {
@@ -76,6 +80,12 @@ test("snapshots from before search seeds and per-fan holds remain loadable", () 
   const storage = memoryStorage();
   const snapshot = captureSnapshot("Original format", settings());
   snapshot.settings.scene = initialScene();
+  snapshot.settings.display = {
+    circle: true,
+    grid: false,
+    guides: true,
+    labels: true,
+  };
   snapshot.settings.tighten = {
     orbit: true,
     origins: false,
@@ -136,4 +146,61 @@ test("storage quota failures are reported rather than presented as a successful 
       captureSnapshot("Test", settings()),
     ]),
   ).toThrow("Quota exceeded");
+});
+
+test("ten-minute budgets round-trip while invalid saved budgets are rejected and worker budgets remain bounded", () => {
+  const storage = memoryStorage();
+  const snapshot = captureSnapshot("Long search", settings());
+  updateSnapshots(storage, () => [
+    snapshot,
+  ]);
+  expect(readSnapshots(storage)[0]?.settings.tighten.seconds).toBe(600);
+  snapshot.settings.tighten.seconds = 601;
+  storage.setItem(
+    SNAPSHOTS_KEY,
+    JSON.stringify({
+      items: [
+        snapshot,
+      ],
+      version: 1,
+    }),
+  );
+  expect(() => readSnapshots(storage)).toThrow("unsupported or invalid");
+  expect(searchDuration(600)).toBe(600);
+  expect(searchDuration(601)).toBe(600);
+  expect(searchDuration(0)).toBe(1);
+  expect(searchDuration(Number.NaN)).toBe(10);
+  expect(searchDuration(Number.POSITIVE_INFINITY)).toBe(10);
+});
+
+test("an unrounded snapshot retains its precision and matching radius after loading", () => {
+  const storage = memoryStorage();
+  const state = settings();
+  state.display.fullPrecision = true;
+  state.scene = {
+    fans: [
+      {
+        ...makeFan("1"),
+        count: 2,
+        orbit: 1.234_567_49,
+        tilt: 0,
+      },
+    ],
+    linked: false,
+  };
+  state.selectedId = "1";
+  const snapshot = captureSnapshot("Unrounded", state);
+  updateSnapshots(storage, () => [
+    snapshot,
+  ]);
+  const loaded = readSnapshots(storage)[0];
+  expect(loaded?.settings.display.fullPrecision).toBe(true);
+  expect(loaded?.radius).toBeCloseTo(2.234_567_49, 12);
+  expect(loaded?.radius).not.toBe(evaluateScene(state.scene).radius);
+  const saved = storage.getItem(SNAPSHOTS_KEY);
+  storage.setItem(
+    SNAPSHOTS_KEY,
+    saved?.replace('"fullPrecision":true', '"fullPrecision":"true"') ?? "",
+  );
+  expect(() => readSnapshots(storage)).toThrow("unsupported or invalid");
 });

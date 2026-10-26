@@ -161,13 +161,13 @@ test("fan spacing and exported radians obey the puzzle contract at six decimals"
       y: 2,
     },
     {
-      // biome-ignore lint/suspicious/noApproximativeNumericConstant: export rounds π to six decimals.
-      theta: 3.141_593,
+      // biome-ignore lint/suspicious/noApproximativeNumericConstant: test the six-decimal value inside the ±π branch cut.
+      theta: -3.141_592,
       x: -2,
       y: 0,
     },
     {
-      theta: 4.712_389,
+      theta: -1.570_796,
       x: 0,
       y: -2,
     },
@@ -187,5 +187,49 @@ test("fan spacing and exported radians obey the puzzle contract at six decimals"
     tilt: -30,
   });
   expect(linked.fans.every((fan) => fan.tilt === -30)).toBe(true);
-  expect(generateShapes(linked).every((shape) => shape.theta >= 0)).toBe(true);
+  for (const shape of [
+    ...shapes,
+    ...generateShapes(linked),
+  ]) {
+    expect(Math.abs(shape.theta)).toBeLessThan(Math.PI);
+    const normalized = Math.atan2(Math.sin(shape.theta), Math.cos(shape.theta));
+    expect(Number(normalized.toFixed(6))).toBe(shape.theta);
+  }
+  const [contact] = generateShapes({
+    fans: [
+      {
+        ...ring,
+        count: 1,
+        phase: 200,
+        tilt: (4.001_234_6 * 180) / Math.PI - 200,
+      },
+    ],
+    linked: false,
+  });
+  // Rounding in 0…2π first produces −2.281950 after a second normalization.
+  expect(contact?.theta).toBe(-2.281_951);
+});
+
+test("full precision preserves the geometry and JSON while puzzle geometry still rounds by default", () => {
+  const orbit = 1.234_567_49;
+  const scene = {
+    fans: [
+      {
+        ...makeFan("1"),
+        count: 2,
+        orbit,
+        tilt: 0,
+      },
+    ],
+    linked: false,
+  };
+  const original = structuredClone(scene);
+  const unrounded = generateShapes(scene, true);
+  const puzzle = generateShapes(scene);
+  expect(unrounded[0]?.x).toBe(orbit);
+  expect(exportPlacements(unrounded)[0]?.x).toBe(orbit);
+  expect(enclosingCircle(unrounded).radius).toBeCloseTo(1 + orbit, 12);
+  expect(puzzle[0]?.x).toBe(1.234_567);
+  expect(enclosingCircle(puzzle).radius).toBeCloseTo(2.234_567, 12);
+  expect(scene).toEqual(original);
 });

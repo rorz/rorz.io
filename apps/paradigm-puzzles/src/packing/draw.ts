@@ -1,4 +1,7 @@
 // biome-ignore-all lint/style/noMagicNumbers: canvas strokes, labels, and unit geometry.
+
+import type { Contact } from "./clearance.ts";
+import { drawContacts } from "./draw-contacts.ts";
 import { type Circle, type Collision, type Fan, type Point, type Shape, TAU } from "./model.ts";
 
 type Viewport = Point & {
@@ -13,10 +16,13 @@ type Display = {
   grid: boolean;
   guides: boolean;
   labels: boolean;
+  contacts?: boolean;
+  fullPrecision?: boolean;
 };
 type Drawing = {
   circle: Circle;
   collisions: Collision[];
+  contacts: Contact[];
   display: Display;
   fans: Fan[];
   selected: string;
@@ -158,7 +164,7 @@ const enclosure = (ctx: CanvasRenderingContext2D, circle: Circle, scale: number)
       x: circle.x + circle.radius / 2,
       y: circle.y + 12 / scale,
     },
-    `R ${circle.radius.toFixed(6)}`,
+    `R ${circle.radius.toFixed(9)}`,
     scale,
   );
 };
@@ -215,6 +221,9 @@ const drawScene = (canvas: HTMLCanvasElement, drawing: Drawing) => {
   }
   if (display.circle) {
     enclosure(ctx, circle, viewport.scale);
+  }
+  if (display.contacts) {
+    drawContacts(ctx, drawing, viewport.scale);
   }
   const fan = fans.find((item) => item.id === selected);
   if (fan) {
