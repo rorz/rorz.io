@@ -49,17 +49,10 @@ const ShapePackingView = () => {
     <main
       className={`flex min-h-dvh flex-col bg-white font-sans text-black scheme-light lg:h-dvh ${editor.drawer ? "lg:pr-80" : ""}`}
     >
-      <title>Shape Packing · Paradigm Puzzles</title>
+      <title>Semicircle packing</title>
       <header className="flex flex-wrap items-center justify-between gap-3 bg-black px-3 py-2 text-white">
         <div className="flex items-center gap-3">
-          <span
-            aria-hidden="true"
-            className="grid size-5 place-items-center border border-white font-mono text-xs"
-          >
-            ◐
-          </span>
-          <h1 className="font-mono text-sm font-bold">Shape Packing</h1>
-          <span className="hidden font-mono text-xs opacity-60 sm:inline">/ paradigm-puzzles</span>
+          <h1 className="font-mono text-sm font-bold">Semicircle packing</h1>
         </div>
         <a
           className="text-xs underline underline-offset-2"
@@ -159,14 +152,6 @@ const ShapePackingView = () => {
           ) : null}
         </div>
       </div>
-      <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-black px-3 py-1.5 font-mono text-xs">
-        <p>
-          {shapes.length === PUZZLE_COUNT
-            ? "15 unit semicircles"
-            : `Exploration mode · ${PUZZLE_COUNT} shapes required for the puzzle`}
-        </p>
-        <p>Overlap tolerance 1e−6</p>
-      </footer>
       {editor.drawer === "saved" ? (
         <SavedDrawer
           error={library.error}
