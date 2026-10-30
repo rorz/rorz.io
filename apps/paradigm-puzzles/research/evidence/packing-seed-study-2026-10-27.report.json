@@ -1,0 +1,337 @@
+{
+  "alternatives": [
+    {
+      "base": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seed-mirrored-released-2920",
+      "histogramAgrees": true,
+      "interior": {
+        "7-corner": 1,
+        "arrow/four-corner": 5,
+        "triangle": 6,
+        "zigzag/six-corner": 1
+      },
+      "name": "packing-seed-mirrored-released-2920",
+      "officialScore": 2.96756022380705,
+      "officialValid": true,
+      "outer": {
+        "2-corner": 2,
+        "5-corner": 2,
+        "arrow/four-corner": 3,
+        "triangle": 3,
+        "zigzag/six-corner": 1
+      },
+      "radius": 2.9675602238070593,
+      "referenceMaximum": 0,
+      "reliable": true,
+      "submittedByAgent": false
+    },
+    {
+      "base": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seed-bilateral-2922",
+      "histogramAgrees": true,
+      "interior": {
+        "5-corner": 1,
+        "9-corner": 1,
+        "triangle": 4,
+        "zigzag/six-corner": 2
+      },
+      "name": "packing-seed-bilateral-2922",
+      "officialScore": 2.9923695162469226,
+      "officialValid": true,
+      "outer": {
+        "2-corner": 2,
+        "7-corner": 2,
+        "arrow/four-corner": 2,
+        "triangle": 4
+      },
+      "radius": 2.9923695162470025,
+      "referenceMaximum": 0,
+      "reliable": true,
+      "submittedByAgent": false
+    },
+    {
+      "base": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seed-inner-triangles-arrows-2923",
+      "histogramAgrees": true,
+      "interior": {
+        "arrow/four-corner": 3,
+        "triangle": 12
+      },
+      "name": "packing-seed-inner-triangles-arrows-2923",
+      "officialScore": 3.0068710549490167,
+      "officialValid": true,
+      "outer": {
+        "5-corner": 1,
+        "arrow/four-corner": 10
+      },
+      "radius": 3.006871054949073,
+      "referenceMaximum": 0,
+      "reliable": true,
+      "submittedByAgent": false
+    }
+  ],
+  "broaderGoalStatus": "paused",
+  "conclusions": [
+    "None of the selected alternatives improves the incumbent.",
+    "Released mirrored-strip seeds reached a smaller radius than the best strictly bilateral candidate in this finite study.",
+    "Interior zigzags can be removed, but the resulting candidate has one five-corner exterior pocket and a larger radius.",
+    "Four-corner gap G26 is large: corner count alone does not measure wasted area.",
+    "Closing contact 10-12 displaced contact 8-9; preserving both moved the complicated pocket elsewhere in the tested conditions.",
+    "These are finite local searches, not an impossibility result or an exhaustive survey of either layout family."
+  ],
+  "cpu": {
+    "atOrAbove90Samples": [
+      {
+        "activeWorkers": [],
+        "at": "2026-10-27T04:21:05.195Z",
+        "cpu250ms": 96.45669291338582,
+        "desiredWorkers": [],
+        "event": "sample",
+        "maxSlots": 1,
+        "ownershipAgeMilliseconds": 1015.6250829999335,
+        "paused": [],
+        "rollingCpu1s": 48.33421852001795,
+        "sampleDurationMilliseconds": 257.1314579999307,
+        "slots": 0
+      },
+      {
+        "activeWorkers": [],
+        "at": "2026-10-27T04:39:47.617Z",
+        "cpu250ms": 93.22709163346615,
+        "desiredWorkers": [],
+        "event": "sample",
+        "maxSlots": 1,
+        "ownershipAgeMilliseconds": 252.80025000008754,
+        "paused": [13219, 13220, 13221, 13222, 13223, 13281, 13282],
+        "rollingCpu1s": 59.35848481802799,
+        "sampleDurationMilliseconds": 252.8064580000937,
+        "slots": 0
+      },
+      {
+        "activeWorkers": [],
+        "at": "2026-10-27T04:42:48.887Z",
+        "cpu250ms": 90.87301587301587,
+        "desiredWorkers": [],
+        "event": "sample",
+        "maxSlots": 1,
+        "ownershipAgeMilliseconds": 504.69354100000055,
+        "paused": [14696, 14771, 14797],
+        "rollingCpu1s": 50.0373470533451,
+        "sampleDurationMilliseconds": 252.81220799999937,
+        "slots": 0
+      }
+    ],
+    "maxActiveRoots": 1,
+    "maxHost250msPercent": 96.45669291338582,
+    "maxHostRolling1sPercent": 63.283147228403266,
+    "note": "3 whole-host 250ms samples exceeded 90%; all recorded zero active owned workers at the sample timestamp. Samples cover the preceding interval and do not establish which processes caused each spike. The governor reacts to observed load; it cannot guarantee an absolute whole-host cap.",
+    "requestedCeilingPercent": 90,
+    "sampleCount": 8326,
+    "signalErrors": []
+  },
+  "createdAt": "2026-10-27T04:45:37.151Z",
+  "distinctMirroredStartingGeometries": 131,
+  "geometry": {
+    "gapClassification": "Visual contact proxy only: expand shape disks and halfplanes by 1e-5, shrink container by 1e-5; trace analytic exposed arc/line faces and tangent-change corners. This proxy never determines feasibility or radius.",
+    "globalPatternFound": false,
+    "interiorPatternFound": true,
+    "outerTwoCornerCrescentsPermittedAndReportedSeparately": true,
+    "rescreenedBilateralArchivedCandidates": 12,
+    "selectedAlternatives": "Gap histograms agree at geometry tolerances 1e-12 and 1e-13; traces reliable, no holes.",
+    "validation": "Canonical six-decimal payload; all 105 published polygon pair checks; full curved minimum enclosing circle; exact scene export; official validation endpoint."
+  },
+  "incumbent": {
+    "officialScore": 2.9485270638716834,
+    "placements": "packing-best.placements.json",
+    "preserved": true,
+    "scene": "packing-best.scene.json",
+    "uiGeometryChangedByStudy": false,
+    "uiSavedName": "Validated · R 2.948527064 · CPU search",
+    "validation": "packing-best.validation.json"
+  },
+  "runs": [
+    {
+      "distinctWithinJob": 25,
+      "job": "2918",
+      "mirrored": 14,
+      "scheduled": 25
+    },
+    {
+      "distinctWithinJob": 217,
+      "job": "2920",
+      "mirrored": 119,
+      "scheduled": 217
+    },
+    {
+      "bilateralThroughout": true,
+      "distinctWithinJob": 31,
+      "job": "2922",
+      "scheduled": 31
+    },
+    {
+      "distinctConditions": 24,
+      "job": "2923",
+      "note": "Deterministic schedule repeated; repeats add no independent search coverage.",
+      "repeatedConditions": 395,
+      "scheduled": 419
+    },
+    {
+      "coupledContacts": ["10-12", "8-9"],
+      "distinctConditions": 24,
+      "job": "2924",
+      "scheduled": 24
+    },
+    {
+      "distinctWithinJob": 166,
+      "families": ["13+2", "14+1", "10+5", "9+6", "8+7", "12+3", "11+4"],
+      "job": "2925",
+      "scheduled": 166
+    }
+  ],
+  "shutdown": {
+    "cpuMaxActiveSlots": 0,
+    "fleetTerminal": true,
+    "governorStatus": "fleet-finished",
+    "governorTerminal": true,
+    "maxWorkers": 0,
+    "owned": 0,
+    "running": 0,
+    "sealed": true
+  },
+  "status": "bounded_experiment_complete",
+  "studyWorkers": [
+    {
+      "argv": [
+        "/private/tmp/packing-zigzag-seeds-2918.ts",
+        "2918",
+        "120",
+        "/private/tmp/packing-mirrored-study-2918"
+      ],
+      "endedAt": "2026-10-27T04:11:20.295Z",
+      "exitCode": 0,
+      "id": "packing-cpu-zigzag-seeds-2918",
+      "log": "/private/tmp/packing-cpu-zigzag-seeds-2918.log",
+      "pid": 4508,
+      "startedAt": "2026-10-27T04:11:09.211Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-zigzag-seeds-2918.stderr.log"
+    },
+    {
+      "argv": [
+        "/private/tmp/packing-zigzag-seeds-2920.ts",
+        "2920",
+        "240",
+        "/private/tmp/packing-mirrored-study-2920"
+      ],
+      "endedAt": "2026-10-27T04:18:36.924Z",
+      "exitCode": 0,
+      "id": "packing-cpu-zigzag-seeds-2920",
+      "log": "/private/tmp/packing-cpu-zigzag-seeds-2920.log",
+      "pid": 5826,
+      "startedAt": "2026-10-27T04:14:36.640Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-zigzag-seeds-2920.stderr.log"
+    },
+    {
+      "argv": [
+        "/private/tmp/packing-bilateral-seeds-2922.ts",
+        "2922",
+        "120",
+        "/private/tmp/packing-bilateral-study-2922"
+      ],
+      "endedAt": "2026-10-27T04:24:00.645Z",
+      "exitCode": 0,
+      "id": "packing-cpu-bilateral-seeds-2922",
+      "log": "/private/tmp/packing-cpu-bilateral-seeds-2922.log",
+      "pid": 8178,
+      "startedAt": "2026-10-27T04:22:00.337Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-bilateral-seeds-2922.stderr.log"
+    },
+    {
+      "argv": [
+        "/private/tmp/packing-contact-gap-2923.ts",
+        "/private/tmp/packing-contact-gap-study-2923",
+        "120"
+      ],
+      "endedAt": "2026-10-27T04:26:01.551Z",
+      "exitCode": 0,
+      "id": "packing-cpu-contact-gap-2923",
+      "log": "/private/tmp/packing-cpu-contact-gap-2923.log",
+      "pid": 8833,
+      "startedAt": "2026-10-27T04:24:01.510Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-contact-gap-2923.stderr.log"
+    },
+    {
+      "argv": [
+        "/private/tmp/packing-contact-gap-2924.ts",
+        "/private/tmp/packing-contact-coupled-study-2924",
+        "120"
+      ],
+      "endedAt": "2026-10-27T04:28:30.787Z",
+      "exitCode": 0,
+      "id": "packing-cpu-contact-gap-2924",
+      "log": "/private/tmp/packing-cpu-contact-gap-2924.log",
+      "pid": 10197,
+      "startedAt": "2026-10-27T04:28:21.915Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-contact-gap-2924.stderr.log"
+    },
+    {
+      "argv": [
+        "/private/tmp/packing-zigzag-seeds-2925.ts",
+        "2925",
+        "120",
+        "/private/tmp/packing-fan-sweep-2925"
+      ],
+      "endedAt": "2026-10-27T04:33:44.494Z",
+      "exitCode": 0,
+      "id": "packing-cpu-fan-sweep-2925",
+      "log": "/private/tmp/packing-cpu-fan-sweep-2925.log",
+      "pid": 11126,
+      "startedAt": "2026-10-27T04:31:44.312Z",
+      "status": "completed",
+      "stderr": "/private/tmp/packing-cpu-fan-sweep-2925.stderr.log"
+    }
+  ],
+  "submittedByAgent": false,
+  "userHypotheses": [
+    "Mirror the right five-piece 3+2 stripe, insert five pieces in the middle.",
+    "Seek voids with three or four corners rather than six-corner zigzags."
+  ],
+  "verification": {
+    "continuation": {
+      "at": "2026-10-27T04:43:08.230Z",
+      "results": [
+        {
+          "args": ["test", "--timeout", "30000", "apps", "packages", "./.pokayoke/rules/*.test.ts"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "pokayoke"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "check:vinext"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "--sequential", "--filter", "./apps/*", "build"],
+          "exitCode": 0
+        }
+      ]
+    },
+    "continuationExplanation": "All 125 app/package tests pass with 30000ms timeout; literal glob does not include six policy tests, which already passed in original run. Pokayoke, Vinext compatibility and sequential all-app builds passed.",
+    "existingBuildWarnings": [
+      "Vinext ineffective dynamic imports",
+      "Vinext sourcemap warnings",
+      "No Cloudflare IMAGES binding: unoptimized image fallback"
+    ],
+    "original": {
+      "at": "2026-10-27T04:39:55.107Z",
+      "command": "bun run verify",
+      "exitCode": 1,
+      "includesCheck": true
+    },
+    "originalFailure": "One 13+2 restart regression exceeded default 5000ms wall-clock timeout under CPU governor. Other 130 tests passed, including all six policy tests. Biome, typecheck and Knip passed.",
+    "repositorySourceChanged": false
+  }
+}

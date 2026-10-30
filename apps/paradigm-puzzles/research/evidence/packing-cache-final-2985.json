@@ -1,0 +1,223 @@
+{
+  "canonical": {
+    "changed": false,
+    "hashes": [
+      {
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.scene.json",
+        "sha256": "0802364747cb028fc301bea5953b5a5b55023aaf35ccea25b7a21a8f5ff62b59",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.placements.json",
+        "sha256": "123b910e19ff1ba27e4af1932b408ff0d3b1073eefcf977e8af28e40e9c2257f",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.validation.json",
+        "sha256": "2a6f4c363a0ac2753577fc560621a7c59088ba7bfde2a51ac766683a03127386",
+        "unchanged": true
+      },
+      {
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.report.json",
+        "sha256": "2f7f6a4541676c11c1c79e351104464c70c4a88b1479de98dfd6e37e4091cc7d",
+        "unchanged": true
+      }
+    ],
+    "officialRadius": 2.9485270638716834
+  },
+  "createdAt": "2026-10-30T06:51:48.004Z",
+  "decision": "Cache and exact block-skip prototypes passed the declared bitwise and semantic-replay checks, but no useful end-to-end speedup was demonstrated. Do not rerun the eight-seed sweep or replace the established kernel based on these results.",
+  "diagnostic": {
+    "completed": 8558,
+    "limits": "Instrumented one-pass mixed8558 corpus, including stress/churn inputs; not an actual CSP trace, not V3, and instrumentation overhead is charged inside stages. Stage share is diagnostic only.",
+    "normalLoopClipCalls": 3844179,
+    "normalLoopClipInputPoints": 926880461,
+    "normalPlusClipFraction": 0.9467861293205325,
+    "result": {
+      "bytes": 2043,
+      "path": "/private/tmp/packing-phase-profile-2982-result.json",
+      "sha256": "f17ab08523a2c6113691d20277e25c6b69eeb912a48773cc2db61518168cd7bc"
+    },
+    "variant": "V2/root2980"
+  },
+  "repositoryVerification": {
+    "passed": true,
+    "result": {
+      "bytes": 315,
+      "path": "/private/tmp/packing-cache-verify-2977.result.json",
+      "sha256": "79f4f512ec8a7869747a3d263a6aaad210b6b707d97daddfbc658471a457d9b9"
+    },
+    "tests": 137
+  },
+  "resourcePolicy": {
+    "attribution": "Host CPU includes unrelated processes. Governor pauses owned process groups reactively; a continuous whole-host ceiling is not guaranteed.",
+    "maxConcurrentGroups": 1,
+    "observedActiveSamplesAbove90": 15,
+    "observedMaxHostCpuPercent": 100,
+    "pauseHostCpuPercent": 50,
+    "resumeHostCpuPercent": 35,
+    "sampleMilliseconds": 50,
+    "samples": 42996,
+    "wholeHostHard90PercentGuaranteed": false
+  },
+  "seedSweep": {
+    "launched": false,
+    "reason": "Performance gate not met; unchanged eight-seed plan remains unarmed."
+  },
+  "shutdown": {
+    "allWorkersStopped": true,
+    "jobs": 11,
+    "proof": {
+      "bytes": 1531,
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-cache-stop-proof-2984.json",
+      "sha256": "69b1313e458b0832cdc92d031cb18d5f1b01fb151985c43af9d7833455b19f7d"
+    },
+    "remainingOwnedMembers": []
+  },
+  "submitted": false,
+  "supersedes": {
+    "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-cache-final-2984.json",
+    "reason": "Narrow correctness claim to declared tests; do not attribute combined diagnostic stage to clipping alone; surface observed CPU-limit outcome."
+  },
+  "terminal": true,
+  "versions": [
+    {
+      "bitMismatches": 0,
+      "bitwiseComparisons": 16453,
+      "compatibilityThresholdFlips": 0,
+      "fixtureCases": 8558,
+      "knownControl": {
+        "all45PoseValuesMatch": true,
+        "allCountersMatch": true,
+        "domainsMatch": true,
+        "nativeWallSeconds": 49.281642083,
+        "nodes": 4731,
+        "residentSeconds": 50.146655583
+      },
+      "oracle": {
+        "bytes": 12692,
+        "path": "/private/tmp/packing-cache-test-2975-result.json",
+        "sha256": "275a4a44dbbb7358dbf759771e6534465902d249d10bbae94e6ae17f7eaceeb3"
+      },
+      "recovery": {
+        "bytes": 23248,
+        "path": "/private/tmp/packing-cached-recovery-2975-result.json",
+        "sha256": "507f0adc1fc90bf21ad85f0e32ffc564a20c9f11cad03f627af2c1d4fe3c960f"
+      },
+      "strictThresholdFlips": 0,
+      "timings": {
+        "cold-orientation-fill": {
+          "cachedCpuSeconds": 0.13347299999999862,
+          "calls": 1320,
+          "oldCpuSeconds": 0.12310899999999592,
+          "ratio": 1.0841855591386742
+        },
+        "hot-orientation-distinct-compatibility-misses": {
+          "cachedCpuSeconds": 0.43651499999999643,
+          "calls": 5632,
+          "oldCpuSeconds": 0.4295890000000071,
+          "ratio": 1.0161223867463767
+        },
+        "orientation-eviction-churn": {
+          "cachedCpuSeconds": 1.3695939999999958,
+          "calls": 1620,
+          "oldCpuSeconds": 1.3445859999999996,
+          "ratio": 1.0185990334571355
+        }
+      },
+      "version": 2975
+    },
+    {
+      "bitMismatches": 0,
+      "bitwiseComparisons": 16453,
+      "compatibilityThresholdFlips": 0,
+      "fixtureCases": 8558,
+      "knownControl": {
+        "all45PoseValuesMatch": true,
+        "allCountersMatch": true,
+        "domainsMatch": true,
+        "nativeWallSeconds": 50.303202959,
+        "nodes": 4731,
+        "residentSeconds": 51.678488707999996
+      },
+      "oracle": {
+        "bytes": 12676,
+        "path": "/private/tmp/packing-cache-test-2981-result.json",
+        "sha256": "989fd46bed91f213103aa176530a08283247564ddef6f07b18ec47658dcfdcf7"
+      },
+      "recovery": {
+        "bytes": 23254,
+        "path": "/private/tmp/packing-cached-recovery-2981-result.json",
+        "sha256": "44a9ee9c7739770ca26803652988ee2e58d32c88f940656805cc8a7e04dc95e9"
+      },
+      "strictThresholdFlips": 0,
+      "timings": {
+        "cold-orientation-fill": {
+          "cachedCpuSeconds": 0.1354559999999978,
+          "calls": 1320,
+          "oldCpuSeconds": 0.1252469999999981,
+          "ratio": 1.0815109343936369
+        },
+        "hot-orientation-distinct-compatibility-misses": {
+          "cachedCpuSeconds": 0.42904900000001334,
+          "calls": 5632,
+          "oldCpuSeconds": 0.4292559999999952,
+          "ratio": 0.9995177702816458
+        },
+        "orientation-eviction-churn": {
+          "cachedCpuSeconds": 1.3870279999999973,
+          "calls": 1620,
+          "oldCpuSeconds": 1.3478249999999967,
+          "ratio": 1.0290861202307426
+        }
+      },
+      "version": 2981
+    },
+    {
+      "bitMismatches": 0,
+      "bitwiseComparisons": 16453,
+      "compatibilityThresholdFlips": 0,
+      "fixtureCases": 8558,
+      "knownControl": {
+        "all45PoseValuesMatch": true,
+        "allCountersMatch": true,
+        "domainsMatch": true,
+        "nativeWallSeconds": 50.202048333,
+        "nodes": 4731,
+        "residentSeconds": 51.028408292
+      },
+      "oracle": {
+        "bytes": 12641,
+        "path": "/private/tmp/packing-cache-test-2983-result.json",
+        "sha256": "98bf40e70be489d2384cc64efbf927257186ead3253c22f7d04585ed947fdcab"
+      },
+      "recovery": {
+        "bytes": 23242,
+        "path": "/private/tmp/packing-cached-recovery-2983-result.json",
+        "sha256": "96051216b0354cb0b8e3bcbda8c0c7fb701b2bb80be8b1c249118986619c2dbf"
+      },
+      "strictThresholdFlips": 0,
+      "timings": {
+        "cold-orientation-fill": {
+          "cachedCpuSeconds": 0.13317899999999483,
+          "calls": 1320,
+          "oldCpuSeconds": 0.12428299999999837,
+          "ratio": 1.0715785747044775
+        },
+        "hot-orientation-distinct-compatibility-misses": {
+          "cachedCpuSeconds": 0.4203460000000234,
+          "calls": 5632,
+          "oldCpuSeconds": 0.4285669999999904,
+          "ratio": 0.9808174684472506
+        },
+        "orientation-eviction-churn": {
+          "cachedCpuSeconds": 1.3582490000000007,
+          "calls": 1620,
+          "oldCpuSeconds": 1.3437509999999975,
+          "ratio": 1.010789201273155
+        }
+      },
+      "version": 2983
+    }
+  ]
+}

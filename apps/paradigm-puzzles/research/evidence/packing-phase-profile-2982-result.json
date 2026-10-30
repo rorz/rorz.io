@@ -1,0 +1,100 @@
+{
+  "actualOracleImage": "/private/tmp/packing-polygon-native.dylib",
+  "attributedStageNanoseconds": 2199498768,
+  "bitMismatches": 0,
+  "blocks": {
+    "checks": 1092992,
+    "normalsChecked": 4479573,
+    "normalsSkipped": 30487632,
+    "skipped": 952941
+  },
+  "cache": {
+    "evictions": 1599,
+    "hits": 15253,
+    "misses": 1855,
+    "residentEntries": 256
+  },
+  "cachedThreadCpuNanoseconds": 2202304194,
+  "capped": false,
+  "completed": 8558,
+  "completedAllFixtures": true,
+  "diagnosticOnly": true,
+  "error": null,
+  "fixtureCount": 8558,
+  "loopStopSeconds": 19,
+  "mismatchCaseIds": [],
+  "nonStageAndInstrumentationNanoseconds": 2805426,
+  "oracleThreadCpuNanoseconds": 2166758151,
+  "requestedRunCapSeconds": 20,
+  "scope": "One pass in immutable fixture order, one cache reset, no extra warmup; oracle calls are outside timed cached phases. Timers/counters add overhead; these timings are diagnostic and are not uninstrumented performance claims.",
+  "solverLaunches": 0,
+  "sourceVariant": "root2980-v2",
+  "stages": [
+    {
+      "boundsCalls": 0,
+      "boundsInputPoints": 0,
+      "clipCalls": 0,
+      "clipInputPoints": 0,
+      "entries": 8554,
+      "name": "cachelookup",
+      "threadCpuNanoseconds": 32574719
+    },
+    {
+      "boundsCalls": 0,
+      "boundsInputPoints": 0,
+      "clipCalls": 0,
+      "clipInputPoints": 0,
+      "entries": 8554,
+      "name": "vertextransform",
+      "threadCpuNanoseconds": 28685228
+    },
+    {
+      "boundsCalls": 0,
+      "boundsInputPoints": 0,
+      "clipCalls": 8554,
+      "clipInputPoints": 35037184,
+      "entries": 8554,
+      "name": "firstflatclip",
+      "threadCpuNanoseconds": 35148198
+    },
+    {
+      "boundsCalls": 0,
+      "boundsInputPoints": 0,
+      "clipCalls": 8554,
+      "clipInputPoints": 13880742,
+      "entries": 8554,
+      "name": "nearestplaneclip",
+      "threadCpuNanoseconds": 15585453
+    },
+    {
+      "boundsCalls": 8554,
+      "boundsInputPoints": 1362163,
+      "clipCalls": 0,
+      "clipInputPoints": 0,
+      "entries": 8554,
+      "name": "initialbounds",
+      "threadCpuNanoseconds": 2901245
+    },
+    {
+      "boundsCalls": 3844179,
+      "boundsInputPoints": 926472787,
+      "clipCalls": 3844179,
+      "clipInputPoints": 926880461,
+      "entries": 8554,
+      "name": "normal-plus-clip-loop",
+      "threadCpuNanoseconds": 2082454925
+    },
+    {
+      "boundsCalls": 0,
+      "boundsInputPoints": 0,
+      "clipCalls": 0,
+      "clipInputPoints": 0,
+      "entries": 8554,
+      "name": "areareduction",
+      "threadCpuNanoseconds": 2149000
+    }
+  ],
+  "terminal": true,
+  "thresholdFlips": 0,
+  "timedNonSeparatedCalls": 8554
+}

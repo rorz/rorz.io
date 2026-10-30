@@ -1,0 +1,153 @@
+{
+  "contactGraphChanges": {
+    "added": [],
+    "newCount": 30,
+    "oldCount": 30,
+    "removed": []
+  },
+  "createdAt": "2026-10-27T02:31:25.290Z",
+  "interpretation": {
+    "budgets": "Independent-axis budgets use analytic semicircle derivatives with published-polygon area values and a fixed enclosing circle. They are local first-order diagnostics, not certified move intervals; curvature, branch changes, inactive contacts, and second-order enclosure changes can tighten them. An angle-only move of an arc-supported piece may leave enclosing radius unchanged and therefore need not improve the score. Both diameter endpoints are included, avoiding a false unbounded angle estimate for piece15 when the other endpoint becomes controlling.",
+    "contactGraph": "All30 positive-area polygon pairs remain;3-12 crosses the arbitrary9e-7 tight-band cutoff only. It has not lost geometric contact.",
+    "roundingEnvelope": "If both placements were independently six-decimal rounded versions of exactly the same continuous rigid arrangement, each midpoint differs by at most sqrt(2) micro-units before an arbitrary translation fit; any pair-distance change is bounded by 2*sqrt(2) micro-units. Much larger pair-distance changes demonstrate genuine relative-placement changes.",
+    "trueRelativeChanges": "Largest invariant pair-distance change is 282.51 micro-units, far above the 2.828 micro-unit maximum from two six-decimal roundings of one rigid arrangement. The new result includes actual relative placement changes along with a large common rotation."
+  },
+  "new": {
+    "activeEnclosureSupports": [2, 11, 14],
+    "activeEnclosureWitnesses": [
+      {
+        "aboveLeaderAtCurrentCenter": 1.3998627057532076e-7,
+        "distance": 2.948527063871882,
+        "gradient": [0.6689208805786072, 0.743333609845499, 0],
+        "id": 2,
+        "kind": "interior-arc",
+        "slack": 0,
+        "x": 1.8222918805786072,
+        "y": 1.3390606098454991
+      },
+      {
+        "aboveLeaderAtCurrentCenter": 1.3998626924305313e-7,
+        "distance": 2.9485270638718806,
+        "gradient": [-0.9970190286930035, 0.07715605241366176, 0],
+        "id": 11,
+        "kind": "interior-arc",
+        "slack": 1.3322676295501878e-15,
+        "x": -3.0897770286930033,
+        "y": -0.6251819475863383
+      },
+      {
+        "aboveLeaderAtCurrentCenter": 1.3998626879896392e-7,
+        "distance": 2.94852706387188,
+        "gradient": [-0.4182890634241475, -0.9083139652233414, 5.551115123125783e-17],
+        "id": 14,
+        "kind": "interior-arc",
+        "slack": 1.7763568394002505e-15,
+        "x": -1.3833760634241477,
+        "y": -3.5308669652233413
+      }
+    ],
+    "circle": {
+      "error": 1.3322676295501878e-15,
+      "radius": 2.948527063871882,
+      "x": -0.15003943939642728,
+      "y": -0.8526786562695373
+    },
+    "enclosureSupportWeights": [
+      {
+        "id": 2,
+        "normal": [0.6689208805786072, 0.743333609845499],
+        "weight": 0.46263176336973283
+      },
+      {
+        "id": 11,
+        "normal": [-0.9970190286930035, 0.07715605241366176],
+        "weight": 0.14633558862571103
+      },
+      {
+        "id": 14,
+        "normal": [-0.4182890634241475, -0.9083139652233414],
+        "weight": 0.39103264800455617
+      }
+    ],
+    "maximumArea": 9.99860213525659e-7,
+    "minimumPairSlack": 1.3978647434090342e-10
+  },
+  "noOptimizerRun": true,
+  "old": {
+    "activeEnclosureSupports": [3, 5, 14, 15],
+    "activeEnclosureWitnesses": [
+      {
+        "aboveLeaderAtCurrentCenter": 1.6516351530881934e-7,
+        "distance": 2.9485270890491266,
+        "gradient": [-0.45168040562855144, -0.8921798087668356, 5.551115123125783e-17],
+        "id": 3,
+        "kind": "interior-arc",
+        "slack": 0,
+        "x": -0.5999104056285515,
+        "y": -2.1681828087668356
+      },
+      {
+        "aboveLeaderAtCurrentCenter": 1.6516351486473013e-7,
+        "distance": 2.948527089049126,
+        "gradient": [0.965612695155419, -0.25998485139463023, 5.551115123125783e-17],
+        "id": 5,
+        "kind": "interior-arc",
+        "slack": 4.440892098500626e-16,
+        "x": 3.5790166951554188,
+        "y": -0.30413885139463026
+      },
+      {
+        "aboveLeaderAtCurrentCenter": 1.5923898555314508e-7,
+        "distance": 2.948527083124597,
+        "gradient": [0.9535194609975378, 0.30133144127184114, 1.1102230246251565e-16],
+        "id": 14,
+        "kind": "interior-arc",
+        "slack": 5.924529755674257e-9,
+        "x": 3.543359460997538,
+        "y": 1.350917441271841
+      },
+      {
+        "aboveLeaderAtCurrentCenter": 1.6516351530881934e-7,
+        "distance": 2.9485270890491266,
+        "gradient": [-0.8985858974897781, 0.4387976581893866, -0.9407314262363069],
+        "id": 15,
+        "kind": "diameter-endpoint-low",
+        "slack": 0,
+        "x": -1.9176233546262027,
+        "y": 1.756240307467574
+      }
+    ],
+    "circle": {
+      "error": 0,
+      "radius": 2.9485270890491266,
+      "x": 0.73188150595993,
+      "y": 0.4624335256848485
+    },
+    "maximumArea": 9.996596293204443e-7,
+    "minimumPairSlack": 3.4037067955561486e-10
+  },
+  "radiusChange": -2.5177244733498583e-8,
+  "representation": "Selected fields from the historical report; omitted event/model/geometry ledgers remain in the local archive.",
+  "rigidAlignment": {
+    "angleMaximum": 0.00045210733770195693,
+    "angleRms": 0.00017758803878961595,
+    "midpointMaximum": 0.00025577132646112784,
+    "midpointRms": 0.0000952593958619164,
+    "rotationDegrees": -132.26500902477275,
+    "rotationRadians": -2.3084598926622983,
+    "translation": {
+      "x": -0.0000015821306730834372,
+      "y": -0.00004295648380425732
+    }
+  },
+  "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-best2855-contact-summary.json",
+  "sourcePoseHashes": [
+    "a7b46c7c431804690c84865a6fe728bb0b8b4c4461398f343d76967c017ec91e",
+    "592afbcc61e3056a71091230500d5db1864e96f44904872df1b930c85c5811b4"
+  ],
+  "sourceSha256": "4c4fde9d12cc0d565a65987a6cbac2ddcc7db52989f9a079036908bbe23b5cdd",
+  "tightThresholdGraphChanges": {
+    "added": [],
+    "removed": ["3-12"]
+  }
+}

@@ -1,0 +1,413 @@
+{
+  "broadGoalStatus": "paused",
+  "cpu": {
+    "atOrAbove90": [],
+    "errors": [],
+    "maxActiveRoots": 1,
+    "maxHost250ms": 88.50574712643679,
+    "maxRolling1s": 68.21704241435478,
+    "requestedCeiling": 90,
+    "samples": 2353
+  },
+  "createdAt": "2026-10-27T05:08:34.809Z",
+  "experiments": [
+    {
+      "artifact": "packing-asymmetric-middle-2931",
+      "conditions": 307,
+      "duplicates": 0,
+      "name": "Independent asymmetric middle, then limited/full side release",
+      "official": {
+        "errors": [],
+        "score": 2.9775667223278655,
+        "valid": true
+      },
+      "provenance": {
+        "angleLimit": null,
+        "angleMagnitude": 0.08607131902693896,
+        "attempt": 294,
+        "base": "monotone-best-middle",
+        "continuousSideDisplacement": {
+          "maximumAngle": 0.062978550588201,
+          "maximumPosition": 0.044645123292582745,
+          "pieces": [
+            {
+              "angle": 0.00010514690412244397,
+              "distance": 0.018425063651416204,
+              "id": 2
+            },
+            {
+              "angle": 0.01304127159230628,
+              "distance": 0.024620323211938067,
+              "id": 3
+            },
+            {
+              "angle": 0.013041618651145807,
+              "distance": 0.03648162840553413,
+              "id": 4
+            },
+            {
+              "angle": 0.011163098634669133,
+              "distance": 0.03510643567962977,
+              "id": 5
+            },
+            {
+              "angle": 0.04365401623241661,
+              "distance": 0.044645123292582745,
+              "id": 6
+            },
+            {
+              "angle": 0.062978550588201,
+              "distance": 0.0172690451787756,
+              "id": 9
+            },
+            {
+              "angle": 0.011995310381414437,
+              "distance": 0.0206987363340706,
+              "id": 10
+            },
+            {
+              "angle": 0.011994966094288627,
+              "distance": 0.0345937096808515,
+              "id": 11
+            },
+            {
+              "angle": 0.010116082303408378,
+              "distance": 0.03250144062108748,
+              "id": 12
+            },
+            {
+              "angle": 0.05091592940230274,
+              "distance": 0.038765506317017896,
+              "id": 13
+            }
+          ],
+          "rmsAngle": 0.030527510620774346,
+          "rmsPosition": 0.031598562998709674
+        },
+        "cycle": 22,
+        "euclideanPositionLimit": null,
+        "family": "top-pair-split",
+        "initialHash": "1eff99cb1f4413e8f19515e0e728060e5c4455dc6d889f72a0c1eb4197287c86",
+        "magnitude": 0.1339508564561532,
+        "middleDiversity": 0.33685316376878466,
+        "pinsExactlyPreserved": null,
+        "positionLimitPerAxis": null,
+        "roundedSideDisplacement": {
+          "maximumAngle": 0.06297900000000034,
+          "maximumPosition": 0.04464548465410586,
+          "pieces": [
+            {
+              "angle": 0.00010500000000002174,
+              "distance": 0.018424891451512014,
+              "id": 2
+            },
+            {
+              "angle": 0.013041000000000304,
+              "distance": 0.024620345753055616,
+              "id": 3
+            },
+            {
+              "angle": 0.013041999999999998,
+              "distance": 0.03648162585466834,
+              "id": 4
+            },
+            {
+              "angle": 0.011163000000000256,
+              "distance": 0.035106620073712604,
+              "id": 5
+            },
+            {
+              "angle": 0.043654000000000005,
+              "distance": 0.04464548465410586,
+              "id": 6
+            },
+            {
+              "angle": 0.06297900000000034,
+              "distance": 0.01726935716811717,
+              "id": 9
+            },
+            {
+              "angle": 0.011995000000000006,
+              "distance": 0.020698777017012452,
+              "id": 10
+            },
+            {
+              "angle": 0.0119950000000002,
+              "distance": 0.034593576007692535,
+              "id": 11
+            },
+            {
+              "angle": 0.010116000000000014,
+              "distance": 0.032501308896719844,
+              "id": 12
+            },
+            {
+              "angle": 0.05091630717958597,
+              "distance": 0.038765451861161156,
+              "id": 13
+            }
+          ],
+          "rmsAngle": 0.030527651463560082,
+          "rmsPosition": 0.031598610814401344
+        },
+        "seed": 2931,
+        "sourcePath": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seed-bilateral-2922.scene.json",
+        "sourceSHA256": "62d8e624857511d6dc78970ed2cc7fe3387ef2fb8a787c71d43c72e761ad7331",
+        "splitDirection": 2.2416023267948963,
+        "stage": "free-polish"
+      },
+      "radius": 2.977566722327868,
+      "seconds": 240.04054637500002
+    },
+    {
+      "artifact": "packing-coupled-lower-2934",
+      "conditions": 134,
+      "duplicates": 0,
+      "name": "Warm start, coupled lower rail opening and lower pair separation/rotation",
+      "official": {
+        "errors": [],
+        "score": 2.976336877341694,
+        "valid": true
+      },
+      "provenance": {
+        "angleLimit": null,
+        "attempt": 125,
+        "axisID": 15,
+        "base": "saved-source-middle-and-rails",
+        "continuousSideDisplacement": {
+          "maximumAngle": 0.14875514812232132,
+          "maximumPosition": 0.011646003040646509,
+          "pieces": [
+            {
+              "angle": 0.004656606278765629,
+              "distance": 0.007330832839321501,
+              "id": 2
+            },
+            {
+              "angle": 0.004263115821429686,
+              "distance": 0.0018920248388520696,
+              "id": 3
+            },
+            {
+              "angle": 0.004259392046318922,
+              "distance": 0.009175206736552796,
+              "id": 4
+            },
+            {
+              "angle": 0.004127270488773593,
+              "distance": 0.011646003040646509,
+              "id": 5
+            },
+            {
+              "angle": 0.14875514812232132,
+              "distance": 0.005394911892566303,
+              "id": 6
+            },
+            {
+              "angle": 0.04185776821218034,
+              "distance": 0.004773395879635045,
+              "id": 9
+            },
+            {
+              "angle": 0.0017006109568081242,
+              "distance": 0.0022029997587540815,
+              "id": 10
+            },
+            {
+              "angle": 0.0017008259275490545,
+              "distance": 0.003004023892552105,
+              "id": 11
+            },
+            {
+              "angle": 0.0018586673388992225,
+              "distance": 0.005373150036297952,
+              "id": 12
+            },
+            {
+              "angle": 0.001594454457361394,
+              "distance": 0.001745337589174191,
+              "id": 13
+            }
+          ],
+          "rmsAngle": 0.04895608602532275,
+          "rmsPosition": 0.006122249327161195
+        },
+        "cycle": 2,
+        "euclideanPositionLimit": null,
+        "family": "contact-restored-opening",
+        "initialHash": "58398449d73612581b8bf7bbcabea2f7a19d4292efdb33fa3d3b3c5cfeb161aa",
+        "jitter": 0.9965872529862331,
+        "leftWeight": 1,
+        "level": 0.08,
+        "lineage": "coupled lower rail opening after asymmetric-middle2931",
+        "lowerPairIDs": [7, 14],
+        "middleDiversity": 0.0026157596699999995,
+        "openedSidesRadius": 2.9791142691323858,
+        "orientationSign": 1,
+        "pinnedSideReference": null,
+        "pinsExactlyPreserved": null,
+        "positionLimitPerAxis": null,
+        "proposalOnly": true,
+        "rails": [
+          {
+            "angle": 0.13962634015954636,
+            "id": 6,
+            "lowerID": 14,
+            "pivot": {
+              "x": 0.9434196614345719,
+              "y": -2.0204213182624926
+            },
+            "pivotDefinition": "lower semicircle unit-arc support toward the source rail normal",
+            "tangencyCorrection": 0.04650366875423961,
+            "targetGap": 0.000003,
+            "translationX": 0
+          },
+          {
+            "angle": -0.13962634015954636,
+            "id": 13,
+            "lowerID": 7,
+            "pivot": {
+              "x": -0.9493359648238647,
+              "y": -1.9675338391598307
+            },
+            "pivotDefinition": "lower semicircle unit-arc support toward the source rail normal",
+            "tangencyCorrection": 0.046206504684537464,
+            "targetGap": 0.000003,
+            "translationX": 0
+          }
+        ],
+        "rightWeight": 1,
+        "roundedSideDisplacement": {
+          "maximumAngle": 0.148755,
+          "maximumPosition": 0.011645730977486965,
+          "pieces": [
+            {
+              "angle": 0.004657000000000022,
+              "distance": 0.00733071353962217,
+              "id": 2
+            },
+            {
+              "angle": 0.004262999999999906,
+              "distance": 0.0018918353522439037,
+              "id": 3
+            },
+            {
+              "angle": 0.004259000000000013,
+              "distance": 0.009175249533391246,
+              "id": 4
+            },
+            {
+              "angle": 0.004126999999999992,
+              "distance": 0.011645730977486965,
+              "id": 5
+            },
+            {
+              "angle": 0.148755,
+              "distance": 0.0053946400250618224,
+              "id": 6
+            },
+            {
+              "angle": 0.04185799999999995,
+              "distance": 0.004773323370566913,
+              "id": 9
+            },
+            {
+              "angle": 0.0017010000000000083,
+              "distance": 0.0022027119648288583,
+              "id": 10
+            },
+            {
+              "angle": 0.0017010000000001748,
+              "distance": 0.0030039062901497187,
+              "id": 11
+            },
+            {
+              "angle": 0.0018589999999999995,
+              "distance": 0.0053732713499320735,
+              "id": 12
+            },
+            {
+              "angle": 0.0015940000000003174,
+              "distance": 0.0017457161854095254,
+              "id": 13
+            }
+          ],
+          "rmsAngle": 0.04895605962084775,
+          "rmsPosition": 0.006122159553621561
+        },
+        "seed": 2934,
+        "sourcePath": "/private/tmp/packing-asymmetric-middle-study-2931-best.scene.json",
+        "sourceSHA256": "6b2836625810ab5c8b2641fba87b4184d3502743eb9f8d4e8d9a761c8d35c5f7",
+        "stage": "free-polish",
+        "turnDegrees": 8
+      },
+      "radius": 2.9763368773417107,
+      "seconds": 120.005508959
+    }
+  ],
+  "geometry": {
+    "all105IndependentReferencePairs": true,
+    "fullCurvedEnclosingCircle": true,
+    "noIncumbentReplacement": true,
+    "schemaAndExportExactness": true,
+    "sixDecimalExport": true
+  },
+  "incumbent": {
+    "officialScore": 2.9485270638716834,
+    "placements": "packing-best.placements.json",
+    "preserved": true,
+    "uiGeometryChanged": false
+  },
+  "interpretation": [
+    "The fixed side ten already impose the entire starting radius. Moving the middle alone can change contacts but cannot shrink that enclosing circle.",
+    "Middle poses are independent; neither stage enforces reflection or a void-corner-count objective.",
+    "Separating the lower halves horizontally alone increases width. Vertical staggering plus lower-side rotation changes which recesses are available.",
+    "The coupled experiment uses explicit rail pivots and preserves opened rail poses during insertion. Both side and middle poses can subsequently relax.",
+    "Both studies improve the selected bilateral starting point. They do not beat the earlier unrestricted mirrored-seed result2.967560224 or the incumbent.",
+    "Finite local experiments do not establish the best possible radius for this layout family."
+  ],
+  "quality": {
+    "attempted": "bun run verify (includes bun run check)",
+    "continuation": {
+      "at": "2026-10-27T05:08:11.710Z",
+      "results": [
+        {
+          "args": ["run", "test", "--timeout", "30000"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "pokayoke"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "check:vinext"],
+          "exitCode": 0
+        },
+        {
+          "args": ["run", "--sequential", "--filter", "./apps/*", "build"],
+          "exitCode": 0
+        }
+      ]
+    },
+    "explanation": "Re-ran the repository test script with--timeout30000, then Pokayoke, Vinext compatibility and sequential all-app builds.",
+    "initialFailure": "The13+2 restart regression exceeded the5000ms wall-clock test timeout under CPU throttling. Other130tests, Biome, typecheck and Knip passed.",
+    "runtimeShim": "The temporary PATH shim was not invoked by nested Bun scripts; it did not change test timeout. Wrapper then hit a missing log-file error after verify had already failed. No repository files changed."
+  },
+  "shutdown": {
+    "fleetTerminal": true,
+    "governorTerminal": true,
+    "maxWorkers": 0,
+    "ownedProcesses": 0,
+    "running": 0,
+    "sealed": true
+  },
+  "startingLayout": {
+    "middleIDs": [1, 7, 8, 14, 15],
+    "radius": 2.9923695162470025,
+    "scene": "packing-seed-bilateral-2922.scene.json",
+    "sideIDs": [2, 3, 4, 5, 6, 9, 10, 11, 12, 13],
+    "sideOnlyRadius": 2.9923695162470025
+  },
+  "status": "bounded_asymmetric_middle_experiment_complete",
+  "submittedByAgent": false
+}

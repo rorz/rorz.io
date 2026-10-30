@@ -1,0 +1,495 @@
+{
+  "allControlledWorkersStopped": true,
+  "archive": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/calibrated-search-2026-10-30",
+  "canonicalChanged": false,
+  "canonicalHashes": {
+    "placements": "123b910e19ff1ba27e4af1932b408ff0d3b1073eefcf977e8af28e40e9c2257f",
+    "report": "2f7f6a4541676c11c1c79e351104464c70c4a88b1479de98dfd6e37e4091cc7d",
+    "scene": "0802364747cb028fc301bea5953b5a5b55023aaf35ccea25b7a21a8f5ff62b59",
+    "validation": "2a6f4c363a0ac2753577fc560621a7c59088ba7bfde2a51ac766683a03127386"
+  },
+  "createdAt": "2026-10-30T05:35:21.082Z",
+  "implementation": {
+    "changes": [
+      "Reusable retained-boundary-point radius certificate catches interior-only and angle-only false exposure.",
+      "Withheld recovery witness must satisfy actual serialized domains including the first angle; empty certified boxes fail loudly.",
+      "Separate kernel calibration is mandatory before its main campaign; failed calibration blocks that campaign."
+    ],
+    "focusedRegressionTests": 6,
+    "repositoryFiles": [
+      {
+        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/enclosure.ts",
+        "sha256": "f7c7f2cd7870b1812862b4bdf6d8ef1778ae72347935caee14b31440ea7243e7"
+      },
+      {
+        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/radius-exposure.ts",
+        "sha256": "710c52119414c0686c0da4ea1e44635e78e032df11385ccb5b5dc95103cbf4fc"
+      },
+      {
+        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/radius-exposure.test.ts",
+        "sha256": "79bad5adb5b62bf198ca29d02b605943f2a0b0d081be8815b614f7c2fb059686"
+      },
+      {
+        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/search-recovery.ts",
+        "sha256": "61d721beeae88500d41793e4149fa380824be8621f13b0c62d4ce4d987e3d835"
+      },
+      {
+        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/search-recovery.test.ts",
+        "sha256": "d3cae410127568e9cdcd847138984dc83744963c0bad347f6e8fad24ff9e9d0c"
+      }
+    ]
+  },
+  "limitations": [
+    "Calibration establishes recovery on the known instance only.",
+    "The finite CSP negative is relative to the implemented constraints and floating-point calculations.",
+    "The radius-directed repair prototype failed its own control and remains inactive for main searches.",
+    "Whole-host CPU samples exceeded90 despite reactive pauses; external idle spikes also occurred. A continuous host-wide ceiling cannot be guaranteed by this governor."
+  ],
+  "officialBest": 2.9485270638716834,
+  "provenance": {
+    "audit": {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-known-recovery-2961-calibration.report.json",
+      "sha256": "5de05343dbd840b503396b2e6a1d45d128954b62149ffb14a9adac253100747c"
+    },
+    "longBox": {
+      "path": "/private/tmp/packing-box-rerun-2968-result.json",
+      "sha256": "192013ca62f1ade4706fa20b328122e88e87e73105af664c8329d0be5965224a"
+    },
+    "recovery": {
+      "path": "/private/tmp/packing-recovery-2961-result.json",
+      "sha256": "6536d741781aec2cb66690a1aac8b6b7bd53312e8619d6cd9fe840ce3474515c"
+    },
+    "repair": {
+      "path": "/private/tmp/packing-radius-directed-2962-calibrate-result.json",
+      "sha256": "f7fef8e88364c16c1328a01a8ec77d056c674788a657359cf769ffe3c5a78ac1"
+    },
+    "shortBox": {
+      "path": "/private/tmp/packing-current-box-2964-result.json",
+      "sha256": "1d0393756923a7cddd4b70492f123c69f956a1fe348901d372e8e49c3d2d7feb"
+    },
+    "verification": {
+      "path": "/private/tmp/packing-verify-2963.result.json",
+      "sha256": "6f13f533e763d2e58ac50e03415189d392ccaf79eb5bf754b416cd09cec300ec"
+    }
+  },
+  "resources": [
+    {
+      "above90ActivePaused": 0,
+      "above90ActiveUnpaused": 1,
+      "above90Idle": 10,
+      "controller": "/private/tmp/packing-controlled-2963-host",
+      "cpuPolicy": {
+        "cpuPauseThreshold": 70,
+        "cpuResumeThreshold": 55,
+        "cpuSampleMilliseconds": 250,
+        "maxConcurrentGroups": 1,
+        "wholeHostHardCapGuaranteed": false
+      },
+      "groupsVerifiedEmpty": true,
+      "jobs": [
+        {
+          "elapsed": 31.767075583,
+          "endedAt": "2026-10-30T04:25:50.755Z",
+          "exitCode": 0,
+          "groupVerifiedEmpty": true,
+          "id": "packing-controlled-verify-2963",
+          "pgid": 24311,
+          "pid": 24311,
+          "rootExitElapsed": 31.117322125,
+          "startedAt": "2026-10-30T04:25:18.988Z",
+          "status": "completed",
+          "stderr": "/private/tmp/packing-controlled-verify-2963.stderr.log",
+          "stdout": "/private/tmp/packing-controlled-verify-2963.log"
+        },
+        {
+          "elapsed": 50.60220887500001,
+          "endedAt": "2026-10-30T04:28:26.373Z",
+          "exitCode": 0,
+          "groupVerifiedEmpty": true,
+          "id": "packing-controlled-recovery-2961",
+          "pgid": 25107,
+          "pid": 25107,
+          "rootExitElapsed": 49.75753608300001,
+          "startedAt": "2026-10-30T04:27:35.774Z",
+          "status": "completed",
+          "stderr": "/private/tmp/packing-controlled-recovery-2961.stderr.log",
+          "stdout": "/private/tmp/packing-controlled-recovery-2961.log"
+        }
+      ],
+      "maximumHostSample": 100,
+      "samplesAbove90": 11,
+      "stateSha256": "a18372614e8c945007568ec2be26bcbb985f1cc7e6224e90003715ede3c9f535",
+      "terminal": true,
+      "wholeHostHardCeilingGuaranteed": false
+    },
+    {
+      "above90ActivePaused": 1,
+      "above90ActiveUnpaused": 4,
+      "above90Idle": 1,
+      "controller": "/private/tmp/packing-controlled-2966",
+      "cpuPolicy": {
+        "cpuPauseThreshold": 50,
+        "cpuResumeThreshold": 35,
+        "cpuSampleMilliseconds": 50,
+        "maxConcurrentGroups": 1,
+        "wholeHostHardCapGuaranteed": false
+      },
+      "groupsVerifiedEmpty": true,
+      "jobs": [
+        {
+          "elapsed": 58.859032875000004,
+          "endedAt": "2026-10-30T05:26:12.791Z",
+          "exitCode": 0,
+          "groupVerifiedEmpty": true,
+          "id": "packing-controlled-current-box-2964",
+          "pgid": 28603,
+          "pid": 28603,
+          "rootExitElapsed": 58.155875792,
+          "startedAt": "2026-10-30T05:25:13.932Z",
+          "status": "completed",
+          "stderr": "/private/tmp/packing-controlled-current-box-2964.stderr.log",
+          "stdout": "/private/tmp/packing-controlled-current-box-2964.log"
+        },
+        {
+          "elapsed": 57.367655667,
+          "endedAt": "2026-10-30T05:27:33.984Z",
+          "exitCode": 2,
+          "groupVerifiedEmpty": true,
+          "id": "packing-controlled-radius-calibrate-2962",
+          "pgid": 29191,
+          "pid": 29191,
+          "rootExitElapsed": 57.089233209000014,
+          "startedAt": "2026-10-30T05:26:36.617Z",
+          "status": "failed",
+          "stderr": "/private/tmp/packing-controlled-radius-calibrate-2962.stderr.log",
+          "stdout": "/private/tmp/packing-controlled-radius-calibrate-2962.log"
+        }
+      ],
+      "maximumHostSample": 100,
+      "samplesAbove90": 6,
+      "stateSha256": "f22950e86939139a5145401bc90c1d1218738cbc2823270962c0c050ead3dbbe",
+      "terminal": true,
+      "wholeHostHardCeilingGuaranteed": false
+    },
+    {
+      "above90ActivePaused": 0,
+      "above90ActiveUnpaused": 0,
+      "above90Idle": 0,
+      "controller": "/private/tmp/packing-controlled-2969",
+      "cpuPolicy": {
+        "cpuPauseThreshold": 50,
+        "cpuResumeThreshold": 35,
+        "cpuSampleMilliseconds": 50,
+        "maxConcurrentGroups": 1,
+        "wholeHostHardCapGuaranteed": false
+      },
+      "groupsVerifiedEmpty": true,
+      "jobs": [
+        {
+          "elapsed": 72.516617666,
+          "endedAt": "2026-10-30T05:32:41.095Z",
+          "exitCode": 0,
+          "groupVerifiedEmpty": true,
+          "id": "packing-controlled-box-rerun-2968",
+          "pgid": 30505,
+          "pid": 30505,
+          "rootExitElapsed": 71.64310283300001,
+          "startedAt": "2026-10-30T05:31:28.579Z",
+          "status": "completed",
+          "stderr": "/private/tmp/packing-controlled-box-rerun-2968.stderr.log",
+          "stdout": "/private/tmp/packing-controlled-box-rerun-2968.log"
+        }
+      ],
+      "maximumHostSample": 90,
+      "samplesAbove90": 0,
+      "stateSha256": "7cbe61512298b0ebda368a8ee050b2b1c0e03e0ad39e0bda7f19f07feb3ff721",
+      "terminal": true,
+      "wholeHostHardCeilingGuaranteed": false
+    }
+  ],
+  "stages": {
+    "knownRecovery": {
+      "maximum": 9.99860213525659e-7,
+      "movement": {
+        "atLeastOneFullGridCentreMove": true,
+        "changedAngles": 5,
+        "changedCentres": 4,
+        "changedFields": 13,
+        "deltas": [
+          {
+            "dtheta": -4,
+            "dx": 0,
+            "dy": 0,
+            "piece": 1
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 2
+          },
+          {
+            "dtheta": 2,
+            "dx": 2,
+            "dy": 1,
+            "piece": 3
+          },
+          {
+            "dtheta": -3,
+            "dx": -2,
+            "dy": -1,
+            "piece": 4
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 5
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 6
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 7
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 8
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 9
+          },
+          {
+            "dtheta": 0,
+            "dx": 2,
+            "dy": 2,
+            "piece": 10
+          },
+          {
+            "dtheta": -5,
+            "dx": 0,
+            "dy": 0,
+            "piece": 11
+          },
+          {
+            "dtheta": 1,
+            "dx": 2,
+            "dy": -1,
+            "piece": 12
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 13
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 14
+          },
+          {
+            "dtheta": 0,
+            "dx": 0,
+            "dy": 0,
+            "piece": 15
+          }
+        ],
+        "l1IntegerDistance": 28,
+        "maximumAbsoluteIntegerDelta": 5
+      },
+      "native": {
+        "capped": false,
+        "edges": 30,
+        "elapsed": 49.371923375,
+        "geometryRejects": 0,
+        "leaves": 1,
+        "nativeChecks": 428584,
+        "nodes": 4731,
+        "normals": 11,
+        "pairChecks": 8333680,
+        "relativeHits": 7757620,
+        "solution": {
+          "center": [-0.15003943939642683, -0.8526786562695368],
+          "radius": 2.9485270638718815,
+          "shapes": [
+            {
+              "theta": -0.063,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "theta": -0.21474,
+              "x": 1.153371,
+              "y": 0.595727
+            },
+            {
+              "theta": 2.772973,
+              "x": -0.844485,
+              "y": 0.967899
+            },
+            {
+              "theta": -1.175297,
+              "x": -1.029881,
+              "y": -0.443202
+            },
+            {
+              "theta": -1.956554,
+              "x": -1.790366,
+              "y": -1.904385
+            },
+            {
+              "theta": 2.906049,
+              "x": 1.444787,
+              "y": -1.382845
+            },
+            {
+              "theta": -1.163694,
+              "x": -0.554354,
+              "y": -1.32709
+            },
+            {
+              "theta": -0.284266,
+              "x": 0.026806,
+              "y": -2.793164
+            },
+            {
+              "theta": -0.235566,
+              "x": 1.245709,
+              "y": -2.212327
+            },
+            {
+              "theta": -2.649264,
+              "x": -1.66196,
+              "y": 0.376489
+            },
+            {
+              "theta": -2.484712,
+              "x": -2.092758,
+              "y": -0.702338
+            },
+            {
+              "theta": -0.368621,
+              "x": -0.959676,
+              "y": 0.669691
+            },
+            {
+              "theta": 0.961528,
+              "x": 0.230811,
+              "y": 1.058266
+            },
+            {
+              "theta": -1.133844,
+              "x": -0.965087,
+              "y": -2.622553
+            },
+            {
+              "theta": -3.108721,
+              "x": 2.622234,
+              "y": -0.761517
+            }
+          ]
+        },
+        "supportChecks": 85202117
+      },
+      "passed": true,
+      "radius": 2.9485270638718815,
+      "residentSeconds": 49.680404417,
+      "scope": "Known-instance calibration only; no current-best improvement claimed.",
+      "status": "known-improvement-recovered"
+    },
+    "longCurrentBox": {
+      "actualFullAllocationSeconds": 540,
+      "interpretation": "Same calibrated kernel/domain/order with a larger native time header; finished uncapped with no target-meeting solution in the finite width5 domains. No global or basin optimality claim.",
+      "native": {
+        "capped": false,
+        "edges": 30,
+        "elapsed": 71.331840292,
+        "geometryRejects": 0,
+        "leaves": 0,
+        "nativeChecks": 455432,
+        "nodes": 12371,
+        "normals": 11,
+        "pairChecks": 10310303,
+        "relativeHits": 9661774,
+        "solution": null,
+        "supportChecks": 263185516
+      },
+      "notCheckpointContinuation": true,
+      "residentSeconds": 71.544524208,
+      "status": "finite-width5-exhausted",
+      "target": 2.948527062871882
+    },
+    "newRepair": {
+      "counters": {
+        "completedTrials": 50,
+        "continuousCheckpoints": 825,
+        "continuousExposed": 145,
+        "distanceProjections": 0,
+        "exportedExposed": 115,
+        "exportedProposals": 3300,
+        "fullNativeGeometryAttempts": 115,
+        "lowerThreeSupportBound": 1054,
+        "maximumAreaExcess": 0.0000026072787939943854,
+        "maximumPairDistanceChange": 0.000005339057300268735,
+        "maximumRadiusAboveReference": 0.0000012840896719268358,
+        "meaningfulAreaBarrierCheckpoints": 825,
+        "meaningfulRadiusBarrierCheckpoints": 719,
+        "nativeFeasible": 0,
+        "nativeMecAttempts": 1068,
+        "nativeReferenceValidityDisagreements": 0,
+        "outsideCalibrationDomain": 0,
+        "referenceAttempts": 0,
+        "referenceGains": 0,
+        "referenceValid": 0,
+        "repairPairs": 502664,
+        "retainedBoundBlocked": 0,
+        "shadowPressurePairs": 28863,
+        "shadowPressureWalls": 30606,
+        "threeSupportBoundBlocked": 334,
+        "trialDeadlines": 6,
+        "trials": 56,
+        "uniqueExportedProposals": 1402,
+        "violatedPairProjections": 77756,
+        "wallProjections": 64987
+      },
+      "interpretation": "Failed feasibility-recovery power control, never a negative result about the current best.",
+      "mainDispatched": false,
+      "passed": false,
+      "residentSeconds": 57.005100375000005,
+      "status": "same-kernel-recovery-capped"
+    },
+    "shortCurrentBox": {
+      "inconclusive": true,
+      "residentSeconds": 58.05849200000001,
+      "status": "watchdog-capped-inconclusive"
+    }
+  },
+  "status": "bounded-program-complete-no-improvement",
+  "submitted": false,
+  "uiChanged": false,
+  "verification": {
+    "args": ["run", "verify"],
+    "exitCode": 0,
+    "finishedAt": "2026-10-30T04:25:50.101Z",
+    "passed": true,
+    "startedAt": "2026-10-30T04:25:19.056Z",
+    "stderr": "/private/tmp/packing-verify-2963.stderr.log",
+    "stdout": "/private/tmp/packing-verify-2963.stdout.log",
+    "terminal": true,
+    "testCount": 137,
+    "testFailures": 0
+  }
+}

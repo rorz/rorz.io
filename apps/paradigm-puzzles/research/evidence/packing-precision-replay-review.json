@@ -1,0 +1,155 @@
+{
+  "bestValidatedScore": 2.948527089049121,
+  "broaderGoal": "paused",
+  "controls": {
+    "inputChecks": [
+      {
+        "count": 58,
+        "file": "packing-lattice-repair-block-2420-inputs.json",
+        "sha256": "75e6f726c7b782e195638ee47fdf94ff645f4ce6c972215e0120eb0028909986"
+      },
+      {
+        "count": 58,
+        "file": "packing-precision-replay-old-2420-inputs.json",
+        "sha256": "75e6f726c7b782e195638ee47fdf94ff645f4ce6c972215e0120eb0028909986"
+      },
+      {
+        "count": 58,
+        "file": "packing-precision-replay-polygon-2420-inputs.json",
+        "sha256": "75e6f726c7b782e195638ee47fdf94ff645f4ce6c972215e0120eb0028909986"
+      }
+    ],
+    "newGradient": "packing-polygon-gradient.ts",
+    "oldGradient": "packing-area.ts",
+    "repairFamily": "packing-lattice-repair-block-2420-inputs.json",
+    "sameGrid": 0.000001,
+    "samePolygonAcceptance": true,
+    "sameSafetyMargin": 1e-12,
+    "seed": 2420,
+    "startingScene": "packing-lattice-block-2410-best.json"
+  },
+  "createdAt": "2026-10-26T04:20:52.796Z",
+  "findings": {
+    "coordinateDifferences": [
+      {
+        "delta": -0.000001000000000139778,
+        "field": "theta",
+        "old": 2.093672,
+        "piece": 2,
+        "polygon": 2.093671
+      }
+    ],
+    "historicalRadiusChanges": [0, 0, 0, 0],
+    "inputDrift": "The live repair pool had grown from 58 to 173 candidates. The initial 42-trial replays with that live pool reproduced neither best score. Using the archived 58-candidate snapshot reproduced the same best radius with both gradient providers. The older calculation reproduced the saved coordinates exactly; the newer calculation changed one angle by one grid step.",
+    "interpretation": "No loss of the successful score from the newer gradient in this controlled replay; the newer gradient was slower. This does not rule out other later heuristic regressions or a better coordinated rounding choice.",
+    "oldSeconds": 18.745757958000002,
+    "polygonSeconds": 31.552341667,
+    "sameCoordinates": false,
+    "suggestedBaseline": "Use the successful analytic proposal calculation with exact polygon acceptance; change one search heuristic at a time against fixed input snapshots.",
+    "timeRatio": 1.683172360258424
+  },
+  "historicalChecks": [
+    {
+      "exportMaximum": 9.99852163131251e-7,
+      "exportOverlaps": 0,
+      "exportRadius": 2.9485271975184943,
+      "file": "packing-precision-final-incumbent.json",
+      "maximum": 9.99852163131251e-7,
+      "radiusDifference": 0,
+      "recomputedRadius": 2.9485271975184943,
+      "recordedRadius": 2.9485271975184943
+    },
+    {
+      "exportMaximum": 9.99858680792362e-7,
+      "exportOverlaps": 0,
+      "exportRadius": 2.9485270908605874,
+      "file": "packing-lattice-block-2410-best.json",
+      "maximum": 9.99858680792362e-7,
+      "radiusDifference": 0,
+      "recomputedRadius": 2.9485270908605874,
+      "recordedRadius": 2.9485270908605874
+    },
+    {
+      "exportMaximum": 9.996596293204443e-7,
+      "exportOverlaps": 0,
+      "exportRadius": 2.9485270890491266,
+      "file": "packing-lattice-repair-block-2420-best.json",
+      "maximum": 9.996596293204443e-7,
+      "radiusDifference": 0,
+      "recomputedRadius": 2.9485270890491266,
+      "recordedRadius": 2.9485270890491266
+    },
+    {
+      "exportMaximum": 0.0000010199760821446726,
+      "exportOverlaps": 15,
+      "exportRadius": 2.9485266725680486,
+      "file": "packing-polygon-polish-2650.json",
+      "maximum": 9.999988235176102e-7,
+      "radiusDifference": 0,
+      "recomputedRadius": 2.948526549841559,
+      "recordedRadius": 2.948526549841559
+    }
+  ],
+  "request": "Check whether newer precision calculations lost the earlier successful rounding move.",
+  "runs": [
+    {
+      "best": {
+        "maximum": 9.996596293204443e-7,
+        "radius": 2.9485270890491266,
+        "v": [
+          0, 0, 2.245642, -1.216622, 0.4529, 2.093672, -0.14823, -1.276003, -1.202013, 1.02049,
+          -0.464081, 1.133615, 2.613404, -0.044154, 0.351933, 0.051632, 1.999251, -1.068691,
+          1.354868, 0.482265, 1.1447, 2.049004, 1.898381, 2.024194, 0.799381, 2.409791, 2.072881,
+          0.839269, -1.483132, -0.340815, 1.927229, -1.076365, -0.175992, 0.149696, -1.160866,
+          1.939579, -0.938462, -0.540916, -3.013349, 2.58984, 1.049586, 1.174632, -1.200075,
+          2.452749, -0.800276, 2.9485270890491266
+        ]
+      },
+      "events": [
+        "CANDIDATE 42 0 7 2.9485270890491266 9.996596293204443e-7 18.7",
+        "BEST 2.9485270890491266",
+        "FINAL 42 42 2.9485270890491266 18.745757958000002"
+      ],
+      "final": "FINAL 42 42 2.9485270890491266 18.745757958000002",
+      "finished": true,
+      "mode": "old",
+      "seed": 2420,
+      "timeLimitSeconds": 60,
+      "trialLimit": 42
+    },
+    {
+      "best": {
+        "maximum": 9.996596293204443e-7,
+        "radius": 2.9485270890491266,
+        "v": [
+          0, 0, 2.245642, -1.216622, 0.4529, 2.093671, -0.14823, -1.276003, -1.202013, 1.02049,
+          -0.464081, 1.133615, 2.613404, -0.044154, 0.351933, 0.051632, 1.999251, -1.068691,
+          1.354868, 0.482265, 1.1447, 2.049004, 1.898381, 2.024194, 0.799381, 2.409791, 2.072881,
+          0.839269, -1.483132, -0.340815, 1.927229, -1.076365, -0.175992, 0.149696, -1.160866,
+          1.939579, -0.938462, -0.540916, -3.013349, 2.58984, 1.049586, 1.174632, -1.200075,
+          2.452749, -0.800276, 2.9485270890491266
+        ]
+      },
+      "events": [
+        "CANDIDATE 42 0 7 2.9485270890491266 9.996596293204443e-7 31.6",
+        "BEST 2.9485270890491266",
+        "FINAL 42 42 2.9485270890491266 31.552341667"
+      ],
+      "final": "FINAL 42 42 2.9485270890491266 31.552341667",
+      "finished": true,
+      "mode": "polygon",
+      "seed": 2420,
+      "timeLimitSeconds": 60,
+      "trialLimit": 42
+    }
+  ],
+  "scope": "A bounded replay of the first 42 trials of the recorded winning seed, changing only the gradient provider. This is not an ablation of every later heuristic.",
+  "submittedByAgent": false,
+  "uiChanged": false,
+  "verification": {
+    "command": "bun run verify",
+    "includes": "bun run check",
+    "log": "packing-2830-verify.log",
+    "passed": true
+  }
+}

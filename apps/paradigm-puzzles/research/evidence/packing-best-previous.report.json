@@ -1,0 +1,672 @@
+{
+  "comparisonRank": 4,
+  "coordinateGridSearch": {
+    "best": 2.9485271975184943,
+    "count": 7262389,
+    "family": [
+      {
+        "best": null,
+        "index": 0,
+        "trials": 47750
+      },
+      {
+        "best": null,
+        "index": 1,
+        "trials": 47825
+      },
+      {
+        "best": null,
+        "index": 2,
+        "trials": 47350
+      },
+      {
+        "best": null,
+        "index": 3,
+        "trials": 47596
+      },
+      {
+        "best": null,
+        "index": 4,
+        "trials": 47676
+      },
+      {
+        "best": null,
+        "index": 5,
+        "trials": 48046
+      },
+      {
+        "best": 2.9485275102975006,
+        "index": 6,
+        "trials": 47622
+      },
+      {
+        "best": 2.9485274723168007,
+        "index": 7,
+        "trials": 47895
+      },
+      {
+        "best": null,
+        "index": 8,
+        "trials": 47905
+      },
+      {
+        "best": null,
+        "index": 9,
+        "trials": 47973
+      },
+      {
+        "best": 2.9485274037702536,
+        "index": 10,
+        "trials": 47621
+      },
+      {
+        "best": null,
+        "index": 11,
+        "trials": 47556
+      },
+      {
+        "best": 2.948527748447425,
+        "index": 12,
+        "trials": 47841
+      },
+      {
+        "best": null,
+        "index": 13,
+        "trials": 47681
+      },
+      {
+        "best": null,
+        "index": 14,
+        "trials": 48043
+      },
+      {
+        "best": null,
+        "index": 15,
+        "trials": 47777
+      },
+      {
+        "best": null,
+        "index": 16,
+        "trials": 47824
+      },
+      {
+        "best": 2.9485273705300092,
+        "index": 17,
+        "trials": 47620
+      },
+      {
+        "best": 2.948527302248422,
+        "index": 18,
+        "trials": 47740
+      },
+      {
+        "best": null,
+        "index": 19,
+        "trials": 47642
+      },
+      {
+        "best": null,
+        "index": 20,
+        "trials": 48021
+      },
+      {
+        "best": null,
+        "index": 21,
+        "trials": 47701
+      },
+      {
+        "best": null,
+        "index": 22,
+        "trials": 47263
+      },
+      {
+        "best": null,
+        "index": 23,
+        "trials": 48115
+      },
+      {
+        "best": 2.9485274277327687,
+        "index": 24,
+        "trials": 47878
+      },
+      {
+        "best": 2.9485274182249364,
+        "index": 25,
+        "trials": 47658
+      },
+      {
+        "best": null,
+        "index": 26,
+        "trials": 47587
+      },
+      {
+        "best": null,
+        "index": 27,
+        "trials": 47719
+      },
+      {
+        "best": null,
+        "index": 28,
+        "trials": 48059
+      },
+      {
+        "best": null,
+        "index": 29,
+        "trials": 47965
+      },
+      {
+        "best": null,
+        "index": 30,
+        "trials": 47567
+      },
+      {
+        "best": 2.9485275822844335,
+        "index": 31,
+        "trials": 47808
+      },
+      {
+        "best": null,
+        "index": 32,
+        "trials": 47928
+      },
+      {
+        "best": null,
+        "index": 33,
+        "trials": 47951
+      },
+      {
+        "best": null,
+        "index": 34,
+        "trials": 48003
+      },
+      {
+        "best": null,
+        "index": 35,
+        "trials": 47941
+      },
+      {
+        "best": null,
+        "index": 36,
+        "trials": 48088
+      },
+      {
+        "best": null,
+        "index": 37,
+        "trials": 47945
+      },
+      {
+        "best": null,
+        "index": 38,
+        "trials": 47755
+      },
+      {
+        "best": null,
+        "index": 39,
+        "trials": 47919
+      },
+      {
+        "best": null,
+        "index": 40,
+        "trials": 48070
+      },
+      {
+        "best": null,
+        "index": 41,
+        "trials": 47372
+      },
+      {
+        "best": null,
+        "index": 42,
+        "trials": 47671
+      },
+      {
+        "best": null,
+        "index": 43,
+        "trials": 47834
+      },
+      {
+        "best": null,
+        "index": 44,
+        "trials": 47636
+      },
+      {
+        "best": null,
+        "index": 45,
+        "trials": 47443
+      },
+      {
+        "best": 2.9485275895371372,
+        "index": 46,
+        "trials": 47998
+      },
+      {
+        "best": null,
+        "index": 47,
+        "trials": 47570
+      },
+      {
+        "best": 2.9485275952313716,
+        "index": 48,
+        "trials": 47919
+      },
+      {
+        "best": null,
+        "index": 49,
+        "trials": 47829
+      },
+      {
+        "best": null,
+        "index": 50,
+        "trials": 47949
+      },
+      {
+        "best": 2.9485276651996064,
+        "index": 51,
+        "trials": 47954
+      },
+      {
+        "best": null,
+        "index": 52,
+        "trials": 47661
+      },
+      {
+        "best": null,
+        "index": 53,
+        "trials": 47393
+      },
+      {
+        "best": 2.9485274894760005,
+        "index": 54,
+        "trials": 48060
+      },
+      {
+        "best": null,
+        "index": 55,
+        "trials": 47890
+      },
+      {
+        "best": 2.948527470161121,
+        "index": 56,
+        "trials": 47440
+      },
+      {
+        "best": null,
+        "index": 57,
+        "trials": 47682
+      },
+      {
+        "best": null,
+        "index": 58,
+        "trials": 47677
+      },
+      {
+        "best": null,
+        "index": 59,
+        "trials": 47734
+      },
+      {
+        "best": 2.948527522955011,
+        "index": 60,
+        "trials": 47815
+      },
+      {
+        "best": 2.948527476424689,
+        "index": 61,
+        "trials": 47602
+      },
+      {
+        "best": null,
+        "index": 62,
+        "trials": 47923
+      },
+      {
+        "best": null,
+        "index": 63,
+        "trials": 48316
+      },
+      {
+        "best": null,
+        "index": 64,
+        "trials": 47812
+      },
+      {
+        "best": null,
+        "index": 65,
+        "trials": 47770
+      },
+      {
+        "best": 2.9485275248560705,
+        "index": 66,
+        "trials": 47779
+      },
+      {
+        "best": null,
+        "index": 67,
+        "trials": 47629
+      },
+      {
+        "best": null,
+        "index": 68,
+        "trials": 47552
+      },
+      {
+        "best": 2.94852743063534,
+        "index": 69,
+        "trials": 47907
+      },
+      {
+        "best": null,
+        "index": 70,
+        "trials": 48161
+      },
+      {
+        "best": null,
+        "index": 71,
+        "trials": 47916
+      },
+      {
+        "best": null,
+        "index": 72,
+        "trials": 47682
+      },
+      {
+        "best": null,
+        "index": 73,
+        "trials": 47657
+      },
+      {
+        "best": null,
+        "index": 74,
+        "trials": 47569
+      },
+      {
+        "best": null,
+        "index": 75,
+        "trials": 47630
+      },
+      {
+        "best": null,
+        "index": 76,
+        "trials": 48022
+      },
+      {
+        "best": null,
+        "index": 77,
+        "trials": 47825
+      },
+      {
+        "best": null,
+        "index": 78,
+        "trials": 47739
+      },
+      {
+        "best": null,
+        "index": 79,
+        "trials": 47632
+      },
+      {
+        "best": 2.9485272803507336,
+        "index": 80,
+        "trials": 47632
+      },
+      {
+        "best": 2.9485273521714803,
+        "index": 81,
+        "trials": 47453
+      },
+      {
+        "best": 2.9485273447507256,
+        "index": 82,
+        "trials": 47871
+      },
+      {
+        "best": 2.9485274529556267,
+        "index": 83,
+        "trials": 47412
+      },
+      {
+        "best": 2.9485274107909913,
+        "index": 84,
+        "trials": 47835
+      },
+      {
+        "best": 2.9485273794473645,
+        "index": 85,
+        "trials": 48220
+      },
+      {
+        "best": 2.9485271975184943,
+        "index": 86,
+        "trials": 936226
+      },
+      {
+        "best": 2.948527283403429,
+        "index": 87,
+        "trials": 47822
+      },
+      {
+        "best": 2.948527370013767,
+        "index": 88,
+        "trials": 47700
+      },
+      {
+        "best": 2.9485274038545426,
+        "index": 89,
+        "trials": 47825
+      },
+      {
+        "best": 2.9485274317783947,
+        "index": 90,
+        "trials": 47846
+      },
+      {
+        "best": 2.948527206184474,
+        "index": 91,
+        "trials": 1882598
+      },
+      {
+        "best": 2.948527372837034,
+        "index": 92,
+        "trials": 47932
+      },
+      {
+        "best": 2.9485273399474052,
+        "index": 93,
+        "trials": 47700
+      },
+      {
+        "best": 2.948527329536718,
+        "index": 94,
+        "trials": 47743
+      }
+    ],
+    "seconds": 480.00012762499995,
+    "valid": 450
+  },
+  "gap": 2.7363279642145244e-7,
+  "lastPrecisionMethod": "Rounding-cell enumeration across 80 continuous near-optimal deformations and 15 integer-angle frames",
+  "leaderScore": 2.9485269238856113,
+  "local": {
+    "overlaps": 0,
+    "radius": 2.9485271975184943,
+    "scene": {
+      "fans": [
+        {
+          "count": 1,
+          "id": "1",
+          "orbit": 0.8656684071450222,
+          "phase": -42.170050575414734,
+          "spread": 360,
+          "tilt": -83.63245903651568,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "2",
+          "orbit": 1.9485273816800728,
+          "phase": -74.1790510670645,
+          "spread": 360,
+          "tilt": -60.32468210062018,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "3",
+          "orbit": 1.9485277468296418,
+          "phase": -11.311529857295682,
+          "spread": 360,
+          "tilt": 47.97819313981074,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "4",
+          "orbit": 0.9705437282894573,
+          "phase": 32.84548647318138,
+          "spread": 360,
+          "tilt": 137.6544920609358,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "5",
+          "orbit": 1.9485271606446752,
+          "phase": 90.47215597655577,
+          "spread": 360,
+          "tilt": 35.236560444311635,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "6",
+          "orbit": 1.6806385475517929,
+          "phase": -140.5835228686804,
+          "spread": 360,
+          "tilt": -175.10735900267247,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "7",
+          "orbit": 0.6232622463987371,
+          "phase": 107.36090707538483,
+          "spread": 360,
+          "tilt": 63.76153280736253,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "8",
+          "orbit": 1.948526501289115,
+          "phase": 153.01199611638071,
+          "spread": 360,
+          "tilt": 68.5078290261676,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "9",
+          "orbit": 1.9485265858950962,
+          "phase": -166.44460855567945,
+          "spread": 360,
+          "tilt": 30.75238903355489,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "10",
+          "orbit": 1.9485270059909359,
+          "phase": 18.698973377158723,
+          "spread": 360,
+          "tilt": 67.31826367335952,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "11",
+          "orbit": 1.9485273511729315,
+          "phase": 53.382800919560054,
+          "spread": 360,
+          "tilt": 42.06681112907893,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "12",
+          "orbit": 1.724652033822765,
+          "phase": -4.1933909174470045,
+          "spread": 360,
+          "tilt": -139.13996564788067,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "13",
+          "orbit": 1.9485275290393,
+          "phase": -43.46718024282262,
+          "spread": 360,
+          "tilt": -23.655856780784575,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "14",
+          "orbit": 1.94852686393234,
+          "phase": 123.07826325573694,
+          "spread": 360,
+          "tilt": 49.76677423807121,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "count": 1,
+          "id": "15",
+          "orbit": 2.7737716301184565,
+          "phase": -120.31183352308688,
+          "spread": 360,
+          "tilt": 179.99999830973798,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "linked": false
+    },
+    "violation": 0
+  },
+  "productionBenchmark": {
+    "evaluations": 10203407,
+    "initialRadius": 2.948529219948435,
+    "iterations": 3251844,
+    "overlaps": 0,
+    "radius": 2.948529219948435,
+    "restarts": 2551,
+    "seconds": 600.0001057909999,
+    "seed": 721
+  },
+  "prototypeSeed": 421,
+  "score": 2.9485271975184077,
+  "searchMethod": "Free-radius replica exchange, constrained refinement, and exhaustive translation rounding cells with sampled rotations",
+  "submitted": false,
+  "tests": 131,
+  "unroundedResearch": {
+    "officiallyValidated": false,
+    "placementsFile": "packing-unrounded.placements.json",
+    "radius": 2.948526550730266,
+    "roundedOverlaps": 11,
+    "sceneFile": "packing-unrounded.scene.json"
+  },
+  "validationEndpoint": "https://www.paradigm.xyz/puzzles/api/v1/packing/validate"
+}

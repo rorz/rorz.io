@@ -1,0 +1,335 @@
+{
+  "baseline": {
+    "acceptedMainScore": 2.9485270638716834,
+    "continuousExportNote": "Continuous research point was not officially validated. Six-decimal export had11 overlaps under the local checker.",
+    "continuousResearchRadius": 2.948526550730266,
+    "historicalGap": 1.3998607206744396e-7,
+    "historicalLeaderScore": 2.9485269238856113,
+    "integrity": "Canonical placements equal immutable2855, match the saved polar fan scene and source geometry after integer translation. No stale canonical payload found."
+  },
+  "centralFinding": {
+    "counterevidence": [
+      "Earlier global-phase and ranked-walk workers genuinely used the current incumbent as a source; the whole campaign was not uniformly stale.",
+      "K-best enumeration completed honestly and every retained point was scored. These facts concern numerical correctness, not useful proposal diversity.",
+      "Excluding a known feasible layout from these spheres does not prove an improving layout exists outside them.",
+      "Broad topology-changing search did run and found the main basin."
+    ],
+    "demonstrated": [
+      "Pinned CVP2905–2907 scored312699 retained points across40phases/77enumerations: zero native-overlap-valid proposals and zero improvements; the three reference checks were baseline controls.",
+      "212365 proposed points already beat the historical leader radius but all failed feasibility. Best below-leader maximum overlap was1.0047052809846665e-6.",
+      "First-phase audits show94.2–94.4% of retained points differ only in piece9 angle; a later4096-point shell had only17 distinct midpoint arrangements.",
+      "Final CVP body selection was continuous2650 for34phases and an invalid near bank for6; verified2855 was never a proposal body.",
+      "The known verified2855 layout lies outside both phase-zero enumeration spheres for all three workers, independently recomputed from saved B factors.",
+      "The summary retained a40%validated-best/40%continuous/20%bank mix from earlier work; that does not describe the actual final CVP worker."
+    ],
+    "knownIncumbentMetricCoverageProof": [
+      {
+        "incumbentInsideAnyInitialSphere": false,
+        "knownFeasibleIncumbentCost": 7.589811653238274,
+        "seed": 2905,
+        "shells": [
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.6242488205280092,
+            "initialBound": 0.8999732548506568,
+            "largestRetainedCost": 0.6242488205280092,
+            "shell": 0
+          },
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.6425330359767975,
+            "initialBound": 1.3991896228471643,
+            "largestRetainedCost": 0.6425330359767975,
+            "shell": 1
+          }
+        ],
+        "source": "continuous"
+      },
+      {
+        "incumbentInsideAnyInitialSphere": false,
+        "knownFeasibleIncumbentCost": 3.955796525849985,
+        "seed": 2906,
+        "shells": [
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.6260473793286692,
+            "initialBound": 1.0818196807262808,
+            "largestRetainedCost": 0.6260473793286692,
+            "shell": 0
+          },
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.6468772644877397,
+            "initialBound": 1.678953354963509,
+            "largestRetainedCost": 0.6468772644877397,
+            "shell": 1
+          }
+        ],
+        "source": "continuous"
+      },
+      {
+        "incumbentInsideAnyInitialSphere": false,
+        "knownFeasibleIncumbentCost": 10.62225267038654,
+        "seed": 2907,
+        "shells": [
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.7646722607021155,
+            "initialBound": 0.9025830009648259,
+            "largestRetainedCost": 0.7646722607021155,
+            "shell": 0
+          },
+          {
+            "completedKBest": true,
+            "exhaustedSphere": false,
+            "finalBound": 0.7917628359814135,
+            "initialBound": 1.403204616868963,
+            "largestRetainedCost": 0.7917628359814135,
+            "shell": 1
+          }
+        ],
+        "source": "continuous"
+      }
+    ],
+    "references": [
+      {
+        "file": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-pinned-cvp-search-2903.ts",
+        "line": 75
+      },
+      {
+        "file": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-pinned-cvp-2905.report.json",
+        "line": 331
+      },
+      {
+        "file": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-constraint-lattice.ts",
+        "line": 23
+      },
+      {
+        "file": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-cpu-search-2026-10-27.report.json",
+        "line": 29
+      }
+    ],
+    "summary": "Several expensive final searches selected many low-surrogate-cost or low-radius points while generating no feasible candidates. Accurate acceptance checks do not make that proposal coverage effective.",
+    "title": "The main endgame lacks a reliable proposal-quality and small-step continuation control"
+  },
+  "date": "2026-10-30",
+  "evidenceLimits": [
+    "Checkpoint inventory contains 22,715 files and 380 TypeScript files including helpers, audits and generated variants; these are not counts of independent methods.",
+    "Reviewers inspected representatives and actual inputs, states, reports and logs across the families below; they did not read every generated trial output.",
+    "The earliest preserved input substantiated here is approximately2.963505. The earlier3.028 stage is supported by conversation, not independently reconstructed from the selected archive.",
+    "Leaderboard values are historical snapshots, not a fresh leaderboard check.",
+    "Static reading and small arithmetic only. No optimizers, test suites, submissions, services or network requests were run."
+  ],
+  "familyCoverage": [
+    {
+      "family": "Fan tightening and restart descent",
+      "limit": "Current source alone cannot reconstruct every early version.",
+      "ran": "Yes; historical app implementations and benchmarks",
+      "result": "Useful initial construction; fan symmetry ties degrees of freedom."
+    },
+    {
+      "family": "Unrestricted Cartesian, fresh random and paired starts",
+      "limit": "Finite stochastic coverage, not exhaustive.",
+      "ran": "Cartesian51:1228 trials; production42:1770; feasible401:3165; feasible421:7820",
+      "result": "Production≈2.961776; feasible421 found≈2.948686667."
+    },
+    {
+      "family": "Replica exchange, annealing, minima hopping and deliberate worsening",
+      "limit": "Many initial states and archives share lineage; contact novelty is heuristic.",
+      "ran": "Hot replicas≈3.115; breakthrough1601:8084; minima1852:2004; wide1921:3273",
+      "result": "Real basin escapes and accepted worsening occurred."
+    },
+    {
+      "family": "Boundary, core, wall, wedge and construction beams",
+      "limit": "Some logs end atPROGRESS; do not count them as completed failures.",
+      "ran": "Core211:1523; wall61:865; other logged constructions",
+      "result": "Alternative geometric families were genuinely tried."
+    },
+    {
+      "family": "Collective motion and breathing",
+      "limit": "Finite inherited-start exploration.",
+      "ran": "Collective1701; breathing1791:428 trials/376accepted",
+      "result": "Coordinated movement and temporary size changes occurred."
+    },
+    {
+      "family": "Cavity removal/reinsertion and vacancy",
+      "limit": "Beam selection and inherited starts limit coverage.",
+      "ran": "Cavity1681:4278trials,2157450insertions,3015validcompletions; vacancy1941:195trials/77accepted",
+      "result": "Substantial actual topology-changing work."
+    },
+    {
+      "family": "Symmetry, genetic crossing and paired mating",
+      "limit": "Not independent surveys; crossing uses archived parents.",
+      "ran": "Symmetric1801:5487; genetic491:7384; mating521:3695",
+      "result": "C3/C5/D3/D5/M1/M3/M5 and released symmetry tested."
+    },
+    {
+      "family": "Continuous clearance, area and polygon polishing",
+      "limit": "Exception-only logs are not successful converged area solves; continuous feasibility differs from exported feasibility.",
+      "ran": "Multiple actual solves; early area-opt and area-retain each logged four exceptions",
+      "result": "Continuous radius≈2.94852655, below historical leader but export invalid."
+    },
+    {
+      "family": "Coordinate frames, rotation/translation and coordinated rounding",
+      "limit": "Dense frame sampling freezes relative poses or restricts coordinate offsets; not millions of independent arrangements.",
+      "ran": "6283169 reported rotational steps; 15frames; final-round7262389proposals/450valid",
+      "result": "Repeated real official-score improvements."
+    },
+    {
+      "family": "Lattice descent, blocks, repair and tempering",
+      "limit": "Old reduced±2 boxes excluded15of43 physical one-microunit moves; later formulations repaired this.",
+      "ran": "2360/2361→2410→2420; fast-round2840:824solves/26uniquevalidgeometries",
+      "result": "Official score improved repeatedly to2.948527089049121; near-misses were useful later."
+    },
+    {
+      "family": "MIP, Benders, Schur, barriers and partial decompositions",
+      "limit": "Time-limited or locally restricted failures do not prove geometric infeasibility; older retained cuts rejected valid rigid rotations.",
+      "ran": "Hundreds of bounded solves; unrestricted2866/2867:34solves each alltimeLimit",
+      "result": "No later accepted improvement from those batches."
+    },
+    {
+      "family": "Recombination, grid pump and exact/native CSP",
+      "limit": "Completed±5/±6/±7 leader-target boxes do not exclude smaller stepping-stone improvements.",
+      "ran": "Completed2700/2701 and finite-box2870–72; earlier2698/2699 failed and2270hadzerotrials",
+      "result": "Known-success controls and finite domain work support the exact checker."
+    },
+    {
+      "family": "Active contacts, seam and curvature diagnostics",
+      "limit": "No local-optimality certificate; strictgap continuation first inflated baseline by≈1.54e-4.",
+      "ran": "2800/2801 pressure,2810continuation,2811transition,2820seam and2821/22curvature",
+      "result": "Useful local derivative and path information."
+    },
+    {
+      "family": "Precision rollback and controlled replay",
+      "limit": "Apparent reproduction failure came from repair-pool drift58→173, not demonstrated precision damage.",
+      "ran": "Frozen42-trial old/new gradient replays",
+      "result": "Both recovered2420; new gradient1.683times slower."
+    },
+    {
+      "family": "Exact tempering and persistent/local walks",
+      "limit": "Some invalid-state radius proxies overestimate by5.94e-7; later exact workers fixed that. No clean same-method small-target continuation from the new winner was found.",
+      "ran": "43-worker main fleet; exact2855:143233steps/360exactchecks",
+      "result": "Exact2855 delivered current official2.9485270638716834."
+    },
+    {
+      "family": "Global phase, phase/cell CSP and ranked walks",
+      "limit": "Global phase is not global initialization; most sources are the same basin and derived near banks.",
+      "ran": "2882–84:127phase trials;2886–89:1607starts;2892–94≈70000cells/1780starts; ranked2896–98:22starts",
+      "result": "Actual incumbent-based/exact-objective and sampled-frame work."
+    },
+    {
+      "family": "Pinned CVP",
+      "limit": "K-best completion is not physical-space or sphere exhaustion.",
+      "ran": "2905–07:312699scores/77K-best enumerations",
+      "result": "No new feasible proposal; current biggest measured proposal-quality failure."
+    },
+    {
+      "family": "Conditional41D and small-step feasible continuation",
+      "limit": "The corrected coverage/continuation hypothesis is still untested.",
+      "ran": "Prepared and selfchecked only; not dispatched",
+      "result": "Cannot be counted as failed searches."
+    },
+    {
+      "family": "Later mirrored, fan, gap and striped alternatives",
+      "limit": "No overall-best improvement; contact2923's419conditions included395repeats.",
+      "ran": "131distinct mirrored starts,31bilateral,166fan; asymmetric/coupled/striped studies",
+      "result": "Valid alternatives; best released mirror≈2.967560, lateststripe≈2.975524."
+    }
+  ],
+  "furtherHoles": [
+    {
+      "facts": [
+        "Successful2855 targeted its old incumbent minus5e-10.",
+        "Later walks often targeted leader minus2e-9 or5e-9.",
+        "Prepared best-minus1e-9 continuation was not dispatched."
+      ],
+      "interpretation": "This does not logically forbid intermediate improvements, but no matched experiment isolates the change in objective difficulty.",
+      "title": "Full-leader targeting replaced controlled incremental continuation"
+    },
+    {
+      "facts": [
+        "Strictgap continuation2810 expanded2.948527089 to2.948680775 before route testing.",
+        "All68 unrestricted2866/2867 MIP solves timed out.",
+        "Older reduced boxes and accumulated tangent cuts had demonstrated coverage defects, subsequently corrected."
+      ],
+      "interpretation": "These negatives cannot be pooled into a proof of practical local exhaustion.",
+      "title": "Some failures concern a different feasible set or capped subproblem"
+    },
+    {
+      "facts": [
+        "Persistent invalid-state radius surrogate overestimated by up to5.94e-7.",
+        "Historical remaining leaderboard gap was1.40e-7.",
+        "Later global/ranked workers used exact MEC on every proposal."
+      ],
+      "interpretation": "This weakens that persistent batch's guidance, not the validity of its saved outputs or every later search.",
+      "title": "Search-energy errors can matter despite correct final acceptance"
+    }
+  ],
+  "optimisationResumed": false,
+  "packingResultsChanged": false,
+  "recommendedExperimentsNotRun": [
+    "Replay the successful exact-tempering method unchanged, with frozen source banks and matched seeds/evaluation budgets, from2420 and2855, each targeting its own initial radius minus5e-10. Record the selected source member.",
+    "Test exact small-step continuation at2855: target current radius minus1e-9, finite±2→±4→±7 coordinate boxes including explicit local first-angle offsets; require positive controls, all105 polygon checks and full curvedMEC. Report capped/empty/success separately.",
+    "Compare42D CVP against conditional41D under matched sources/anchors and exact-score budgets. Include verified2855 as a genuine proposal body; use controlled physical regularization and a finite piece9-angle schedule.",
+    "Measure distinct midpoint/relative-angle structures, feasible fraction, improvement per exact score, displacement and persistent invalid pair. Stop unproductive batches based on these, not raw candidate count."
+  ],
+  "reviewers": [
+    {
+      "focus": "Search strategy, topology and coverage",
+      "freshContext": true,
+      "name": "full_strategy_appraisal"
+    },
+    {
+      "focus": "Numerical objectives, discrete export and local optimality",
+      "freshContext": true,
+      "name": "full_numerics_appraisal"
+    },
+    {
+      "focus": "Run provenance, chronology, sources and status",
+      "freshContext": true,
+      "name": "full_history_forensics"
+    }
+  ],
+  "reviewOnly": true,
+  "scope": "Full historical campaign appraisal by method family, including the main incumbent. This is not limited to the recent striped studies.",
+  "submissionsMade": false,
+  "validatedProgression": [
+    {
+      "score": 2.9485292199484325,
+      "stage": "free exported refinement"
+    },
+    {
+      "score": 2.9485271975184077,
+      "stage": "earlier coordinated rounding"
+    },
+    {
+      "score": 2.9485271686200436,
+      "stage": "2013"
+    },
+    {
+      "score": 2.94852710129197,
+      "stage": "2360"
+    },
+    {
+      "score": 2.9485270999054354,
+      "stage": "2361"
+    },
+    {
+      "score": 2.9485270908603973,
+      "stage": "2410"
+    },
+    {
+      "score": 2.948527089049121,
+      "stage": "2420"
+    },
+    {
+      "score": 2.9485270638716834,
+      "stage": "2855"
+    }
+  ]
+}

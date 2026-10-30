@@ -1,0 +1,214 @@
+{
+  "canonicalChanged": false,
+  "createdAt": "2026-10-30T05:22:57.069Z",
+  "doesNotProve": [
+    "Bank21 was the immediate source selected in the historical trial26; it remains unlogged.",
+    "The same effort is sufficient for an unknown current-best improvement, or that a finite current-best negative proves local/global optimality.",
+    "Any improvement on canonical2855; the recovered radius is equivalent at the2e-13 comparison threshold."
+  ],
+  "files": [
+    {
+      "bytes": 5220,
+      "path": "/private/tmp/packing-recovery-2961-state.json",
+      "sha256": "98297d903c4fc790ed4b842478218ccf2601fa4c178a89a22ca55ef8f7126dd3"
+    },
+    {
+      "bytes": 2384,
+      "path": "/private/tmp/packing-recovery-2961-inputs.json",
+      "sha256": "668849578ba14c6af5c843bbfa2652e571538ea4dbf97d8b3362a0830101d34d"
+    },
+    {
+      "bytes": 14805,
+      "path": "/private/tmp/packing-recovery-2961-certificate.json",
+      "sha256": "b9d2bf2cc942162b7decda730ff626b3218d040a012beae518376ecde4a62e1a"
+    },
+    {
+      "bytes": 1322,
+      "path": "/private/tmp/packing-recovery-2961-native.stdout.json",
+      "sha256": "8fe9a7d3302b4afef60f7e68fbdb60d6467b7770e80fa1843c76115ad5e57163"
+    },
+    {
+      "bytes": 6302,
+      "path": "/private/tmp/packing-recovery-2961-candidate.json",
+      "sha256": "88a377c73703daaf49c2dc92b4550d70df70cf81ccd4d4d6659e38ba9d137710"
+    },
+    {
+      "bytes": 123,
+      "path": "/private/tmp/packing-recovery-2961-children-terminal.json",
+      "sha256": "013326e1b7ab494a9d9861e94dd502eb28874d982ad32eb4e5c604af9fa09b12"
+    }
+  ],
+  "gateAllowsFollowup": true,
+  "independentGate": {
+    "exact45FieldRoundtrip": true,
+    "gainAgainstOld": 2.5177245177587793e-8,
+    "inSerializedDomain": true,
+    "maximum": 9.99860213525659e-7,
+    "oldBaseline": 2.9485270890491266,
+    "radius": 2.9485270638718815,
+    "referencePairs": 105,
+    "sceneSchemaValid": true,
+    "target": 2.9485270880491266
+  },
+  "manifest": {
+    "bytes": 23793,
+    "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-known-recovery-2961-frozen/manifest.json",
+    "sha256": "7b031b31192ab675440f846ab17c9fecb215d08790a8b5f3f97d35eb286559c9"
+  },
+  "movement": {
+    "atLeastOneFullGridCentreMove": true,
+    "changedAngles": 5,
+    "changedCentres": 4,
+    "changedFields": 13,
+    "deltas": [
+      {
+        "dtheta": -4,
+        "dx": 0,
+        "dy": 0,
+        "piece": 1
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 2
+      },
+      {
+        "dtheta": 2,
+        "dx": 2,
+        "dy": 1,
+        "piece": 3
+      },
+      {
+        "dtheta": -3,
+        "dx": -2,
+        "dy": -1,
+        "piece": 4
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 5
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 6
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 7
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 8
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 9
+      },
+      {
+        "dtheta": 0,
+        "dx": 2,
+        "dy": 2,
+        "piece": 10
+      },
+      {
+        "dtheta": -5,
+        "dx": 0,
+        "dy": 0,
+        "piece": 11
+      },
+      {
+        "dtheta": 1,
+        "dx": 2,
+        "dy": -1,
+        "piece": 12
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 13
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 14
+      },
+      {
+        "dtheta": 0,
+        "dx": 0,
+        "dy": 0,
+        "piece": 15
+      }
+    ],
+    "l1IntegerDistance": 28,
+    "maximumAbsoluteIntegerDelta": 5
+  },
+  "networkRequests": 0,
+  "optimizerLaunchedByAudit": false,
+  "passed": true,
+  "proves": [
+    "This existing native kernel, exact box construction and domain order can recover a historical-sized improvement from the specified invalid bank21 precursor within the60s allocation.",
+    "The stdin and argv carry no withheld-witness warm start or ordering hint; exact input reconstruction uses only precursor/oldtarget.",
+    "The raw near-feasible bank contains useful starting geometry missed as a start by both normalized replay arms."
+  ],
+  "result": {
+    "bytes": 22706,
+    "path": "/private/tmp/packing-recovery-2961-result.json",
+    "sha256": "6536d741781aec2cb66690a1aac8b6b7bd53312e8619d6cd9fe840ce3474515c"
+  },
+  "search": {
+    "nativeCapped": false,
+    "nodes": 4731,
+    "oneNativeInvocation": true,
+    "residentSeconds": 49.680404417,
+    "watchdog": false
+  },
+  "sourceOnlyInput": {
+    "adaptiveRetuning": false,
+    "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+    "method": "Independent Cartesian-offset construction from frozen bank21 and old2420 target; fixed squared-distance/lexicographic order; only duration header taken from native input.",
+    "nativeArgv": [],
+    "nativeInput": {
+      "bytes": 672374,
+      "path": "/private/tmp/packing-recovery-2961-input.txt",
+      "sha256": "6c8cf1b1763a524d31c6035dcd5c22816060a84670a26e0ed33fdd26b2390bba"
+    },
+    "poseChoices": 18645,
+    "recreatedByteForByteWithoutWitness": true,
+    "sourceLottery": false,
+    "witnessWarmStart": false
+  },
+  "status": "independently-audited-known-recovery-passed",
+  "withheldComparison": {
+    "coordinateDifferences": [
+      {
+        "deltaMicro": -1,
+        "field": "theta",
+        "piece": 10,
+        "recovered": -2.649264,
+        "withheld": -2.649263
+      },
+      {
+        "deltaMicro": -2,
+        "field": "theta",
+        "piece": 12,
+        "recovered": -0.368621,
+        "withheld": -0.368619
+      }
+    ],
+    "radiusDifference": -4.440892098500626e-16,
+    "sameRadiusAt2e13Threshold": true
+  }
+}

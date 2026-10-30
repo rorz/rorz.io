@@ -133,4 +133,4 @@ const enclosingCircle = (shapes: Placement[]): Circle => {
   };
 };
 
-export { enclosingCircle, farthestPoint };
+export { enclosingCircle, farthestPoint, pointCircle as enclosingPoints };

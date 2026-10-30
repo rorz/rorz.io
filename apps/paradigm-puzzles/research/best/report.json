@@ -1,0 +1,13 @@
+{
+  "gap": 1.3998607206744396e-7,
+  "improvement": 2.5177437468215658e-8,
+  "leaderScore": 2.9485269238856113,
+  "note": "Puzzle validation endpoint confirmed this exact exported payload. Current leaderboard still requires user submission.",
+  "precision": 6,
+  "previousScore": 2.948527089049121,
+  "score": 2.9485270638716834,
+  "source": "packing-cpu-improvement-2855",
+  "submittedByAgent": false,
+  "updatedAt": "2026-10-27T02:15:13.083Z",
+  "validated": true
+}

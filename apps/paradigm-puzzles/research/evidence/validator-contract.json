@@ -1,0 +1,36 @@
+{
+  "asOf": "2026-10-30",
+  "basis": "Read from the saved published checker sources captured during the campaign. These source files are fingerprinted here, not vendored. This is not a fresh check of the live service.",
+  "containmentLengthTolerance": 1e-9,
+  "coordinateMeaning": "Full unit-disk centre / diameter midpoint",
+  "excludedSavedResponses": "The archived overlap.py and mec.py fetches contained 404: Not Found; neither is cited as implementation evidence.",
+  "exportConvention": "Editor wraps theta before rounding; saved published loader rounds without requiring canonical wrapping",
+  "overlapAreaTolerance": 0.000001,
+  "pairChecks": 105,
+  "polygonArcPoints": 4096,
+  "poseDecimalPlaces": 6,
+  "precisionLimit": "Floating-point algorithms and declared tolerances, not interval-arithmetic certificates",
+  "problemUrl": "https://www.paradigm.xyz/puzzles/packing/about",
+  "radius": 1,
+  "score": "Freely centred enclosing-circle radius with curved-boundary refinement",
+  "semicircles": 15,
+  "sourceFiles": [
+    {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/official-packing/run.py",
+      "sha256": "367d6eb1aab2c9afb89c3af88bf2e19ca3cb615adb369006869a07ffd5025b7b"
+    },
+    {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/official-packing/src/semicircle_packing/config.py",
+      "sha256": "c694f258859152ddf3c7857a7b968c0d40d601e8e0fd6091fd58d351c433bfb8"
+    },
+    {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/official-packing/src/semicircle_packing/geometry.py",
+      "sha256": "e943a1a956815779b25533c436d6eba17b5345d9effd43fcf1d4958c656b2652"
+    },
+    {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/official-packing/src/semicircle_packing/scoring.py",
+      "sha256": "4a822c1551cd15f70f040b0fac1a8253570a0474eb1592541ef0875513e58b3c"
+    }
+  ],
+  "thetaMeaning": "Radians toward the curved half; flat diameter perpendicular to this normal"
+}

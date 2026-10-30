@@ -1,0 +1,293 @@
+{
+  "canonicalChanged": false,
+  "createdAt": "2026-10-30T04:10:09.752Z",
+  "initialCvp": {
+    "cases": [
+      {
+        "caseId": 0,
+        "residentSeconds": 3.884222542,
+        "ridge": 0.001,
+        "status": "bounded-inconclusive"
+      },
+      {
+        "caseId": 1,
+        "residentSeconds": 71.899420959,
+        "ridge": 0.001,
+        "status": "matched-budget-complete"
+      },
+      {
+        "caseId": 2,
+        "residentSeconds": 3.609912459,
+        "ridge": 0.01,
+        "status": "bounded-inconclusive"
+      },
+      {
+        "caseId": 3,
+        "residentSeconds": 70.92359395800001,
+        "ridge": 0.01,
+        "status": "matched-budget-complete"
+      }
+    ],
+    "diagnostics": {
+      "maximumAreaAbsoluteDifference": 5.3723064679604e-18,
+      "maximumRadiusAbsoluteDifference": 0,
+      "nativeImproversRejectedByReference": 0,
+      "nativeImproversRejectedForReferenceOverlap": 0,
+      "nativeImproversWithReferenceOverlapPassButSceneGateFail": 0,
+      "nativeImproversWithReferenceValidityButNoReferenceGain": 0,
+      "nativeImprovingProposals": 0,
+      "nativePassReferenceOverlapFail": 0,
+      "referencePassNativeOverlapFail": 0,
+      "scope": "Same-point2953 ledgers: each scored point has all105 native polygon pairs, all105 reference polygon pairs, and both full curved MECs. These are not2950 provisional/event counters.",
+      "scoredEvaluations": 3612,
+      "strictValidityDisagreements": 0
+    },
+    "limits": [
+      "Counts of reference-feasible evaluations can include repeated geometry; they are not counts of distinct feasible packings.",
+      "Distinct scalar counters are reconciled across worker artifacts; this script does not recompute geometry. Summed per-case distinct counts are not global unique counts.",
+      "A capped/short/incomplete case is inconclusive even when actual scored counts match.",
+      "Conditional41D samples only the recorded finite theta9 offsets; no theta9 irrelevance or local/global optimality claim.",
+      "All candidate scores remain local reference results requiring root official validation; this script never promotes or submits."
+    ],
+    "status": "all-four-terminal-with-inconclusive-or-failed-cases",
+    "totalScored": 3612
+  },
+  "localBest": 2.948527063871882,
+  "officialBestPreserved": 2.9485270638716834,
+  "paired": {
+    "allAccountingChecksPassed": true,
+    "arms": [
+      {
+        "arm": "old",
+        "budget": {
+          "baselineAndPromotionReferenceGatesSeparate": true,
+          "boundsRejected": 14,
+          "capStatus": "none",
+          "completeBudget": true,
+          "exactEvaluations": 80000,
+          "initializerGeometryEvaluations": 108,
+          "proposalGeometryEvaluations": 79892,
+          "proposalSoftStopSeconds": 595,
+          "rawProposalIterations": 79906,
+          "requestedExactEvaluations": 80000,
+          "requestedMaxResidentSeconds": 600,
+          "residentSeconds": 309.800276042,
+          "stoppedBeforeEvaluation": 0,
+          "underRequestedResidentLimit": true
+        },
+        "proposalTotals": {
+          "acceptanceFraction": 0.060508597602182565,
+          "accepted": 4835,
+          "acceptedWorseValidFraction": 0.05223880597014925,
+          "boundsRejected": 14,
+          "budgetStopped": 0,
+          "energyUpAccepted": 1076,
+          "evaluated": 79892,
+          "nativeValid": 1668,
+          "nativeValidAccepted": 1160,
+          "nativeValidAcceptedFraction": 0.6954436450839329,
+          "nativeValidFraction": 0.020878185550493165,
+          "proposals": 79906,
+          "worseValid": 536,
+          "worseValidAccepted": 28
+        },
+        "result": {
+          "baselineLocalRadius": 2.9485270890491266,
+          "canonicalChanged": false,
+          "currentCanonicalOfficialScore": 2.9485270638716834,
+          "frozenSourceRadius": 2.9485270890491266,
+          "improvementAgainstOwnBaseline": 0,
+          "locallyBeatsFrozen2855": false,
+          "locallyBeatsOwnBaseline": false,
+          "locallyVerifiedBestRadius": 2.9485270890491266,
+          "officiallyValidatedByThisStudy": false,
+          "promotionCount": 0,
+          "submitted": false,
+          "target": 2.9485270885491266
+        },
+        "status": "evaluation-budget-complete"
+      },
+      {
+        "arm": "new",
+        "budget": {
+          "baselineAndPromotionReferenceGatesSeparate": true,
+          "boundsRejected": 3,
+          "capStatus": "none",
+          "completeBudget": true,
+          "exactEvaluations": 80000,
+          "initializerGeometryEvaluations": 108,
+          "proposalGeometryEvaluations": 79892,
+          "proposalSoftStopSeconds": 595,
+          "rawProposalIterations": 79895,
+          "requestedExactEvaluations": 80000,
+          "requestedMaxResidentSeconds": 600,
+          "residentSeconds": 301.30969200000004,
+          "stoppedBeforeEvaluation": 0,
+          "underRequestedResidentLimit": true
+        },
+        "proposalTotals": {
+          "acceptanceFraction": 0.0611802991426247,
+          "accepted": 4888,
+          "acceptedWorseValidFraction": 0.41379310344827586,
+          "boundsRejected": 3,
+          "budgetStopped": 0,
+          "energyUpAccepted": 1406,
+          "evaluated": 79892,
+          "nativeValid": 1066,
+          "nativeValidAccepted": 879,
+          "nativeValidAcceptedFraction": 0.8245778611632271,
+          "nativeValidFraction": 0.013343013067641315,
+          "proposals": 79895,
+          "worseValid": 319,
+          "worseValidAccepted": 132
+        },
+        "result": {
+          "baselineLocalRadius": 2.948527063871882,
+          "canonicalChanged": false,
+          "currentCanonicalOfficialScore": 2.9485270638716834,
+          "frozenSourceRadius": 2.948527063871882,
+          "improvementAgainstOwnBaseline": 0,
+          "locallyBeatsFrozen2855": false,
+          "locallyBeatsOwnBaseline": false,
+          "locallyVerifiedBestRadius": 2.948527063871882,
+          "officiallyValidatedByThisStudy": false,
+          "promotionCount": 0,
+          "submitted": false,
+          "target": 2.948527063371882
+        },
+        "status": "evaluation-budget-complete"
+      }
+    ],
+    "limits": [
+      "Single paired seed, not independent replications or a statistical performance test.",
+      "Original wall-timed trial boundaries are replaced by3000 raw proposal iterations; failure to reproduce a historical improvement is not evidence the historical result was wrong.",
+      "RNG consumption branches on acceptance/source selection; matched seeds do not preserve common proposal streams after trajectories diverge.",
+      "Within-trial geometry/midpoint uniqueness is not global uniqueness or contact-topology diversity.",
+      "Native-valid proposal rates do not mean every proposal received the independent reference gate.",
+      "A completed finite negative is not a local/global optimality certificate.",
+      "Resident duration is affected by initialization, logging, full gates, host load and CPU governor pauses."
+    ],
+    "protocol": "budget-normalized paired replay, not historical bit reproduction"
+  },
+  "representation": "Selected fields from the historical report; omitted event/model/geometry ledgers remain in the local archive.",
+  "smallStep": {
+    "counts": {
+      "candidates": 1,
+      "improvements": 0,
+      "invalidCandidates": 0,
+      "nativeCapped": 1,
+      "nativeCompleted": 4,
+      "nativeExhausted": 2,
+      "nativeFailed": 0,
+      "nativeStarts": 4,
+      "nativeWatchdogCapped": 1,
+      "referenceChecks": 2
+    },
+    "finiteEmptyEstablished": false,
+    "limits": [
+      "No target-meeting point in completed width2/4 boxes under the implemented finite CSP model.",
+      "Width7 hit its300s watchdog cap; not exhausted.",
+      "No local/global optimality certificate."
+    ],
+    "operations": [
+      {
+        "budget": 0.5,
+        "elapsed": 0.045279291,
+        "exitCode": 0,
+        "improved": false,
+        "mode": "positive-control",
+        "native": {
+          "capped": false,
+          "nodes": 1
+        },
+        "operation": 0,
+        "outcome": "positive-control-passed",
+        "watchdogReason": null,
+        "width": 0
+      },
+      {
+        "budget": 10,
+        "elapsed": 1.703154292,
+        "exitCode": 0,
+        "improved": false,
+        "mode": "continuation",
+        "native": {
+          "capped": false,
+          "nodes": 37
+        },
+        "operation": 1,
+        "outcome": "exhausted",
+        "watchdogReason": null,
+        "width": 2
+      },
+      {
+        "budget": 45,
+        "elapsed": 22.481991875,
+        "exitCode": 0,
+        "improved": false,
+        "mode": "continuation",
+        "native": {
+          "capped": false,
+          "nodes": 3313
+        },
+        "operation": 2,
+        "outcome": "exhausted",
+        "watchdogReason": null,
+        "width": 4
+      },
+      {
+        "budget": 300,
+        "elapsed": 300.110885708,
+        "exitCode": 143,
+        "improved": false,
+        "mode": "continuation",
+        "native": {},
+        "operation": 3,
+        "outcome": "watchdog-capped",
+        "watchdogReason": "native-cap",
+        "width": 7
+      }
+    ],
+    "status": "bounded-inconclusive",
+    "step": 1e-9,
+    "target": 2.948527062871882
+  },
+  "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/controlled-experiments-2026-10-30/files/private/tmp/packing-controlled-summary-2959.json",
+  "sourceSha256": "4c51e6e3ba0883165e58d25c80ed91825e131c3c12bfe279b5c3cc364cc85368",
+  "status": "bounded-program-complete-no-improvement",
+  "submitted": false,
+  "widenedCvp": {
+    "cases": [
+      {
+        "adequateGeometryComparison": true,
+        "caseId": 0,
+        "equalActualScoreCounts": true,
+        "equalCompleteScoreBudget": true,
+        "matchedBudget": 896,
+        "noOptimalityCertificate": true,
+        "residentSeconds": 71.91865270899999,
+        "status": "matched-budget-complete-geometry-diverse"
+      },
+      {
+        "adequateGeometryComparison": true,
+        "caseId": 1,
+        "equalActualScoreCounts": true,
+        "equalCompleteScoreBudget": true,
+        "matchedBudget": 896,
+        "noOptimalityCertificate": true,
+        "residentSeconds": 69.78614191599999,
+        "status": "matched-budget-complete-geometry-diverse"
+      }
+    ],
+    "improvingEvaluations": 0,
+    "limits": [
+      "Same frozen verified2855 body and shared metrics, two regularizers.",
+      "Every scored point receives full native and independent reference geometry; controls are additional.",
+      "Sphere-fill success is distinct from geometry diversity. Each arm still has only3 distinct midpoint configurations.",
+      "Distinct counts are per case/arm; do not sum them as global unique geometries.",
+      "Finite matched tests do not establish optimality or prove the ninth angle irrelevant."
+    ],
+    "nativeReferenceValidityDisagreements": 0,
+    "totalScored": 3584
+  }
+}

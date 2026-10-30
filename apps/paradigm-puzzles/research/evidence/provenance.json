@@ -1,0 +1,223 @@
+{
+  "asOf": "2026-10-30",
+  "files": [
+    {
+      "path": "best/placements.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "fb977677e2bf6f9504a18ae08c65098af0bab83c1eb24dcaa7d4f5b885c386b5",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.placements.json",
+      "sourceSha256": "123b910e19ff1ba27e4af1932b408ff0d3b1073eefcf977e8af28e40e9c2257f"
+    },
+    {
+      "path": "best/scene.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "1d7bc0594db6563b11ee7b07259ac70a20aff05a64312a7c093f6e0fe321a16d",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.scene.json",
+      "sourceSha256": "0802364747cb028fc301bea5953b5a5b55023aaf35ccea25b7a21a8f5ff62b59"
+    },
+    {
+      "path": "best/validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "b5e2c7e222712b33ad0628e39dffe8a764eaffa93ad5718f27133560059a9e31",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.validation.json",
+      "sourceSha256": "2a6f4c363a0ac2753577fc560621a7c59088ba7bfde2a51ac766683a03127386"
+    },
+    {
+      "path": "best/report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "466d1ea2384140d4268076ed85a4846f98d2c0f76de81fa950d082c107bcbf63",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.report.json",
+      "sourceSha256": "2f7f6a4541676c11c1c79e351104464c70c4a88b1479de98dfd6e37e4091cc7d"
+    },
+    {
+      "path": "best/placements.original.txt",
+      "representation": "Byte-identical original JSON payload; .txt preserves archival formatting",
+      "sha256": "123b910e19ff1ba27e4af1932b408ff0d3b1073eefcf977e8af28e40e9c2257f",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best.placements.json",
+      "sourceSha256": "123b910e19ff1ba27e4af1932b408ff0d3b1073eefcf977e8af28e40e9c2257f"
+    },
+    {
+      "path": "evidence/packing-2948529.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "e9007fa988584e0feccda8e71bdd4f3628d33878e039ef1ddeb04e8ca30ddba9",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-2948529.validation.json",
+      "sourceSha256": "9175c28b6082f3d070e7f55129f5e6c7cd344a7d8f9c630ecfd6d68c7e84a016"
+    },
+    {
+      "path": "evidence/packing-best-previous.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "8edbe884a2051c159c1c330bcb77e6382d503ab1675d5f1fe04ab007df9196af",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-best-previous.report.json",
+      "sourceSha256": "278e497f5adbe43627ca8fdef6dfad06e2e73a7824229f8700a0fa1953804aa8"
+    },
+    {
+      "path": "evidence/packing-grid-2013.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "8b09c34f308bd6355663e480799aa4f00cb3da18040c60f34cb2523afd8995df",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-grid-2013.validation.json",
+      "sourceSha256": "a78418555d1fd8324dbf771e88b39afaeff5bf8bc11ffaf109bfecccf9f8bc5c"
+    },
+    {
+      "path": "evidence/packing-lattice-2360.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "6285c36e7ec3f84ce74e23916f20932502db8c608374b5b845856abfa0e97c87",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-lattice-2360.validation.json",
+      "sourceSha256": "4f7557151ba06d295a098b445934d71478d57d622fb0a7d4bdf814a2823dcf94"
+    },
+    {
+      "path": "evidence/packing-lattice-2361.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "c876ea9524035a73fb1e3c0ea15c93f6b117be6a80ae05e0175d2f39e4147b03",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-lattice-2361.validation.json",
+      "sourceSha256": "9cbfe4da9c87c9d1197bb78316aca58d4ac651826d39c3594a3cd3b424c7cfe9"
+    },
+    {
+      "path": "evidence/packing-lattice-block-2410.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "317bb1105d1f413feb962e61e7729c3a9c7fa42736adf30676bc33bd071d348f",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-lattice-block-2410.validation.json",
+      "sourceSha256": "54ad151b293bd92946f79a880ce5c8f2e526e0aa12754ecd7e795749e2b1f4b5"
+    },
+    {
+      "path": "evidence/packing-lattice-repair-block-2420.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "2905d1137c0fec0f6464ad734e0b239e6e6827154dda3e571f6b06dbff9e0f59",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-lattice-repair-block-2420.validation.json",
+      "sourceSha256": "df370e369d8c24d1ecca864600bb6ec136a5fa8b2ab339fef43a0dae5ea1ad3f"
+    },
+    {
+      "path": "evidence/packing-cpu-improvement-2855.validation.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "b5e2c7e222712b33ad0628e39dffe8a764eaffa93ad5718f27133560059a9e31",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-cpu-improvement-2855.validation.json",
+      "sourceSha256": "2a6f4c363a0ac2753577fc560621a7c59088ba7bfde2a51ac766683a03127386"
+    },
+    {
+      "path": "evidence/packing-unrounded.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "2dae97f49b31468f59b5542c918333ff3298a65b42d8031cda27bb2c50f751d4",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-unrounded.report.json",
+      "sourceSha256": "7f48477e9b5d135bbc56d3a37ba7882791338351112dbd135199532f77d973ee"
+    },
+    {
+      "path": "evidence/packing-full-adversarial-appraisal-2026-10-30.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "ae8cfad8a34096821a4b2296c46a1d84ecdb99502429550c3c98b211b735e246",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-full-adversarial-appraisal-2026-10-30.json",
+      "sourceSha256": "72120ad4ed39ddad7be312665b34e3c474e57c978154d6ba89a7c279165ecfd8"
+    },
+    {
+      "path": "evidence/packing-adversarial-reset-2026-10-30.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "2c6b9cf6b7555e859163d37cabfb18fda07e19eb07ef53dd2107b2c69b68ba3e",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-adversarial-reset-2026-10-30.json",
+      "sourceSha256": "ffdbb0a4e68b870c2690f4548ccd1f77054a7959f21686c803b76f41b313667b"
+    },
+    {
+      "path": "evidence/packing-research-20261026-summary.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "7298aeff0f7a735ab7b53d2ec31d5c56ded6e531639f856e3b8eba69d2c64c48",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-research-20261026-summary.json",
+      "sourceSha256": "892bdca92bd00b7d50ff5ed840a7b296a0f567f408ce3f1c33ab1880bf2a3cd8"
+    },
+    {
+      "path": "evidence/packing-cpu-search-2026-10-27.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "7b933020d35f796a60b27d610de8e3c71bcc7d68045abb17664e1432d3861c9d",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-cpu-search-2026-10-27.report.json",
+      "sourceSha256": "74b67eb4f550e36e4e9325af0f274a74e14b99afa0599a0742c6e9c31d2f1518"
+    },
+    {
+      "path": "evidence/packing-seed-study-2026-10-27.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "0e7fe2306c789cdbae1fda114ebc1271ee0ac4b8c7dc84d0458529159767f55b",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seed-study-2026-10-27.report.json",
+      "sourceSha256": "4b7d2dc685095af696f60a8016741998f31148a34226b62a3e338f0803f61dff"
+    },
+    {
+      "path": "evidence/packing-asymmetric-study-2026-10-27.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "7b4aa6dd292546597785ec56ce93193c1259999f263752655eedd3fc3652cfa2",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-asymmetric-study-2026-10-27.report.json",
+      "sourceSha256": "ed060937b89aa54c27c25af391ffaef5594f2abf6df839d78668619998ee919d"
+    },
+    {
+      "path": "evidence/packing-striped-push-2026-10-27.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "435e83979220c2cc229b44ce4d5bcc44ac7c5b510b450fac1ded47d57f4ae750",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-striped-push-2026-10-27.report.json",
+      "sourceSha256": "831d1222088699b628ad09fe95bf99a99fe11ff3c442f472021cbd90410edd52"
+    },
+    {
+      "path": "evidence/packing-precision-replay-review.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "5d7a06127dce397e24be90d7609120f4b0ecf8527ac8b015a5d17c50e980cc72",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-precision-replay-review.json",
+      "sourceSha256": "1352896a63a2dbd804fa9a63ca12ca025ef51071d9f8c29c14913c2563334368"
+    },
+    {
+      "path": "evidence/packing-seam-audit-summary.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "2f6894eef85d3296f90b28bb1849bd42bebc7b1af8cf23873704fea91a906fe5",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-seam-audit-summary.json",
+      "sourceSha256": "9100df94bf5058085ed125b8d0028a243db646b36543e7ca8ec001b6917c45b3"
+    },
+    {
+      "path": "evidence/packing-calibrated-program-2969-report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "e4cd5eff691f9595d1c18ab1d2a0d75c9f9a6bb4146864434dd23fbd6e81b245",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-calibrated-program-2969-report.json",
+      "sourceSha256": "2c92ed069fcc542d18ab8391b5a715ff4acb0ae6fdfa2a6e765833fcf2e1e15f"
+    },
+    {
+      "path": "evidence/packing-known-recovery-2961-calibration.report.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "83344718e5523b34c31b59b0e2416899fae8c71519f3945a53c273c5fbb91e40",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/packing-known-recovery-2961-calibration.report.json",
+      "sourceSha256": "5de05343dbd840b503396b2e6a1d45d128954b62149ffb14a9adac253100747c"
+    },
+    {
+      "path": "evidence/packing-best2855-contact-summary.extract.json",
+      "representation": "Selected fields from the historical report; omitted event/model/geometry ledgers remain in the local archive.",
+      "sha256": "717e3f49aac43d9f3a3788febf0fb05d4ca182f76a83749a0632d2846d9d49a0",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-best2855-contact-summary.json",
+      "sourceSha256": "4c4fde9d12cc0d565a65987a6cbac2ddcc7db52989f9a079036908bbe23b5cdd"
+    },
+    {
+      "path": "evidence/packing-cache-final-2985.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "24b0ade81205c3a7ca86b0f6860953ee0fd764c3705e13f34234ea1344aa04c7",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-cache-final-2985.json",
+      "sourceSha256": "d8824058218e39dcda037723d5def9fb75607b8011dc765e0394085acaf38616"
+    },
+    {
+      "path": "evidence/packing-phase-profile-2982-result.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "c865191941c7a8169f147a35ed5d705b41ba1bc89f4b82aead57f11348f0fb78",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/cache-performance-2026-10-30/files/private/tmp/packing-phase-profile-2982-result.json",
+      "sourceSha256": "f17ab08523a2c6113691d20277e25c6b69eeb912a48773cc2db61518168cd7bc"
+    },
+    {
+      "path": "evidence/packing-seed-sweep-2972-summary.json",
+      "representation": "JSON keys sorted and whitespace formatted; parsed values unchanged",
+      "sha256": "b5c0ed026fee953e42a4b35502a5b7efc7f4a627f64cba9b45a20e3d75901650",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/seed-repair-sweep-2026-10-30/files/private/tmp/packing-seed-sweep-2972-summary.json",
+      "sourceSha256": "e8d7c1567b8b63478f8c2893cb53a971012f62b53691bd0d143856fd93fd79c8"
+    },
+    {
+      "path": "evidence/packing-controlled-summary-2959.extract.json",
+      "representation": "Selected fields from the historical report; omitted event/model/geometry ledgers remain in the local archive.",
+      "sha256": "5952285f6a9aaa0aca96ed7a68e85d17f6c995142fc9f43cee98fcb9b3d8f5a5",
+      "source": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/controlled-experiments-2026-10-30/files/private/tmp/packing-controlled-summary-2959.json",
+      "sourceSha256": "4c51e6e3ba0883165e58d25c80ed91825e131c3c12bfe279b5c3cc364cc85368"
+    },
+    {
+      "path": "evidence/validator-contract.json",
+      "representation": "Manually reviewed contract facts and source fingerprints; original source bodies are not copied",
+      "sha256": "89e3b05c74b20fd3ac8267b33bcebd493193c03f610eabf3c58c157b13de11e8",
+      "source": "Derived from the four fingerprinted saved sources listed in this file"
+    }
+  ],
+  "localOriginalRoot": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f",
+  "scope": "Selected evidence for the research journal, not the complete experiment archive. Absolute paths inside historical reports are provenance, not repository dependencies. Later journal corrections take precedence over superseded interpretations in snapshots."
+}

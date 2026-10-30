@@ -1,0 +1,10 @@
+{
+  "note": "Continuous research candidate. The puzzle checker rounds coordinates to six decimals, which changes its geometry.",
+  "officiallyValidated": false,
+  "precision": "full",
+  "roundedOverlaps": 11,
+  "roundedRadius": 2.9485270732965585,
+  "submitted": false,
+  "unroundedOverlaps": 0,
+  "unroundedRadius": 2.948526550730266
+}

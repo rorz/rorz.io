@@ -1,0 +1,1521 @@
+{
+  "calibration": {
+    "binary": {
+      "bytes": 97688,
+      "path": "/private/tmp/packing-grid-csp-2852.bin",
+      "sha256": "e28afd9b1b9c2c5609af8673533ee54bdb39208f95f97e5b8a8485bdfffb4635"
+    },
+    "builder": {
+      "bytes": 25008,
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-known-recovery-2961.ts",
+      "sha256": "68cf32f610f43874baf63fe994eb896a325db32250d02136025385bd44416bc3"
+    },
+    "certifiedSourceHashes": {
+      "oldIncumbent": "a7b46c7c431804690c84865a6fe728bb0b8b4c4461398f343d76967c017ec91e",
+      "precursor": "ba7073583b9bee8740f92adf6fb8f0908e90e5271e6cf5d7a95da98aa42981c6",
+      "precursorGeometrySha256": "57d885686581e74254f41e87f577a09c5816cec3dbbad7964673d5777283f56c",
+      "withheldWitness": "592afbcc61e3056a71091230500d5db1864e96f44904872df1b930c85c5811b4"
+    },
+    "manifest": {
+      "bytes": 23793,
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-known-recovery-2961-frozen/manifest.json",
+      "sha256": "7b031b31192ab675440f846ab17c9fecb215d08790a8b5f3f97d35eb286559c9"
+    },
+    "result": {
+      "bytes": 22706,
+      "path": "/private/tmp/packing-recovery-2961-result.json",
+      "sha256": "6536d741781aec2cb66690a1aac8b6b7bd53312e8619d6cd9fe840ce3474515c"
+    }
+  },
+  "canonicalChanged": false,
+  "controller": {
+    "cleanupFailure": true,
+    "cleanupReconciled": true,
+    "cleanupReconciliation": {
+      "bytes": 1041,
+      "evidence": {
+        "allKnownGroupsAbsent": true,
+        "checkedGroups": [34321, 34955, 35267, 35549, 35896, 36297, 36627, 37033],
+        "checkedPids": [34320, 37033, 37035, 37038],
+        "command": ["/bin/ps", "-axo", "pid=,ppid=,pgid=,uid=,stat=,command="],
+        "controllerCleanupFailureFlagPreserved": true,
+        "controllerErrorPreserved": "SystemError: kill() failed: EPERM: Operation not permitted",
+        "controllerStatePath": "/private/tmp/packing-seed-sweep-2971.state.json",
+        "controllerStateSha256": "46980580ce1a9b425830cbc55748111f5d92c6a12bbeb43d5da70bebbfb02bab",
+        "exitCode": 0,
+        "finalWorkerStatus": "watchdog-capped-inconclusive",
+        "finalWorkerTerminal": true,
+        "finishedAt": "2026-10-30T05:53:48.539Z",
+        "observedRows": 887,
+        "originalControllerRecordCount": 7,
+        "psSnapshotSha256": "ffc9740489e09d95de41381a22143a78dbcc11dca5165f58b528780eee19cdad",
+        "remainingRelevantRows": [],
+        "resultsRewritten": false,
+        "signalsSent": false,
+        "startedAt": "2026-10-30T05:53:48.496Z"
+      },
+      "path": "/private/tmp/packing-seed-sweep-2971-cleanup-reconciliation.json",
+      "sha256": "c817aa158420aa69718c42b02982c1299f1725e57bf40b7916083c0f764dc5b9"
+    },
+    "config": {
+      "bytes": 4174,
+      "path": "/private/tmp/packing-seed-sweep-2971.config.json",
+      "sha256": "57dbab4d25c4c11aa36504f0948d5a0412f59ab9b61cc2514c9d9a9e2f2d93c4"
+    },
+    "configuredJobs": 8,
+    "controllerFinalizationError": true,
+    "elapsedSeconds": 468.79179775,
+    "events": {
+      "bytes": 1711796,
+      "path": "/private/tmp/packing-seed-sweep-2971.events.jsonl",
+      "sha256": "b697ef8bde36a042c5e566552fe075fdca7555db1f6864afd2c2f8fbd12103fa"
+    },
+    "fatalError": "SystemError: kill() failed: EPERM: Operation not permitted",
+    "finishedGroupRecords": 7,
+    "reconciledUnrecordedTerminalWorkerIds": ["ranked-continuous2650"],
+    "resourcePolicy": {
+      "cpuPauseThreshold": 50,
+      "cpuResumeThreshold": 35,
+      "cpuSampleMilliseconds": 50,
+      "maxConcurrentGroups": 1,
+      "wholeHostHardCapGuaranteed": false
+    },
+    "state": {
+      "bytes": 4646,
+      "path": "/private/tmp/packing-seed-sweep-2971.state.json",
+      "sha256": "46980580ce1a9b425830cbc55748111f5d92c6a12bbeb43d5da70bebbfb02bab"
+    },
+    "stopping": true,
+    "terminal": true
+  },
+  "counts": {
+    "cappedInconclusive": 8,
+    "completedFiniteBoxNegatives": 0,
+    "incompleteWorkerLedgers": 0,
+    "interruptedInconclusive": 0,
+    "ledgerErrors": 0,
+    "missingWorkerResults": 0,
+    "notStarted": 0,
+    "referenceGatedImprovements": 0,
+    "targetShortfallInconclusive": 0,
+    "workerErrors": 0
+  },
+  "coverageLimits": {
+    "approximateIntrinsicDifferencesDoNotProveIndependentBasins": true,
+    "artifactLineageIndependenceAssumed": false,
+    "candidateGeometryReexecutedBySummary": false,
+    "capsAreNotCompletedNegatives": true,
+    "exactDistinctSourceBodies": 8,
+    "globalOptimality": false,
+    "lineageLimitation": "Strata name recorded artifact provenance; they do not prove independent ancestry. Several historical methods inherit earlier elites or rounded versions of the same continuous arrangement.",
+    "nativeRadiusQualifiedLeavesMayFailPolygonPairs": true,
+    "nativeRadiusTargetAllowance": 1e-13,
+    "overlappingBoxesNotSummedAsUniqueVolume": true,
+    "selectionExclusions": "Continuous wide-soft/unanchored/noncanonical families, badlyinvalid lowR candidates failing the fixed maximum gate, exactwinnerbox, exactduplicate boxes; near2399/2401 aliases add no separate stratum. No exhaustive history coverage claim."
+  },
+  "cpu": {
+    "activePaused": {
+      "above90": 17,
+      "atLeast90": 17,
+      "maximum": 100,
+      "sampledMilliseconds": 77387.48287500023,
+      "samples": 1499,
+      "timeWeightedMean": 26.14475792197957
+    },
+    "activeUnpaused": {
+      "above90": 3,
+      "atLeast90": 3,
+      "maximum": 98.18181818181819,
+      "sampledMilliseconds": 391306.7836249998,
+      "samples": 7622,
+      "timeWeightedMean": 22.75062650311295
+    },
+    "all": {
+      "above90": 20,
+      "atLeast90": 20,
+      "maximum": 100,
+      "sampledMilliseconds": 468746.58075,
+      "samples": 9122,
+      "timeWeightedMean": 23.30951298353468
+    },
+    "continuousHardCeilingEstablished": false,
+    "idle": {
+      "above90": 0,
+      "atLeast90": 0,
+      "maximum": 9.615384615384615,
+      "sampledMilliseconds": 52.31425,
+      "samples": 1,
+      "timeWeightedMean": 9.615384615384615
+    },
+    "measurement": "sampled whole-host CPU, not worker CPU attribution or process CPU time; labels identify controller state at sample event",
+    "rawAtLeast90Samples": [
+      {
+        "activeJob": "packing-seed-sweep-2971-bridge-bank21",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:43:39.012Z",
+        "milliseconds": 51.773166999999376,
+        "paused": true,
+        "percent": 90.74074074074075
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-bridge-bank21",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:43:59.693Z",
+        "milliseconds": 51.40387499999997,
+        "paused": true,
+        "percent": 94.23076923076923
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-bridge-bank21",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:43:59.744Z",
+        "milliseconds": 51.568875000000844,
+        "paused": true,
+        "percent": 94.44444444444444
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-unpaused",
+        "at": "2026-10-30T05:44:56.789Z",
+        "milliseconds": 51.719708000004175,
+        "paused": false,
+        "percent": 95.83333333333333
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:44:58.847Z",
+        "milliseconds": 52.31058299999859,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:44:58.908Z",
+        "milliseconds": 60.62041699999827,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:44:58.960Z",
+        "milliseconds": 52.890417000002344,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:44:59.011Z",
+        "milliseconds": 51.281915999992634,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2400",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:44:59.529Z",
+        "milliseconds": 55.64041599999473,
+        "paused": true,
+        "percent": 90.19607843137256
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-barrier2530",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:45:30.090Z",
+        "milliseconds": 59.63779199999408,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-barrier2530",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:45:30.141Z",
+        "milliseconds": 51.1785830000008,
+        "paused": true,
+        "percent": 91.83673469387755
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-barrier2530",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:45:40.934Z",
+        "milliseconds": 51.94887500000186,
+        "paused": true,
+        "percent": 94.33962264150944
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-barrier2530",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:46:21.155Z",
+        "milliseconds": 51.40525000001071,
+        "paused": true,
+        "percent": 91.83673469387755
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-paired2430",
+        "activity": "active-group-unpaused",
+        "at": "2026-10-30T05:47:15.673Z",
+        "milliseconds": 53.646458999981405,
+        "paused": false,
+        "percent": 92.3076923076923
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-proposals2321",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:48:12.902Z",
+        "milliseconds": 53.26524999999674,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-proposals2321",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:48:13.013Z",
+        "milliseconds": 63.890208999975584,
+        "paused": true,
+        "percent": 99.0909090909091
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-proposals2321",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:48:13.066Z",
+        "milliseconds": 103.62033300002804,
+        "paused": true,
+        "percent": 100
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-proposals2321",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:48:13.280Z",
+        "milliseconds": 51.932792000006884,
+        "paused": true,
+        "percent": 91.83673469387755
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-lattice2403",
+        "activity": "active-group-unpaused",
+        "at": "2026-10-30T05:49:16.991Z",
+        "milliseconds": 55.38862500002142,
+        "paused": false,
+        "percent": 98.18181818181819
+      },
+      {
+        "activeJob": "packing-seed-sweep-2971-near-proposals2340",
+        "activity": "active-group-paused",
+        "at": "2026-10-30T05:49:36.374Z",
+        "milliseconds": 51.38641700003063,
+        "paused": true,
+        "percent": 96.15384615384616
+      }
+    ]
+  },
+  "createdAt": "2026-10-30T05:56:20.807Z",
+  "domain": {
+    "allFirstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+    "firstXYGauge": [0, 0],
+    "fixedSourcePerJob": true,
+    "fixedTarget": true,
+    "freeIntegerFields": 43,
+    "oneBoxPerSeed": true,
+    "sameCalibratedBuilderAndBinary": true,
+    "width": 5
+  },
+  "existingFixedSourceAudit": {
+    "existingValidImprovements": [],
+    "fullFixedSourceEvaluations": 248,
+    "inventory": {
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-inventory.json",
+      "sha256": "530380bbf8324bb05bfdd3c3cc70c7b349e1871834cb9fb4691ae371ce75c046"
+    },
+    "inventoryRows": 248,
+    "meaning": "248 unchanged archived vectors were independently gated before this sweep; no claim about unexamined poses or successful repairs.",
+    "scope": [
+      {
+        "field": "near",
+        "id": "near",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      {
+        "field": "entries",
+        "id": "ranked",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-ranked-cell-bank-2895.json",
+        "sha256": "bcf6eac33fe81d8adc296c377662f0f328d4ddcb46175d0d9a41aac2ac1a5d98"
+      }
+    ],
+    "totalSources": 248
+  },
+  "integrityIssues": [],
+  "integrityValid": true,
+  "manifest": {
+    "bytes": 204401,
+    "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-sweep-2970-manifest-v2.json",
+    "sha256": "c6c1213803e697ab4e50b527d46601b6f9b1af94aa3fcbafddcf6ad350b2b6f7"
+  },
+  "nativeTotals": {
+    "geometryRejectsKnownOnlySum": 0,
+    "knownNativeJobCount": 0,
+    "leavesKnownOnlySum": 0,
+    "nativeChecksKnownOnlySum": 0,
+    "nativeSecondsKnownOnlySum": 0,
+    "nodesKnownOnlySum": 0,
+    "pairChecksKnownOnlySum": 0,
+    "radiusQualifiedLeavesKnownOnlySum": 0,
+    "supportChecksKnownOnlySum": 0,
+    "unknownNativeJobCount": 8
+  },
+  "recordedProcessAbsenceChecked": true,
+  "rows": [
+    {
+      "artifacts": [
+        {
+          "bytes": 2838,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-state.json",
+          "sha256": "715d0adc4ec6a8bfccad7afcffa39cb5184cdf98feb5ac7c744d8447299e7727"
+        },
+        {
+          "bytes": 3590,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-result.json",
+          "sha256": "7fa9feeb97eaeab344ac50976261f99602ed482c21bc4be32e3800c7070a95fa"
+        },
+        {
+          "bytes": 2920,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-inputs.json",
+          "sha256": "cc7470f45ec4e292925c33a1eb36bcf5a261cf272d97439b88f7a5da674732bb"
+        },
+        {
+          "bytes": 672378,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-input.txt",
+          "sha256": "92674191920968153f99b6f12c6fa04f64e05de6fbf78541061380370946d2ff"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28360,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-reference-source.json",
+          "sha256": "79b20b4d5ae003546f09d2775f3e2ea9b2afb64114758ee6194f7df13b373e2a"
+        },
+        {
+          "bytes": 1411,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-events.jsonl",
+          "sha256": "c544464aa3f6a22f5e22e9f4d8b87264ca299ebe04597e05f20aad483d886c5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-bridge-bank21-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.490668250000006,
+        "endedAt": "2026-10-30T05:44:26.936Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-bridge-bank21",
+        "pgid": 34321,
+        "pid": 34321,
+        "rootExitElapsed": 58.140213292,
+        "startedAt": "2026-10-30T05:43:28.445Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-bridge-bank21.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-bridge-bank21.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 3,
+          "atLeast90": 3,
+          "maximum": 94.44444444444444,
+          "sampledMilliseconds": 4158.340041999998,
+          "samples": 81,
+          "timeWeightedMean": 20.032046182559316
+        },
+        "activeUnpaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 87.75510204081633,
+          "sampledMilliseconds": 54334.689749000005,
+          "samples": 1058,
+          "timeWeightedMean": 21.786519674018784
+        },
+        "pauseSignals": 7
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "701fc4c52a1dbfa03023f9be5eee29a9aa2b177a24c9cc03176a9e597948f347",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0.03761722275216932,
+        "intrinsicMidpointDistanceChangeLInf": 0.0000025990811789444734,
+        "rigidAlignment": {
+          "angle": -1.2373861277502918e-7,
+          "maxMidpointResidual": 0.0000026524558934376763,
+          "maxRelativeThetaResidual": 0.000004876261387121161
+        },
+        "sourceSupportIds": [2, 8, 10]
+      },
+      "domainSha256": "337c86231e0407dad557980fc658291cab865c54ca1f95757c0b9e94102c7623",
+      "geometrySha256": "57d885686581e74254f41e87f577a09c5816cec3dbbad7964673d5777283f56c",
+      "inputSha256": "92674191920968153f99b6f12c6fa04f64e05de6fbf78541061380370946d2ff",
+      "issues": [],
+      "lineage": "packing-lattice-tempering-2402-state.json",
+      "nativeBudgetSeconds": 57.87451441700001,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010005126483019534,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.948527084386601,
+        "sourceRadiusMinusTarget": 2.1514719339421617e-8,
+        "sourceRetainedIncumbentWitnessBound": 2.9485270637718806,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "891b5514df05a8126c2a477e83dd57a4e49378ebf5ba41ca5c8ad2e2e6640159",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/21",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "bridge-bank21",
+      "selectionReason": "Known-recovery bridge, absent from both2950 replay starts; new tighter target and shifted box.",
+      "source": {
+        "bytes": 1305,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/bridge-bank21.json",
+        "sha256": "d43551cdee8e0e1367d599daa0679d14f49b070682ab8e13aedd5730eef6a2fc"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010005126483019534,
+        "radius": 2.948527084386601,
+        "valid": false
+      },
+      "startedIn2950Replay": false,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.0583075,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2841,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-state.json",
+          "sha256": "5bd85c335be2c2e68c638edcc42ac3007cfc99defaeb9231273043566e22a2a4"
+        },
+        {
+          "bytes": 3593,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-result.json",
+          "sha256": "ca0ed96dccb2dc962844b6a0914982a041aea513cb592b623ede4eee40f11bca"
+        },
+        {
+          "bytes": 2921,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-inputs.json",
+          "sha256": "1a2559542781222573cfce88fbc807d291538b5f8a9927dd4246064c2918b668"
+        },
+        {
+          "bytes": 672375,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-input.txt",
+          "sha256": "bb9ad1c1d235d854d2b859556eecd0851d5e5e9839a15539fb0f87c2967966a6"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 82,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-children-terminal.json",
+          "sha256": "e96ec6359e2391b5830633d4cb39802e5cded7fc32d570cc957c9f0638f76012"
+        },
+        {
+          "bytes": 28356,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-reference-source.json",
+          "sha256": "f5f3cfc2e5c024b0f395cd85dbb01d1713f574c4832c68d31431ef26becb3130"
+        },
+        {
+          "bytes": 1390,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-events.jsonl",
+          "sha256": "eb03575827d023b85c41ee65e35e8c6f748aa5aa30c5eb706f61dc380195442d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2400-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.578281375,
+        "endedAt": "2026-10-30T05:45:25.515Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-lattice2400",
+        "pgid": 34955,
+        "pid": 34955,
+        "rootExitElapsed": 58.330500208,
+        "startedAt": "2026-10-30T05:44:26.937Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-lattice2400.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-lattice2400.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 5,
+          "atLeast90": 5,
+          "maximum": 100,
+          "sampledMilliseconds": 13491.43020599999,
+          "samples": 262,
+          "timeWeightedMean": 32.741787156521596
+        },
+        "activeUnpaused": {
+          "above90": 1,
+          "atLeast90": 1,
+          "maximum": 95.83333333333333,
+          "sampledMilliseconds": 45087.889961,
+          "samples": 878,
+          "timeWeightedMean": 22.572092980043212
+        },
+        "pauseSignals": 13
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "56801dbbcbc4bc715c9b5fc63cbe53d6f0996effef4002cb4b2bfb1725b9e3cb",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.0002197661470200174,
+        "rigidAlignment": {
+          "angle": -0.000010082862484201093,
+          "maxMidpointResidual": 0.00022064680555656252,
+          "maxRelativeThetaResidual": 0.0003749171375158067
+        },
+        "sourceSupportIds": [2, 11, 14]
+      },
+      "domainSha256": "0ddc2689ca322e17a5243193ba52db105f6a95cf15d841b8b0621b76cdcfcbe7",
+      "geometrySha256": "dd762b5f901382d9206a665b171310c519c326eae9348e3282ab03f9fc010556",
+      "inputSha256": "bb9ad1c1d235d854d2b859556eecd0851d5e5e9839a15539fb0f87c2967966a6",
+      "issues": [],
+      "lineage": "packing-lattice-tempering-2400-state.json",
+      "nativeBudgetSeconds": 57.889495917,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010000515925020774,
+        "sourceMeetsRadiusTarget": true,
+        "sourceRadius": 2.948527052581241,
+        "sourceRadiusMinusTarget": -1.0290640783949812e-8,
+        "sourceRetainedIncumbentWitnessBound": 0.05556106380859731,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "511ee1727b424090276870bbb0876880d8a610f41e30c408d0cba581351aa871",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/0",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-lattice2400",
+      "selectionReason": "Very small recorded overlap excess; omitted near-bank lineage member.",
+      "source": {
+        "bytes": 1297,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-lattice2400.json",
+        "sha256": "0056a81afe5ff6a8c1546c62de6eb373873035fad8c58323dbb2cbceffdca28d"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010000515925020774,
+        "radius": 2.948527052581241,
+        "valid": false
+      },
+      "startedIn2950Replay": false,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.259988375,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2820,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-state.json",
+          "sha256": "ce9cb7125a6e492d1085eba5352a8f4da2c628f34516e676991dd4e96b49e775"
+        },
+        {
+          "bytes": 3571,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-result.json",
+          "sha256": "b2d41dd1500100d498e6b258920ee865d0d24c2aae7885aadcb052d5b81ebeef"
+        },
+        {
+          "bytes": 2917,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-inputs.json",
+          "sha256": "dfe1de4923c311af3ba0e3677f285a83525563b6169c4cbdb865f544fbfa16b0"
+        },
+        {
+          "bytes": 653494,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-input.txt",
+          "sha256": "0109cb646e7a94c5dda6fbc14af65cad4fd4b5e984eddcf3f967355389074e7f"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28336,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-reference-source.json",
+          "sha256": "b620aeb9068e1368e243cc754d2c2c8af3bb80620f74d385cdf39c69dfee7c12"
+        },
+        {
+          "bytes": 1393,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-events.jsonl",
+          "sha256": "d26ffc89e486d1640e5e23d95ee116d4ff9f83e09f07df8ba511628fa67db261"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-barrier2530-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.46326612499998,
+        "endedAt": "2026-10-30T05:46:23.980Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-barrier2530",
+        "pgid": 35267,
+        "pid": 35267,
+        "rootExitElapsed": 58.13670750000001,
+        "startedAt": "2026-10-30T05:45:25.517Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-barrier2530.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-barrier2530.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 4,
+          "atLeast90": 4,
+          "maximum": 100,
+          "sampledMilliseconds": 9429.356917000012,
+          "samples": 183,
+          "timeWeightedMean": 23.996653624140563
+        },
+        "activeUnpaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 79.24528301886792,
+          "sampledMilliseconds": 49035.45104100001,
+          "samples": 955,
+          "timeWeightedMean": 23.018383108043043
+        },
+        "pauseSignals": 13
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "b9a65592881aaf521a2bfeac5575635d98126d8568059c2b0a3f7c5e3a7fe0d7",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00037201909656209287,
+        "rigidAlignment": {
+          "angle": -3.0434149505872936,
+          "maxMidpointResidual": 0.0004212377660005116,
+          "maxRelativeThetaResidual": 0.000512049412706439
+        },
+        "sourceSupportIds": [5, 9, 13]
+      },
+      "domainSha256": "69bd0f9eb54ea271a503c27c51e22d1c1192fe1aa3cffc38df1e54f7946eeb02",
+      "geometrySha256": "08f78598fbe4594510851940d8f0232e05593bc6d0fd68fa42d0c254e4f7842b",
+      "inputSha256": "0109cb646e7a94c5dda6fbc14af65cad4fd4b5e984eddcf3f967355389074e7f",
+      "issues": [],
+      "lineage": "packing-barrier-2530-state.json",
+      "nativeBudgetSeconds": 57.880048583000004,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010000651504950098,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.948527082286753,
+        "sourceRadiusMinusTarget": 1.9414871044176607e-8,
+        "sourceRetainedIncumbentWitnessBound": 0,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "bc61fbd751d5858ab85b2ded8252ff948e8fb2219fba0439b735a13e8479e960",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/1",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-barrier2530",
+      "selectionReason": "Barrier ancestry and a distinct rounded global phase/contact state.",
+      "source": {
+        "bytes": 1260,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-barrier2530.json",
+        "sha256": "af651ef8020647be063929e75708abf0fdcdd1cf1eeb4ecffca662ca9d352b3c"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010000651504950098,
+        "radius": 2.948527082286753,
+        "valid": false
+      },
+      "startedIn2950Replay": true,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.05839675,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2838,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-state.json",
+          "sha256": "86a50f541e920ef7de96d17db13d328711af8d1a5539d7ac94491203da6493c0"
+        },
+        {
+          "bytes": 3597,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-result.json",
+          "sha256": "8bfcb585bff0de914a3befacd1cca725499db5a18a9d9383917e9d730dc67e3f"
+        },
+        {
+          "bytes": 2918,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-inputs.json",
+          "sha256": "f55c2e5968a5622f8c802b0988119977d8a28b8deae1d4629ebf510b843fb561"
+        },
+        {
+          "bytes": 656997,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-input.txt",
+          "sha256": "25d3fdd32405bac3d6bf858750d37cbabc8af3ff433419b3444ea320e17f34a1"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28349,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-reference-source.json",
+          "sha256": "2366b0abd317cbf37f29c4debb3de99320ae9291e011cca1f4550c55c54f49d9"
+        },
+        {
+          "bytes": 1409,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-events.jsonl",
+          "sha256": "6bf0e6f3ecd68c46ec03a886b5719d8a59d6597255955559e9158be70efdb42f"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-paired2430-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.526897958999996,
+        "endedAt": "2026-10-30T05:47:22.511Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-paired2430",
+        "pgid": 35549,
+        "pid": 35549,
+        "rootExitElapsed": 58.13135187499999,
+        "startedAt": "2026-10-30T05:46:23.984Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-paired2430.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-paired2430.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 62.5,
+          "sampledMilliseconds": 4797.439916000032,
+          "samples": 93,
+          "timeWeightedMean": 14.46319804374317
+        },
+        "activeUnpaused": {
+          "above90": 1,
+          "atLeast90": 1,
+          "maximum": 92.3076923076923,
+          "sampledMilliseconds": 53733.195958999946,
+          "samples": 1047,
+          "timeWeightedMean": 20.706575012390896
+        },
+        "pauseSignals": 9
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "c4a6c0cd67c54f7af4ab6df01656586cc0247929af12a7b1d01166f1dde653e0",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00036092209128107955,
+        "rigidAlignment": {
+          "angle": -2.4035819768349445,
+          "maxMidpointResidual": 0.00043220965240599904,
+          "maxRelativeThetaResidual": 0.00046902316505548214
+        },
+        "sourceSupportIds": [9, 11, 15]
+      },
+      "domainSha256": "c54e0df651c44b32d77f565bfe5d3e956d7f5b2d775f8ba0b195b5f82b9be6a1",
+      "geometrySha256": "837013c1906a0d07a86029c821a1c93bc3131cddf10c40de4b11dc401401fe4d",
+      "inputSha256": "25d3fdd32405bac3d6bf858750d37cbabc8af3ff433419b3444ea320e17f34a1",
+      "issues": [],
+      "lineage": "packing-paired-tempering-2430-state.json",
+      "nativeBudgetSeconds": 57.885140209,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.000001000174565118527,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.9485272661206574,
+        "sourceRadiusMinusTarget": 2.0324877558763887e-7,
+        "sourceRetainedIncumbentWitnessBound": 0.05556106380859731,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "e49f22b9d84d702a1433a26ea548b5b047a50dac52f1709da909ad0eca481daf",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/3",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-paired2430",
+      "selectionReason": "Paired-tempering ancestry and a distinct phase, not merely another low-radius rank.",
+      "source": {
+        "bytes": 1288,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-paired2430.json",
+        "sha256": "a5a7c190d122ca910a6b4a086cc2a8ee8edacc8c354dd282b6bdf64689d4dcf1"
+      },
+      "sourceReference": {
+        "maximum": 0.000001000174565118527,
+        "radius": 2.9485272661206574,
+        "valid": false
+      },
+      "startedIn2950Replay": false,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.058746166000006,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2831,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-state.json",
+          "sha256": "25f767f67139b978f33edfed3c8320b00cbe64b32323e618b645ff4a5045eb4d"
+        },
+        {
+          "bytes": 3583,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-result.json",
+          "sha256": "6ecac17e933bf8a2bb2727a79ae435628db4946e1c8452aca1ed51f1b11465e3"
+        },
+        {
+          "bytes": 2924,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-inputs.json",
+          "sha256": "bf60928e87ae531178ff81151f269f4c1ad412efb81ee9948a08d342ee285661"
+        },
+        {
+          "bytes": 670681,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-input.txt",
+          "sha256": "872aa85dd82ab5057a0fb635787eb8d0c5d6392272a6ff983a65a6fdb12b6fc8"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28335,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-reference-source.json",
+          "sha256": "d1c7d03a90f05860deda1f2ad44399be5ad1ef29a784d7df3538d9194a10f592"
+        },
+        {
+          "bytes": 1363,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-events.jsonl",
+          "sha256": "324fdc4796af3e43c07ea8c6708b565c4978d26cfc47e2c2c480b1f993c6f7a8"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2321-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.51867262500001,
+        "endedAt": "2026-10-30T05:48:21.031Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-proposals2321",
+        "pgid": 35896,
+        "pid": 35896,
+        "rootExitElapsed": 58.132863000000015,
+        "startedAt": "2026-10-30T05:47:22.512Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-proposals2321.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-proposals2321.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 4,
+          "atLeast90": 4,
+          "maximum": 100,
+          "sampledMilliseconds": 6307.547751000093,
+          "samples": 121,
+          "timeWeightedMean": 26.826277017712265
+        },
+        "activeUnpaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 83.01886792452831,
+          "sampledMilliseconds": 52212.4299989999,
+          "samples": 1017,
+          "timeWeightedMean": 20.989023847325036
+        },
+        "pauseSignals": 8
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "50131a6203b68e1cf7910f2c83d4ef927027cdb1250ebf5acd0a2e49e50d1f70",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00036920614096297433,
+        "rigidAlignment": {
+          "angle": 0.5712942897919353,
+          "maxMidpointResidual": 0.0004113538894779903,
+          "maxRelativeThetaResidual": 0.000521289791935331
+        },
+        "sourceSupportIds": [9, 10, 13]
+      },
+      "domainSha256": "4c2198be5182795e5503170f4ef5688a46811a0dd937152fee1794ec1fd26a0f",
+      "geometrySha256": "6b313ac936843388232b997f571fa31a3362d5314452aa42bbbe59b01f51dcea",
+      "inputSha256": "872aa85dd82ab5057a0fb635787eb8d0c5d6392272a6ff983a65a6fdb12b6fc8",
+      "issues": [],
+      "lineage": "packing-lattice-proposals-2321-pool.json",
+      "nativeBudgetSeconds": 57.886172375,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.000001000420812168044,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.9485271172570497,
+        "sourceRadiusMinusTarget": 5.43851679246643e-8,
+        "sourceRetainedIncumbentWitnessBound": 0,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "5247c16af2ba5dadc032b898e6700862416fd272a9140845ed7661dc5a8dea55",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/4",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-proposals2321",
+      "selectionReason": "Earlier lattice-proposal ancestry and rounded embedding.",
+      "source": {
+        "bytes": 1290,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-proposals2321.json",
+        "sha256": "5152d470215c2fc0a7d9aaf3c637fa2184751435dfec58532a6fa08682e06249"
+      },
+      "sourceReference": {
+        "maximum": 0.000001000420812168044,
+        "radius": 2.9485271172570497,
+        "valid": false
+      },
+      "startedIn2950Replay": true,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.058181125000004,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2843,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-state.json",
+          "sha256": "24818a91a950920a93a1038328857e62365dfd6119ba34ac7a74e719ac922e93"
+        },
+        {
+          "bytes": 3601,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-result.json",
+          "sha256": "6e4ce7d94ea4c1f6a2b668a74e6c561298c370f1dfd021f3688e15d587f030ca"
+        },
+        {
+          "bytes": 2921,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-inputs.json",
+          "sha256": "5c7326148a14cf02eb22e680f416679eaa65dfe40b5c924eb15f5190a5212ffa"
+        },
+        {
+          "bytes": 666314,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-input.txt",
+          "sha256": "784d34a833578ebf0d03c2002e429d3dfa97f2e875bd733d0c8094de069e08e1"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28341,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-reference-source.json",
+          "sha256": "38dad85ca187dea711885b99e3ec948b085bc242295bedb9b38b4bf194c4327a"
+        },
+        {
+          "bytes": 1403,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-events.jsonl",
+          "sha256": "f1d50c9f2bcb2fe355f38f909140bc21eeb43b2e49f65d0eb9db6eae8452ea6b"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-lattice2403-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.424745417000025,
+        "endedAt": "2026-10-30T05:49:19.459Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-lattice2403",
+        "pgid": 36297,
+        "pid": 36297,
+        "rootExitElapsed": 58.17570029200002,
+        "startedAt": "2026-10-30T05:48:21.034Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-lattice2403.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-lattice2403.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 85.45454545454545,
+          "sampledMilliseconds": 4887.868459000078,
+          "samples": 95,
+          "timeWeightedMean": 22.670589338637484
+        },
+        "activeUnpaused": {
+          "above90": 1,
+          "atLeast90": 1,
+          "maximum": 98.18181818181819,
+          "sampledMilliseconds": 53540.43762499996,
+          "samples": 1043,
+          "timeWeightedMean": 19.105717206557923
+        },
+        "pauseSignals": 8
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "52fd9ce9818efbfdeb3b2f2f3650b06ce0c68cf0c3f1f84ab350ddcfb652c6d8",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00045521466272241407,
+        "rigidAlignment": {
+          "angle": -0.7800380754105947,
+          "maxMidpointResidual": 0.0005254407247757847,
+          "maxRelativeThetaResidual": 0.0006159245894052923
+        },
+        "sourceSupportIds": [8, 11, 15]
+      },
+      "domainSha256": "709a16fb8e52f99f19784666111b701a444eaeb8ff65a612600c24c1ec63b345",
+      "geometrySha256": "00f7c2d734cc681a2a8d9f85115900a7c5979d0695b417159dd5dfc00745d684",
+      "inputSha256": "784d34a833578ebf0d03c2002e429d3dfa97f2e875bd733d0c8094de069e08e1",
+      "issues": [],
+      "lineage": "packing-lattice-tempering-2403-state.json",
+      "nativeBudgetSeconds": 57.884366541,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010003907757113564,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.9485271006224023,
+        "sourceRadiusMinusTarget": 3.775052048737848e-8,
+        "sourceRetainedIncumbentWitnessBound": 0.05556106380859731,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "dd5f1d9e39bdb9282175f7a91d0b532ac9112701ff91942c62b3ea84547c5709",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/9",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-lattice2403",
+      "selectionReason": "Different tempering lineage/global phase with independent contact slack.",
+      "source": {
+        "bytes": 1299,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-lattice2403.json",
+        "sha256": "db2d84993874b09bb03b47bc49cfd9a32d6193a3a4438fc2358a17ea281fc183"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010003907757113564,
+        "radius": 2.9485271006224023,
+        "valid": false
+      },
+      "startedIn2950Replay": false,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.100935209000006,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2851,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-state.json",
+          "sha256": "290d9864309922d5cc585102cab6779d15a356a6c3157d1bf935c13db4dec2de"
+        },
+        {
+          "bytes": 3603,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-result.json",
+          "sha256": "5d631adafa280417068487bfbbfb76e5721b74541c619ea7a4f750d72a10b4c5"
+        },
+        {
+          "bytes": 2924,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-inputs.json",
+          "sha256": "3963a6d9262e0e37db9b179544d268bb976e139d8f5ec29fda842b4dad188f7d"
+        },
+        {
+          "bytes": 653244,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-input.txt",
+          "sha256": "b31cd580c3b878736b1debcd7689bdd578cc5d08cc9f75e2c408bbf088d53f3d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28334,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-reference-source.json",
+          "sha256": "9d57b6d1285232eb1b0e2153af9f8b170036f873777098bf1697fa550c6ea672"
+        },
+        {
+          "bytes": 1411,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-events.jsonl",
+          "sha256": "13ab74a4731461df1e9cb285e2ebf8f92b3b16b29c2f8272676c718b75d2f752"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-near-proposals2340-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "original-completed-record",
+      "controllerActiveEntry": null,
+      "controllerRecord": {
+        "elapsed": 58.654958708000024,
+        "endedAt": "2026-10-30T05:50:18.135Z",
+        "exitCode": 0,
+        "groupVerifiedEmpty": true,
+        "id": "packing-seed-sweep-2971-near-proposals2340",
+        "pgid": 36627,
+        "pid": 36627,
+        "rootExitElapsed": 58.11828145800001,
+        "startedAt": "2026-10-30T05:49:19.460Z",
+        "status": "completed",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-near-proposals2340.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-near-proposals2340.log"
+      },
+      "cpu": {
+        "activePaused": {
+          "above90": 1,
+          "atLeast90": 1,
+          "maximum": 96.15384615384616,
+          "sampledMilliseconds": 25898.58779099991,
+          "samples": 501,
+          "timeWeightedMean": 28.45464288270482
+        },
+        "activeUnpaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 84,
+          "sampledMilliseconds": 32757.623417000053,
+          "samples": 638,
+          "timeWeightedMean": 31.2388753787214
+        },
+        "pauseSignals": 24
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "e2869927fdef0f1eeb57af1c91ff81550d0a71343314615e792a3d1788fe767b",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00044075331682069674,
+        "rigidAlignment": {
+          "angle": -2.9169677881089893,
+          "maxMidpointResidual": 0.0005014369811600076,
+          "maxRelativeThetaResidual": 0.0006062118910108438
+        },
+        "sourceSupportIds": [10, 14, 15]
+      },
+      "domainSha256": "7627434c03115a9763bb26eb2af5c8e97d09f929156c97e0d4dda80dbe6884b3",
+      "geometrySha256": "e1612450077aed89a7c171e58d849b879d01ba2b2348fb3cc31150e71f81e1d6",
+      "inputSha256": "b31cd580c3b878736b1debcd7689bdd578cc5d08cc9f75e2c408bbf088d53f3d",
+      "issues": [],
+      "lineage": "packing-lattice-proposals-2340-pool.json",
+      "nativeBudgetSeconds": 57.887456708,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010005590704601595,
+        "sourceMeetsRadiusTarget": false,
+        "sourceRadius": 2.948527084408683,
+        "sourceRadiusMinusTarget": 2.1536801231292202e-8,
+        "sourceRetainedIncumbentWitnessBound": 0.05556106380859731,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "7864db14954dc80aac62c6c1d8317ba062ff049d48190d9b2bbf402909dcaf19",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-near-grid-2761.json",
+        "pointer": "/near/14",
+        "sha256": "0ffd9d258d0e85b3058bc93b83cc4ea0025cc060ce8276483e2f93ce5d9aaf6f"
+      },
+      "seedId": "near-proposals2340",
+      "selectionReason": "Later lattice-proposal ancestry; exact aliases represented once.",
+      "source": {
+        "bytes": 1276,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/near-proposals2340.json",
+        "sha256": "a3bef3dbcbed98872940a9b077d3fc9002a19b93cae685fe5c8d1352bba597d8"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010005590704601595,
+        "radius": 2.948527084408683,
+        "valid": false
+      },
+      "startedIn2950Replay": false,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.038390082999996,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 2845,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-state.json",
+          "sha256": "64954f902c75a8a675ea387b7cfd5915ee001203aba5f1f3faf4540ff35ef65c"
+        },
+        {
+          "bytes": 3597,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-result.json",
+          "sha256": "21a6654b56a6c31451a67155cba3cb1d7aa1f0de8b8dd3dc5200a7fb45f25943"
+        },
+        {
+          "bytes": 2922,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-inputs.json",
+          "sha256": "7abb79fd2e39db5b5142c59f5f29e0b8666073a2b31418a8772f60eceabf26db"
+        },
+        {
+          "bytes": 661231,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-input.txt",
+          "sha256": "4197c8b9a0fb0bffb0d11a877c9b22e144d3bebca3ca25e6184692342f96cd19"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-native.stdout.json",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 83,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-children-terminal.json",
+          "sha256": "c57eb5075f7507ef6335ca68c51fbdcaa6b56f55fa0a560d63c33cfd72b391f1"
+        },
+        {
+          "bytes": 28392,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-reference-source.json",
+          "sha256": "d2af61a0127120f4bc3bb03d643649430603410ec7c2983551da60a9fbc7be5c"
+        },
+        {
+          "bytes": 1406,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-events.jsonl",
+          "sha256": "0593afcf4f2c7a3e39693d806254081b8a07277cba8956736a703e9de9bcaf19"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/packing-seed-sweep-2970-ranked-continuous2650-native.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "candidate": null,
+      "classification": "capped-inconclusive",
+      "controllerAccounting": "active-entry-and-terminal-worker-reconciled; missing controller record and finalization error preserved",
+      "controllerActiveEntry": {
+        "id": "packing-seed-sweep-2971-ranked-continuous2650",
+        "members": [],
+        "paused": false,
+        "pgid": 37033,
+        "pid": 37033,
+        "rootExit": 0,
+        "startedAt": "2026-10-30T05:50:18.136Z",
+        "stderr": "/private/tmp/packing-seed-sweep-2971-ranked-continuous2650.stderr.log",
+        "stdout": "/private/tmp/packing-seed-sweep-2971-ranked-continuous2650.log",
+        "terminating": "resident-wall-cap",
+        "wallSeconds": 60
+      },
+      "controllerRecord": null,
+      "cpu": {
+        "activePaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 88.67924528301887,
+          "sampledMilliseconds": 8416.911793000123,
+          "samples": 163,
+          "timeWeightedMean": 22.054422152494332
+        },
+        "activeUnpaused": {
+          "above90": 0,
+          "atLeast90": 0,
+          "maximum": 80.76923076923077,
+          "sampledMilliseconds": 50605.065873999905,
+          "samples": 986,
+          "timeWeightedMean": 26.035094764941576
+        },
+        "pauseSignals": 13
+      },
+      "distinctBoxMetadata": {
+        "contactSignature": "5ff2ee64444803e0bbd75511134e98cdab698375991be141f5d41f0dadeb25e9",
+        "coordinateBoxOverlapMeaning": "literal equal-width integer box overlap; not feasible-volume/geometric coverage",
+        "coordinateBoxOverlapWithFrozenBest": 0,
+        "intrinsicMidpointDistanceChangeLInf": 0.00041643442698241495,
+        "rigidAlignment": {
+          "angle": -1.4884850172609303,
+          "maxMidpointResidual": 0.0004782260091263476,
+          "maxRelativeThetaResidual": 0.0005659827390696037
+        },
+        "sourceSupportIds": [11, 13, 15]
+      },
+      "domainSha256": "3393216ec7bca8a7f93aa7251a4b220f4ec14e213a9fee34aca32b0ac4da7a3d",
+      "geometrySha256": "1899613ae0d25afdbb3f9a1580a36c78b3eb9ad3841d79d9d04b6526d2f4e5dd",
+      "inputSha256": "4197c8b9a0fb0bffb0d11a877c9b22e144d3bebca3ca25e6184692342f96cd19",
+      "issues": [],
+      "lineage": "packing-polygon-polish-2650.json",
+      "nativeBudgetSeconds": 57.876843291,
+      "nativeStats": null,
+      "objectiveExposure": {
+        "allNonfirstCentresFree": true,
+        "firstThetaOffsets": [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
+        "nativeLeafExposure": null,
+        "scope": "source diagnostic and native full-MEC leaf counts; no inference from angle/layout counts",
+        "sourceMaximum": 0.0000010108720398646697,
+        "sourceMeetsRadiusTarget": true,
+        "sourceRadius": 2.9485268342694435,
+        "sourceRadiusMinusTarget": -2.2860243831246407e-7,
+        "sourceRetainedIncumbentWitnessBound": 0.05556106380859731,
+        "sourceValid": false,
+        "targetRadius": 2.948527062871882
+      },
+      "origin": {
+        "geometrySha256": "82eac7cc52000ab60f4b17389ede72b2f3c7019fa3db6e9b733da109eb7b5adf",
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-ranked-cell-bank-2895.json",
+        "pointer": "/entries/46",
+        "sha256": "bcf6eac33fe81d8adc296c377662f0f328d4ddcb46175d0d9a41aac2ac1a5d98"
+      },
+      "seedId": "ranked-continuous2650",
+      "selectionReason": "One continuous-polish/rounded-cell stratum; larger invalidity explicitly reported.",
+      "source": {
+        "bytes": 2179,
+        "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970-frozen/ranked-continuous2650.json",
+        "sha256": "ca15f7193b0c73f91991430cef6742c853abc0930028170f99fffc61c94fcd63"
+      },
+      "sourceReference": {
+        "maximum": 0.0000010108720398646697,
+        "radius": 2.9485268342694435,
+        "valid": false
+      },
+      "startedIn2950Replay": null,
+      "workerExitCode": 0,
+      "workerResidentSeconds": 58.945815417,
+      "workerStatus": "watchdog-capped-inconclusive",
+      "workerTerminal": true
+    }
+  ],
+  "selection": {
+    "bytes": 189786,
+    "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-seed-selection-2970.json",
+    "sha256": "a91ef8a885e8f0184b9206df5d98b678cafe07a3df1dbdb053e1ae59daa5d2e6"
+  },
+  "submitted": false,
+  "summaryOnly": true,
+  "target": {
+    "localRadius": 2.948527063871882,
+    "officialRadius": 2.9485270638716834,
+    "radius": 2.948527062871882,
+    "sha256": "592afbcc61e3056a71091230500d5db1864e96f44904872df1b930c85c5811b4",
+    "source": {
+      "bytes": 2443,
+      "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-calibrated-continuation-2964-frozen/verified2855.json",
+      "sha256": "592afbcc61e3056a71091230500d5db1864e96f44904872df1b930c85c5811b4"
+    },
+    "sourcePath": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-calibrated-continuation-2964-frozen/verified2855.json",
+    "step": 1e-9
+  },
+  "terminal": true,
+  "version": 1
+}

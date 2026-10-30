@@ -2,6 +2,8 @@
 
 A collection of web views built with React, TypeScript, Vite, and Tailwind CSS, deployed as Cloudflare static assets. `/` is an empty black screen. View components live in `src/views/`.
 
+The [research journal](research/README.md) records the packing campaign, validated score history, unsuccessful experiments, corrected interpretations, and remaining avenues. Its [best-result snapshots](research/best/placements.json) and selected evidence are versioned alongside it.
+
 ## Shape packing
 
 Open `/shape-packing` for the monochrome semicircle editor. It starts with an editable 12 + 3 fan arrangement, not a proposed solution. Add and remove fans; adjust count, orbit radius, rotation, spread, tilt, and origin. Full rings space N shapes without repeating the endpoint; partial fans include both ends of their spread. Locking θ shares the tilt relative to each shape's radial direction. All semicircles have radius 1.

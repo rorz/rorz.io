@@ -1,0 +1,337 @@
+{
+  "bestValidatedScore": 2.948527089049121,
+  "broaderGoal": "paused",
+  "changes": [
+    "Research-only independent polygon derivative implementation and seam audit.",
+    "Research-only derivative self-check now independently covers the seam fallback.",
+    "Research-only curvature diagnostic now differences gradients.",
+    "No application code or UI changes."
+  ],
+  "createdAt": "2026-10-26T04:14:39.204Z",
+  "findings": {
+    "conclusion": "The first-order seam derivatives agree closely with an independent polygon calculation. Corrected local curvature is positive in all four tested tangent modes at the small-step plateau; the apparent negative directions from earlier coarse estimates are not reliable escape directions. This audit found no seam-derivative error that explains the search plateau.",
+    "concreteExample": {
+      "branchChanges": true,
+      "h": 0.000001,
+      "pair": [3, 12],
+      "relativeCentralDifferenceGradientError": 0.2064629972138492,
+      "source": "incumbent"
+    },
+    "existingGradientCheck": {
+      "analyticError": 0.0007572401357986645,
+      "boundaryError": 6.514343964643348e-8,
+      "rotationError": 6.044802828330401e-8,
+      "rows": [
+        {
+          "boundaryDifference": 5.584438782478554e-9,
+          "ids": [1, 2],
+          "relativeGradientDifference": 0.00045902339800686734,
+          "rotationError": 3.432065539316273e-9,
+          "stepError": 4.176446089306315e-9
+        },
+        {
+          "boundaryDifference": 5.8568249673906244e-8,
+          "ids": [1, 4],
+          "relativeGradientDifference": 0.00017543032132779482,
+          "rotationError": 6.044802828330401e-8,
+          "stepError": 1.1549281213892253e-7
+        },
+        {
+          "boundaryDifference": 5.490427078592935e-9,
+          "ids": [1, 6],
+          "relativeGradientDifference": 0.0005862328495885063,
+          "rotationError": 1.3441500224314143e-9,
+          "stepError": 9.87997692583625e-9
+        },
+        {
+          "boundaryDifference": 3.958755318239363e-9,
+          "ids": [1, 7],
+          "relativeGradientDifference": 0.00021290463125696367,
+          "rotationError": 4.21128319370931e-9,
+          "stepError": 8.924242100706611e-9
+        },
+        {
+          "boundaryDifference": 6.514343964643348e-8,
+          "ids": [1, 12],
+          "relativeGradientDifference": 0.0005298322207399444,
+          "rotationError": 5.956446915397313e-8,
+          "stepError": 1.7938193521652488e-7
+        },
+        {
+          "boundaryDifference": 2.8995115991059006e-9,
+          "ids": [1, 13],
+          "relativeGradientDifference": 0.0005455108773636918,
+          "rotationError": 8.939117361689155e-10,
+          "stepError": 5.410767633503213e-9
+        },
+        {
+          "boundaryDifference": 4.2432581742681796e-9,
+          "ids": [2, 6],
+          "relativeGradientDifference": 0.000754932926454716,
+          "rotationError": 9.4011796970644e-9,
+          "stepError": 8.354046545955504e-9
+        },
+        {
+          "boundaryDifference": 3.370422381698963e-8,
+          "ids": [2, 13],
+          "relativeGradientDifference": 0.000507625498843357,
+          "rotationError": 2.6756798600804256e-8,
+          "stepError": 7.598546109805355e-8
+        },
+        {
+          "boundaryDifference": 1.3620543822471825e-9,
+          "ids": [2, 15],
+          "relativeGradientDifference": 0.0005609680736089328,
+          "rotationError": 1.3574048360689463e-9,
+          "stepError": 6.519018329735593e-9
+        },
+        {
+          "boundaryDifference": 1.832955588414775e-9,
+          "ids": [3, 10],
+          "relativeGradientDifference": 0.00017777254686550688,
+          "rotationError": 1.7029445929804115e-9,
+          "stepError": 3.817684000101663e-9
+        },
+        {
+          "boundaryDifference": 3.8521451662524727e-10,
+          "ids": [3, 12],
+          "relativeGradientDifference": 0,
+          "rotationError": 6.443811739055117e-17,
+          "stepError": 0
+        },
+        {
+          "boundaryDifference": 8.171979577997519e-9,
+          "ids": [3, 13],
+          "relativeGradientDifference": 0.00008649971824149876,
+          "rotationError": 1.1423777665996055e-8,
+          "stepError": 1.1155667075818755e-8
+        },
+        {
+          "boundaryDifference": 2.668880845517175e-9,
+          "ids": [4, 7],
+          "relativeGradientDifference": 0.0001540984603540127,
+          "rotationError": 3.257426074741717e-9,
+          "stepError": 6.910671523684052e-9
+        },
+        {
+          "boundaryDifference": 2.7476533580495725e-8,
+          "ids": [4, 10],
+          "relativeGradientDifference": 0.000512942884503702,
+          "rotationError": 1.5075868113513916e-8,
+          "stepError": 7.29946043061152e-8
+        },
+        {
+          "boundaryDifference": 4.850165888531876e-9,
+          "ids": [4, 11],
+          "relativeGradientDifference": 0.0005359370783634676,
+          "rotationError": 1.5581892509190154e-9,
+          "stepError": 9.879785703191016e-9
+        },
+        {
+          "boundaryDifference": 2.5366672111638237e-8,
+          "ids": [4, 12],
+          "relativeGradientDifference": 0.00022712754468565843,
+          "rotationError": 1.335860356871119e-8,
+          "stepError": 4.365446592167065e-8
+        },
+        {
+          "boundaryDifference": 1.5371184972167922e-8,
+          "ids": [5, 7],
+          "relativeGradientDifference": 0.0002637552046860863,
+          "rotationError": 4.428534350924542e-9,
+          "stepError": 4.223327628244827e-8
+        },
+        {
+          "boundaryDifference": 3.2624428615013264e-8,
+          "ids": [5, 11],
+          "relativeGradientDifference": 0.0004980576978486815,
+          "rotationError": 9.049945576944879e-9,
+          "stepError": 8.835577829886486e-8
+        },
+        {
+          "boundaryDifference": 2.904718588894821e-9,
+          "ids": [5, 14],
+          "relativeGradientDifference": 0.00023580616375212075,
+          "rotationError": 2.937242302257895e-9,
+          "stepError": 6.648566621351109e-9
+        },
+        {
+          "boundaryDifference": 4.0766629363132065e-9,
+          "ids": [6, 7],
+          "relativeGradientDifference": 0.0004677558829344447,
+          "rotationError": 4.041484100499746e-9,
+          "stepError": 1.142586746852105e-8
+        },
+        {
+          "boundaryDifference": 2.2587903948424506e-9,
+          "ids": [6, 8],
+          "relativeGradientDifference": 0.0005724100658545407,
+          "rotationError": 2.3521657677716223e-9,
+          "stepError": 7.739451690729973e-9
+        },
+        {
+          "boundaryDifference": 8.515185997816741e-9,
+          "ids": [6, 9],
+          "relativeGradientDifference": 0,
+          "rotationError": 1.2039023687950457e-13,
+          "stepError": 0
+        },
+        {
+          "boundaryDifference": 2.8158817896367685e-8,
+          "ids": [6, 15],
+          "relativeGradientDifference": 0.00048637074453179675,
+          "rotationError": 3.762102102410675e-9,
+          "stepError": 3.378775774946626e-8
+        },
+        {
+          "boundaryDifference": 6.5991374560350155e-9,
+          "ids": [7, 8],
+          "relativeGradientDifference": 0.00011108550433955769,
+          "rotationError": 5.749496086104144e-9,
+          "stepError": 5.2633120420112e-9
+        },
+        {
+          "boundaryDifference": 4.412488957200577e-9,
+          "ids": [7, 14],
+          "relativeGradientDifference": 0.0005179441510962687,
+          "rotationError": 6.789952183711836e-9,
+          "stepError": 6.31747508956739e-9
+        },
+        {
+          "boundaryDifference": 2.5579371768629602e-8,
+          "ids": [8, 14],
+          "relativeGradientDifference": 0.00021476857834739314,
+          "rotationError": 1.1401230847112649e-8,
+          "stepError": 5.4889592920574445e-8
+        },
+        {
+          "boundaryDifference": 7.917968794154369e-10,
+          "ids": [9, 15],
+          "relativeGradientDifference": 0.0007572401357986645,
+          "rotationError": 4.926375755015547e-10,
+          "stepError": 7.807558365694222e-9
+        },
+        {
+          "boundaryDifference": 4.3715708028346155e-9,
+          "ids": [10, 11],
+          "relativeGradientDifference": 0.0003816957096752202,
+          "rotationError": 2.108951166475199e-9,
+          "stepError": 1.0650202774923023e-8
+        },
+        {
+          "boundaryDifference": 4.165517968754186e-9,
+          "ids": [10, 12],
+          "relativeGradientDifference": 0.0000027274865190958037,
+          "rotationError": 2.441097139077855e-9,
+          "stepError": 1.1126817082837179e-8
+        },
+        {
+          "boundaryDifference": 3.7201128248530137e-9,
+          "ids": [12, 13],
+          "relativeGradientDifference": 0.0005010177586419862,
+          "rotationError": 4.804765079814872e-9,
+          "stepError": 5.376596827995052e-9
+        }
+      ],
+      "stepError": 1.7938193521652488e-7
+    },
+    "independentChecks": {
+      "invarianceError": 2.220446049250313e-16,
+      "nativeError": 0,
+      "randomFiniteError": 1.2928264033044704e-8,
+      "swapError": 1.1764367258138009e-11,
+      "valueError": 0
+    },
+    "maximumRelativeSeamGradientDiscrepancy": 9.253277556084923e-9,
+    "maximumSeamCirclePolygonAreaDifference": 8.841053770699582e-15,
+    "numericalIssue": "At large finite-difference steps the seam changes contact branch, and a quadratic approximation mixes different geometric regimes. At very small steps, second differences of overlap values amplify floating-point cancellation. Neither effect implies an error in the existing first-order seam derivative.",
+    "seamPairs": [[3, 12], [6, 9]],
+    "stableCurvature": [
+      {
+        "linearObjective": -0.00007840277037979293,
+        "modes": 4,
+        "radius": 2.948526549841559,
+        "source": "/private/tmp/packing-polygon-polish-2650.json",
+        "stationarityResidual": 0.000032660324184434027,
+        "steps": [
+          {
+            "eigenvalues": [
+              0.004596140163558175, 0.08804544763733985, 333.04159305410826, 32573.250818478442
+            ],
+            "h": 3e-9,
+            "symmetryError": 0.09368076888677024
+          },
+          {
+            "eigenvalues": [
+              0.004596353525669786, 0.08804484028835201, 333.0413991946681, 32572.952653433415
+            ],
+            "h": 1e-9,
+            "symmetryError": 0.007430252286212635
+          },
+          {
+            "eigenvalues": [
+              0.004596457996941117, 0.08804689390306057, 333.0403894742647, 32572.869709266866
+            ],
+            "h": 3e-10,
+            "symmetryError": 0.035714158017071895
+          }
+        ]
+      },
+      {
+        "linearObjective": -0.007871895178972018,
+        "modes": 4,
+        "radius": 2.9485270890491266,
+        "source": "/private/tmp/packing-lattice-repair-block-2420-best.json",
+        "stationarityResidual": 0.003739403448066787,
+        "steps": [
+          {
+            "eigenvalues": [
+              0.004321920804696175, 0.03954710915301848, 0.09240784729280471, 380.7462260916919
+            ],
+            "h": 3e-9,
+            "symmetryError": 0.00012032984629684051
+          },
+          {
+            "eigenvalues": [
+              0.004321837376467604, 0.03954730550295959, 0.09240756786243584, 380.7464272180843
+            ],
+            "h": 1e-9,
+            "symmetryError": 0.00022714021382519434
+          },
+          {
+            "eigenvalues": [
+              0.00432209519383434, 0.03954566598113468, 0.0924089179203721, 380.746200287876
+            ],
+            "h": 3e-10,
+            "symmetryError": 0.0016580813424980079
+          }
+        ]
+      }
+    ],
+    "testingDefect": "The previous h versus h/2 check invoked the same analytic fallback on both sides at nearly opposing seams, so that comparison was not independent. The check now also compares every active contact to labelled polygon boundary integrals."
+  },
+  "limitations": [
+    "This is a floating-point local diagnostic with approximate contact multipliers, not a proof of local or global optimality.",
+    "Some polygon clipping branches still switch for very small steps; the reported small-step curvature is an observed convergence plateau, not a symbolic Hessian certificate.",
+    "Exactly coincident touching flat edges have unequal one-sided derivatives; the boundary-integral routine must not be treated as a unique smooth derivative there.",
+    "No new packing search was run, and the existing six-decimal export obstacle remains."
+  ],
+  "methods": [
+    "Compute polygon overlap derivatives by integrating the normal velocity along each labelled clipped boundary segment.",
+    "Independently compare these derivatives to the existing analytic seam fallback and finite differences over steps from 1e-4 to 1e-10.",
+    "Check 30 active contacts in each of the incumbent and continuous layouts, plus 30 general configurations and parallel-strip/touching-edge examples.",
+    "Compute local constrained curvature from first differences of the boundary gradients, avoiding second differences of small area values."
+  ],
+  "newCandidateGenerated": false,
+  "nextAction": "End the bounded audit; preserve the incumbent and keep the broader goal paused.",
+  "request": "Quick audit of near-parallel flat-edge mathematics (avenue 2).",
+  "submittedByAgent": false,
+  "terminal": true,
+  "uiChanged": false,
+  "verification": {
+    "command": "bun run verify",
+    "includes": "bun run check",
+    "log": "packing-2820-verify.log",
+    "passed": true
+  }
+}

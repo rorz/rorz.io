@@ -1,0 +1,238 @@
+{
+  "bestValidated": 2.9485270999054354,
+  "frames": [
+    {
+      "count": 459527,
+      "frame": 0,
+      "span": 459527
+    },
+    {
+      "count": 164632,
+      "frame": 1,
+      "span": 164632
+    },
+    {
+      "count": 528120,
+      "frame": 2,
+      "span": 528120
+    },
+    {
+      "count": 781750,
+      "frame": 3,
+      "span": 781750
+    },
+    {
+      "count": 10869,
+      "frame": 4,
+      "span": 10869
+    },
+    {
+      "count": 30063,
+      "frame": 5,
+      "span": 30063
+    },
+    {
+      "count": 764829,
+      "frame": 6,
+      "span": 0
+    },
+    {
+      "count": 84702,
+      "frame": 7,
+      "span": 84702
+    },
+    {
+      "count": 48658,
+      "frame": 8,
+      "span": 48658
+    },
+    {
+      "count": 20743,
+      "frame": 9,
+      "span": 20743
+    },
+    {
+      "count": 151867,
+      "frame": 10,
+      "span": 151867
+    },
+    {
+      "count": 1024150,
+      "frame": 11,
+      "span": 1024150
+    },
+    {
+      "count": 1811465,
+      "frame": 12,
+      "span": 1811465
+    },
+    {
+      "count": 133381,
+      "frame": 13,
+      "span": 133381
+    },
+    {
+      "count": 268413,
+      "frame": 14,
+      "span": 268413
+    }
+  ],
+  "gap": 1.7601982404968908e-7,
+  "leaderAtLastRead": 2.9485269238856113,
+  "notes": [
+    "Bounded neighbourhood searches do not prove global optimality.",
+    "Some individual search nodes reached their time or node caps.",
+    "Unrounded and overlap-bearing proposals are research inputs, not validated results.",
+    "Only the public validation endpoint was used; no result was submitted.",
+    "The full repository verification passed after pausing the CPU searches: 131 tests passed, 0 failed, all four app builds succeeded."
+  ],
+  "placements": "packing-best.placements.json",
+  "previousBestAtStart": 2.9485271975184077,
+  "rotationalStepsConsidered": 6283169,
+  "runs": [
+    {
+      "bestEvents": [],
+      "last": "FINAL 191208 490176 229942966 0 2.9485271975184943 528.107377292",
+      "name": "packing-enumerate-2010",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 191207 490569 230046445 0 2.9485271975184943 527.528568625",
+      "name": "packing-enumerate-2011",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 191207 491481 230051585 0 2.9485271975184943 514.258939958",
+      "name": "packing-enumerate-2012",
+      "terminal": true
+    },
+    {
+      "bestEvents": ["BEST 2.9485271686202346 MEMBER 0"],
+      "last": "FINAL 191207 360926 224406946 1 2.9485271686202346 516.5935788749999",
+      "name": "packing-enumerate-2013",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 129222 2016498 0 1 1 2.9485271686210437 600.00547625",
+      "name": "packing-global-coupled-2261",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 126650 1731098 0 1 4 2.9485271686210437 600.000071833",
+      "name": "packing-soft-coupled-2271",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 150201 1548961 0 1 0 2.9485271686210437 600.0019400000001",
+      "name": "packing-wide-coupled-2282",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 46 2876 0 0.07812505737265144 2.9485271686200436 15.173054790999998",
+      "name": "packing-lattice-proposals-2290",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 929 59319 0 0.009170825905386943 2.9485271686200436 240.09985791699998",
+      "name": "packing-lattice-proposals-2310",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 790 50357 0 0.0054859170882291695 2.9485271686200436 240.270503875",
+      "name": "packing-lattice-proposals-2320",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 825 52580 0 0.00014701659239828627 2.9485271686200436 240.20372733300002",
+      "name": "packing-lattice-proposals-2321",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 816 72228 0 0.0005593263375847054 2.9485271686200436 240.10441016599998",
+      "name": "packing-lattice-proposals-2340",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 80 1194 0 0 0 2.9485271686210437 8.933413041999998",
+      "name": "packing-lattice-repair-2300",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 80 1518 0 0 0 2.9485271686210437 9.097104125",
+      "name": "packing-lattice-repair-2330",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 80 8281 0 0 0 2.9485271686210437 14.891319958",
+      "name": "packing-lattice-repair-2331",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 80 9816 0 0 14 2.9485271686210437 16.734691166999998",
+      "name": "packing-lattice-repair-2332",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 80 87604 0 1 8 2.9485271686210437 63.460165124999996",
+      "name": "packing-lattice-repair-2333",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 41 41 2.9485271686200436 180.010198292",
+      "name": "packing-lattice-mip-2350",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 9 9 2.9485271686200436 180.048994583",
+      "name": "packing-lattice-mip-2351",
+      "terminal": true
+    },
+    {
+      "bestEvents": ["BEST 2.94852712723083", "BEST 2.9485271012921026"],
+      "last": "FINAL 204 611316 0 2.9485271012921026 180.000357083",
+      "name": "packing-lattice-descent-2360",
+      "terminal": true
+    },
+    {
+      "bestEvents": ["BEST 2.9485270999055415"],
+      "last": "FINAL 214 641983 0 2.9485270999055415 180.000160833",
+      "name": "packing-lattice-descent-2361",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 216 646509 0 2.9485271012921026 180.000092833",
+      "name": "packing-lattice-descent-2362",
+      "terminal": true
+    },
+    {
+      "bestEvents": [],
+      "last": "FINAL 216 645856 0 2.9485271012921026 180.03164349999997",
+      "name": "packing-lattice-descent-2363",
+      "terminal": true
+    }
+  ],
+  "screenshot": "packing-lattice-2361.png",
+  "submitted": false,
+  "uiJsonMatchesValidated": true,
+  "uiSnapshot": "Validated · R 2.948527100",
+  "updatedAt": "2026-10-26T02:10:39.017Z",
+  "validation": "packing-best.validation.json"
+}

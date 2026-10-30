@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-27T02:29:14.387Z",
+  "bestValidatedScore": 2.9485270638716834,
+  "contactDiagnostic": "resumed-research/packing-best2855-contact-summary.json",
+  "findings": [
+    "A one-microunit physical move can need a reduced-basis coefficient as large as 51; the older ±2 box excluded these moves.",
+    "Old retained local tangent planes can reject true valid rigid rotations; fresh exact geometry is used for final acceptance.",
+    "Finite old-frame ±5 and ±6 boxes and the new-frame ±7 box exhausted with no leader-beating candidate; this is not a global optimality proof.",
+    "New exact-tempering seed2855 improved the official validator score. Search remains active and no submission was made.",
+    "Independent contact audit confirms coordinated relative motion, not just rigid rotation and rounding: aligned midpoint RMS≈95 microunits, max≈256 microunits, same30 positive-area contacts.",
+    "Audited older persistent-search radius surrogate: max overestimate5.94e-7 on newbest ±1microunit moves; valid accepted results always used exactMEC; current workers use exactMEC for search too.",
+    "Full15-piece positive control recovered known2855 packing in0.086s,11nodes,no cap; nativeCSP success path is verified.",
+    "Pure translation-cell enumerator passed109296coveragechecks and3620exactscene roundtrips; up to225cells at fixedrotation.",
+    "Native enumeration completed without time/node caps; scoring consumed most of the run. Increasing enumeration time alone would not solve the bottleneck.",
+    "In three first-phase batches 94.2–94.4% of retained candidates differ only in piece9 angle. That angle affects pair6–9, but those changes leave the dominant invalid overlap unchanged. It cannot be declared physically irrelevant.",
+    "Low metric regularization permits milliradian-scale tangent motion, beyond the scale where the local model is accurate. Stronger regularization and conditional angle sampling are prepared for a distinct experiment.",
+    "Candidate bank 2908 contains invalid proposals only; lower radius is not an accepted improvement.",
+    "Another prepared experiment seeks small feasible radius reductions before targeting the entire remaining leaderboard gap."
+  ],
+  "goal": "First place on the packing leaderboard",
+  "improvement": 2.5177437468215658e-8,
+  "leaderAtLastRead": 2.9485269238856113,
+  "nextResume": [
+    "User must resume goal before further research.",
+    "No searches launched this continuation; 2911 continuation/41D tests remain prepared only.",
+    "Do NOT use packing-cpu-fleet-resume-2912.ts: read-only review found unsafe deadline fallback/race. 2913 replacement preparation was interrupted and is unreviewed.",
+    "Existing manager and governor handles both completed; config maxWorkers0/activeSlots0/sealedtrue.",
+    "Best canonical files and saved UI remain 2855 at official score2.9485270638716834.",
+    "Never submit; user reserved submissions. Preserve CPU ceiling and user-managed server4447."
+  ],
+  "pause": {
+    "bestValidatedScore": 2.9485270638716834,
+    "fleetDisabled": true,
+    "requestedByUser": true,
+    "submittedByAgent": false,
+    "uiAlreadySynced": true
+  },
+  "preparedOnly": {
+    "conditional41D": "/private/tmp/packing-conditional-cvp-search-2909.ts",
+    "conditionalTests": "/private/tmp/packing-conditional-cvp-2908-selfcheck.json",
+    "continuationTests": "/private/tmp/packing-feasible-continuation-2909.selfcheck.json",
+    "feasibleContinuation": "/private/tmp/packing-feasible-continuation-2909.ts"
+  },
+  "previousValidatedScore": 2.948527089049121,
+  "processStatus": {
+    "governorStatus": "fleet-finished",
+    "hostProcessCheck": "No packing workers, supervisors or native children remain",
+    "managerTerminal": true,
+    "runningSearchWorkers": 0
+  },
+  "remainingGap": 1.3998607206744396e-7,
+  "resourceCaveat": "Final whole-machine log recorded10quarter-second samples at/above90%, max99.625%; packing workers were paused at these points. Root disclosed it; cause not established from available process telemetry. No claim that the90% ceiling held.",
+  "resourcePolicy": {
+    "corrections": [
+      "V2 logged3briefone-secondsamplesabove90%; rootreportedthesetouserandreducedconcurrency.",
+      "FirstV3exitednormalduringqueued-jobstartupgap;fixedterminationtoauthoritativemanagerstateonlyandverifiedoldsessionexitbefore restart.",
+      "CurrentV3auditfoundmax80%CPUover250msandmax58.15%rolling1s in76swindow; activecontrollercanpauseonlypackingprocesses."
+    ],
+    "cpuSampleMilliseconds": 250,
+    "emergencyPauseThreshold": 75,
+    "governorPid": 85725,
+    "governorSession": 76875,
+    "governorState": "/private/tmp/packing-cpu-governor-2873-v3-state.json",
+    "latestAudit": {
+      "maxActiveWorkers": 3,
+      "maxLiveWorkers": 3,
+      "maxRollingCpu": 91.25386582710959,
+      "maxSampleCpu": 99.625468164794,
+      "samples": 3372,
+      "samplesAtOrAbove90": 10
+    },
+    "maxActiveWorkers": 3,
+    "maxLiveWorkers": 3,
+    "softThreshold": 70,
+    "targetTotalCpuPercent": 65,
+    "totalCpuCeilingPercent": 90
+  },
+  "search": {
+    "completedWorkers": 43,
+    "config": "/private/tmp/packing-cpu-fleet-2850-config.json",
+    "currentCellWorkers": [],
+    "currentPinnedWorkers": [],
+    "failedWorkers": 0,
+    "independentReferenceGate": "All105publishedpolygonpairs; exactsceneexportmatch; officialvalidationbeforecanonicalpromotion",
+    "latestExperiment": "packing-pinned-cvp-2905.report.json",
+    "managerPid": 85545,
+    "managerSession": 40044,
+    "maximumSecondsPerWorker": 600,
+    "method": "Systematic 42-coordinate lattice proposals with first X/Y/theta fixed; K4096, two shells, complete native polygon and curved-circle scoring of every retained point; independent reference acceptance gate.",
+    "proposalMix": {
+      "continuous2650": 0.4,
+      "nearBank": 0.2,
+      "validatedBest": 0.4
+    },
+    "runningWorkers": 0,
+    "status": "paused"
+  },
+  "status": "paused",
+  "submittedByAgent": false,
+  "ui": {
+    "exactRenderedPayloadValidated": true,
+    "placements": "packing-best.placements.json",
+    "savedCount": 19,
+    "savedName": "Validated · R 2.948527064 · CPU search",
+    "scene": "packing-best.scene.json",
+    "screenshot": "packing-cpu-improvement-2855-ui.png"
+  },
+  "updatedAt": "2026-10-27T03:48:04.792Z",
+  "verification": {
+    "command": "bun run verify",
+    "exitCode": 0,
+    "notes": "Check and builds passed. Existing informational lints, build warnings, and sandbox Wrangler-log warning were emitted."
+  }
+}

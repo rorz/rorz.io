@@ -1,0 +1,392 @@
+{
+  "builder": {
+    "bun": "1.4.4",
+    "networkRequests": 0,
+    "optimizerLaunched": false,
+    "path": "/Users/rorz/.codex/visualizations/2026/10/25/01a171cd-9c02-7981-ab5d-1490dddb856f/resumed-research/packing-adversarial-proof-2960.ts",
+    "sha256": "6df780a233a2fe584b25fbf5218805691f67f155a7063c7cf6500197b8efef1c"
+  },
+  "canonicalChanged": false,
+  "createdAt": "2026-10-30T04:19:05.658Z",
+  "fixedWitnessProof": {
+    "centresUnchangedInEveryCandidate": true,
+    "checkedCandidates": 3584,
+    "conclusion": "Every widened candidate retains these three points. Their minimum enclosing-circle radius is a lower bound exceeding the target. These3584 candidates could not achieve the requested improvement.",
+    "ledgers": [
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-0-enumeration.json",
+        "enumerationSha256": "fb958cc046d07a616642b5d215f6bf25e4ae07e1df55cca62e52374a2b9f3e8e",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-0-model.json",
+        "modelSha256": "6a76e875fc839c38d823f4c4b40611c2b6c2534060141a20c83d1c2afd63f47a"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-1-enumeration.json",
+        "enumerationSha256": "d36c0eb01cc342f370c29d89dd51c9984809cd9d7dd9acbbe748c2c7b69aa916",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-1-model.json",
+        "modelSha256": "8674abbab745d0fd0a79a33786620a229bb8a88f0206c59f93b9a15f11e10d88"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-2-enumeration.json",
+        "enumerationSha256": "2fb9f02241cdf94b49b2730b8fe1fb9d9a4c6c26008ab485e8bb73b043d389c6",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-2-model.json",
+        "modelSha256": "566b9817115512f9b83801ca3e42eeb48519930dab4f1fbcec71eadfa28ae989"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-3-enumeration.json",
+        "enumerationSha256": "12e5d72fb2c1e71233218149f3d4634441560b69d05d2c41f27d14b34913dba2",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-3-model.json",
+        "modelSha256": "3f3b72460e11a2d3e4231c22ecbfe1c83c58e7030d866079cd17442dc59a1fd7"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-4-enumeration.json",
+        "enumerationSha256": "8ba4f6e4f4a63bd3fe5f39433ddb76d6ebac4dcd6f9274c5dd00ea724e57c8cf",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-4-model.json",
+        "modelSha256": "3fb0e727a43665e69d00064b13a8d1cc60e126662052ce53bbdf69b283d56252"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-5-enumeration.json",
+        "enumerationSha256": "57df39743d03ce99994f8d1207434d7fa67e7fc6902c893ba7b85f39ebd2a273",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-5-model.json",
+        "modelSha256": "cd91190bd5ef8d89962f3b69ffa297bbd39d8f7f63803f603935e8ad7f420f5a"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-6-enumeration.json",
+        "enumerationSha256": "9206becc364970c519796fd53109aea721f2cd75cdbf6b00b623bb72b80bda37",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-42D-pass-6-model.json",
+        "modelSha256": "8a29b02efc03daa8e027dc9a67a7dd21f02f6bab6531a41f8e4a6725e44ca842"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-0-enumeration.json",
+        "enumerationSha256": "03cc6f5c9287b52673e43346edaa95afc3fba6a05fca4341083f804a3395244c",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-0-model.json",
+        "modelSha256": "d029764ebdcac38f2bb204bf89e5c386eb0e75c3d068cf792a32e28db9e971ee"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-1-enumeration.json",
+        "enumerationSha256": "8a50d66f5e441e5e613da59ec2166d388d297618dfad33eae1e3b1c7378053bf",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-1-model.json",
+        "modelSha256": "ba6d4f672b87cd08c7e009a213a8e4d09cbfda906f481134661ff2fa1dff9305"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-2-enumeration.json",
+        "enumerationSha256": "d17505d6c523928170eaaf2409b13c32d934f594b2ea74603336e177f71ae83c",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-2-model.json",
+        "modelSha256": "3dd4b80b74e07450d0b2c2578dde9886f8ca10297f257bc9865578053a520197"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-3-enumeration.json",
+        "enumerationSha256": "37c320db8788e08df2f74afed7b4d54fd265d3652d5efde4e85a86903991c897",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-3-model.json",
+        "modelSha256": "26fe64e971e938d8e68d50105f326958b09bd7d23b82268479e4ad212930552f"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-4-enumeration.json",
+        "enumerationSha256": "05035c3ba13e6a0dcab7cafb703c13f7228227f1a4c6b35dec6805bf7b9f128b",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-4-model.json",
+        "modelSha256": "d1b245e03fb4638bf268de6e3eb5b4a36f0aaf3065668fac5802337e517fca44"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-5-enumeration.json",
+        "enumerationSha256": "373128daff9ffd324e0092e51376ed26c30c2efa9129798b6af16a8a9d5004c3",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-5-model.json",
+        "modelSha256": "0c4a7efcf0bbc655bfe4b201924545f938aa0434bbd664e07cde49b1bb4b7a6c"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-6-enumeration.json",
+        "enumerationSha256": "ae62f298efb53604c21d3d27386f5beac7d082019cba7e710c7b37bd579fd73f",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case0-41D-pass-6-model.json",
+        "modelSha256": "0b28ca85aad33174b663e39dd71ba8d72f99b273861b50992fc35f9fa364e36e"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-0-enumeration.json",
+        "enumerationSha256": "7539c4dc0a29a60c9ca3f4b2a2ce55968959f23cde0d97bbfc11026dc96cd029",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-0-model.json",
+        "modelSha256": "dc7b1e089b92935b10922f7e9c8ea56a1920efe6d260e5e8d47604a5f66ec579"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-1-enumeration.json",
+        "enumerationSha256": "bdd67716af18e0e81a53cbe27fbba408d95e91b60846c0b0cba0512fd89a03ad",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-1-model.json",
+        "modelSha256": "366c23b6b01c15c13480cf818ec14145690ce2356aec20493514e6a7acc3fd79"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-2-enumeration.json",
+        "enumerationSha256": "7f124794fab71b886ff189ee548f16b55fffde0dcdad683d5e72881734b2fa89",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-2-model.json",
+        "modelSha256": "4b35a1d592ca5e2a15f50ca326e83e105123ad726391da77942e75a96c54802d"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-3-enumeration.json",
+        "enumerationSha256": "056190a2aa1a030a184d78baa42bf488307d30b8501dc1281078ef2621af9a98",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-3-model.json",
+        "modelSha256": "08b23c475598c501d42c3600890fcbde63b40debc4248efda1346ae3e38ea3d2"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-4-enumeration.json",
+        "enumerationSha256": "e6ba2a2995975272d801a04011609fbde91ba68becf340dde6b38ff31182ffea",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-4-model.json",
+        "modelSha256": "481de2e2c68ddd324886985ce3f7251abedc2e38ac71c62c21e5730b914a5c69"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-5-enumeration.json",
+        "enumerationSha256": "da5927b2717ababbdeb22944d64f72f492049be0901c395a2fc80201dbf405b4",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-5-model.json",
+        "modelSha256": "d69a6edc79f47d6816e90289ab6b2aa0ad1d6212d49f6fcddac6fcfdd02235a1"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-6-enumeration.json",
+        "enumerationSha256": "6b7f7d25795d49a67475e4d827265a754c40a5acbdc971eb61a4308fd7b8d84f",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-42D-pass-6-model.json",
+        "modelSha256": "565261ad90239b2961622fc703cb17efc9ae02f4e7e27ab74b4e28c5a22cfdab"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-0-enumeration.json",
+        "enumerationSha256": "f6c746c9d0992041c0b3773b0e13b3a64826e607d1780ae2a0ac8152a71500f2",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-0-model.json",
+        "modelSha256": "5540a342915528f077a79e5f26c3c760e767f267d29d0b9f89fdcaaf870e1d33"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-1-enumeration.json",
+        "enumerationSha256": "4a6bca3862e21a108a3adbe843e6de92e3f3b70c5417135bce9786fa5acd6f0f",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-1-model.json",
+        "modelSha256": "c00b488bf5c2b4ed4e965ce1a4d7ac4da06acc6268900b1f148bad7925d4ae5e"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-2-enumeration.json",
+        "enumerationSha256": "1134d4eed213c98289e31187fd1e80bab9a54b41d10d4f75bfc01f36ef667e92",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-2-model.json",
+        "modelSha256": "a16f837f1aab85371608e9e322d10eb6fc49d6e20999425dd7f70a266bc3a380"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-3-enumeration.json",
+        "enumerationSha256": "9f560cd3ecf29ef225ebfb79d56daee627e2c1ad276f74f97c635901e9deb6a7",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-3-model.json",
+        "modelSha256": "59be2610add10957a70702009ebb63780708d88d727a55b1327b7d0027c1fc98"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-4-enumeration.json",
+        "enumerationSha256": "53d738c9592bfb10730d5676cd6bd4a2da1bf28ada21af0b59a47b1b1fc75bb0",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-4-model.json",
+        "modelSha256": "8675fbe04e33f8e3038ac2e747be6998e7efff78bc00ccd3783ef9069b81fd23"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-5-enumeration.json",
+        "enumerationSha256": "b94b2f9d475a0adff627de3b4d5bca01db13acc7a590146b81eb4f3c9202dbde",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-5-model.json",
+        "modelSha256": "0167b56906d317b0a2f40aa5c6276ef6fd1295d2f4f5410116d6c4450b9da42e"
+      },
+      {
+        "candidates": 128,
+        "enumeration": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-6-enumeration.json",
+        "enumerationSha256": "17e3e7503121848835f73d6a54c3699a50f6a7e333a09a300b79630f991ea9d4",
+        "model": "/private/tmp/packing-sphere-cvp-2959-case1-41D-pass-6-model.json",
+        "modelSha256": "3a7267c2596602f1f9a336db9682147d01a551fadc7780fbf93f6fe064f7bcde"
+      }
+    ],
+    "maximumSupportAngleMicro": [1, 1, 1],
+    "minimumArcMembershipDot": [0.4951566326568403, 0.7424242913984777, 0.6459614841538546],
+    "minimumArcMembershipSlackDegrees": [29.680079401344546, 47.938339522043464, 40.23780258011019],
+    "onlyMidpointMovement": {
+      "coordinate": "y",
+      "microOffsets": [-1, 1],
+      "piece": 12
+    },
+    "source": {
+      "path": "/private/tmp/packing-cpu-improvement-2855-source.json",
+      "sha256": "592afbcc61e3056a71091230500d5db1864e96f44904872df1b930c85c5811b4"
+    },
+    "sourceCircle": {
+      "error": 1.3322676295501878e-15,
+      "radius": 2.948527063871882,
+      "x": -0.15003943939642728,
+      "y": -0.8526786562695373
+    },
+    "supports": [2, 11, 14],
+    "target": 2.948527062871882,
+    "threePointMinimumCircle": {
+      "positiveCentreWeights": [0.4626317633697328, 0.14633558862571097, 0.3910326480045563],
+      "radius": 2.948527063871881,
+      "x": -0.15003943939642664,
+      "y": -0.8526786562695368
+    },
+    "witnesses": [
+      {
+        "piece": 2,
+        "ux": 0.6689208805786072,
+        "uy": 0.7433336098454991,
+        "x": 1.8222918805786072,
+        "y": 1.3390606098454991
+      },
+      {
+        "piece": 11,
+        "ux": -0.9970190286930036,
+        "uy": 0.07715605241366177,
+        "x": -3.0897770286930033,
+        "y": -0.6251819475863383
+      },
+      {
+        "piece": 14,
+        "ux": -0.4182890634241475,
+        "uy": -0.9083139652233414,
+        "x": -1.3833760634241474,
+        "y": -3.5308669652233413
+      }
+    ]
+  },
+  "historicalCorrection": {
+    "attributedTo": "full_history_forensics",
+    "finding": "The2855 winning phase necessarily inherited earlier tempering-bank ancestry; exact immediate parent was not logged. Crediting only the final repair operator omits the geometry/phase generation stage.",
+    "maximum26TrialChainedChange": 0.065,
+    "oldFirstTheta": 2.245642,
+    "perTrialFirstThetaLimit": 0.0025,
+    "winnerFirstTheta": -0.063
+  },
+  "proposedControl": {
+    "includeAllFirstThetaOffsets": true,
+    "incumbent": "old2420",
+    "integerPoseBoxWidth": 5,
+    "maximumSeconds": 60,
+    "notRun": true,
+    "proposalCentre": "Frozen bank21 with unchanged phase",
+    "stop": "An uncapped empty result contradicts the witness. A cap shows insufficient recovery power. Passing calibrates only this instance.",
+    "success": "Discover any independently validated improvement without injecting the withheld winner",
+    "target": 2.9485270880491266,
+    "withheldVerifiedWitness": "new2855"
+  },
+  "recoveryWitness": {
+    "bank": {
+      "memberGeometrySha256": "57d885686581e74254f41e87f577a09c5816cec3dbbad7964673d5777283f56c",
+      "memberIndex": 21,
+      "path": "/private/tmp/packing-paired-replay-2950-frozen-v2/common-bank60.json",
+      "sha256": "3327ed7c802ebb2599beaa8955c0135db69ef6718b60466bea27781fd4983d1f",
+      "source": "packing-lattice-tempering-2402-state.json/elites/19/0,0,-0.062996,1.153371,0.59572"
+    },
+    "deltas": [
+      {
+        "coordinate": "theta",
+        "micro": -4,
+        "piece": 1
+      },
+      {
+        "coordinate": "x",
+        "micro": 2,
+        "piece": 3
+      },
+      {
+        "coordinate": "y",
+        "micro": 1,
+        "piece": 3
+      },
+      {
+        "coordinate": "theta",
+        "micro": 2,
+        "piece": 3
+      },
+      {
+        "coordinate": "x",
+        "micro": -2,
+        "piece": 4
+      },
+      {
+        "coordinate": "y",
+        "micro": -1,
+        "piece": 4
+      },
+      {
+        "coordinate": "theta",
+        "micro": -3,
+        "piece": 4
+      },
+      {
+        "coordinate": "x",
+        "micro": 2,
+        "piece": 10
+      },
+      {
+        "coordinate": "y",
+        "micro": 2,
+        "piece": 10
+      },
+      {
+        "coordinate": "theta",
+        "micro": 1,
+        "piece": 10
+      },
+      {
+        "coordinate": "theta",
+        "micro": -5,
+        "piece": 11
+      },
+      {
+        "coordinate": "x",
+        "micro": 2,
+        "piece": 12
+      },
+      {
+        "coordinate": "y",
+        "micro": -1,
+        "piece": 12
+      },
+      {
+        "coordinate": "theta",
+        "micro": 3,
+        "piece": 12
+      }
+    ],
+    "exactHistoricalImmediateParentKnown": false,
+    "l1Micro": 31,
+    "maximumAbsoluteMicro": 5,
+    "replays": [
+      {
+        "arm": "old",
+        "bank21Starts": 0,
+        "path": "/private/tmp/packing-paired-replay-2950-old-events.jsonl",
+        "sha256": "1fd501426a8d71cbf53685136737e55d1cd1aeacc7369a3eb278454f123139ea",
+        "trialStarts": 27
+      },
+      {
+        "arm": "new",
+        "bank21Starts": 0,
+        "path": "/private/tmp/packing-paired-replay-2950-new-events.jsonl",
+        "sha256": "b06dd30519289faf73973e458d3059a5180262431249e743268c490cc596e077",
+        "trialStarts": 27
+      }
+    ]
+  },
+  "scope": "Independent root reconstruction of saved data; no optimizer or solver launched",
+  "submitted": false,
+  "withdrawnClaims": [
+    "Any changed midpoint establishes objective-relevant coverage.",
+    "A filled candidate budget establishes useful exploration.",
+    "Strict floating-point worsening alone demonstrates meaningful barrier crossing.",
+    "Equal80k budgets isolate source effects.",
+    "Earlier sophisticated searches contributed nothing to the final simpler repair."
+  ]
+}

@@ -1,0 +1,296 @@
+{
+  "broaderGoalStatus": "paused",
+  "cpu": {
+    "atOrAbove90": [],
+    "errors": [],
+    "maxActiveRoots": 1,
+    "maxHost250ms": 89.37007874015748,
+    "maxRolling1s": 79.07680823161908,
+    "sampleCount": 2403
+  },
+  "createdAt": "2026-10-27T05:35:19.572Z",
+  "incumbent": {
+    "officialRadius": 2.9485270638716834,
+    "preserved": true,
+    "uiChangedByThisStudy": false
+  },
+  "methods": {
+    "contactRay": {
+      "explanation": "Analytic cooperative direction supplied a validated warm start.",
+      "radius": 2.9763269222628463,
+      "referenceMaximum": 0
+    },
+    "continuedAL": {
+      "conditions": 30,
+      "notes": "Eight-second conditions, carried multiplier state, released stripe tether, diverse middle escapes, fixed-target compression with feasible restoration.",
+      "officialRadius": 2.9759125096539423,
+      "restores": 42,
+      "seconds": 243.753228375,
+      "targetAttempts": 127
+    },
+    "gradientAudit": {
+      "assertions": 28058,
+      "at": "2026-10-27T05:32:06.023Z",
+      "checks": 504,
+      "elapsedMilliseconds": 10.044416999999996,
+      "helper": "/private/tmp/packing-nlopt/striped-bundle-2944.ts",
+      "helperSHA256": "8aa5bb03943d37c7a24c2104445a9a3908da10473e5edd0261dc7dc43fd6e235",
+      "maxAbsoluteError": 5.986604545427099e-10,
+      "maxScaledError": 5.986604545427099e-10,
+      "noOptimization": true,
+      "witnesses": {
+        "arcOnly": {
+          "curvedRow": 0.5,
+          "endpointRows": [-0.08578643762690485, -0.08578643762690485]
+        },
+        "invalidRegime": {
+          "APlane": [-0.099997, -0.099997],
+          "BPlane": [0.10000300000000001, 0.10000300000000001],
+          "opposition": [3.121592653589793, -3.161592653589793],
+          "targets": [3.141592653589793, 3.141592653589793]
+        },
+        "onePlaneWitness": {
+          "APlane": [0.0005028333341665745, -0.019496833334166574],
+          "BPlane": [-0.020496341671541553, -0.0004966750032084021],
+          "opposition": [-0.010000000000000214, -0.029999999999999787],
+          "targets": [3.141592653589793, 3.141592653589793]
+        },
+        "overlapping": {
+          "APlane": [0.10000300000000013, 0.10000299999999988],
+          "BPlane": [0.10000299999999987, 0.10000300000000012],
+          "opposition": [-0.02, -0.02],
+          "targets": [3.141592653589793, 3.141592653589793]
+        },
+        "parallel": {
+          "APlane": [-0.000006999999999877537, -0.000007000000000122465],
+          "BPlane": [-0.000007000000000134711, -0.000006999999999889783],
+          "opposition": [-0.02, -0.02],
+          "targets": [3.141592653589793, 3.141592653589793]
+        },
+        "wrappedSource": {
+          "APlane": [-0.000007000000000122465, -0.000006999999999877537],
+          "BPlane": [-0.00000699999999986529, -0.000007000000000110218],
+          "opposition": [-0.02, -0.02],
+          "targets": [-3.141592653589793, 3.141592653589793]
+        }
+      },
+      "worst": {
+        "analytic": 0.05919874761420352,
+        "numerical": 0.05919874701554306,
+        "row": 146,
+        "trial": 5
+      }
+    },
+    "SLSQP": {
+      "attempts": 105,
+      "modes": {
+        "generic-endpoints": {
+          "attempts": 26,
+          "continuousFeasible": 1612,
+          "minimumValidRadius": 2.975523948718791,
+          "solverExceptions": 0,
+          "validAttempts": 26
+        },
+        "local-seam-bundle": {
+          "attempts": 13,
+          "continuousFeasible": 2767,
+          "minimumValidRadius": 2.9755240743495546,
+          "solverExceptions": 0,
+          "validAttempts": 12
+        },
+        "plain-control": {
+          "attempts": 14,
+          "continuousFeasible": 2601,
+          "minimumValidRadius": 2.9755238790576732,
+          "solverExceptions": 0,
+          "validAttempts": 14
+        },
+        "seam-a-plane": {
+          "attempts": 26,
+          "continuousFeasible": 3598,
+          "minimumValidRadius": 2.975523809196232,
+          "solverExceptions": 0,
+          "validAttempts": 25
+        },
+        "seam-b-plane": {
+          "attempts": 26,
+          "continuousFeasible": 3539,
+          "minimumValidRadius": 2.9755240108421255,
+          "solverExceptions": 0,
+          "validAttempts": 24
+        }
+      },
+      "notes": [
+        "Plain control, redundant enclosure endpoints and guarded sufficient flat-plane branches.",
+        "All retained continuous feasible iterates and final solver outputs were independently rounded and validated, including after solver exceptions.",
+        "Mode results share a sequential warm incumbent and are not independent equal-start benchmarks.",
+        "Seam-plane modes are local restrictions, not globally equivalent descriptions of all nonoverlapping arrangements."
+      ],
+      "rejectedOutputs": 4,
+      "seconds": 120.25438175000001,
+      "validOutputs": 731
+    }
+  },
+  "observedGeometry": {
+    "alignment": "Least-squares rigid alignment of the ten originally striped side-piece midpoints; angle differences wrap to +/-pi.",
+    "commonRotationRadians": 0.01845127899131522,
+    "maxAlignedSideAngle": 0.23791072100868457,
+    "maxAlignedSideDisplacement": 0.017009421499686046,
+    "neckGaps": [
+      {
+        "after": 5.740036743695498e-7,
+        "before": 0.0006925978217222628,
+        "ids": [13, 15]
+      },
+      {
+        "after": 0.023213454746716877,
+        "before": 0.0010581752668692435,
+        "ids": [11, 13]
+      },
+      {
+        "after": 0.0000015900049373795966,
+        "before": 0.001451934918953235,
+        "ids": [6, 7]
+      },
+      {
+        "after": 0.000001090289952543344,
+        "before": 0.002197928360457402,
+        "ids": [9, 10]
+      },
+      {
+        "after": 9.860860066268629e-7,
+        "before": 0.002395717270939457,
+        "ids": [3, 6]
+      }
+    ],
+    "opposedMiddlePairErrors": [
+      {
+        "angleError": 3.464102069410249e-7,
+        "ids": [1, 8]
+      },
+      {
+        "angleError": 6.535897931987531e-7,
+        "ids": [7, 14]
+      }
+    ],
+    "sideChanges": [
+      {
+        "angle": 0.013966278991315306,
+        "distance": 0.012696073609084665,
+        "id": 2
+      },
+      {
+        "angle": 0.0048697210086849916,
+        "distance": 0.0033476454069956544,
+        "id": 3
+      },
+      {
+        "angle": 0.004865721008684792,
+        "distance": 0.0021052911789972563,
+        "id": 4
+      },
+      {
+        "angle": 0.004993721008685003,
+        "distance": 0.010070088713515715,
+        "id": 5
+      },
+      {
+        "angle": 0.03155027899131521,
+        "distance": 0.0057329802511900275,
+        "id": 6
+      },
+      {
+        "angle": 0.23791072100868457,
+        "distance": 0.014725361628907883,
+        "id": 9
+      },
+      {
+        "angle": 0.008478278991315202,
+        "distance": 0.0134938991699953,
+        "id": 10
+      },
+      {
+        "angle": 0.008478278991315147,
+        "distance": 0.011316003536308888,
+        "id": 11
+      },
+      {
+        "angle": 0.008580278991315193,
+        "distance": 0.017009421499686046,
+        "id": 12
+      },
+      {
+        "angle": 0.004705721008684716,
+        "distance": 0.011037811982019757,
+        "id": 13
+      }
+    ],
+    "visual": "Comparison PNG reviewed. The two side stripes remain recognisable; preserving them after full release is an observation, not an imposed guarantee."
+  },
+  "quality": {
+    "at": "2026-10-27T05:25:46.248Z",
+    "cpuThrottlingTimeoutAdjusted": true,
+    "explanation": "bun run verify/includes check initially encountered its default5000ms regression-test timeout under throttling. The131-test suite passed with30000ms wall timeout; remaining checks and sequential app builds passed.",
+    "passed": true,
+    "results": [
+      {
+        "args": ["run", "verify"],
+        "exitCode": 1,
+        "stderrPath": "/private/tmp/packing-verify-2941-verify.stderr.log",
+        "stdoutPath": "/private/tmp/packing-verify-2941-verify.stdout.log"
+      },
+      {
+        "args": ["run", "test", "--timeout", "30000"],
+        "exitCode": 0,
+        "stderrPath": "/private/tmp/packing-verify-2941-tests.stderr.log",
+        "stdoutPath": "/private/tmp/packing-verify-2941-tests.stdout.log"
+      },
+      {
+        "args": ["run", "pokayoke"],
+        "exitCode": 0,
+        "stderrPath": "/private/tmp/packing-verify-2941-pokayoke.stderr.log",
+        "stdoutPath": "/private/tmp/packing-verify-2941-pokayoke.stdout.log"
+      },
+      {
+        "args": ["run", "check:vinext"],
+        "exitCode": 0,
+        "stderrPath": "/private/tmp/packing-verify-2941-vinext.stderr.log",
+        "stdoutPath": "/private/tmp/packing-verify-2941-vinext.stdout.log"
+      },
+      {
+        "args": ["run", "--sequential", "--filter", "./apps/*", "build"],
+        "exitCode": 0,
+        "stderrPath": "/private/tmp/packing-verify-2941-build.stderr.log",
+        "stdoutPath": "/private/tmp/packing-verify-2941-build.stdout.log"
+      }
+    ],
+    "terminal": true
+  },
+  "result": {
+    "artifact": "packing-striped-bundle-2944",
+    "improvement": 0.0008130681454621147,
+    "officialRadius": 2.9755238091962317,
+    "officialValid": true
+  },
+  "shutdown": {
+    "fleetTerminal": true,
+    "governorTerminal": true,
+    "maxWorkers": 0,
+    "owned": 0,
+    "running": 0,
+    "sealed": true
+  },
+  "source": {
+    "artifact": "packing-coupled-lower-2934",
+    "officialRadius": 2.976336877341694
+  },
+  "status": "bounded_striped_arrangement_push_complete",
+  "submittedByAgent": false,
+  "validation": {
+    "all105ReferencePairs": true,
+    "curvedMEC": true,
+    "officialEndpoint": true,
+    "sceneSchemaAndExactExport": true,
+    "sixDecimalCoordinates": true
+  }
+}
