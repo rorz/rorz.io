@@ -59,8 +59,8 @@
         "wrangler": "catalog:",
       },
     },
-    "apps/paradigm-puzzles": {
-      "name": "@rorz/paradigm-puzzles",
+    "apps/puzzles": {
+      "name": "@rorz/puzzles",
       "version": "0.1.0",
       "dependencies": {
         "react": "catalog:",
@@ -494,7 +494,7 @@
 
     "@rorz/jevball": ["@rorz/jevball@workspace:apps/jevball"],
 
-    "@rorz/paradigm-puzzles": ["@rorz/paradigm-puzzles@workspace:apps/paradigm-puzzles"],
+    "@rorz/puzzles": ["@rorz/puzzles@workspace:apps/puzzles"],
 
     "@rorz/web": ["@rorz/web@workspace:apps/web"],
 

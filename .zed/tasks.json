@@ -34,11 +34,11 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "build:paradigm-puzzles"],
+    "args": ["run", "build:puzzles"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
-    "label": "bun: build:paradigm-puzzles",
+    "label": "bun: build:puzzles",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
@@ -177,22 +177,22 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "deploy:paradigm-puzzles"],
+    "args": ["run", "deploy:puzzles"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
-    "label": "bun: deploy:paradigm-puzzles",
+    "label": "bun: deploy:puzzles",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "deploy:paradigm-puzzles:dry"],
+    "args": ["run", "deploy:puzzles:dry"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
-    "label": "bun: deploy:paradigm-puzzles:dry",
+    "label": "bun: deploy:puzzles:dry",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
@@ -276,11 +276,11 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "dev:paradigm-puzzles"],
+    "args": ["run", "dev:puzzles"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
-    "label": "bun: dev:paradigm-puzzles",
+    "label": "bun: dev:puzzles",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true
@@ -386,11 +386,11 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "search:paradigm-puzzles"],
+    "args": ["run", "search:puzzles"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "on_success",
-    "label": "bun: search:paradigm-puzzles",
+    "label": "bun: search:puzzles",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": false
@@ -430,11 +430,11 @@
   },
   {
     "allow_concurrent_runs": false,
-    "args": ["run", "start:paradigm-puzzles"],
+    "args": ["run", "start:puzzles"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
-    "label": "bun: start:paradigm-puzzles",
+    "label": "bun: start:puzzles",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true

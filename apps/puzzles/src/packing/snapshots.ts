@@ -3,7 +3,7 @@ import { parseSnapshots } from "./snapshot-schema.ts";
 import { evaluateScene } from "./tighten.ts";
 
 type SnapshotStorage = Pick<Storage, "getItem" | "setItem">;
-const SNAPSHOTS_KEY = "paradigm-puzzles:shape-packing:snapshots:v1";
+const SNAPSHOTS_KEY = "puzzles:shape-packing:snapshots:v1";
 const readSnapshots = (storage: SnapshotStorage) => parseSnapshots(storage.getItem(SNAPSHOTS_KEY));
 const updateSnapshots = (
   storage: SnapshotStorage,

@@ -18,23 +18,23 @@
     "focusedRegressionTests": 6,
     "repositoryFiles": [
       {
-        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/enclosure.ts",
+        "path": "/Users/rorz/repos/rorz.io/apps/puzzles/src/packing/enclosure.ts",
         "sha256": "f7c7f2cd7870b1812862b4bdf6d8ef1778ae72347935caee14b31440ea7243e7"
       },
       {
-        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/radius-exposure.ts",
+        "path": "/Users/rorz/repos/rorz.io/apps/puzzles/src/packing/radius-exposure.ts",
         "sha256": "710c52119414c0686c0da4ea1e44635e78e032df11385ccb5b5dc95103cbf4fc"
       },
       {
-        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/radius-exposure.test.ts",
+        "path": "/Users/rorz/repos/rorz.io/apps/puzzles/src/packing/radius-exposure.test.ts",
         "sha256": "79bad5adb5b62bf198ca29d02b605943f2a0b0d081be8815b614f7c2fb059686"
       },
       {
-        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/search-recovery.ts",
+        "path": "/Users/rorz/repos/rorz.io/apps/puzzles/src/packing/search-recovery.ts",
         "sha256": "61d721beeae88500d41793e4149fa380824be8621f13b0c62d4ce4d987e3d835"
       },
       {
-        "path": "/Users/rorz/repos/rorz.io/apps/paradigm-puzzles/src/packing/search-recovery.test.ts",
+        "path": "/Users/rorz/repos/rorz.io/apps/puzzles/src/packing/search-recovery.test.ts",
         "sha256": "d3cae410127568e9cdcd847138984dc83744963c0bad347f6e8fad24ff9e9d0c"
       }
     ]

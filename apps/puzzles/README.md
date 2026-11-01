@@ -1,4 +1,4 @@
-# Paradigm Puzzles
+# Puzzles
 
 A collection of web views built with React, TypeScript, Vite, and Tailwind CSS, deployed as Cloudflare static assets. `/` is an empty black screen. View components live in `src/views/`.
 
@@ -42,18 +42,18 @@ Geometry lives independently in `src/packing/`. Intersections integrate circular
 
 Run these commands from the repository root:
 
-- `bun run dev:paradigm-puzzles` starts development at `http://127.0.0.1:4447`.
-- `bun run build:paradigm-puzzles` builds the app into `apps/paradigm-puzzles/dist`.
-- `bun run start:paradigm-puzzles` previews that build on port 4447.
-- `bun run deploy:paradigm-puzzles:dry` validates the Cloudflare deployment locally.
-- `bun run deploy:paradigm-puzzles` publishes to `paradigm-puzzles.rorz.io`.
+- `bun run dev:puzzles` starts development at `http://127.0.0.1:4447`.
+- `bun run build:puzzles` builds the app into `apps/puzzles/dist`.
+- `bun run start:puzzles` previews that build on port 4447.
+- `bun run deploy:puzzles:dry` validates the Cloudflare deployment locally.
+- `bun run deploy:puzzles` publishes to `puzzles.rorz.io`.
 
 The app participates in the root `check`, `build`, and `verify` commands.
 
 For a reproducible search outside the browser, export Inspector → Scene JSON and run:
 
 ```sh
-bun run search:paradigm-puzzles /absolute/path/scene.json /absolute/path/run-42 600 42
+bun run search:puzzles /absolute/path/scene.json /absolute/path/run-42 600 42
 ```
 
 The final arguments are seconds and seed. An optional fifth argument caps optimizer iterations, making comparisons independent of machine speed when the time budget is sufficient. The command writes `.scene.json`, `.placements.json`, `.report.json`, and `.checkpoint.json` files under the output prefix. It uses the same solver and validation as the editor, and does not submit anything to the leaderboard.

@@ -6,7 +6,7 @@ import "./styles.css";
 const root = document.querySelector("#root");
 
 if (!root) {
-  throw new Error("Paradigm Puzzles' root element is missing.");
+  throw new Error("Puzzles' root element is missing.");
 }
 
 createRoot(root).render(

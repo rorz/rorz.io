@@ -13,7 +13,7 @@
     "vite": "catalog:",
     "wrangler": "catalog:"
   },
-  "name": "@rorz/paradigm-puzzles",
+  "name": "@rorz/puzzles",
   "private": true,
   "scripts": {
     "build": "vite build",
