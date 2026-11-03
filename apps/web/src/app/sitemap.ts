@@ -11,8 +11,11 @@ import {
 import { getAbsoluteUrl } from "@/lib/seo/site.ts";
 import { getIndexableSiteEntries } from "@/lib/seo/site-content.ts";
 
-const sitemap = async (): Promise<MetadataRoute.Sitemap> =>
-  (await getIndexableSiteEntries()).map(({ note, route }) => {
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => [
+  {
+    url: getAbsoluteUrl("/resume"),
+  },
+  ...(await getIndexableSiteEntries()).map(({ note, route }) => {
     const description = getNoteDescription(note);
     const image = getNoteImage(note);
     const lastModified = getNoteModifiedAt(note) ?? undefined;
@@ -53,6 +56,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> =>
         : {}),
       url: getAbsoluteUrl(route.webPath),
     };
-  });
+  }),
+];
 
 export default sitemap;

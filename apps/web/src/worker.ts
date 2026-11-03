@@ -28,8 +28,9 @@ const proxyPostHogRequest = async (
   const requestUrl = new URL(request.url);
   const upstreamPath = requestUrl.pathname.slice(proxyPath.length) || "/";
   const isAssetRequest = upstreamPath.startsWith("/static/") || upstreamPath.startsWith("/array/");
+  // Avoid reusing older entries whose compressed bodies lost their encoding header.
   const assetCache =
-    request.method === "GET" && isAssetRequest ? await caches.open("posthog") : null;
+    request.method === "GET" && isAssetRequest ? await caches.open("posthog-assets-v2") : null;
 
   if (assetCache) {
     const cachedResponse = await assetCache.match(request);
@@ -47,6 +48,11 @@ const proxyPostHogRequest = async (
   const clientIp = headers.get("CF-Connecting-IP");
   headers.delete("cookie");
   headers.delete("host");
+
+  if (isAssetRequest) {
+    // Cache one uncompressed representation so cache hits remain valid scripts.
+    headers.set("accept-encoding", "identity");
+  }
 
   if (clientIp) {
     headers.set("X-Forwarded-For", clientIp);

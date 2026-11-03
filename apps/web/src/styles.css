@@ -27,9 +27,25 @@ html {
     var(--font-libertinus-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: var(--font-jetbrains-mono), ui-mono, "Courier New", Courier;
 
+  --spacing-a4-width: 210mm;
+  --spacing-a4-height: 297mm;
+  --text-resume: 11pt;
+  --text-resume-heading: 13pt;
+
   --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-accent: var(--accent);
+}
+
+@theme inline {
+  --font-resume:
+    var(--font-crimson-text), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* biome-ignore lint/suspicious/useBaseline: Named pages keep A4 print settings scoped to the resume. */
+@page resume {
+  size: A4;
+  margin: 0;
 }
 
 .markdown p {

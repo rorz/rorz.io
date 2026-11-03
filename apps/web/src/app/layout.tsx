@@ -1,17 +1,12 @@
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import type { Metadata, Viewport } from "next";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 import "@/styles.css";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import { JetBrains_Mono, Libertinus_Serif, Zalando_Sans } from "next/font/google";
 // biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
-import Link from "next/link";
-// biome-ignore lint/correctness/noUndeclaredDependencies: Vinext provides this Next.js-compatible module.
 import Script from "next/script";
-import { Navigation } from "@/components/navigation/index.tsx";
 import { PostHog } from "@/components/posthog.tsx";
-import { ThemeToggles } from "@/components/theme-toggles.tsx";
-import { cn } from "@/lib/cn/index.ts";
 import { postHogConfig } from "@/lib/posthog/config.ts";
 import {
   RSS_ALTERNATES,
@@ -21,8 +16,6 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/seo/site.ts";
-import { parseFrontmatter, rootFrontmatterSchema } from "@/lib/vault/frontmatter.ts";
-import { getVaultRouteManifest, vault } from "@/lib/vault/index.ts";
 
 const libertinusSerif = Libertinus_Serif({
   subsets: [
@@ -61,7 +54,7 @@ const metadata: Metadata = {
   authors: [
     {
       name: SITE_NAME,
-      url: SITE_URL,
+      url: SITE_URL.toString(),
     },
   ],
   creator: SITE_NAME,
@@ -117,58 +110,11 @@ const viewport: Viewport = {
   ],
 };
 
-const Masthead: FC<{
-  className?: string;
-}> = ({ className }) => (
-  <Link
-    className={cn(
-      "group col-span-2 bg-black dark:bg-zinc-600 text-white flex items-end pb-1",
-      className,
-    )}
-    href="/"
-  >
-    <span className="block px-2 font-bold group-hover:underline underline-offset-2 font-sans text-lg font-stretch-semi-condensed">
-      Rory&nbsp;McMeekin
-    </span>
-  </Link>
-);
-
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
 
-const getDirectoryHref = (
-  getWebPath: (vaultPath: string) => string | null,
-  resolvedPath: string | null,
-  target: string,
-): string => {
-  if (resolvedPath) {
-    const webPath = getWebPath(resolvedPath);
-
-    if (webPath) {
-      return webPath;
-    }
-  }
-
-  return `#unresolved-${encodeURIComponent(target)}`;
-};
-
-const RootLayout = async ({ children }: RootLayoutProps) => {
-  const [manifest, rootPage] = await Promise.all([
-    getVaultRouteManifest(),
-    vault.getFile("page"),
-  ]);
-
-  if (!rootPage) {
-    throw new Error("Missing vault root page: page");
-  }
-
-  const { directories } = parseFrontmatter(rootPage, rootFrontmatterSchema);
-  const navigationItems = directories.map((directory) => ({
-    href: getDirectoryHref(manifest.getWebPath, directory.resolvedPath, directory.target),
-    label: directory.label,
-  }));
-
+const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
       className={`${zalandoSans.variable} ${libertinusSerif.variable} ${jetBrainsMono.variable}`}
@@ -184,34 +130,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
       </Script>
       <body className="size-full flex flex-col items-center justify-start bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 min-h-screen">
         <PostHog apiHost={postHogConfig.apiHost} projectToken={postHogConfig.projectToken} />
-        <div className="size-full lg:max-w-5xl lg:grid lg:grid-cols-12 flex flex-col items-start">
-          <div className="lg:col-span-2 flex lg:flex-col gap-2 lg:gap-6 w-full items-start">
-            <div className="flex flex-col lg:min-w-unset lg:w-full">
-              <Masthead className="h-14 lg:h-28 lg:w-full mb-1 lg:mb-0" />
-              <div className="lg:hidden">
-                <ThemeToggles />
-              </div>
-            </div>
-            <Navigation items={navigationItems} />
-          </div>
-          <main className="w-full lg:col-span-8 lg:pl-8 lg:pt-34 pt-12 px-3">{children}</main>
-          <div className="hidden col-span-2 lg:flex items-start justify-end pr-2">
-            <ThemeToggles />
-          </div>
-        </div>
-        <footer className="mt-auto pt-12 pb-8">
-          <span className="font-sans text-xs text-zinc-500">
-            Content &copy; {new Date().getFullYear()} Rory McMeekin. Code is{" "}
-            <a
-              className="underline"
-              href="https://github.com/rorz/rorz.io"
-              rel="noopener"
-              target="_blank"
-            >
-              open source.
-            </a>
-          </span>
-        </footer>
+        {children}
       </body>
     </html>
   );
