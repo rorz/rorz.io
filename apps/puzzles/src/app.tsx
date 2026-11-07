@@ -1,4 +1,4 @@
-import { BlackView } from "./views/black.tsx";
+import { HomeView } from "./views/home.tsx";
 import { ShapePackingView } from "./views/shape-packing.tsx";
 
 const App = () =>
@@ -8,7 +8,7 @@ const App = () =>
   ].includes(globalThis.location.pathname) ? (
     <ShapePackingView />
   ) : (
-    <BlackView />
+    <HomeView />
   );
 
 export { App };
