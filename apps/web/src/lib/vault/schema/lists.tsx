@@ -118,9 +118,6 @@ const renderListEntries = (
     />
   ));
 
-const renderWritingSignup = (index: ListContext["note"]) =>
-  index.webPath === "/writing" ? <WritingSignup /> : null;
-
 const renderListGroup = (
   group: ListGroup,
   title = getFolderTitle(group.index),
@@ -129,7 +126,6 @@ const renderListGroup = (
   <div className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <SectionHeading count={group.totalCount} href={group.index.webPath} title={title} />
     <List>{renderListEntries(group.entries, getDecoration)}</List>
-    {renderWritingSignup(group.index)}
   </div>
 );
 
@@ -216,7 +212,7 @@ const list: VaultRenderer<"list"> = async ({ note: current, query }) => {
       title={getFolderTitle(current)}
     >
       <List className="mt-6">{renderListEntries(entries)}</List>
-      {renderWritingSignup(current)}
+      {current.webPath === "/writing" ? <WritingSignup /> : null}
     </Page>
   );
 };
@@ -255,7 +251,7 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
       title={current.properties.title ? renderText(current.properties.title) : current.name}
     >
       <VaultMarkdown note={current} />
-      {renderWritingSignup(parent)}
+      <WritingSignup />
       <EntryNavigation {...navigation} />
     </Page>
   );
