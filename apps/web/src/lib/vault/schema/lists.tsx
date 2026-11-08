@@ -8,6 +8,7 @@ import { Page } from "@/components/page.tsx";
 import { SectionHeading } from "@/components/section-heading.tsx";
 import { StarRating } from "@/components/star-rating.tsx";
 import { VaultMarkdown } from "@/components/vault-markdown.tsx";
+import { WritingSignup } from "@/components/writing-signup.tsx";
 import { getEntryNavigation } from "@/lib/vault/entry-navigation.ts";
 import { getParentDirectoryNavigation } from "@/lib/vault/parent-directory.ts";
 import {
@@ -43,21 +44,13 @@ const findListEntries = (index: ListContext["note"], query: ListContext["query"]
   });
 
 const getListDecoration = (entry: VaultEntry): ReactNode => {
-  if (entry.kind === "place") {
-    if (entry.properties.rating === undefined) {
-      return "No rating";
-    }
-
-    return <StarRating className="py-0.5" value={entry.properties.rating} />;
-  }
-
-  if (entry.kind === "film") {
+  if (entry.kind === "place" || entry.kind === "film") {
     if (entry.properties.rating !== undefined) {
       return <StarRating className="py-0.5" value={entry.properties.rating} />;
     }
 
-    if (entry.properties.date === undefined) {
-      return null;
+    if (entry.kind === "place") {
+      return "No rating";
     }
   }
 
@@ -125,6 +118,9 @@ const renderListEntries = (
     />
   ));
 
+const renderWritingSignup = (index: ListContext["note"]) =>
+  index.webPath === "/writing" ? <WritingSignup /> : null;
+
 const renderListGroup = (
   group: ListGroup,
   title = getFolderTitle(group.index),
@@ -133,6 +129,7 @@ const renderListGroup = (
   <div className="w-full flex flex-col items-start gap-3" key={group.index.webPath}>
     <SectionHeading count={group.totalCount} href={group.index.webPath} title={title} />
     <List>{renderListEntries(group.entries, getDecoration)}</List>
+    {renderWritingSignup(group.index)}
   </div>
 );
 
@@ -219,6 +216,7 @@ const list: VaultRenderer<"list"> = async ({ note: current, query }) => {
       title={getFolderTitle(current)}
     >
       <List className="mt-6">{renderListEntries(entries)}</List>
+      {renderWritingSignup(current)}
     </Page>
   );
 };
@@ -257,6 +255,7 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
       title={current.properties.title ? renderText(current.properties.title) : current.name}
     >
       <VaultMarkdown note={current} />
+      {renderWritingSignup(parent)}
       <EntryNavigation {...navigation} />
     </Page>
   );
