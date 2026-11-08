@@ -65,7 +65,7 @@ const WritingSignup = () => (
         <li>
           <a
             className="inline-flex items-center gap-1.5"
-            href="https://linkedin.com/in/rorz"
+            href="https://github.com/rorz"
             rel="noopener"
             target="_blank"
           >
