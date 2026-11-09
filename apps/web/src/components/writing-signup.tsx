@@ -11,7 +11,7 @@ const WritingSignup = () => (
     <h3 className="font-sans text-xl font-semibold">Subscribe to future writing</h3>
     <p className="font-serif text-lg leading-snug">I’ll email you when I write something new.</p>
     <input name="embed" type="hidden" value="1" />
-    <div className="flex w-full max-w-md items-center gap-4">
+    <div className="flex w-full max-w-md lg:items-center items-start gap-2.5 lg:gap-4 lg:flex-row flex-col">
       <div className="flex min-w-0 flex-1">
         <input
           aria-label="Email address"
