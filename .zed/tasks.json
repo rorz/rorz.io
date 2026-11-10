@@ -12,6 +12,17 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "build:datamatics"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: build:datamatics",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "build:diffly"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -133,6 +144,28 @@
   },
   {
     "allow_concurrent_runs": false,
+    "args": ["run", "deploy:datamatics"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:datamatics",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "deploy:datamatics:dry"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "on_success",
+    "label": "bun: deploy:datamatics:dry",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
     "args": ["run", "deploy:diffly"],
     "command": "bun",
     "cwd": "$ZED_WORKTREE_ROOT",
@@ -248,6 +281,17 @@
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
     "label": "bun: dev",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "dev:datamatics"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: dev:datamatics",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true
@@ -402,6 +446,17 @@
     "cwd": "$ZED_WORKTREE_ROOT",
     "hide": "never",
     "label": "bun: start",
+    "reveal": "always",
+    "save": "all",
+    "use_new_terminal": true
+  },
+  {
+    "allow_concurrent_runs": false,
+    "args": ["run", "start:datamatics"],
+    "command": "bun",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "hide": "never",
+    "label": "bun: start:datamatics",
     "reveal": "always",
     "save": "all",
     "use_new_terminal": true

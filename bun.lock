@@ -13,6 +13,24 @@
         "typescript": "catalog:",
       },
     },
+    "apps/datamatics": {
+      "name": "@rorz/datamatics",
+      "version": "0.1.0",
+      "dependencies": {
+        "react": "catalog:",
+        "react-dom": "catalog:",
+      },
+      "devDependencies": {
+        "@tailwindcss/vite": "catalog:",
+        "@types/react": "catalog:",
+        "@types/react-dom": "catalog:",
+        "@vitejs/plugin-react": "catalog:",
+        "tailwindcss": "catalog:",
+        "typescript": "catalog:",
+        "vite": "catalog:",
+        "wrangler": "catalog:",
+      },
+    },
     "apps/diffly": {
       "name": "@rorz/diffly",
       "version": "0.1.0",
@@ -489,6 +507,8 @@
     "@rolldown/binding-win32-x64-msvc": ["@rolldown/binding-win32-x64-msvc@1.2.15", "", { "os": "win32", "cpu": "x64" }, "sha512-HFZd2QNQYn1JbIi+Hpd7H+r/lkWxcfIu28nirZ6eCn2LafuvmExMlb/P96Sfx5tf7pPArw39IdhmCF8vmV+NhQ=="],
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.1", "", {}, "sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw=="],
+
+    "@rorz/datamatics": ["@rorz/datamatics@workspace:apps/datamatics"],
 
     "@rorz/diffly": ["@rorz/diffly@workspace:apps/diffly"],
 
