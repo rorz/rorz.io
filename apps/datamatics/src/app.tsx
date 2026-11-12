@@ -39,7 +39,7 @@ const App = () => {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="px-5 pt-5 sm:px-8 sm:pt-7">
-        <p className="max-w-prose text-left font-thin text-base text-zinc-200 leading-relaxed lowercase sm:text-lg">
+        <p className="max-w-prose text-left font-thin text-base text-zinc-200 leading-relaxed sm:text-lg">
           This is an experiment I worked on in order to create the hero image on{" "}
           <a
             className="underline decoration-zinc-500 underline-offset-4 hover:decoration-current focus-visible:outline-offset-4"
@@ -94,7 +94,7 @@ const App = () => {
           rel="noreferrer"
           target="_blank"
         >
-          Code open-source here.
+          Code is open-source and available here.
         </a>
       </footer>
     </div>
