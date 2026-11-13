@@ -261,6 +261,7 @@ const ObsidianMarkdown = ({
   children,
   components,
   links = [],
+  remarkRehypeOptions,
   resolveWikiImage = defaultResolveWikiImage,
   resolveWikiLink = defaultResolveWikiLink,
 }: ObsidianMarkdownProps) => (
@@ -271,6 +272,7 @@ const ObsidianMarkdown = ({
       createWikiLinkPlugin(links, resolveWikiImage, resolveWikiLink),
       createExternalImageDimensionsPlugin,
     ]}
+    remarkRehypeOptions={remarkRehypeOptions}
     skipHtml={true}
   >
     {children}

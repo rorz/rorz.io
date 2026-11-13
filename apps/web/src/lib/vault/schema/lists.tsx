@@ -250,8 +250,7 @@ const post: VaultRenderer<"post"> = async ({ note: current, query }) => {
       }
       title={current.properties.title ? renderText(current.properties.title) : current.name}
     >
-      <VaultMarkdown note={current} />
-      <WritingSignup />
+      <VaultMarkdown beforeFootnotes={<WritingSignup />} note={current} />
       <EntryNavigation {...navigation} />
     </Page>
   );

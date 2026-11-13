@@ -75,3 +75,48 @@ test("renders external Markdown images directly with parsed dimensions", () => {
     width: 640,
   });
 });
+
+test("puts the signup before footnotes and preserves the return link for each citation", () => {
+  const html = renderToStaticMarkup(
+    <VaultMarkdown
+      beforeFootnotes={<form aria-label="Subscribe" />}
+      note={{
+        body: "Cited here[^source] and again[^source].\n\n[^source]: The source.",
+        resolveImage: () => null,
+      }}
+    />,
+  );
+
+  const signup = html.indexOf('<form aria-label="Subscribe"');
+  expect(signup).toBeGreaterThan(html.indexOf("again"));
+  expect(html.indexOf("data-footnotes")).toBeGreaterThan(signup);
+  expect(html).toContain('href="#user-content-fn-source"');
+  expect(html).toContain('id="user-content-fn-source"');
+  expect(html).toContain('aria-describedby="footnote-label"');
+  expect(html).toContain('id="footnote-label"');
+
+  for (const suffix of [
+    "",
+    "-2",
+  ]) {
+    const reference = `user-content-fnref-source${suffix}`;
+    expect(html).toContain(`id="${reference}"`);
+    expect(html).toContain(`href="#${reference}"`);
+    expect(html).toContain(`aria-label="Back to reference 1${suffix}"`);
+  }
+});
+
+test("keeps the signup after the prose when no footnotes are cited", () => {
+  const html = renderToStaticMarkup(
+    <VaultMarkdown
+      beforeFootnotes={<form aria-label="Subscribe" />}
+      note={{
+        body: "Closing paragraph.\n\n[^unused]: An unused definition.",
+        resolveImage: () => null,
+      }}
+    />,
+  );
+
+  expect(html).toContain('<p>Closing paragraph.</p></div><form aria-label="Subscribe"></form>');
+  expect(html).not.toContain("data-footnotes");
+});

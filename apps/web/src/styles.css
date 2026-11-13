@@ -102,3 +102,20 @@ html {
 .dark .markdown code {
   background-color: var(--color-zinc-700);
 }
+
+.footnotes > h2 {
+  @apply mb-2 text-sm font-semibold text-ink;
+}
+
+.footnotes :is(p, ol, ul) {
+  @apply text-base leading-normal;
+}
+
+.footnotes > ol {
+  @apply mb-0 space-y-2 pl-5 marker:font-sans marker:text-sm;
+}
+
+.markdown [data-footnote-ref],
+.footnotes > ol > li {
+  @apply scroll-mt-6 target:rounded-sm target:bg-zinc-100 dark:target:bg-zinc-800;
+}

@@ -6,7 +6,7 @@ The [research journal](research/README.md) records the packing campaign, validat
 
 ## Shape packing
 
-Open `/shape-packing` for the monochrome semicircle editor. It starts with an editable 12 + 3 fan arrangement, not a proposed solution. Add and remove fans; adjust count, orbit radius, rotation, spread, tilt, and origin. Full rings space N shapes without repeating the endpoint; partial fans include both ends of their spread. Locking θ shares the tilt relative to each shape's radial direction. All semicircles have radius 1.
+Open `/semicircle-packing` for the monochrome semicircle editor. It starts with an editable 12 + 3 fan arrangement, not a proposed solution. Add and remove fans; adjust count, orbit radius, rotation, spread, tilt, and origin. Full rings space N shapes without repeating the endpoint; partial fans include both ends of their spread. Locking θ shares the tilt relative to each shape's radial direction. All semicircles have radius 1.
 
 Changing **Semicircles / N** redistributes the fan across its spread, which can create overlaps even when the count decreases. **Remove last, keep positions** instead deletes the last semicircle and adjusts the spread to preserve all remaining placements. For example, a 12-shape full ring becomes an 11-shape fan with a 300° spread and the same 30° spacing. This retains a valid starting packing for Tighten.
 

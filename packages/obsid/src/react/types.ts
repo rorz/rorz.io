@@ -1,4 +1,4 @@
-import type { Components } from "react-markdown";
+import type { Components, Options } from "react-markdown";
 import type { ObsidRenderedSchemaShape, ObsidResolvedNoteForSchema } from "../config/schema.ts";
 import type { VaultLink } from "../vault/types.ts";
 
@@ -9,6 +9,7 @@ interface ObsidianMarkdownProps {
   readonly children: string;
   readonly components?: Components;
   readonly links?: readonly VaultLink[];
+  readonly remarkRehypeOptions?: Options["remarkRehypeOptions"];
   readonly resolveWikiImage?: ResolveWikiImage;
   readonly resolveWikiLink?: ResolveWikiLink;
 }
